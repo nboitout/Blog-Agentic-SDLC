@@ -87,10 +87,7 @@ export default defineConfig({
           { text: 'Lectures', link: '/en/lectures/lecture-01-why-traditional-sdlc-breaks/' },
           { text: 'Projects', link: '/en/projects/' },
           { text: 'Resources', link: '/en/resources/' },
-          {
-            text: 'Survey ↗',
-            link: 'https://github.com/nboitout/agentic-sdlc-survey',
-          },
+          { text: 'Self-Assessment', link: '/en/executive-self-assessment/' },
         ],
         sidebar: enSidebar,
       },
