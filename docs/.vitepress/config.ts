@@ -73,7 +73,7 @@ const frSidebar = {
 }
 
 export default defineConfig({
-  base: '/agentic-sdlc/',
+  base: '/Blog-Agentic-SDLC/',
 
   locales: {
     en: {
