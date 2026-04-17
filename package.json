@@ -1,6 +1,7 @@
 {
   "name": "agentic-sdlc",
   "version": "1.0.0",
+  "type": "module",
   "description": "A practical course on AI-driven software development lifecycles",
   "scripts": {
     "dev": "vitepress dev docs",
