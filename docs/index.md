@@ -1,12 +1,14 @@
 ---
-layout: home
+layout: false
 ---
-
-<script setup>
-import { onMounted } from 'vue'
-import { useRouter } from 'vitepress'
-const router = useRouter()
-onMounted(() => {
-  router.go('/agentic-sdlc/en/')
-})
-</script>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="0; url=/Blog-Agentic-SDLC/en/">
+    <link rel="canonical" href="/Blog-Agentic-SDLC/en/">
+  </head>
+  <body>
+    Redirecting to <a href="/Blog-Agentic-SDLC/en/">/Blog-Agentic-SDLC/en/</a>
+  </body>
+</html>
