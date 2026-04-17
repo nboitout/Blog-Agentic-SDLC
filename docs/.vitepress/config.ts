@@ -20,7 +20,7 @@ const enSidebar = {
       text: 'Projects',
       items: [
         { text: 'Overview', link: '/en/projects/' },
-        { text: 'Project 01 · Baseline vs Agentic', link: '/en/projects/project-01-baseline-vs-agentic/' },
+        { text: 'Project 01 · Vibe Coding vs Harness Engineering', link: '/en/projects/project-01-baseline-vs-agentic/' },
         { text: 'Project 02 · Minimal Harness', link: '/en/projects/project-02-minimal-harness/' },
         { text: 'Project 03 · Multi-Agent Pipeline', link: '/en/projects/project-03-multi-agent-pipeline/' },
       ],
@@ -56,7 +56,7 @@ const frSidebar = {
       text: 'Projets',
       items: [
         { text: 'Vue d\'ensemble', link: '/fr/projects/' },
-        { text: 'Projet 01 · Baseline vs Agentique', link: '/fr/projects/project-01-baseline-vs-agentic/' },
+        { text: 'Projet 01 · Vibe Coding vs Harness Engineering', link: '/fr/projects/project-01-baseline-vs-agentic/' },
         { text: 'Projet 02 · Harness minimal', link: '/fr/projects/project-02-minimal-harness/' },
         { text: 'Projet 03 · Pipeline multi-agents', link: '/fr/projects/project-03-multi-agent-pipeline/' },
       ],
