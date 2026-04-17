@@ -126,7 +126,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/nboitout/agentic-sdlc' },
+      { icon: 'github', link: 'https://github.com/nboitout/Blog-Agentic-SDLC' },
     ],
 
     footer: {
@@ -136,6 +136,6 @@ export default defineConfig({
   },
 
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/agentic-sdlc/favicon.svg' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/Blog-Agentic-SDLC/favicon.svg' }],
   ],
 })
