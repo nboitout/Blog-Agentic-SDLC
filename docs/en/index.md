@@ -3,52 +3,58 @@ layout: home
 
 hero:
   name: "Agentic SDLC"
-  text: "Build software differently with AI agents"
-  tagline: A practical course on designing the loops, harnesses, and governance systems that make AI-driven development teams actually ship.
+  text: "Designing reliable software delivery with AI agents"
+  tagline: A practical course on the loops, harnesses, and governance systems that let engineers and AI agents ship software reliably together.
   actions:
     - theme: brand
       text: Start Learning →
       link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
     - theme: alt
       text: View on GitHub
-      link: https://github.com/nboitout/agentic-sdlc
-  image:
-    svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none"><circle cx="100" cy="100" r="80" stroke="#6366f1" stroke-width="2" stroke-dasharray="8 4" opacity="0.3"/><circle cx="100" cy="100" r="50" stroke="#6366f1" stroke-width="2" opacity="0.5"/><circle cx="100" cy="100" r="20" fill="#6366f1" opacity="0.8"/><path d="M100 50 L120 80 L100 70 L80 80 Z" fill="#6366f1"/><path d="M150 100 L120 120 L130 100 L120 80 Z" fill="#818cf8"/><path d="M100 150 L80 120 L100 130 L120 120 Z" fill="#4f46e5"/><path d="M50 100 L80 80 L70 100 L80 120 Z" fill="#818cf8"/></svg>'
+      link: https://github.com/nboitout/Blog-Agentic-SDLC
 
 features:
   - icon: 🎓
     title: Lectures
-    details: Understand why classic development loops break under agentic pressure — and learn the theory behind effective AI-driven SDLC design.
+    details: Eight lectures covering why classical delivery loops break under agentic pressure — and how to redesign them with explicit constraints, state management, and verification.
     link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
     linkText: Start with Lecture 01
   - icon: 🛠️
     title: Projects
-    details: Hands-on practice comparing baseline workflows against agentic pipelines, building harnesses, and orchestrating multi-agent teams.
+    details: Hands-on practice building and comparing agentic pipelines — from a first minimal harness to a multi-agent feature pipeline spanning frontend, backend, and tests.
     link: /en/projects/
     linkText: Explore Projects
   - icon: 📚
     title: Resource Library
-    details: Copy-ready templates — AGENTS.md, sprint plans, review checklists, prompt libraries — for use in your own repositories and teams.
+    details: Copy-ready templates — AGENTS.md, feature lists, session logs, review requests — designed to be dropped into real repositories and used immediately.
     link: /en/resources/
     linkText: Browse Resources
 ---
 
-## What is the Agentic SDLC? {#what-is-it}
+## What this course is about {#what-is-it}
 
-The **Agentic SDLC** is a redefinition of the software development lifecycle around AI coding agents as first-class participants. It is not about automating away developers — it's about designing the **loops, constraints, and feedback systems** that allow AI agents and human engineers to collaborate reliably on complex software.
+AI coding agents — tools like Claude Code, Codex, and Cursor — are increasingly capable of writing, reviewing, and refactoring code. But capability alone does not produce reliable delivery. Without deliberate engineering, agentic workflows introduce new failure modes: context loss between sessions, scope overreach, silent errors, and accumulated drift.
 
-This course synthesises the most advanced thinking in the field — from Anthropic's harness engineering research, to OpenAI's Codex field reports, to production patterns observed across teams shipping with Claude Code and Cursor — into a structured, actionable curriculum.
+This course rethinks software delivery for a world where AI coding agents participate directly in planning, coding, testing, and review. It is not about replacing developers. It is about designing the systems, constraints, and feedback structures that make human-agent collaboration work in practice — at the feature level, the session level, and across the full delivery lifecycle.
 
-## Core themes you will master {#themes}
+The course is built around three core concepts:
 
-- **Loop design** — how to structure Plan → Code → Test → Review cycles for agents
-- **Context engineering** — what your agent needs to know, when, and in what format
-- **Harness primitives** — state management, verification, observability, and entropy control
-- **Multi-agent coordination** — orchestration patterns for parallel agentic teams
-- **Governance** — when and how to put humans back in the loop
+- **Loops** — the Plan → Code → Verify → Reflect cycles that replace the sprint as the unit of agentic work
+- **Harnesses** — the files, scripts, and constraints that shape what agents can do, what state they maintain, and how failures are surfaced
+- **Governance** — the checkpoints, review protocols, and autonomy levels that keep humans meaningfully in control
+
+## What you will be able to do {#outcomes}
+
+By the end of this course you will be able to:
+
+- Diagnose why an agentic workflow is failing and identify the harness primitive that is missing
+- Design a minimal harness for a real codebase — scope rules, verification pipeline, state files
+- Run a governed agent session that produces auditable, recoverable work
+- Coordinate multiple agents across a feature that spans frontend, backend, and tests
+- Set appropriate autonomy levels and define human checkpoints for your team's risk tolerance
 
 ## Where to start {#start}
 
 - [Lecture 01: Why Traditional SDLC Breaks](/en/lectures/lecture-01-why-traditional-sdlc-breaks/) — start here for the theory
 - [Project 01: Baseline vs Agentic Sprint](/en/projects/project-01-baseline-vs-agentic/) — start here for hands-on practice
-- [AGENTS.md Template](/en/resources/templates/) — grab the essentials for your own project
+- [Templates](/en/resources/templates/) — grab AGENTS.md, feature_list.json, and progress.md for your own project
