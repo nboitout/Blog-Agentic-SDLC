@@ -23,8 +23,23 @@
 
 /* Hero customisations */
 .VPHero .tagline {
-  font-size: 1.1rem;
-  opacity: 0.75;
+  max-width: 38rem;
+  font-size: 1.05rem;
+  opacity: 0.8;
+}
+
+.VPHero.has-image .image {
+  transform: none;
+}
+
+.VPHero.has-image .image-container {
+  width: min(560px, 100%);
+}
+
+@media (max-width: 960px) {
+  .VPHero .tagline {
+    max-width: 100%;
+  }
 }
 
 /* Feature cards */

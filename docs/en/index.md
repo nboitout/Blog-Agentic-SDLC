@@ -3,15 +3,18 @@ layout: home
 
 hero:
   name: "Agentic SDLC"
-  text: "Designing reliable software delivery with AI agents"
-  tagline: A practical course on the loops, harnesses, and governance systems that let engineers and AI agents ship software reliably together.
+  text: "From AI coding tools to reliable delivery systems"
+  tagline: A practical course on the coding agents, loops, harnesses, and governance patterns that make a software factory possible.
   actions:
     - theme: brand
-      text: Start Learning →
+      text: Start Learning
       link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
     - theme: alt
-      text: View on GitHub
-      link: https://github.com/nboitout/Blog-Agentic-SDLC
+      text: Self-Assessment
+      link: /en/executive-self-assessment/
+  image:
+    src: /hero-three-levels.svg
+    alt: "Three levels: Agentic SDLC, Agentic engineering, Harness engineering"
 
 features:
   - icon: 🎓
