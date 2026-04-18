@@ -56,7 +56,7 @@ const frSidebar = {
     {
       text: 'Projets',
       items: [
-        { text: "Vue d'ensemble", link: '/fr/projects/' },
+        { text: 'Vue d\'ensemble', link: '/fr/projects/' },
         { text: 'Projet 01 · Vibe Coding vs Harness Engineering', link: '/fr/projects/project-01-baseline-vs-agentic/' },
         { text: 'Projet 02 · Harness minimal', link: '/fr/projects/project-02-minimal-harness/' },
         { text: 'Projet 03 · Pipeline multi-agents', link: '/fr/projects/project-03-multi-agent-pipeline/' },
@@ -85,10 +85,15 @@ export default defineConfig({
       title: 'Agentic SDLC',
       description: 'A practical course on AI-driven software development lifecycles',
       themeConfig: {
+        search: {
+          provider: 'local',
+        },
         nav: [
           { text: 'Lectures', link: '/en/lectures/lecture-01-why-traditional-sdlc-breaks/' },
           { text: 'Projects', link: '/en/projects/' },
           { text: 'Resources', link: '/en/resources/' },
+          { text: 'Share your priorities', link: '/en/share-your-priorities/' },
+          { text: 'Self-Assessment', link: '/en/executive-self-assessment/' },
         ],
         sidebar: enSidebar,
       },
@@ -100,6 +105,9 @@ export default defineConfig({
       title: 'SDLC Agentique',
       description: "Un cours pratique sur les cycles de développement logiciel pilotés par l'IA",
       themeConfig: {
+        search: {
+          provider: 'local',
+        },
         nav: [
           { text: 'Cours', link: '/fr/lectures/lecture-01-why-traditional-sdlc-breaks/' },
           { text: 'Projets', link: '/fr/projects/' },

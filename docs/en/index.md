@@ -2,15 +2,36 @@
 layout: home
 
 hero:
-  text: "Designing reliable software delivery with AI agents"
-  tagline: A practical course on the loops, harnesses, and governance systems that let engineers and AI agents ship software reliably together.
+  name: "Agentic SDLC"
+  text: "From AI coding tools to reliable delivery systems"
+  tagline: A practical course on the coding agents, loops, harnesses, and governance patterns that make a software factory possible.
   actions:
     - theme: brand
-      text: Start with Lecture 01 →
+      text: Start Learning
       link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
     - theme: alt
-      text: Take the Self-Assessment →
+      text: Self-Assessment
       link: /en/executive-self-assessment/
+  image:
+    src: /hero-three-levels.svg
+    alt: "Three levels: Agentic SDLC, Agentic engineering, Harness engineering"
+
+features:
+  - icon: 🎓
+    title: Lectures
+    details: Eight lectures covering why classical delivery loops break under agentic pressure — and how to redesign them with explicit constraints, state management, and verification.
+    link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
+    linkText: Start with Lecture 01
+  - icon: 🛠️
+    title: Projects
+    details: Hands-on practice building and comparing agentic pipelines — from a first minimal harness to a multi-agent feature pipeline spanning frontend, backend, and tests.
+    link: /en/projects/
+    linkText: Explore Projects
+  - icon: 📚
+    title: Resource Library
+    details: Copy-ready templates — AGENTS.md, feature lists, session logs, review requests — designed to be dropped into real repositories and used immediately.
+    link: /en/resources/
+    linkText: Browse Resources
 ---
 
 <div class="hero-pillars">
@@ -83,7 +104,7 @@ This course was informed by a focused set of public references on harness engine
 
 ### Implementation-oriented references
 
-- [Claude Code from Source — Chapter 1: Architecture](https://claude-code-from-source.com/ch01-architecture/#the-golden-path-from-keystroke-to-output) — Useful for understanding the end-to-end runtime path from prompt input to system output.
+- [Claude Code from Source — Chapter 1: Architecture / The golden path from keystroke to output](https://claude-code-from-source.com/ch01-architecture/#the-golden-path-from-keystroke-to-output) — Useful for understanding the end-to-end runtime path from prompt input to system output.
 - [Claude Code from Source — Chapter 2: Bootstrap](https://claude-code-from-source.com/ch02-bootstrap/) — Explains early-session initialization mechanics that strongly influence reliability and context quality.
 - [Simon Willison — Red/Green TDD for agentic coding](https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/) — A practical reliability pattern for keeping coding-agent changes test-driven and auditable.
 - [Phil Schmid — Agent Harness 2026](https://www.philschmid.de/agent-harness-2026) — A concise implementation-focused perspective on harness design decisions and operational trade-offs.
