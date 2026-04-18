@@ -3,15 +3,18 @@ layout: home
 
 hero:
   name: "Agentic SDLC"
-  text: "Designing reliable software delivery with AI agents"
-  tagline: A practical course on the loops, harnesses, and governance systems that let engineers and AI agents ship software reliably together.
+  text: "From AI coding tools to reliable delivery systems"
+  tagline: A practical course on the coding agents, loops, harnesses, and governance patterns that make a software factory possible.
   actions:
     - theme: brand
-      text: Start Learning →
+      text: Start Learning
       link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
     - theme: alt
-      text: View on GitHub
-      link: https://github.com/nboitout/Blog-Agentic-SDLC
+      text: Self-Assessment
+      link: /en/executive-self-assessment/
+  image:
+    src: /hero-three-levels.svg
+    alt: "Three levels: Agentic SDLC, Agentic engineering, Harness engineering"
 
 features:
   - icon: 🎓
@@ -56,5 +59,25 @@ By the end of this course you will be able to:
 ## Where to start {#start}
 
 - [Lecture 01: Why Traditional SDLC Breaks](/en/lectures/lecture-01-why-traditional-sdlc-breaks/) — start here for the theory
-- [Project 01: Baseline vs Agentic Sprint](/en/projects/project-01-baseline-vs-agentic/) — start here for hands-on practice
+- [Project 01: Vibe Coding vs Harness Engineering](/en/projects/project-01-baseline-vs-agentic/) — start here for hands-on practice
 - [Templates](/en/resources/templates/) — grab AGENTS.md, feature_list.json, and progress.md for your own project
+
+## Help shape the next advanced chapters {#advanced-chapters}
+
+We are preparing a new set of advanced chapters for engineering leaders and practitioners working on reliable human-agent software delivery.
+
+These may include:
+- Harness patterns for frontend agents
+- Harness patterns for backend/API agents
+- Harness patterns for QA and release engineering
+- Agent memory design
+- Subagents and role specialization
+- When not to use agents
+- Reviewing agent-generated pull requests
+- Agentic incident response and SRE loops
+- Harness anti-patterns
+- Measuring real productivity gains
+
+Tell us which topics matter most in your context.
+
+[**Share your priorities →**](/en/share-your-priorities/)
