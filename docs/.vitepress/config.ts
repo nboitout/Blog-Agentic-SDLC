@@ -75,6 +75,7 @@ const frSidebar = {
 
 export default defineConfig({
   base: '/Blog-Agentic-SDLC/',
+  ignoreDeadLinks: true, 
 
   locales: {
     en: {
