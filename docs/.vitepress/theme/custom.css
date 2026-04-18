@@ -1,4 +1,4 @@
-/* Agentic SDLC — Brand Colors */
+/* ── Brand Colors ── */
 :root {
   --vp-c-brand-1: #6366f1;
   --vp-c-brand-2: #4f46e5;
@@ -54,18 +54,8 @@
   opacity: 0.8;
 }
 
-.VPHero.has-image .image {
-  transform: none;
-}
-
-.VPHero.has-image .image-container {
-  width: min(560px, 100%);
-}
-
 @media (max-width: 960px) {
-  .VPHero .tagline {
-    max-width: 100%;
-  }
+  .VPHero .tagline { max-width: 100%; }
 }
 
 /* ── Three pillar cards ── */
@@ -121,13 +111,119 @@
 .pillar-link--loops  { color: #6366f1; }
 .pillar-link--harness { color: #16a34a; }
 .pillar-link--gov    { color: #c2410c; }
+.pillar-link:hover   { text-decoration: underline; }
 
-.pillar-link:hover { text-decoration: underline; }
+/* ── Language switcher — two-column grid ── */
+.VPNavBarTranslations .menu .VPMenu,
+.VPNavScreenTranslations .menu .VPMenu {
+  min-width: 340px;
+}
+
+.VPNavBarTranslations .menu .VPMenu .items,
+.VPNavScreenTranslations .menu .VPMenu .items {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  padding: 8px 6px;
+}
+
+.VPNavBarTranslations .VPMenuLink,
+.VPNavScreenTranslations .VPMenuLink {
+  padding: 0;
+}
+
+.VPNavBarTranslations .VPMenuLink a,
+.VPNavScreenTranslations .VPMenuLink a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* ── Country code badges ── */
+.VPNavBarTranslations .VPMenuLink a::before,
+.VPNavScreenTranslations .VPMenuLink a::before {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 17px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  border-radius: 3px;
+  background: var(--vp-c-bg-mute);
+  color: var(--vp-c-text-2);
+  flex-shrink: 0;
+}
+
+.VPNavBarTranslations a[href$="/en/"]::before,
+.VPNavScreenTranslations a[href$="/en/"]::before { content: "GB"; }
+
+.VPNavBarTranslations a[href$="/fr/"]::before,
+.VPNavScreenTranslations a[href$="/fr/"]::before { content: "FR"; }
+
+.VPNavBarTranslations a[href$="/de/"]::before,
+.VPNavScreenTranslations a[href$="/de/"]::before { content: "DE"; }
+
+.VPNavBarTranslations a[href$="/es/"]::before,
+.VPNavScreenTranslations a[href$="/es/"]::before { content: "ES"; }
+
+.VPNavBarTranslations a[href$="/it/"]::before,
+.VPNavScreenTranslations a[href$="/it/"]::before { content: "IT"; }
+
+.VPNavBarTranslations a[href$="/pt/"]::before,
+.VPNavScreenTranslations a[href$="/pt/"]::before { content: "PT"; }
+
+.VPNavBarTranslations a[href$="/nl/"]::before,
+.VPNavScreenTranslations a[href$="/nl/"]::before { content: "NL"; }
+
+.VPNavBarTranslations a[href$="/pl/"]::before,
+.VPNavScreenTranslations a[href$="/pl/"]::before { content: "PL"; }
+
+.VPNavBarTranslations a[href$="/sv/"]::before,
+.VPNavScreenTranslations a[href$="/sv/"]::before { content: "SE"; }
+
+.VPNavBarTranslations a[href$="/da/"]::before,
+.VPNavScreenTranslations a[href$="/da/"]::before { content: "DK"; }
+
+.VPNavBarTranslations a[href$="/fi/"]::before,
+.VPNavScreenTranslations a[href$="/fi/"]::before { content: "FI"; }
+
+.VPNavBarTranslations a[href$="/ro/"]::before,
+.VPNavScreenTranslations a[href$="/ro/"]::before { content: "RO"; }
+
+.VPNavBarTranslations a[href$="/cs/"]::before,
+.VPNavScreenTranslations a[href$="/cs/"]::before { content: "CZ"; }
+
+.VPNavBarTranslations a[href$="/hu/"]::before,
+.VPNavScreenTranslations a[href$="/hu/"]::before { content: "HU"; }
+
+.VPNavBarTranslations a[href$="/hr/"]::before,
+.VPNavScreenTranslations a[href$="/hr/"]::before { content: "HR"; }
+
+.VPNavBarTranslations a[href$="/ru/"]::before,
+.VPNavScreenTranslations a[href$="/ru/"]::before { content: "RU"; }
+
+.VPNavBarTranslations a[href$="/uk/"]::before,
+.VPNavScreenTranslations a[href$="/uk/"]::before { content: "UA"; }
+
+.VPNavBarTranslations a[href$="/bg/"]::before,
+.VPNavScreenTranslations a[href$="/bg/"]::before { content: "BG"; }
+
+.VPNavBarTranslations a[href$="/sr/"]::before,
+.VPNavScreenTranslations a[href$="/sr/"]::before { content: "RS"; }
+
+.VPNavBarTranslations a[href$="/el/"]::before,
+.VPNavScreenTranslations a[href$="/el/"]::before { content: "GR"; }
+
+.VPNavBarTranslations a[href$="/tr/"]::before,
+.VPNavScreenTranslations a[href$="/tr/"]::before { content: "TR"; }
 
 /* ── Feature cards ── */
-.VPFeature .icon {
-  font-size: 2rem;
-}
+.VPFeature .icon { font-size: 2rem; }
 
 /* ── Sidebar active link ── */
 .VPSidebarItem.is-active > .item > .link > .text {
@@ -142,31 +238,5 @@
 }
 
 /* ── Callout / tip overrides ── */
-.custom-block.tip {
-  border-color: var(--vp-c-brand-1);
-}
-.custom-block.tip .custom-block-title {
-  color: var(--vp-c-brand-1);
-}
-
-/* ── Self-Assessment nav badge (EN) ── */
-.VPNavBarMenu .VPNavBarMenuLink[href$='/en/executive-self-assessment/'] {
-  margin-left: 0.55rem;
-  padding: 0.34rem 0.72rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 999px;
-  background-color: var(--vp-c-bg-soft);
-  font-weight: 600;
-}
-
-.VPNavBarMenu .VPNavBarMenuLink[href$='/en/executive-self-assessment/']:hover {
-  border-color: var(--vp-c-brand-1);
-  color: var(--vp-c-brand-1);
-}
-
-.VPNavScreenMenuLink[href$='/en/executive-self-assessment/'] {
-  margin-top: 0.4rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background-color: var(--vp-c-bg-soft);
-}
+.custom-block.tip { border-color: var(--vp-c-brand-1); }
+.custom-block.tip .custom-block-title { color: var(--vp-c-brand-1); }
