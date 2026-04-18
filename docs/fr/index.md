@@ -48,5 +48,5 @@ Ce cours synthétise les réflexions les plus avancées du domaine — de la rec
 ## Par où commencer {#commencer}
 
 - [Cours 01 : Pourquoi le SDLC traditionnel échoue](/fr/lectures/lecture-01-why-traditional-sdlc-breaks/) — commencez par la théorie
-- [Projet 01 : Baseline vs Sprint Agentique](/fr/projects/project-01-baseline-vs-agentic/) — commencez par la pratique
+- [Projet 01 : Vibe Coding vs Harness Engineering](/fr/projects/project-01-baseline-vs-agentic/) — commencez par la pratique
 - [Template AGENTS.md](/fr/resources/templates/) — récupérez l'essentiel pour votre projet
