@@ -231,6 +231,28 @@ You are no longer treating AI as a side tool. You are actively redesigning softw
 **Next move**  
 Focus on scale, consistency, and economics.
 
+## Recommended reading
+
+This page was informed by a small set of public references on harness engineering, long-running agents, and agentic software delivery. If you want to go deeper, these are the sources we recommend starting with.
+
+### Foundational perspectives
+
+- [Anthropic — Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) — Practical patterns for keeping long-running agent workflows coherent, recoverable, and verifiable over time.
+- [OpenAI — Harness engineering](https://openai.com/index/harness-engineering/) — Introduces harness engineering as the reliability layer that makes agent behavior operationally dependable.
+- [Martin Fowler — Harness Engineering for Coding Agent Users](https://martinfowler.com/articles/harness-engineering.html) — Clear framing of why software teams need structure and control boundaries around coding agents.
+- [LangChain — The anatomy of an agent harness](https://www.langchain.com/blog/the-anatomy-of-an-agent-harness) — Breaks down the main harness components and how they work together in production settings.
+
+### Pedagogical deep dives
+
+- [WalkingLabs — Learn Harness Engineering](https://walkinglabs.github.io/learn-harness-engineering/en/) — A structured learning path that connects conceptual foundations to implementation choices.
+
+### Implementation-oriented references
+
+- [Claude Code from Source — Chapter 1: Architecture / The golden path from keystroke to output](https://claude-code-from-source.com/ch01-architecture/#the-golden-path-from-keystroke-to-output) — Useful for understanding the end-to-end runtime path from prompt input to system output.
+- [Claude Code from Source — Chapter 2: Bootstrap](https://claude-code-from-source.com/ch02-bootstrap/) — Explains early-session initialization mechanics that strongly influence reliability and context quality.
+- [Simon Willison — Red/Green TDD for agentic coding](https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/) — A practical reliability pattern for keeping coding-agent changes test-driven and auditable.
+- [Phil Schmid — Agent Harness 2026](https://www.philschmid.de/agent-harness-2026) — A concise implementation-focused perspective on harness design decisions and operational trade-offs.
+
 ## Want the deeper version?
 
 This quick self-assessment is only a snapshot. The full Agentic SDLC diagnostic goes deeper into engineering workflows, governance, quality systems, and organizational readiness.
