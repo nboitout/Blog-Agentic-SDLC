@@ -31,7 +31,7 @@ const enSidebar = {
         { text: 'Library', link: '/en/resources/' },
         { text: 'Templates', link: '/en/resources/templates/' },
         { text: 'Guides', link: '/en/resources/guides/' },
-        { text: 'Share your priorities', link: '/en/share-your-priorities/' },
+        
       ],
     },
   ],
