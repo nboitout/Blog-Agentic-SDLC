@@ -31,7 +31,7 @@ const enSidebar = {
         { text: 'Library', link: '/en/resources/' },
         { text: 'Templates', link: '/en/resources/templates/' },
         { text: 'Guides', link: '/en/resources/guides/' },
-        
+        { text: 'Share your priorities', link: '/en/share-your-priorities/' },
       ],
     },
   ],
@@ -84,10 +84,14 @@ export default defineConfig({
       title: 'Agentic SDLC',
       description: 'A practical course on AI-driven software development lifecycles',
       themeConfig: {
+        search: {
+          provider: 'local',
+        },
         nav: [
           { text: 'Lectures', link: '/en/lectures/lecture-01-why-traditional-sdlc-breaks/' },
           { text: 'Projects', link: '/en/projects/' },
           { text: 'Resources', link: '/en/resources/' },
+          { text: 'Share your priorities', link: '/en/share-your-priorities/' },
           { text: 'Self-Assessment', link: '/en/executive-self-assessment/' },
         ],
         sidebar: enSidebar,
@@ -100,6 +104,9 @@ export default defineConfig({
       title: 'SDLC Agentique',
       description: 'Un cours pratique sur les cycles de développement logiciel pilotés par l\'IA',
       themeConfig: {
+        search: {
+          provider: 'local',
+        },
         nav: [
           { text: 'Cours', link: '/fr/lectures/lecture-01-why-traditional-sdlc-breaks/' },
           { text: 'Projets', link: '/fr/projects/' },
