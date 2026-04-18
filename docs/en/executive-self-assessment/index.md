@@ -114,6 +114,26 @@ const totalScore = computed(() => questions.reduce((sum, question) => {
 }, 0))
 
 const selectedOption = (question) => question.options.find((option) => option.key === answers[question.id])
+
+const currentProfile = computed(() => {
+  if (totalScore.value <= 16) return 'Tooling Curious'
+  if (totalScore.value <= 24) return 'Local Acceleration'
+  if (totalScore.value <= 32) return 'Managed Agentic Delivery'
+  return 'AI-Native Delivery System'
+})
+
+const profileInterpretation = computed(() => {
+  if (totalScore.value <= 16) {
+    return 'AI is mostly an individual aid today; your delivery model itself has not shifted yet.'
+  }
+  if (totalScore.value <= 24) {
+    return 'You are getting practical wins, but workflows and governance remain fragmented across teams.'
+  }
+  if (totalScore.value <= 32) {
+    return 'Structured agent workflows are emerging with stronger verification and clearer human oversight.'
+  }
+  return 'You are operating toward a governed, AI-native delivery model with recurring human-agent collaboration.'
+})
 </script>
 
 # How agentic is your software delivery model?
@@ -143,16 +163,15 @@ This short self-assessment is designed for executives and engineering leaders wh
   </p>
 </div>
 
-## How to score yourself
+## Your current result
 
-- **A = 1 point**
-- **B = 2 points**
-- **C = 3 points**
-- **D = 4 points**
-
-Add your points across all 10 questions and total your score out of 40.
-
-> **Current score:** **{{ totalScore }}/40**
+<div style="margin: 1.25rem 0 1.75rem; padding: 1rem 1.1rem; border: 1px solid var(--vp-c-divider); border-radius: 10px;">
+  <p style="margin: 0; font-size: 1.7rem; font-weight: 700; line-height: 1.2;">{{ totalScore }} / 40</p>
+  <p style="margin: 0.15rem 0 0.85rem; font-size: 0.88rem; color: var(--vp-c-text-2);">Executive self-assessment score</p>
+  <p style="margin: 0.2rem 0;"><strong>Profile:</strong> {{ currentProfile }}</p>
+  <p style="margin: 0.45rem 0 0; color: var(--vp-c-text-2);">{{ profileInterpretation }}</p>
+  <p style="margin: 0.75rem 0 0; font-size: 0.84rem; color: var(--vp-c-text-3);">This result updates automatically as you answer the questions.</p>
+</div>
 
 ## Your maturity profile
 
