@@ -23,8 +23,23 @@
 
 /* Hero customisations */
 .VPHero .tagline {
-  font-size: 1.1rem;
-  opacity: 0.75;
+  max-width: 38rem;
+  font-size: 1.05rem;
+  opacity: 0.8;
+}
+
+.VPHero.has-image .image {
+  transform: none;
+}
+
+.VPHero.has-image .image-container {
+  width: min(560px, 100%);
+}
+
+@media (max-width: 960px) {
+  .VPHero .tagline {
+    max-width: 100%;
+  }
 }
 
 /* Feature cards */
@@ -50,4 +65,27 @@
 }
 .custom-block.tip .custom-block-title {
   color: var(--vp-c-brand-1);
+}
+
+/* Header CTA: Self-Assessment (EN) */
+.VPNavBarMenu .VPNavBarMenuLink[href$='/en/executive-self-assessment/'] {
+  margin-left: 0.55rem;
+  padding: 0.34rem 0.72rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  background-color: var(--vp-c-bg-soft);
+  font-weight: 600;
+}
+
+.VPNavBarMenu .VPNavBarMenuLink[href$='/en/executive-self-assessment/']:hover {
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
+}
+
+/* Keep CTA easy to find in mobile menu without changing structure */
+.VPNavScreenMenuLink[href$='/en/executive-self-assessment/'] {
+  margin-top: 0.4rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background-color: var(--vp-c-bg-soft);
 }
