@@ -9,11 +9,8 @@ hero:
       text: Start with Lecture 01 →
       link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
     - theme: alt
-      text: Take the Self-Assessment
+      text: Take the Self-Assessment →
       link: /en/executive-self-assessment/
-  image:
-    src: /hero-three-levels.svg
-    alt: "Three levels: Agentic SDLC, Agentic engineering, Harness engineering"
 ---
 
 <div class="hero-pillars">
@@ -37,19 +34,21 @@ hero:
   </div>
 </div>
 
+## Three levels of the agentic stack {#three-levels}
+
+Agentic software delivery operates across three nested levels. This course covers all three, from the highest-level lifecycle changes down to the engineering primitives that make agents reliable.
+
+| Level | What it covers |
+|---|---|
+| **Agentic SDLC** | How software delivery changes when AI agents participate directly in planning, coding, testing, and review |
+| **Agentic engineering** | How engineers work inside that model — designing loops, managing state, and setting scope boundaries |
+| **Harness engineering** | How agents are made reliable enough to participate at all — constraints, verification, and continuity |
+
 ## What this course is about {#what-is-it}
 
 AI coding agents — tools like Claude Code, Codex, and Cursor — are increasingly capable of writing, reviewing, and refactoring code. But capability alone does not produce reliable delivery. Without deliberate engineering, agentic workflows introduce new failure modes: context loss between sessions, scope overreach, silent errors, and accumulated drift.
 
 This course rethinks software delivery for a world where AI coding agents participate directly in planning, coding, testing, and review. It is not about replacing developers. It is about designing the systems, constraints, and feedback structures that make human-agent collaboration work in practice — at the feature level, the session level, and across the full delivery lifecycle.
-
-### Three levels of the agentic stack
-
-| Level | What it covers |
-|---|---|
-| **Agentic SDLC** | How software delivery changes when AI agents participate directly |
-| **Agentic engineering** | How engineers work inside that model — loops, state, scope |
-| **Harness engineering** | How agents are made reliable enough to participate at all |
 
 ## What you will be able to do {#outcomes}
 
@@ -84,7 +83,7 @@ This course was informed by a focused set of public references on harness engine
 
 ### Implementation-oriented references
 
-- [Claude Code from Source — Chapter 1: Architecture / The golden path from keystroke to output](https://claude-code-from-source.com/ch01-architecture/#the-golden-path-from-keystroke-to-output) — Useful for understanding the end-to-end runtime path from prompt input to system output.
+- [Claude Code from Source — Chapter 1: Architecture](https://claude-code-from-source.com/ch01-architecture/#the-golden-path-from-keystroke-to-output) — Useful for understanding the end-to-end runtime path from prompt input to system output.
 - [Claude Code from Source — Chapter 2: Bootstrap](https://claude-code-from-source.com/ch02-bootstrap/) — Explains early-session initialization mechanics that strongly influence reliability and context quality.
 - [Simon Willison — Red/Green TDD for agentic coding](https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/) — A practical reliability pattern for keeping coding-agent changes test-driven and auditable.
 - [Phil Schmid — Agent Harness 2026](https://www.philschmid.de/agent-harness-2026) — A concise implementation-focused perspective on harness design decisions and operational trade-offs.
