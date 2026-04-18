@@ -8,8 +8,8 @@ hero:
 
 features:
   - icon: ⚡
-    title: Project 01 · Baseline vs Agentic Sprint
-    details: Run the same feature implementation twice — once with a vanilla agent, once with a minimal harness. Measure the difference in reliability, scope adherence, and time-to-verify.
+    title: Project 01 · Vibe Coding vs Harness Engineering
+    details: Run the same feature implementation twice — first in vibe-coding mode with a vanilla agent, then with a minimal harness. Measure the difference in reliability, scope adherence, and time-to-verify.
     link: /en/projects/project-01-baseline-vs-agentic/
     linkText: Start Project 01
   - icon: 🏗️
