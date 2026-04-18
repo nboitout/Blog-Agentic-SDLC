@@ -10,7 +10,7 @@ hero:
       text: Start Learning
       link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
     - theme: alt
-      text: Self-Assessment
+      text: Self-Assessment for Executives
       link: /en/executive-self-assessment/
   image:
     src: /hero-three-levels.svg
@@ -70,6 +70,29 @@ Agentic software delivery operates across three nested levels. This course cover
 AI coding agents — tools like Claude Code, Codex, and Cursor — are increasingly capable of writing, reviewing, and refactoring code. But capability alone does not produce reliable delivery. Without deliberate engineering, agentic workflows introduce new failure modes: context loss between sessions, scope overreach, silent errors, and accumulated drift.
 
 This course rethinks software delivery for a world where AI coding agents participate directly in planning, coding, testing, and review. It is not about replacing developers. It is about designing the systems, constraints, and feedback structures that make human-agent collaboration work in practice — at the feature level, the session level, and across the full delivery lifecycle.
+
+The course is built around three core concepts:
+
+<div class="core-concepts-grid">
+  <article class="core-concept-card">
+    <p class="core-concept-icon">↺</p>
+    <h3>Loops</h3>
+    <p>Plan → Code → Verify → Reflect. The cycle that replaces the sprint.</p>
+    <p><a href="/en/lectures/lecture-02-the-agentic-loop/">Lecture 02</a></p>
+  </article>
+  <article class="core-concept-card">
+    <p class="core-concept-icon">⊞</p>
+    <h3>Harnesses</h3>
+    <p>Scope, state, and verification. The structure that keeps agents on track.</p>
+    <p><a href="/en/lectures/lecture-04-harness-design/">Lecture 04</a></p>
+  </article>
+  <article class="core-concept-card">
+    <p class="core-concept-icon">◈</p>
+    <h3>Governance</h3>
+    <p>Autonomy levels and checkpoints. Humans meaningfully in control.</p>
+    <p><a href="/en/lectures/lecture-08-human-in-the-loop/">Lecture 08</a></p>
+  </article>
+</div>
 
 ## What you will be able to do {#outcomes}
 

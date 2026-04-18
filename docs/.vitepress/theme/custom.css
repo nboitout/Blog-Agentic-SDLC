@@ -181,25 +181,42 @@
   color: var(--vp-c-brand-1);
 }
 
-/* Header CTA: Self-Assessment (EN) */
-.VPNavBarMenu .VPNavBarMenuLink[href$='/en/executive-self-assessment/'] {
-  margin-left: 0.55rem;
-  padding: 0.34rem 0.72rem;
+/* Home core concepts */
+.core-concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 0.85rem;
+}
+
+.core-concept-card {
   border: 1px solid var(--vp-c-divider);
-  border-radius: 999px;
-  background-color: var(--vp-c-bg-soft);
+  border-radius: 10px;
+  padding: 0.85rem 0.95rem;
+  background: var(--vp-c-bg-soft);
+}
+
+.core-concept-card h3 {
+  margin: 0.15rem 0 0.35rem;
+  font-size: 1.02rem;
+}
+
+.core-concept-card p {
+  margin: 0.2rem 0;
+}
+
+.core-concept-icon {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--vp-c-text-2);
+}
+
+.core-concept-card a {
   font-weight: 600;
 }
 
-.VPNavBarMenu .VPNavBarMenuLink[href$='/en/executive-self-assessment/']:hover {
-  border-color: var(--vp-c-brand-1);
-  color: var(--vp-c-brand-1);
-}
-
-/* Keep CTA easy to find in mobile menu without changing structure */
-.VPNavScreenMenuLink[href$='/en/executive-self-assessment/'] {
-  margin-top: 0.4rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background-color: var(--vp-c-bg-soft);
+@media (max-width: 960px) {
+  .core-concepts-grid {
+    grid-template-columns: 1fr;
+  }
 }

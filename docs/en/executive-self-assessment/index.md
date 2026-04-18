@@ -239,4 +239,4 @@ This self-assessment is only a first snapshot. The full Agentic SDLC diagnostic 
 
 That discussion is often more valuable than the score itself.
 
-[**Explore the full diagnostic**](https://www.linkedin.com/in/nicolas-boitout-phd-8677842/)
+[**Contact me for the full diagnostic — DM on LinkedIn, for instance**](https://www.linkedin.com/in/nicolas-boitout-phd-8677842/)

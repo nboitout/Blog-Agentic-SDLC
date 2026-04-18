@@ -93,7 +93,6 @@ export default defineConfig({
           { text: 'Projects', link: '/en/projects/' },
           { text: 'Resources', link: '/en/resources/' },
           { text: 'Share your priorities', link: '/en/share-your-priorities/' },
-          { text: 'Self-Assessment', link: '/en/executive-self-assessment/' },
         ],
         sidebar: enSidebar,
       },
