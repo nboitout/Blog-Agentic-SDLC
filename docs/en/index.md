@@ -2,7 +2,6 @@
 layout: home
 
 hero:
-  name: "Agentic SDLC"
   text: "Designing reliable software delivery with AI agents"
   tagline: A practical course on the loops, harnesses, and governance systems that let engineers and AI agents ship software reliably together.
   actions:
