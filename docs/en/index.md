@@ -3,36 +3,40 @@ layout: home
 
 hero:
   name: "Agentic SDLC"
-  text: "From AI coding tools to reliable delivery systems"
-  tagline: A practical course on the coding agents, loops, harnesses, and governance patterns that make a software factory possible.
+  text: "Designing reliable software delivery with AI agents"
+  tagline: A practical course on the loops, harnesses, and governance systems that let engineers and AI agents ship software reliably together.
   actions:
     - theme: brand
-      text: Start Learning
+      text: Start with Lecture 01 →
       link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
     - theme: alt
-      text: Self-Assessment
+      text: Take the Self-Assessment
       link: /en/executive-self-assessment/
   image:
     src: /hero-three-levels.svg
     alt: "Three levels: Agentic SDLC, Agentic engineering, Harness engineering"
-
-features:
-  - icon: 🎓
-    title: Lectures
-    details: Eight lectures covering why classical delivery loops break under agentic pressure — and how to redesign them with explicit constraints, state management, and verification.
-    link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
-    linkText: Start with Lecture 01
-  - icon: 🛠️
-    title: Projects
-    details: Hands-on practice building and comparing agentic pipelines — from a first minimal harness to a multi-agent feature pipeline spanning frontend, backend, and tests.
-    link: /en/projects/
-    linkText: Explore Projects
-  - icon: 📚
-    title: Resource Library
-    details: Copy-ready templates — AGENTS.md, feature lists, session logs, review requests — designed to be dropped into real repositories and used immediately.
-    link: /en/resources/
-    linkText: Browse Resources
 ---
+
+<div class="hero-pillars">
+  <div class="pillar-card">
+    <div class="pillar-icon">↺</div>
+    <div class="pillar-title">Loops</div>
+    <div class="pillar-desc">Plan → Code → Verify → Reflect. The cycle that replaces the sprint.</div>
+    <a class="pillar-link pillar-link--loops" href="/Blog-Agentic-SDLC/en/lectures/lecture-02-the-agentic-loop/">Lecture 02</a>
+  </div>
+  <div class="pillar-card">
+    <div class="pillar-icon">⊞</div>
+    <div class="pillar-title">Harnesses</div>
+    <div class="pillar-desc">Scope, state, and verification. The structure that keeps agents on track.</div>
+    <a class="pillar-link pillar-link--harness" href="/Blog-Agentic-SDLC/en/lectures/lecture-04-harness-design/">Lecture 04</a>
+  </div>
+  <div class="pillar-card">
+    <div class="pillar-icon">◈</div>
+    <div class="pillar-title">Governance</div>
+    <div class="pillar-desc">Autonomy levels and checkpoints. Humans meaningfully in control.</div>
+    <a class="pillar-link pillar-link--gov" href="/Blog-Agentic-SDLC/en/lectures/lecture-08-human-in-the-loop/">Lecture 08</a>
+  </div>
+</div>
 
 ## What this course is about {#what-is-it}
 
@@ -40,11 +44,13 @@ AI coding agents — tools like Claude Code, Codex, and Cursor — are increasin
 
 This course rethinks software delivery for a world where AI coding agents participate directly in planning, coding, testing, and review. It is not about replacing developers. It is about designing the systems, constraints, and feedback structures that make human-agent collaboration work in practice — at the feature level, the session level, and across the full delivery lifecycle.
 
-The course is built around three core concepts:
+### Three levels of the agentic stack
 
-- **Loops** — the Plan → Code → Verify → Reflect cycles that replace the sprint as the unit of agentic work
-- **Harnesses** — the files, scripts, and constraints that shape what agents can do, what state they maintain, and how failures are surfaced
-- **Governance** — the checkpoints, review protocols, and autonomy levels that keep humans meaningfully in control
+| Level | What it covers |
+|---|---|
+| **Agentic SDLC** | How software delivery changes when AI agents participate directly |
+| **Agentic engineering** | How engineers work inside that model — loops, state, scope |
+| **Harness engineering** | How agents are made reliable enough to participate at all |
 
 ## What you will be able to do {#outcomes}
 
