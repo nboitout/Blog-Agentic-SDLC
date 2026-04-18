@@ -115,6 +115,35 @@
   content: 'For software engineers, engineering leads, and CTOs navigating AI-native delivery.';
   display: block;
   font-size: 0.82rem;
+
+
+  .VPHero .name::before {
+  content: 'Practical course  ·  8 lectures  ·  EN / FR';
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  border: 1px solid color-mix(in srgb, var(--vp-c-brand-1) 30%, transparent);
+  border-radius: 999px;
+  padding: 3px 14px;
+  margin-bottom: 14px;
+  width: fit-content;
+  -webkit-text-fill-color: var(--vp-c-brand-1);
+  background-clip: unset;
+  -webkit-background-clip: unset;
+}
+
+.VPHero .tagline::after {
+  content: 'For software engineers, engineering leads, and CTOs navigating AI-native delivery.';
+  display: block;
+  font-size: 0.82rem;
+  color: var(--vp-c-text-3);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
   color: var(--vp-c-text-3);
   margin-top: 0.5rem;
   font-style: italic;
