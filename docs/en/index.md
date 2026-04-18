@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: "Agentic SDLC"
-  text: "From AI coding tools to reliable delivery systems"
-  tagline: A practical course on the coding agents, loops, harnesses, and governance patterns that make a software factory possible.
+  text: "Designing reliable software delivery with AI agents"
+  tagline: A practical course on the loops, harnesses, and governance systems that let engineers and AI agents ship software reliably together.
   actions:
     - theme: brand
       text: Start Learning

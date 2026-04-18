@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: "SDLC Agentique"
-  text: "Développer autrement avec les agents IA"
-  tagline: Un cours pratique sur la conception des boucles, des harnais et des systèmes de gouvernance qui permettent aux équipes pilotées par l'IA de livrer vraiment.
+  text: "Concevoir une livraison logicielle fiable avec des agents IA"
+  tagline: Un cours pratique sur les boucles, harnais et systèmes de gouvernance qui permettent aux ingénieurs et aux agents IA de livrer ensemble, de manière fiable.
   actions:
     - theme: brand
       text: Commencer →
