@@ -106,8 +106,6 @@ const questions = [
 
 const answers = reactive({})
 
-const answeredCount = computed(() => questions.filter((question) => answers[question.id]).length)
-
 const totalScore = computed(() => questions.reduce((sum, question) => {
   const selectedKey = answers[question.id]
   if (!selectedKey) return sum
@@ -116,16 +114,6 @@ const totalScore = computed(() => questions.reduce((sum, question) => {
 }, 0))
 
 const selectedOption = (question) => question.options.find((option) => option.key === answers[question.id])
-
-const profileLabel = computed(() => {
-  if (answeredCount.value < questions.length) {
-    return 'Complete all 10 questions to unlock your profile.'
-  }
-  if (totalScore.value <= 16) return 'Tooling Curious'
-  if (totalScore.value <= 24) return 'Local Acceleration'
-  if (totalScore.value <= 32) return 'Managed Agentic Delivery'
-  return 'AI-Native Delivery System'
-})
 </script>
 
 # How agentic is your software delivery model?
@@ -164,8 +152,7 @@ This short self-assessment is designed for executives and engineering leaders wh
 
 Add your points across all 10 questions and total your score out of 40.
 
-> **Current score:** **{{ totalScore }}/40** (answered: {{ answeredCount }}/10)  
-> **Current profile:** **{{ profileLabel }}**
+> **Current score:** **{{ totalScore }}/40**
 
 ## Your maturity profile
 
