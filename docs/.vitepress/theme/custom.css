@@ -68,6 +68,20 @@
   }
 }
 
+.VPHero.has-image .image {
+  transform: none;
+}
+
+.VPHero.has-image .image-container {
+  width: min(560px, 100%);
+}
+
+@media (max-width: 960px) {
+  .VPHero .tagline {
+    max-width: 100%;
+  }
+}
+
 /* ── Country code badges ── */
 .VPNavBarTranslations .VPMenuLink a::before,
 .VPNavScreenTranslations .VPMenuLink a::before {
