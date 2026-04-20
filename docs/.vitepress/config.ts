@@ -14,6 +14,7 @@ const enSidebar = {
         { text: '06 · Testing Agentic Pipelines', link: '/en/lectures/lecture-06-testing-agentic-pipelines/' },
         { text: '07 · Observability', link: '/en/lectures/lecture-07-observability/' },
         { text: '08 · Human-in-the-Loop Governance', link: '/en/lectures/lecture-08-human-in-the-loop/' },
+        { text: '09 · Bibliography', link: '/en/lectures/lecture-09-bibliography/' },
       ],
     },
     {

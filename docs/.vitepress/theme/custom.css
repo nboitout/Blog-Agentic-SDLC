@@ -68,10 +68,6 @@
   }
 }
 
-.VPHero.has-image .image {
-  transform: none;
-}
-
 .VPHero.has-image .image-container {
   width: min(560px, 100%);
 }
