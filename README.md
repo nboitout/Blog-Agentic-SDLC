@@ -57,6 +57,8 @@ First-time setup:
 1. Go to repo Settings → Pages → Source → **GitHub Actions**
 2. Push to `main`
 
+Sympa !!
+
 ## License
 
 MIT © 2026 Nicolas Boitout
