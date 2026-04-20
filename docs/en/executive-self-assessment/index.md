@@ -233,6 +233,10 @@ Focus on scale, consistency, and economics.
 
 ## Want the deeper version?
 
-This quick self-assessment is only a snapshot. The full Agentic SDLC diagnostic goes deeper into engineering workflows, governance, quality systems, and organizational readiness.
+This self-assessment is only a first snapshot. The full Agentic SDLC diagnostic goes deeper into delivery workflows, governance, verification, operating-model design, and organizational readiness.
 
-If useful, start here with your leadership team, then compare answers before moving to the full diagnostic.
+**Recommended next step:** ask 3–5 leaders across engineering, product, and delivery to complete this page separately, compare the answers, and identify where your assumptions diverge.
+
+That discussion is often more valuable than the score itself.
+
+[**Contact me for the full diagnostic — DM on LinkedIn, for instance**](https://www.linkedin.com/in/nicolas-boitout-phd-8677842/)
