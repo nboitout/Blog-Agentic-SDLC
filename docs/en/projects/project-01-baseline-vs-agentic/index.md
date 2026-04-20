@@ -1,12 +1,12 @@
-# Project 01 · Baseline vs Agentic Sprint
+# Project 01 · Vibe Coding vs Harness Engineering
 
 **Difficulty:** Beginner · **Duration:** ~2 hours · **Prerequisites:** Lectures 01–02
 
 ## Objective {#objective}
 
-Run the same feature implementation task twice — once with a vanilla agent (no harness), once with a minimal harness — and measure the difference in reliability, scope adherence, and time-to-verify.
+Run the same feature implementation task twice — first in **vibe-coding mode** with a vanilla agent and no harness, then with a **minimal harness** — and compare reliability, scope adherence, and time-to-verify.
 
-This project makes the value of harness design viscerally concrete. Most engineers don't believe how large the difference is until they see it themselves.
+This project makes the contrast concrete: vibe coding is fast, intuitive, and loosely controlled; harness engineering is bounded, verifiable, and recoverable.
 
 ## The task {#task}
 
@@ -16,7 +16,7 @@ You will implement a simple **user authentication module** with two endpoints:
 
 The codebase is a minimal TypeScript Express application provided in `starter/`.
 
-## Phase 1: The Baseline Run {#baseline}
+## Phase 1: The Vibe-Coding Run {#baseline}
 
 ### Setup
 ```bash
