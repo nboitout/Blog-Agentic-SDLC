@@ -140,38 +140,36 @@ The following lectures build the theoretical foundation for a redesigned SDLC:
 - **Lecture 03** covers context engineering — how to ensure your agent always has what it needs
 - **Lecture 04** covers harness design — the structural constraints that keep agents on track
 
-<button class="lecture-quiz-trigger" @click="isQuizOpen = true">
-  Take a short quiz
-</button>
+<button class="lecture-quiz-trigger" @click="isQuizOpen = true">Take a short quiz</button>
 
 <div v-if="isQuizOpen" class="lecture-quiz-modal" role="dialog" aria-modal="true" aria-label="Lecture 01 quiz">
-  <div class="lecture-quiz-backdrop" @click="isQuizOpen = false"></div>
-  <div class="lecture-quiz-panel">
-    <div class="lecture-quiz-header">
-      <h2>Lecture 01: Why Traditional SDLC Breaks</h2>
-      <button class="lecture-quiz-close" @click="isQuizOpen = false" aria-label="Close quiz">✕</button>
-    </div>
+<div class="lecture-quiz-backdrop" @click="isQuizOpen = false"></div>
+<div class="lecture-quiz-panel">
+<div class="lecture-quiz-header">
+<h2>Lecture 01: Why Traditional SDLC Breaks</h2>
+<button class="lecture-quiz-close" @click="isQuizOpen = false" aria-label="Close quiz">✕</button>
+</div>
 
-    <p class="lecture-quiz-meta">Select one answer per question, then submit to check your score.</p>
+<p class="lecture-quiz-meta">Select one answer per question, then submit to check your score.</p>
 
-    <div v-for="(question, index) in questions" :key="question.id" class="lecture-quiz-question">
-      <p><strong>{{ index + 1 }}. {{ question.prompt }}</strong></p>
-      <label v-for="(optionText, optionKey) in question.options" :key="optionKey" class="lecture-quiz-option">
-        <input type="radio" :name="question.id" :value="optionKey" v-model="answers[question.id]">
-        <span><strong>{{ optionKey }})</strong> {{ optionText }}</span>
-      </label>
-    </div>
+<div v-for="(question, index) in questions" :key="question.id" class="lecture-quiz-question">
+<p><strong>{{ index + 1 }}. {{ question.prompt }}</strong></p>
+<label v-for="(optionText, optionKey) in question.options" :key="optionKey" class="lecture-quiz-option">
+<input type="radio" :name="question.id" :value="optionKey" v-model="answers[question.id]">
+<span><strong>{{ optionKey }})</strong> {{ optionText }}</span>
+</label>
+</div>
 
-    <div class="lecture-quiz-actions">
-      <button @click="submitQuiz" class="lecture-quiz-submit">Submit quiz</button>
-      <button @click="resetQuiz" class="lecture-quiz-reset">Reset</button>
-      <span class="lecture-quiz-progress">Answered: {{ totalAnswered }} / 5</span>
-    </div>
+<div class="lecture-quiz-actions">
+<button @click="submitQuiz" class="lecture-quiz-submit">Submit quiz</button>
+<button @click="resetQuiz" class="lecture-quiz-reset">Reset</button>
+<span class="lecture-quiz-progress">Answered: {{ totalAnswered }} / 5</span>
+</div>
 
-    <p v-if="isSubmitted" class="lecture-quiz-result">
-      Score: <strong>{{ score }} / 5</strong>
-    </p>
-  </div>
+<p v-if="isSubmitted" class="lecture-quiz-result">
+Score: <strong>{{ score }} / 5</strong>
+</p>
+</div>
 </div>
 
 ---
