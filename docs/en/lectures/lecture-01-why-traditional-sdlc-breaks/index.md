@@ -6,6 +6,7 @@ pageClass: lecture-01-quiz-page
 import { computed, reactive, ref } from 'vue'
 
 const isQuizOpen = ref(false)
+const currentQuestionIndex = ref(0)
 const answers = reactive({})
 
 const questions = [
@@ -81,6 +82,8 @@ const score = computed(() => questions.reduce((total, question) => {
   return total
 }, 0))
 
+const currentQuestion = computed(() => questions[currentQuestionIndex.value])
+
 const totalAnswered = computed(() => questions.reduce((count, question) => {
   if (answers[question.id]) return count + 1
   return count
@@ -91,6 +94,13 @@ const isCorrect = (question) => answers[question.id] === question.correct
 function resetQuiz() {
   for (const question of questions) {
     answers[question.id] = ''
+  }
+  currentQuestionIndex.value = 0
+}
+
+function nextQuestion() {
+  if (currentQuestionIndex.value < questions.length - 1) {
+    currentQuestionIndex.value += 1
   }
 }
 </script>
@@ -156,35 +166,35 @@ The following lectures build the theoretical foundation for a redesigned SDLC:
 <button class="lecture-quiz-close" @click="isQuizOpen = false" aria-label="Close quiz">✕</button>
 </div>
 
-<p class="lecture-quiz-meta">Select one answer per question, then submit to check your score.</p>
+<p class="lecture-quiz-meta">Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}. Select one answer to get immediate feedback.</p>
 
-<div v-for="(question, index) in questions" :key="question.id" class="lecture-quiz-question">
-<p><strong>{{ index + 1 }}. {{ question.prompt }}</strong></p>
+<div class="lecture-quiz-question">
+<p><strong>{{ currentQuestionIndex + 1 }}. {{ currentQuestion.prompt }}</strong></p>
 <div
-  v-if="answers[question.id]"
+  v-if="answers[currentQuestion.id]"
   class="lecture-quiz-feedback"
-  :class="isCorrect(question) ? 'is-correct' : 'is-incorrect'"
+  :class="isCorrect(currentQuestion) ? 'is-correct' : 'is-incorrect'"
 >
-  <strong>{{ isCorrect(question) ? 'Correct' : 'Incorrect' }}</strong>
-  <span>{{ isCorrect(question) ? 'Great job! Review the explanations below.' : 'Review the explanations to understand the correct answer.' }}</span>
+  <strong>{{ isCorrect(currentQuestion) ? 'Correct' : 'Incorrect' }}</strong>
+  <span>{{ isCorrect(currentQuestion) ? 'Great job! Review the explanations below.' : 'Review the explanations to understand the correct answer.' }}</span>
 </div>
 
-<div v-for="(optionText, optionKey) in question.options" :key="optionKey">
+<div v-for="(optionText, optionKey) in currentQuestion.options" :key="optionKey">
   <label
     class="lecture-quiz-option"
     :class="{
-      'is-correct': answers[question.id] && optionKey === question.correct,
-      'is-selected-wrong': answers[question.id] === optionKey && optionKey !== question.correct
+      'is-correct': answers[currentQuestion.id] && optionKey === currentQuestion.correct,
+      'is-selected-wrong': answers[currentQuestion.id] === optionKey && optionKey !== currentQuestion.correct
     }"
   >
-  <input type="radio" :name="question.id" :value="optionKey" v-model="answers[question.id]">
+  <input type="radio" :name="currentQuestion.id" :value="optionKey" v-model="answers[currentQuestion.id]">
   <span><strong>{{ optionKey }})</strong> {{ optionText }}</span>
-  <span v-if="answers[question.id] && optionKey === question.correct" class="lecture-quiz-marker">✓</span>
-  <span v-else-if="answers[question.id] === optionKey && optionKey !== question.correct" class="lecture-quiz-marker">✕</span>
+  <span v-if="answers[currentQuestion.id] && optionKey === currentQuestion.correct" class="lecture-quiz-marker">✓</span>
+  <span v-else-if="answers[currentQuestion.id] === optionKey && optionKey !== currentQuestion.correct" class="lecture-quiz-marker">✕</span>
   </label>
-  <details v-if="answers[question.id]" class="lecture-quiz-explainer">
-    <summary>{{ optionKey === question.correct ? 'Why this is correct' : 'Why this is incorrect' }}</summary>
-    <p>{{ optionKey === question.correct ? question.whyCorrect : question.whyIncorrect }}</p>
+  <details v-if="answers[currentQuestion.id]" class="lecture-quiz-explainer">
+    <summary>{{ optionKey === currentQuestion.correct ? 'Why this is correct' : 'Why this is incorrect' }}</summary>
+    <p>{{ optionKey === currentQuestion.correct ? currentQuestion.whyCorrect : currentQuestion.whyIncorrect }}</p>
   </details>
 </div>
 </div>
@@ -193,7 +203,18 @@ The following lectures build the theoretical foundation for a redesigned SDLC:
 <button @click="resetQuiz" class="lecture-quiz-reset">Reset</button>
 <span class="lecture-quiz-progress">Answered: {{ totalAnswered }} / 5</span>
 <span class="lecture-quiz-progress">Score: {{ score }} / 5</span>
+<button
+  class="lecture-quiz-submit"
+  @click="nextQuestion"
+  :disabled="!answers[currentQuestion.id] || currentQuestionIndex === questions.length - 1"
+>
+  Next Question
+</button>
 </div>
+
+<p v-if="currentQuestionIndex === questions.length - 1 && answers[currentQuestion.id]" class="lecture-quiz-result">
+You reached the last question. Review your score or click Reset to try again.
+</p>
 </div>
 </div>
 

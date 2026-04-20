@@ -68,10 +68,6 @@
   }
 }
 
-.VPHero.has-image .image-container {
-  width: min(560px, 100%);
-}
-
 @media (max-width: 960px) {
   .VPHero .tagline {
     max-width: 100%;
