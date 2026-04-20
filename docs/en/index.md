@@ -34,6 +34,37 @@ features:
     linkText: Browse Resources
 ---
 
+<div class="hero-pillars">
+  <div class="pillar-card">
+    <div class="pillar-icon">↺</div>
+    <div class="pillar-title">Loops</div>
+    <div class="pillar-desc">Plan → Code → Verify → Reflect. The cycle that replaces the sprint.</div>
+    <a class="pillar-link pillar-link--loops" href="/Blog-Agentic-SDLC/en/lectures/lecture-02-the-agentic-loop/">Lecture 02</a>
+  </div>
+  <div class="pillar-card">
+    <div class="pillar-icon">⊞</div>
+    <div class="pillar-title">Harnesses</div>
+    <div class="pillar-desc">Scope, state, and verification. The structure that keeps agents on track.</div>
+    <a class="pillar-link pillar-link--harness" href="/Blog-Agentic-SDLC/en/lectures/lecture-04-harness-design/">Lecture 04</a>
+  </div>
+  <div class="pillar-card">
+    <div class="pillar-icon">◈</div>
+    <div class="pillar-title">Governance</div>
+    <div class="pillar-desc">Autonomy levels and checkpoints. Humans meaningfully in control.</div>
+    <a class="pillar-link pillar-link--gov" href="/Blog-Agentic-SDLC/en/lectures/lecture-08-human-in-the-loop/">Lecture 08</a>
+  </div>
+</div>
+
+## Three levels of the agentic stack {#three-levels}
+
+Agentic software delivery operates across three nested levels. This course covers all three, from the highest-level lifecycle changes down to the engineering primitives that make agents reliable.
+
+| Level | What it covers |
+|---|---|
+| **Agentic SDLC** | How software delivery changes when AI agents participate directly in planning, coding, testing, and review |
+| **Agentic engineering** | How engineers work inside that model — designing loops, managing state, and setting scope boundaries |
+| **Harness engineering** | How agents are made reliable enough to participate at all — constraints, verification, and continuity |
+
 ## What this course is about {#what-is-it}
 
 AI coding agents — tools like Claude Code, Codex, and Cursor — are increasingly capable of writing, reviewing, and refactoring code. But capability alone does not produce reliable delivery. Without deliberate engineering, agentic workflows introduce new failure modes: context loss between sessions, scope overreach, silent errors, and accumulated drift.
