@@ -23,8 +23,23 @@
 
 /* Hero customisations */
 .VPHero .tagline {
-  font-size: 1.1rem;
-  opacity: 0.75;
+  max-width: 38rem;
+  font-size: 1.05rem;
+  opacity: 0.8;
+}
+
+.VPHero.has-image .image {
+  transform: none;
+}
+
+.VPHero.has-image .image-container {
+  width: min(560px, 100%);
+}
+
+@media (max-width: 960px) {
+  .VPHero .tagline {
+    max-width: 100%;
+  }
 }
 
 /* Feature cards */
@@ -50,4 +65,70 @@
 }
 .custom-block.tip .custom-block-title {
   color: var(--vp-c-brand-1);
+}
+
+/* Home core concepts */
+.core-concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 0.85rem;
+}
+
+.core-concept-card {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  padding: 0.85rem 0.95rem;
+  background: var(--vp-c-bg-soft);
+}
+
+.core-concept-card h3 {
+  margin: 0.15rem 0 0.35rem;
+  font-size: 1.02rem;
+}
+
+.core-concept-card p {
+  margin: 0.2rem 0;
+}
+
+.core-concept-icon {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--vp-c-text-2);
+}
+
+.core-concept-card a {
+  font-weight: 600;
+}
+
+@media (max-width: 960px) {
+  .core-concepts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Language selector: two-column flyout for easier scanning */
+.VPNavBarTranslations .items,
+.VPNavBarExtra .group.translations {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  column-gap: 8px;
+  align-items: start;
+}
+
+.VPNavBarTranslations .title,
+.VPNavBarExtra .trans-title {
+  grid-column: 1 / -1;
+}
+
+.VPNavBarTranslations .VPMenuLink,
+.VPNavBarExtra .translations .VPMenuLink {
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  .VPNavBarTranslations .items,
+  .VPNavBarExtra .group.translations {
+    grid-template-columns: 1fr;
+  }
 }
