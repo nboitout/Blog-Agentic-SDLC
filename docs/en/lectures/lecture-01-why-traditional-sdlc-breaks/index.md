@@ -6,7 +6,6 @@ pageClass: lecture-01-quiz-page
 import { computed, reactive, ref } from 'vue'
 
 const isQuizOpen = ref(false)
-const isSubmitted = ref(false)
 const answers = reactive({})
 
 const questions = [
@@ -20,6 +19,8 @@ const questions = [
       D: "The repository is missing an initial system prompt that strictly orders the model to avoid modifying out-of-scope files during the current two-week sprint cycle.",
     },
     correct: 'C',
+    whyCorrect: 'The failure is architectural: the team is relying on social/process assumptions instead of enforcing deterministic loop constraints in a harness.',
+    whyIncorrect: 'This option does not address the core issue: without closed-loop constraints, the agent can overreach and close tasks prematurely.',
   },
   {
     id: 'q2',
@@ -31,6 +32,8 @@ const questions = [
       D: 'Premature task closure, wherein the agent clears its own short-term memory cache under the false assumption that the overarching project objective is complete.',
     },
     correct: 'A',
+    whyCorrect: 'Context amnesia is specifically about lack of persistent implicit memory across sessions unless memory is externalized.',
+    whyIncorrect: 'This does not match the observed symptom of forgetting prior conventions; the key failure mode here is memory continuity.',
   },
   {
     id: 'q3',
@@ -42,6 +45,8 @@ const questions = [
       D: "Agents experience no social or professional cost for rewriting modules they weren't asked to touch, whereas human developers hesitate to exceed boundaries.",
     },
     correct: 'D',
+    whyCorrect: 'Scope overreach is common because agents do not face the social/professional boundary costs that humans do.',
+    whyIncorrect: 'This explanation misses the behavioral-economic driver: no social cost for going out of scope.',
   },
   {
     id: 'q4',
@@ -53,6 +58,8 @@ const questions = [
       D: 'The agent cannot securely authenticate into the CI/CD pipeline solely via a text-based prompt, making it impossible to genuinely trigger the required test suite.',
     },
     correct: 'B',
+    whyCorrect: 'A prompt rule is still internal intent. Reliability requires external, enforced structure in the loop/harness.',
+    whyIncorrect: 'This focuses on implementation details, not the main reason prompt-only control is structurally weak.',
   },
   {
     id: 'q5',
@@ -64,6 +71,8 @@ const questions = [
       D: 'A harness requires continuous, synchronous human supervision to execute tasks, whereas a well-designed prompt enables total Level 3 autonomous execution.',
     },
     correct: 'A',
+    whyCorrect: 'A harness creates a verifiable and recoverable operating system around the model, not just better wording.',
+    whyIncorrect: 'This confuses model capability with system design; prompts shape text behavior but do not enforce deterministic control.',
   },
 ]
 
@@ -77,15 +86,12 @@ const totalAnswered = computed(() => questions.reduce((count, question) => {
   return count
 }, 0))
 
-function submitQuiz() {
-  isSubmitted.value = true
-}
+const isCorrect = (question) => answers[question.id] === question.correct
 
 function resetQuiz() {
   for (const question of questions) {
     answers[question.id] = ''
   }
-  isSubmitted.value = false
 }
 </script>
 
@@ -154,21 +160,40 @@ The following lectures build the theoretical foundation for a redesigned SDLC:
 
 <div v-for="(question, index) in questions" :key="question.id" class="lecture-quiz-question">
 <p><strong>{{ index + 1 }}. {{ question.prompt }}</strong></p>
-<label v-for="(optionText, optionKey) in question.options" :key="optionKey" class="lecture-quiz-option">
-<input type="radio" :name="question.id" :value="optionKey" v-model="answers[question.id]">
-<span><strong>{{ optionKey }})</strong> {{ optionText }}</span>
-</label>
+<div
+  v-if="answers[question.id]"
+  class="lecture-quiz-feedback"
+  :class="isCorrect(question) ? 'is-correct' : 'is-incorrect'"
+>
+  <strong>{{ isCorrect(question) ? 'Correct' : 'Incorrect' }}</strong>
+  <span>{{ isCorrect(question) ? 'Great job! Review the explanations below.' : 'Review the explanations to understand the correct answer.' }}</span>
+</div>
+
+<div v-for="(optionText, optionKey) in question.options" :key="optionKey">
+  <label
+    class="lecture-quiz-option"
+    :class="{
+      'is-correct': answers[question.id] && optionKey === question.correct,
+      'is-selected-wrong': answers[question.id] === optionKey && optionKey !== question.correct
+    }"
+  >
+  <input type="radio" :name="question.id" :value="optionKey" v-model="answers[question.id]">
+  <span><strong>{{ optionKey }})</strong> {{ optionText }}</span>
+  <span v-if="answers[question.id] && optionKey === question.correct" class="lecture-quiz-marker">✓</span>
+  <span v-else-if="answers[question.id] === optionKey && optionKey !== question.correct" class="lecture-quiz-marker">✕</span>
+  </label>
+  <details v-if="answers[question.id]" class="lecture-quiz-explainer">
+    <summary>{{ optionKey === question.correct ? 'Why this is correct' : 'Why this is incorrect' }}</summary>
+    <p>{{ optionKey === question.correct ? question.whyCorrect : question.whyIncorrect }}</p>
+  </details>
+</div>
 </div>
 
 <div class="lecture-quiz-actions">
-<button @click="submitQuiz" class="lecture-quiz-submit">Submit quiz</button>
 <button @click="resetQuiz" class="lecture-quiz-reset">Reset</button>
 <span class="lecture-quiz-progress">Answered: {{ totalAnswered }} / 5</span>
+<span class="lecture-quiz-progress">Score: {{ score }} / 5</span>
 </div>
-
-<p v-if="isSubmitted" class="lecture-quiz-result">
-Score: <strong>{{ score }} / 5</strong>
-</p>
 </div>
 </div>
 

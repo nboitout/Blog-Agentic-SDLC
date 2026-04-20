@@ -6,7 +6,6 @@ pageClass: lecture-01-quiz-page
 import { computed, reactive, ref } from 'vue'
 
 const isQuizOpen = ref(false)
-const isSubmitted = ref(false)
 const answers = reactive({})
 
 const questions = [
@@ -20,6 +19,8 @@ const questions = [
       D: 'Context → Execute → Debug → Commit',
     },
     correct: 'B',
+    whyCorrect: 'The Agentic Loop is explicitly defined as Plan → Code → Verify → Reflect.',
+    whyIncorrect: 'This option does not match the deterministic four-phase loop used in Agentic SDLC.',
   },
   {
     id: 'q7',
@@ -31,6 +32,8 @@ const questions = [
       D: 'It prevents the agent from experiencing "Invisible Failure" by ensuring all planned code compiles perfectly before any files are modified.',
     },
     correct: 'C',
+    whyCorrect: 'Writing the plan to disk externalizes intent so it remains auditable and reusable across sessions.',
+    whyIncorrect: 'This misses the core reason for writing plans to files: persistent, inspectable state across sessions.',
   },
   {
     id: 'q8',
@@ -42,6 +45,8 @@ const questions = [
       D: 'The dynamic decision-making process consumes too much of the context window budget, leaving inadequate room for the actual source code and state files.',
     },
     correct: 'C',
+    whyCorrect: 'Verification rules must be engineered before runtime; letting the agent decide loop safety gates leads to skipped checks.',
+    whyIncorrect: 'This describes side effects, but not the principal anti-pattern: delegating loop design to the agent itself.',
   },
   {
     id: 'q9',
@@ -53,6 +58,8 @@ const questions = [
       D: 'Timescale: Days | Verifier: End-to-end user acceptance testing in staging.',
     },
     correct: 'B',
+    whyCorrect: 'Feature loops run on a minutes timescale and are validated with integration-level verification.',
+    whyIncorrect: 'This mismatches the loop granularity table for feature loops.',
   },
   {
     id: 'q10',
@@ -64,6 +71,8 @@ const questions = [
       D: 'The agent reads the verification results and explicitly updates the state file with what was completed, what failed, and the targeted next step.',
     },
     correct: 'D',
+    whyCorrect: 'Reflection requires explicit state updates with outcomes and targeted next steps to preserve continuity.',
+    whyIncorrect: 'This breaks loop continuity by avoiding explicit state reflection.',
   },
 ]
 
@@ -77,15 +86,12 @@ const totalAnswered = computed(() => questions.reduce((count, question) => {
   return count
 }, 0))
 
-function submitQuiz() {
-  isSubmitted.value = true
-}
+const isCorrect = (question) => answers[question.id] === question.correct
 
 function resetQuiz() {
   for (const question of questions) {
     answers[question.id] = ''
   }
-  isSubmitted.value = false
 }
 </script>
 
@@ -169,21 +175,39 @@ The harness design (Lecture 04) specifies how each of these loops is instrumente
 
 <div v-for="(question, index) in questions" :key="question.id" class="lecture-quiz-question">
 <p><strong>{{ index + 1 }}. {{ question.prompt }}</strong></p>
-<label v-for="(optionText, optionKey) in question.options" :key="optionKey" class="lecture-quiz-option">
-<input type="radio" :name="question.id" :value="optionKey" v-model="answers[question.id]">
-<span><strong>{{ optionKey }})</strong> {{ optionText }}</span>
-</label>
+<div
+  v-if="answers[question.id]"
+  class="lecture-quiz-feedback"
+  :class="isCorrect(question) ? 'is-correct' : 'is-incorrect'"
+>
+  <strong>{{ isCorrect(question) ? 'Correct' : 'Incorrect' }}</strong>
+  <span>{{ isCorrect(question) ? 'Great job! Review the explanations below.' : 'Review the explanations to understand the correct answer.' }}</span>
+</div>
+<div v-for="(optionText, optionKey) in question.options" :key="optionKey">
+  <label
+    class="lecture-quiz-option"
+    :class="{
+      'is-correct': answers[question.id] && optionKey === question.correct,
+      'is-selected-wrong': answers[question.id] === optionKey && optionKey !== question.correct
+    }"
+  >
+  <input type="radio" :name="question.id" :value="optionKey" v-model="answers[question.id]">
+  <span><strong>{{ optionKey }})</strong> {{ optionText }}</span>
+  <span v-if="answers[question.id] && optionKey === question.correct" class="lecture-quiz-marker">✓</span>
+  <span v-else-if="answers[question.id] === optionKey && optionKey !== question.correct" class="lecture-quiz-marker">✕</span>
+  </label>
+  <details v-if="answers[question.id]" class="lecture-quiz-explainer">
+    <summary>{{ optionKey === question.correct ? 'Why this is correct' : 'Why this is incorrect' }}</summary>
+    <p>{{ optionKey === question.correct ? question.whyCorrect : question.whyIncorrect }}</p>
+  </details>
+</div>
 </div>
 
 <div class="lecture-quiz-actions">
-<button @click="submitQuiz" class="lecture-quiz-submit">Submit quiz</button>
 <button @click="resetQuiz" class="lecture-quiz-reset">Reset</button>
 <span class="lecture-quiz-progress">Answered: {{ totalAnswered }} / 5</span>
+<span class="lecture-quiz-progress">Score: {{ score }} / 5</span>
 </div>
-
-<p v-if="isSubmitted" class="lecture-quiz-result">
-Score: <strong>{{ score }} / 5</strong>
-</p>
 </div>
 </div>
 

@@ -318,6 +318,59 @@
   align-items: flex-start;
   gap: 0.45rem;
   margin: 0.45rem 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  padding: 0.5rem 0.6rem;
+  background: var(--vp-c-bg-soft);
+}
+
+.lecture-01-quiz-page .lecture-quiz-option.is-correct {
+  border-color: #22a95c;
+  background: rgba(34, 169, 92, 0.08);
+}
+
+.lecture-01-quiz-page .lecture-quiz-option.is-selected-wrong {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.lecture-01-quiz-page .lecture-quiz-marker {
+  margin-left: auto;
+  font-weight: 700;
+}
+
+.lecture-01-quiz-page .lecture-quiz-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0.55rem 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+}
+
+.lecture-01-quiz-page .lecture-quiz-feedback.is-correct {
+  border-color: #22a95c;
+  background: rgba(34, 169, 92, 0.12);
+  color: #15803d;
+}
+
+.lecture-01-quiz-page .lecture-quiz-feedback.is-incorrect {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+  color: #b91c1c;
+}
+
+.lecture-01-quiz-page .lecture-quiz-explainer {
+  margin: 0 0 0.45rem;
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+  padding: 0.2rem 0.55rem;
+}
+
+.lecture-01-quiz-page .lecture-quiz-explainer summary {
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .lecture-01-quiz-page .lecture-quiz-actions {
