@@ -92,6 +92,7 @@ export default defineConfig({
           { text: 'Lectures', link: '/en/lectures/lecture-01-why-traditional-sdlc-breaks/' },
           { text: 'Projects', link: '/en/projects/' },
           { text: 'Resources', link: '/en/resources/' },
+          { text: 'Self-Assessment', link: '/en/executive-self-assessment/' },
           { text: 'Share your priorities', link: '/en/share-your-priorities/' },
         ],
         sidebar: enSidebar,
