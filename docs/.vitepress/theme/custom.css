@@ -1,4 +1,4 @@
-/* Agentic SDLC — Brand Colors */
+/* ── Brand Colors ── */
 :root {
   --vp-c-brand-1: #6366f1;
   --vp-c-brand-2: #4f46e5;
@@ -21,24 +21,149 @@
   --vp-c-brand-soft: rgba(129, 140, 248, 0.16);
 }
 
-/* Hero customisations */
+/* ── Hero eyebrow pill ── */
+.VPHero .main::before {
+  content: 'PRACTICAL COURSE · 8 LECTURES · EN / FR';
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 999px;
+  padding: 4px 16px;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+
+/* ── Hero audience line ── */
+.VPHero .tagline::after {
+  content: 'For software engineers, engineering leads, and CTOs navigating AI-native delivery.';
+  display: block;
+  font-size: 0.82rem;
+  color: var(--vp-c-text-2);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* ── Hero tagline sizing ── */
 .VPHero .tagline {
-  font-size: 1.1rem;
-  opacity: 0.75;
+  max-width: 38rem;
+  font-size: 1.05rem;
+  opacity: 0.8;
 }
 
-/* Feature cards */
-.VPFeature .icon {
-  font-size: 2rem;
+.VPHero.has-image .image {
+  transform: none;
 }
 
-/* Sidebar active link */
+.VPHero.has-image .image-container {
+  width: min(560px, 100%);
+}
+
+@media (max-width: 960px) {
+  .VPHero .tagline {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 960px) {
+  .VPHero .tagline {
+    max-width: 100%;
+  }
+}
+
+/* ── Country code badges ── */
+.VPNavBarTranslations .VPMenuLink a::before,
+.VPNavScreenTranslations .VPMenuLink a::before {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 17px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  border-radius: 3px;
+  background: var(--vp-c-bg-mute);
+  color: var(--vp-c-text-2);
+  flex-shrink: 0;
+}
+
+.VPNavBarTranslations a[href$="/en/"]::before,
+.VPNavScreenTranslations a[href$="/en/"]::before { content: "GB"; }
+
+.VPNavBarTranslations a[href$="/fr/"]::before,
+.VPNavScreenTranslations a[href$="/fr/"]::before { content: "FR"; }
+
+.VPNavBarTranslations a[href$="/de/"]::before,
+.VPNavScreenTranslations a[href$="/de/"]::before { content: "DE"; }
+
+.VPNavBarTranslations a[href$="/es/"]::before,
+.VPNavScreenTranslations a[href$="/es/"]::before { content: "ES"; }
+
+.VPNavBarTranslations a[href$="/it/"]::before,
+.VPNavScreenTranslations a[href$="/it/"]::before { content: "IT"; }
+
+.VPNavBarTranslations a[href$="/pt/"]::before,
+.VPNavScreenTranslations a[href$="/pt/"]::before { content: "PT"; }
+
+.VPNavBarTranslations a[href$="/nl/"]::before,
+.VPNavScreenTranslations a[href$="/nl/"]::before { content: "NL"; }
+
+.VPNavBarTranslations a[href$="/pl/"]::before,
+.VPNavScreenTranslations a[href$="/pl/"]::before { content: "PL"; }
+
+.VPNavBarTranslations a[href$="/sv/"]::before,
+.VPNavScreenTranslations a[href$="/sv/"]::before { content: "SE"; }
+
+.VPNavBarTranslations a[href$="/da/"]::before,
+.VPNavScreenTranslations a[href$="/da/"]::before { content: "DK"; }
+
+.VPNavBarTranslations a[href$="/fi/"]::before,
+.VPNavScreenTranslations a[href$="/fi/"]::before { content: "FI"; }
+
+.VPNavBarTranslations a[href$="/ro/"]::before,
+.VPNavScreenTranslations a[href$="/ro/"]::before { content: "RO"; }
+
+.VPNavBarTranslations a[href$="/cs/"]::before,
+.VPNavScreenTranslations a[href$="/cs/"]::before { content: "CZ"; }
+
+.VPNavBarTranslations a[href$="/hu/"]::before,
+.VPNavScreenTranslations a[href$="/hu/"]::before { content: "HU"; }
+
+.VPNavBarTranslations a[href$="/hr/"]::before,
+.VPNavScreenTranslations a[href$="/hr/"]::before { content: "HR"; }
+
+.VPNavBarTranslations a[href$="/ru/"]::before,
+.VPNavScreenTranslations a[href$="/ru/"]::before { content: "RU"; }
+
+.VPNavBarTranslations a[href$="/uk/"]::before,
+.VPNavScreenTranslations a[href$="/uk/"]::before { content: "UA"; }
+
+.VPNavBarTranslations a[href$="/bg/"]::before,
+.VPNavScreenTranslations a[href$="/bg/"]::before { content: "BG"; }
+
+.VPNavBarTranslations a[href$="/sr/"]::before,
+.VPNavScreenTranslations a[href$="/sr/"]::before { content: "RS"; }
+
+.VPNavBarTranslations a[href$="/el/"]::before,
+.VPNavScreenTranslations a[href$="/el/"]::before { content: "GR"; }
+
+.VPNavBarTranslations a[href$="/tr/"]::before,
+.VPNavScreenTranslations a[href$="/tr/"]::before { content: "TR"; }
+
+/* ── Feature cards ── */
+.VPFeature .icon { font-size: 2rem; }
+
+/* ── Sidebar active link ── */
 .VPSidebarItem.is-active > .item > .link > .text {
   color: var(--vp-c-brand-1);
   font-weight: 600;
 }
 
-/* Code blocks */
+/* ── Code blocks ── */
 .vp-code-group .tabs label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.78rem;
@@ -50,4 +175,234 @@
 }
 .custom-block.tip .custom-block-title {
   color: var(--vp-c-brand-1);
+}
+
+/* Home core concepts */
+.core-concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 0.85rem;
+}
+
+.core-concept-card {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  padding: 0.85rem 0.95rem;
+  background: var(--vp-c-bg-soft);
+}
+
+.core-concept-card h3 {
+  margin: 0.15rem 0 0.35rem;
+  font-size: 1.02rem;
+}
+
+.core-concept-card p {
+  margin: 0.2rem 0;
+}
+
+.core-concept-icon {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--vp-c-text-2);
+}
+
+.core-concept-card a {
+  font-weight: 600;
+}
+
+@media (max-width: 960px) {
+  .core-concepts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Language selector: two-column flyout for easier scanning */
+.VPNavBarTranslations .items,
+.VPNavBarExtra .group.translations {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  column-gap: 8px;
+  align-items: start;
+}
+
+.VPNavBarTranslations .title,
+.VPNavBarExtra .trans-title {
+  grid-column: 1 / -1;
+}
+
+.VPNavBarTranslations .VPMenuLink,
+.VPNavBarExtra .translations .VPMenuLink {
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  .VPNavBarTranslations .items,
+  .VPNavBarExtra .group.translations {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Lecture 01 quiz modal */
+.lecture-01-quiz-page .lecture-quiz-trigger {
+  margin: 1rem 0 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  padding: 0.45rem 0.8rem;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+}
+
+.lecture-01-quiz-page .lecture-quiz-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+}
+
+.lecture-01-quiz-page .lecture-quiz-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.42);
+}
+
+.lecture-01-quiz-page .lecture-quiz-panel {
+  position: relative;
+  margin: 6vh auto 0;
+  width: min(920px, calc(100vw - 2rem));
+  max-height: 88vh;
+  overflow-y: auto;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg);
+  box-shadow: var(--vp-shadow-3);
+  padding: 1rem 1.1rem 1.2rem;
+}
+
+.lecture-01-quiz-page .lecture-quiz-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.lecture-01-quiz-page .lecture-quiz-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.lecture-01-quiz-page .lecture-quiz-close {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 6px;
+  background: var(--vp-c-bg-soft);
+  padding: 0.2rem 0.45rem;
+}
+
+.lecture-01-quiz-page .lecture-quiz-meta {
+  margin: 0.4rem 0 1rem;
+  color: var(--vp-c-text-2);
+}
+
+.lecture-01-quiz-page .lecture-quiz-question {
+  margin-bottom: 1rem;
+  border-top: 1px solid var(--vp-c-divider);
+  padding-top: 0.8rem;
+}
+
+.lecture-01-quiz-page .lecture-quiz-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin: 0.45rem 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  padding: 0.5rem 0.6rem;
+  background: var(--vp-c-bg-soft);
+}
+
+.lecture-01-quiz-page .lecture-quiz-option.is-correct {
+  border-color: #22a95c;
+  background: rgba(34, 169, 92, 0.08);
+}
+
+.lecture-01-quiz-page .lecture-quiz-option.is-selected-wrong {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.lecture-01-quiz-page .lecture-quiz-marker {
+  margin-left: auto;
+  font-weight: 700;
+}
+
+.lecture-01-quiz-page .lecture-quiz-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0.55rem 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+}
+
+.lecture-01-quiz-page .lecture-quiz-feedback.is-correct {
+  border-color: #22a95c;
+  background: rgba(34, 169, 92, 0.12);
+  color: #15803d;
+}
+
+.lecture-01-quiz-page .lecture-quiz-feedback.is-incorrect {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+  color: #b91c1c;
+}
+
+.lecture-01-quiz-page .lecture-quiz-explainer {
+  margin: 0 0 0.45rem;
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+  padding: 0.2rem 0.55rem;
+}
+
+.lecture-01-quiz-page .lecture-quiz-explainer summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.lecture-01-quiz-page .lecture-quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  margin-top: 0.9rem;
+}
+
+.lecture-01-quiz-page .lecture-quiz-submit,
+.lecture-01-quiz-page .lecture-quiz-reset {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+}
+
+.lecture-01-quiz-page .lecture-quiz-submit {
+  border-color: var(--vp-c-brand-1);
+}
+
+.lecture-01-quiz-page .lecture-quiz-progress {
+  color: var(--vp-c-text-2);
+}
+
+.lecture-01-quiz-page .lecture-quiz-result {
+  margin-top: 0.75rem;
+}
+
+@media (min-width: 1280px) {
+  .lecture-01-quiz-page .lecture-quiz-trigger {
+    position: fixed;
+    top: calc(var(--vp-nav-height) + 280px);
+    right: max(24px, calc((100vw - var(--vp-layout-max-width)) / 2 + 40px));
+    z-index: 20;
+  }
 }

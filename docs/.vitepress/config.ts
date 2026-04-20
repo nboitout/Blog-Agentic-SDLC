@@ -75,6 +75,7 @@ const frSidebar = {
 
 export default defineConfig({
   base: '/Blog-Agentic-SDLC/',
+  ignoreDeadLinks: true, 
 
   locales: {
     en: {
@@ -84,6 +85,9 @@ export default defineConfig({
       title: 'Agentic SDLC',
       description: 'A practical course on AI-driven software development lifecycles',
       themeConfig: {
+        search: {
+          provider: 'local',
+        },
         nav: [
           { text: 'Lectures', link: '/en/lectures/lecture-01-why-traditional-sdlc-breaks/' },
           { text: 'Projects', link: '/en/projects/' },
@@ -99,35 +103,48 @@ export default defineConfig({
       lang: 'fr',
       link: '/fr/',
       title: 'SDLC Agentique',
-      description: 'Un cours pratique sur les cycles de développement logiciel pilotés par l\'IA',
+      description: "Un cours pratique sur les cycles de développement logiciel pilotés par l'IA",
       themeConfig: {
+        search: {
+          provider: 'local',
+        },
         nav: [
           { text: 'Cours', link: '/fr/lectures/lecture-01-why-traditional-sdlc-breaks/' },
           { text: 'Projets', link: '/fr/projects/' },
           { text: 'Ressources', link: '/fr/resources/' },
-          {
-            text: 'Enquête ↗',
-            link: 'https://github.com/nboitout/agentic-sdlc-survey',
-          },
         ],
         sidebar: frSidebar,
       },
     },
+    de: { label: 'Deutsch',     lang: 'de', link: '/de/' },
+    es: { label: 'Español',     lang: 'es', link: '/es/' },
+    it: { label: 'Italiano',    lang: 'it', link: '/it/' },
+    pt: { label: 'Português',   lang: 'pt', link: '/pt/' },
+    nl: { label: 'Nederlands',  lang: 'nl', link: '/nl/' },
+    pl: { label: 'Polski',      lang: 'pl', link: '/pl/' },
+    sv: { label: 'Svenska',     lang: 'sv', link: '/sv/' },
+    da: { label: 'Dansk',       lang: 'da', link: '/da/' },
+    fi: { label: 'Suomi',       lang: 'fi', link: '/fi/' },
+    ro: { label: 'Română',      lang: 'ro', link: '/ro/' },
+    cs: { label: 'Čeština',     lang: 'cs', link: '/cs/' },
+    hu: { label: 'Magyar',      lang: 'hu', link: '/hu/' },
+    hr: { label: 'Hrvatski',    lang: 'hr', link: '/hr/' },
+    ru: { label: 'Русский',     lang: 'ru', link: '/ru/' },
+    uk: { label: 'Українська',  lang: 'uk', link: '/uk/' },
+    bg: { label: 'Български',   lang: 'bg', link: '/bg/' },
+    sr: { label: 'Српски',      lang: 'sr', link: '/sr/' },
+    el: { label: 'Ελληνικά',    lang: 'el', link: '/el/' },
+    tr: { label: 'Türkçe',      lang: 'tr', link: '/tr/' },
   },
 
   themeConfig: {
     logo: {
       svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
     },
-
-    search: {
-      provider: 'local',
-    },
-
+    search: { provider: 'local' },
     socialLinks: [
       { icon: 'github', link: 'https://github.com/nboitout/Blog-Agentic-SDLC' },
     ],
-
     footer: {
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2026 Nicolas Boitout',

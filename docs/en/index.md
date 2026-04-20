@@ -3,15 +3,18 @@ layout: home
 
 hero:
   name: "Agentic SDLC"
-  text: "Designing reliable software delivery with AI agents"
-  tagline: A practical course on the loops, harnesses, and governance systems that let engineers and AI agents ship software reliably together.
+  text: "From AI coding tools to reliable delivery systems"
+  tagline: A practical course on the coding agents, loops, harnesses, and governance patterns that make a software factory possible.
   actions:
     - theme: brand
-      text: Start Learning →
+      text: Start Learning
       link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
     - theme: alt
-      text: View on GitHub
-      link: https://github.com/nboitout/Blog-Agentic-SDLC
+      text: Self-Assessment for Executives
+      link: /en/executive-self-assessment/
+  image:
+    src: /hero-three-levels.svg
+    alt: "Three levels: Agentic SDLC, Agentic engineering, Harness engineering"
 
 features:
   - icon: 🎓
@@ -31,6 +34,37 @@ features:
     linkText: Browse Resources
 ---
 
+<div class="hero-pillars">
+  <div class="pillar-card">
+    <div class="pillar-icon">↺</div>
+    <div class="pillar-title">Loops</div>
+    <div class="pillar-desc">Plan → Code → Verify → Reflect. The cycle that replaces the sprint.</div>
+    <a class="pillar-link pillar-link--loops" href="/Blog-Agentic-SDLC/en/lectures/lecture-02-the-agentic-loop/">Lecture 02</a>
+  </div>
+  <div class="pillar-card">
+    <div class="pillar-icon">⊞</div>
+    <div class="pillar-title">Harnesses</div>
+    <div class="pillar-desc">Scope, state, and verification. The structure that keeps agents on track.</div>
+    <a class="pillar-link pillar-link--harness" href="/Blog-Agentic-SDLC/en/lectures/lecture-04-harness-design/">Lecture 04</a>
+  </div>
+  <div class="pillar-card">
+    <div class="pillar-icon">◈</div>
+    <div class="pillar-title">Governance</div>
+    <div class="pillar-desc">Autonomy levels and checkpoints. Humans meaningfully in control.</div>
+    <a class="pillar-link pillar-link--gov" href="/Blog-Agentic-SDLC/en/lectures/lecture-08-human-in-the-loop/">Lecture 08</a>
+  </div>
+</div>
+
+## Three levels of the agentic stack {#three-levels}
+
+Agentic software delivery operates across three nested levels. This course covers all three, from the highest-level lifecycle changes down to the engineering primitives that make agents reliable.
+
+| Level | What it covers |
+|---|---|
+| **Agentic SDLC** | How software delivery changes when AI agents participate directly in planning, coding, testing, and review |
+| **Agentic engineering** | How engineers work inside that model — designing loops, managing state, and setting scope boundaries |
+| **Harness engineering** | How agents are made reliable enough to participate at all — constraints, verification, and continuity |
+
 ## What this course is about {#what-is-it}
 
 AI coding agents — tools like Claude Code, Codex, and Cursor — are increasingly capable of writing, reviewing, and refactoring code. But capability alone does not produce reliable delivery. Without deliberate engineering, agentic workflows introduce new failure modes: context loss between sessions, scope overreach, silent errors, and accumulated drift.
@@ -39,9 +73,26 @@ This course rethinks software delivery for a world where AI coding agents partic
 
 The course is built around three core concepts:
 
-- **Loops** — the Plan → Code → Verify → Reflect cycles that replace the sprint as the unit of agentic work
-- **Harnesses** — the files, scripts, and constraints that shape what agents can do, what state they maintain, and how failures are surfaced
-- **Governance** — the checkpoints, review protocols, and autonomy levels that keep humans meaningfully in control
+<div class="core-concepts-grid">
+  <article class="core-concept-card">
+    <p class="core-concept-icon">↺</p>
+    <h3>Loops</h3>
+    <p>Plan → Code → Verify → Reflect. The cycle that replaces the sprint.</p>
+    <p><a href="/en/lectures/lecture-02-the-agentic-loop/">Lecture 02</a></p>
+  </article>
+  <article class="core-concept-card">
+    <p class="core-concept-icon">⊞</p>
+    <h3>Harnesses</h3>
+    <p>Scope, state, and verification. The structure that keeps agents on track.</p>
+    <p><a href="/en/lectures/lecture-04-harness-design/">Lecture 04</a></p>
+  </article>
+  <article class="core-concept-card">
+    <p class="core-concept-icon">◈</p>
+    <h3>Governance</h3>
+    <p>Autonomy levels and checkpoints. Humans meaningfully in control.</p>
+    <p><a href="/en/lectures/lecture-08-human-in-the-loop/">Lecture 08</a></p>
+  </article>
+</div>
 
 ## What you will be able to do {#outcomes}
 
