@@ -3,15 +3,18 @@ layout: home
 
 hero:
   name: "Agentic SDLC"
-  text: "Designing reliable software delivery with AI agents"
-  tagline: A practical course on the loops, harnesses, and governance systems that let engineers and AI agents ship software reliably together.
+  text: "From AI coding tools to reliable delivery systems"
+  tagline: A practical course on the coding agents, loops, harnesses, and governance patterns that make a software factory possible.
   actions:
     - theme: brand
-      text: Start Learning →
+      text: Start Learning
       link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
     - theme: alt
-      text: View on GitHub
-      link: https://github.com/nboitout/Blog-Agentic-SDLC
+      text: Self-Assessment for Executives
+      link: /en/executive-self-assessment/
+  image:
+    src: /hero-three-levels.svg
+    alt: "Three levels: Agentic SDLC, Agentic engineering, Harness engineering"
 
 features:
   - icon: 🎓
@@ -39,9 +42,26 @@ This course rethinks software delivery for a world where AI coding agents partic
 
 The course is built around three core concepts:
 
-- **Loops** — the Plan → Code → Verify → Reflect cycles that replace the sprint as the unit of agentic work
-- **Harnesses** — the files, scripts, and constraints that shape what agents can do, what state they maintain, and how failures are surfaced
-- **Governance** — the checkpoints, review protocols, and autonomy levels that keep humans meaningfully in control
+<div class="core-concepts-grid">
+  <article class="core-concept-card">
+    <p class="core-concept-icon">↺</p>
+    <h3>Loops</h3>
+    <p>Plan → Code → Verify → Reflect. The cycle that replaces the sprint.</p>
+    <p><a href="/en/lectures/lecture-02-the-agentic-loop/">Lecture 02</a></p>
+  </article>
+  <article class="core-concept-card">
+    <p class="core-concept-icon">⊞</p>
+    <h3>Harnesses</h3>
+    <p>Scope, state, and verification. The structure that keeps agents on track.</p>
+    <p><a href="/en/lectures/lecture-04-harness-design/">Lecture 04</a></p>
+  </article>
+  <article class="core-concept-card">
+    <p class="core-concept-icon">◈</p>
+    <h3>Governance</h3>
+    <p>Autonomy levels and checkpoints. Humans meaningfully in control.</p>
+    <p><a href="/en/lectures/lecture-08-human-in-the-loop/">Lecture 08</a></p>
+  </article>
+</div>
 
 ## What you will be able to do {#outcomes}
 
@@ -56,5 +76,60 @@ By the end of this course you will be able to:
 ## Where to start {#start}
 
 - [Lecture 01: Why Traditional SDLC Breaks](/en/lectures/lecture-01-why-traditional-sdlc-breaks/) — start here for the theory
-- [Project 01: Baseline vs Agentic Sprint](/en/projects/project-01-baseline-vs-agentic/) — start here for hands-on practice
+- [Project 01: Vibe Coding vs Harness Engineering](/en/projects/project-01-baseline-vs-agentic/) — start here for hands-on practice
 - [Templates](/en/resources/templates/) — grab AGENTS.md, feature_list.json, and progress.md for your own project
+
+## Bibliography {#bibliography}
+
+This course was informed by a focused set of public references on harness engineering, long-running agents, and reliable agentic software delivery.
+
+### Core papers
+
+- [Pan et al. — Natural-Language Agent Harnesses (Tsinghua University, March 2026)](https://arxiv.org/abs/2603.25723) — Proposes natural-language harness specifications with an explicit runtime contract layer.
+- [Lee et al. — Meta-Harness: End-to-End Optimization of Model Harnesses (Stanford University, March 2026)](https://arxiv.org/abs/2603.28052) — Shows automated harness optimization using full execution traces and iterative outer-loop improvement.
+- [DeepMind — AutoHarness: improving LLM agents by automatically synthesizing a code harness (March 2026)](https://arxiv.org/abs/2603.03329) — Demonstrates code-generated harnesses to enforce environment-valid actions in long-horizon tasks.
+- [AgentSpec — Customizable Runtime Enforcement for Safe and Reliable LLM Agents (ICSE 2026 track context)](https://arxiv.org/abs/2503.18666) — Introduces a DSL for runtime safety constraints and enforceable policy boundaries.
+
+### Industry sources & case studies
+
+- [Anthropic — Building effective agents (December 2024)](https://www.anthropic.com/engineering/building-effective-agents) — Practical architecture patterns for deciding when to use workflows vs autonomous agents.
+- [Anthropic — Effective harnesses for long-running agents (November 2025)](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) — Concrete guidance on continuity, recovery, and reliability in extended agent sessions.
+- [OpenAI — Zero-manual-code experiment report (2025–2026)](https://openai.com/research/zero-manual-code/) — Reference link for OpenAI’s reported experiment on reducing manual coding steps through agentic workflows.
+- [LangChain — Evaluating Deep Agents CLI on Terminal Bench 2.0 (December 2025, referenced in March 2026 reporting)](https://www.langchain.com/blog/evaluating-deepagents-cli-on-terminal-bench-2-0) — Benchmark-oriented case study on harness and evaluation setup impact.
+
+### Foundational perspectives
+
+- [OpenAI — Harness engineering](https://openai.com/index/harness-engineering/) — Introduces harness engineering as the reliability layer that makes agent behavior operationally dependable.
+- [Martin Fowler — Harness Engineering for Coding Agent Users](https://martinfowler.com/articles/harness-engineering.html) — Clear framing of why software teams need structure and control boundaries around coding agents.
+- [LangChain — The anatomy of an agent harness](https://www.langchain.com/blog/the-anatomy-of-an-agent-harness) — Breaks down the main harness components and how they work together in production settings.
+
+### Pedagogical deep dives
+
+- [WalkingLabs — Learn Harness Engineering](https://walkinglabs.github.io/learn-harness-engineering/en/) — A structured learning path that connects conceptual foundations to implementation choices.
+
+### Implementation-oriented references
+
+- [Claude Code from Source — Chapter 1: Architecture / The golden path from keystroke to output](https://claude-code-from-source.com/ch01-architecture/#the-golden-path-from-keystroke-to-output) — Useful for understanding the end-to-end runtime path from prompt input to system output.
+- [Claude Code from Source — Chapter 2: Bootstrap](https://claude-code-from-source.com/ch02-bootstrap/) — Explains early-session initialization mechanics that strongly influence reliability and context quality.
+- [Simon Willison — Red/Green TDD for agentic coding](https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/) — A practical reliability pattern for keeping coding-agent changes test-driven and auditable.
+- [Phil Schmid — Agent Harness 2026](https://www.philschmid.de/agent-harness-2026) — A concise implementation-focused perspective on harness design decisions and operational trade-offs.
+
+## Help shape the next advanced chapters {#advanced-chapters}
+
+We are preparing a new set of advanced chapters for engineering leaders and practitioners working on reliable human-agent software delivery.
+
+These may include:
+- Harness patterns for frontend agents
+- Harness patterns for backend/API agents
+- Harness patterns for QA and release engineering
+- Agent memory design
+- Subagents and role specialization
+- When not to use agents
+- Reviewing agent-generated pull requests
+- Agentic incident response and SRE loops
+- Harness anti-patterns
+- Measuring real productivity gains
+
+Tell us which topics matter most in your context.
+
+[**Share your priorities →**](/en/share-your-priorities/)
