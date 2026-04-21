@@ -13,6 +13,7 @@ This course was informed by a focused set of public references on harness engine
 
 - [Anthropic — Building effective agents (December 2024)](https://www.anthropic.com/engineering/building-effective-agents) — Practical architecture patterns for deciding when to use workflows vs autonomous agents.
 - [Anthropic — Effective harnesses for long-running agents (November 2025)](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) — Concrete guidance on continuity, recovery, and reliability in extended agent sessions.
+- [Anthropic — Harness design for long-running applications](https://www.anthropic.com/engineering/harness-design-long-running-apps) — Practical design patterns for building durable harnesses in long-horizon production workflows.
 - [OpenAI — Zero-manual-code experiment report (2025–2026)](https://openai.com/research/zero-manual-code/) — Reference link for OpenAI’s reported experiment on reducing manual coding steps through agentic workflows.
 - [LangChain — Evaluating Deep Agents CLI on Terminal Bench 2.0 (December 2025, referenced in March 2026 reporting)](https://www.langchain.com/blog/evaluating-deepagents-cli-on-terminal-bench-2-0) — Benchmark-oriented case study on harness and evaluation setup impact.
 
