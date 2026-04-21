@@ -152,6 +152,6 @@ export default defineConfig({
   },
 
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/Blog-Agentic-SDLC/favicon.svg' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/Blog-Agentic-SDLC/favicon-dots.svg' }],
   ],
 })
