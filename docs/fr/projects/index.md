@@ -8,8 +8,8 @@ hero:
 
 features:
   - icon: ⚡
-    title: Projet 01 · Baseline vs Sprint Agentique
-    details: Implémentez la même fonctionnalité deux fois — une fois avec un agent vanilla, une fois avec un harnais minimal. Mesurez la différence en fiabilité, respect du périmètre et temps de vérification.
+    title: Projet 01 · Vibe Coding vs Harness Engineering
+    details: Implémentez la même fonctionnalité deux fois — d’abord en mode vibe coding avec un agent vanilla, puis avec un harness minimal. Mesurez la différence en fiabilité, respect du périmètre et temps de vérification.
     link: /fr/projects/project-01-baseline-vs-agentic/
     linkText: Démarrer le Projet 01
   - icon: 🏗️
