@@ -3,15 +3,18 @@ layout: home
 
 hero:
   name: "Agentic SDLC"
-  text: "Designing reliable software delivery with AI agents"
-  tagline: A practical course on the loops, harnesses, and governance systems that let engineers and AI agents ship software reliably together.
+  text: "From AI coding tools to reliable delivery systems"
+  tagline: A practical course on the coding agents, loops, harnesses, and governance patterns that make a software factory possible.
   actions:
     - theme: brand
-      text: Start Learning →
+      text: Start Learning
       link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
     - theme: alt
-      text: View on GitHub
-      link: https://github.com/nboitout/Blog-Agentic-SDLC
+      text: Self-Assessment for Executives
+      link: /en/executive-self-assessment/
+  image:
+    src: /hero-three-levels.svg
+    alt: "Three levels: Agentic SDLC, Agentic engineering, Harness engineering"
 
 features:
   - icon: 🎓
@@ -39,9 +42,26 @@ This course rethinks software delivery for a world where AI coding agents partic
 
 The course is built around three core concepts:
 
-- **Loops** — the Plan → Code → Verify → Reflect cycles that replace the sprint as the unit of agentic work
-- **Harnesses** — the files, scripts, and constraints that shape what agents can do, what state they maintain, and how failures are surfaced
-- **Governance** — the checkpoints, review protocols, and autonomy levels that keep humans meaningfully in control
+<div class="core-concepts-grid">
+  <article class="core-concept-card">
+    <p class="core-concept-icon">↺</p>
+    <h3>Loops</h3>
+    <p>Plan → Code → Verify → Reflect. The cycle that replaces the sprint.</p>
+    <p><a href="/en/lectures/lecture-02-the-agentic-loop/">Lecture 02</a></p>
+  </article>
+  <article class="core-concept-card">
+    <p class="core-concept-icon">⊞</p>
+    <h3>Harnesses</h3>
+    <p>Scope, state, and verification. The structure that keeps agents on track.</p>
+    <p><a href="/en/lectures/lecture-04-harness-design/">Lecture 04</a></p>
+  </article>
+  <article class="core-concept-card">
+    <p class="core-concept-icon">◈</p>
+    <h3>Governance</h3>
+    <p>Autonomy levels and checkpoints. Humans meaningfully in control.</p>
+    <p><a href="/en/lectures/lecture-08-human-in-the-loop/">Lecture 08</a></p>
+  </article>
+</div>
 
 ## What you will be able to do {#outcomes}
 
@@ -56,5 +76,25 @@ By the end of this course you will be able to:
 ## Where to start {#start}
 
 - [Lecture 01: Why Traditional SDLC Breaks](/en/lectures/lecture-01-why-traditional-sdlc-breaks/) — start here for the theory
-- [Project 01: Baseline vs Agentic Sprint](/en/projects/project-01-baseline-vs-agentic/) — start here for hands-on practice
+- [Project 01: Vibe Coding vs Harness Engineering](/en/projects/project-01-baseline-vs-agentic/) — start here for hands-on practice
 - [Templates](/en/resources/templates/) — grab AGENTS.md, feature_list.json, and progress.md for your own project
+
+## Help shape the next advanced chapters {#advanced-chapters}
+
+We are preparing a new set of advanced chapters for engineering leaders and practitioners working on reliable human-agent software delivery.
+
+These may include:
+- Harness patterns for frontend agents
+- Harness patterns for backend/API agents
+- Harness patterns for QA and release engineering
+- Agent memory design
+- Subagents and role specialization
+- When not to use agents
+- Reviewing agent-generated pull requests
+- Agentic incident response and SRE loops
+- Harness anti-patterns
+- Measuring real productivity gains
+
+Tell us which topics matter most in your context.
+
+[**Share your priorities →**](/en/share-your-priorities/)

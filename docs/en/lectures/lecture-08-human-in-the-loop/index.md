@@ -53,4 +53,4 @@ The human reads, responds, and the agent resumes. The entire exchange is committ
 
 ---
 
-You've completed the lecture series. Start with [Project 01](/en/projects/project-01-baseline-vs-agentic/) to put these concepts into practice.
+Next: [09. Bibliography →](/en/lectures/lecture-09-bibliography/)
