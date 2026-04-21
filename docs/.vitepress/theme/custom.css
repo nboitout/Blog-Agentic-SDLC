@@ -1,4 +1,4 @@
-/* Agentic SDLC — Brand Colors */
+/* ── Brand Colors ── */
 :root {
   --vp-c-brand-1: #6366f1;
   --vp-c-brand-2: #4f46e5;
@@ -21,7 +21,33 @@
   --vp-c-brand-soft: rgba(129, 140, 248, 0.16);
 }
 
-/* Hero customisations */
+/* ── Hero eyebrow pill ── */
+.VPHero .main::before {
+  content: 'PRACTICAL COURSE · 8 LECTURES · EN / FR';
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 999px;
+  padding: 4px 16px;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+
+/* ── Hero audience line ── */
+.VPHero .tagline::after {
+  content: 'For software engineers, engineering leads, and CTOs navigating AI-native delivery.';
+  display: block;
+  font-size: 0.82rem;
+  color: var(--vp-c-text-2);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* ── Hero tagline sizing ── */
 .VPHero .tagline {
   max-width: 38rem;
   font-size: 1.05rem;
@@ -42,18 +68,102 @@
   }
 }
 
-/* Feature cards */
-.VPFeature .icon {
-  font-size: 2rem;
+@media (max-width: 960px) {
+  .VPHero .tagline {
+    max-width: 100%;
+  }
 }
 
-/* Sidebar active link */
+/* ── Country code badges ── */
+.VPNavBarTranslations .VPMenuLink a::before,
+.VPNavScreenTranslations .VPMenuLink a::before {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 17px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  border-radius: 3px;
+  background: var(--vp-c-bg-mute);
+  color: var(--vp-c-text-2);
+  flex-shrink: 0;
+}
+
+.VPNavBarTranslations a[href$="/en/"]::before,
+.VPNavScreenTranslations a[href$="/en/"]::before { content: "GB"; }
+
+.VPNavBarTranslations a[href$="/fr/"]::before,
+.VPNavScreenTranslations a[href$="/fr/"]::before { content: "FR"; }
+
+.VPNavBarTranslations a[href$="/de/"]::before,
+.VPNavScreenTranslations a[href$="/de/"]::before { content: "DE"; }
+
+.VPNavBarTranslations a[href$="/es/"]::before,
+.VPNavScreenTranslations a[href$="/es/"]::before { content: "ES"; }
+
+.VPNavBarTranslations a[href$="/it/"]::before,
+.VPNavScreenTranslations a[href$="/it/"]::before { content: "IT"; }
+
+.VPNavBarTranslations a[href$="/pt/"]::before,
+.VPNavScreenTranslations a[href$="/pt/"]::before { content: "PT"; }
+
+.VPNavBarTranslations a[href$="/nl/"]::before,
+.VPNavScreenTranslations a[href$="/nl/"]::before { content: "NL"; }
+
+.VPNavBarTranslations a[href$="/pl/"]::before,
+.VPNavScreenTranslations a[href$="/pl/"]::before { content: "PL"; }
+
+.VPNavBarTranslations a[href$="/sv/"]::before,
+.VPNavScreenTranslations a[href$="/sv/"]::before { content: "SE"; }
+
+.VPNavBarTranslations a[href$="/da/"]::before,
+.VPNavScreenTranslations a[href$="/da/"]::before { content: "DK"; }
+
+.VPNavBarTranslations a[href$="/fi/"]::before,
+.VPNavScreenTranslations a[href$="/fi/"]::before { content: "FI"; }
+
+.VPNavBarTranslations a[href$="/ro/"]::before,
+.VPNavScreenTranslations a[href$="/ro/"]::before { content: "RO"; }
+
+.VPNavBarTranslations a[href$="/cs/"]::before,
+.VPNavScreenTranslations a[href$="/cs/"]::before { content: "CZ"; }
+
+.VPNavBarTranslations a[href$="/hu/"]::before,
+.VPNavScreenTranslations a[href$="/hu/"]::before { content: "HU"; }
+
+.VPNavBarTranslations a[href$="/hr/"]::before,
+.VPNavScreenTranslations a[href$="/hr/"]::before { content: "HR"; }
+
+.VPNavBarTranslations a[href$="/ru/"]::before,
+.VPNavScreenTranslations a[href$="/ru/"]::before { content: "RU"; }
+
+.VPNavBarTranslations a[href$="/uk/"]::before,
+.VPNavScreenTranslations a[href$="/uk/"]::before { content: "UA"; }
+
+.VPNavBarTranslations a[href$="/bg/"]::before,
+.VPNavScreenTranslations a[href$="/bg/"]::before { content: "BG"; }
+
+.VPNavBarTranslations a[href$="/sr/"]::before,
+.VPNavScreenTranslations a[href$="/sr/"]::before { content: "RS"; }
+
+.VPNavBarTranslations a[href$="/el/"]::before,
+.VPNavScreenTranslations a[href$="/el/"]::before { content: "GR"; }
+
+.VPNavBarTranslations a[href$="/tr/"]::before,
+.VPNavScreenTranslations a[href$="/tr/"]::before { content: "TR"; }
+
+/* ── Feature cards ── */
+.VPFeature .icon { font-size: 2rem; }
+
+/* ── Sidebar active link ── */
 .VPSidebarItem.is-active > .item > .link > .text {
   color: var(--vp-c-brand-1);
   font-weight: 600;
 }
 
-/* Code blocks */
+/* ── Code blocks ── */
 .vp-code-group .tabs label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.78rem;
