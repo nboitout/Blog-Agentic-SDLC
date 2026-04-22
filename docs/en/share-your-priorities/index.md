@@ -26,4 +26,7 @@ This is a lightweight way to tell us which topics would be most useful in your c
 
 If one or more of these topics would be valuable for your team, feel free to get in touch and let us know where you would like us to go deeper.
 
-> A lightweight interest form will be added here soon.
+You can contact me directly to share your priorities on harness engineering and agentic engineering:
+
+- Email: [nicolas@agentic-sdlc.it](mailto:nicolas@agentic-sdlc.it)
+- LinkedIn: [Nicolas Boitout](https://www.linkedin.com/in/nicolas-boitout-phd-8677842/)
