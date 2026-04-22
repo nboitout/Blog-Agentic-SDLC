@@ -3,15 +3,15 @@ layout: home
 
 hero:
   name: "Agentic SDLC"
-  text: "Designing reliable software delivery with AI agents"
-  tagline: A practical course on the loops, harnesses, and governance systems that let engineers and AI agents ship software reliably together.
+  text: "From AI coding tools to reliable delivery systems"
+  tagline: A practical course on the coding agents, loops, harnesses, and governance patterns that make a software factory possible.
   actions:
     - theme: brand
-      text: Start Learning →
+      text: Start Learning
       link: /en/lectures/lecture-01-why-traditional-sdlc-breaks/
     - theme: alt
-      text: View on GitHub
-      link: https://github.com/nboitout/Blog-Agentic-SDLC
+      text: Self-Assessment for Executives
+      link: /en/executive-self-assessment/
 
 features:
   - icon: 🎓
@@ -37,12 +37,6 @@ AI coding agents — tools like Claude Code, Codex, and Cursor — are increasin
 
 This course rethinks software delivery for a world where AI coding agents participate directly in planning, coding, testing, and review. It is not about replacing developers. It is about designing the systems, constraints, and feedback structures that make human-agent collaboration work in practice — at the feature level, the session level, and across the full delivery lifecycle.
 
-The course is built around three core concepts:
-
-- **Loops** — the Plan → Code → Verify → Reflect cycles that replace the sprint as the unit of agentic work
-- **Harnesses** — the files, scripts, and constraints that shape what agents can do, what state they maintain, and how failures are surfaced
-- **Governance** — the checkpoints, review protocols, and autonomy levels that keep humans meaningfully in control
-
 ## What you will be able to do {#outcomes}
 
 By the end of this course you will be able to:
@@ -56,5 +50,25 @@ By the end of this course you will be able to:
 ## Where to start {#start}
 
 - [Lecture 01: Why Traditional SDLC Breaks](/en/lectures/lecture-01-why-traditional-sdlc-breaks/) — start here for the theory
-- [Project 01: Baseline vs Agentic Sprint](/en/projects/project-01-baseline-vs-agentic/) — start here for hands-on practice
+- [Project 01: Vibe Coding vs Harness Engineering](/en/projects/project-01-baseline-vs-agentic/) — start here for hands-on practice
 - [Templates](/en/resources/templates/) — grab AGENTS.md, feature_list.json, and progress.md for your own project
+
+## Help shape the next advanced chapters {#advanced-chapters}
+
+We are preparing a new set of advanced chapters for engineering leaders and practitioners working on reliable human-agent software delivery.
+
+These may include:
+- Harness patterns for frontend agents
+- Harness patterns for backend/API agents
+- Harness patterns for QA and release engineering
+- Agent memory design
+- Subagents and role specialization
+- When not to use agents
+- Reviewing agent-generated pull requests
+- Agentic incident response and SRE loops
+- Harness anti-patterns
+- Measuring real productivity gains
+
+Tell us which topics matter most in your context.
+
+[**Share your priorities →**](/en/share-your-priorities/)
