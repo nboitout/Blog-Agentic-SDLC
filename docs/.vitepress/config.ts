@@ -14,13 +14,14 @@ const enSidebar = {
         { text: '06 · Testing Agentic Pipelines', link: '/en/lectures/lecture-06-testing-agentic-pipelines/' },
         { text: '07 · Observability', link: '/en/lectures/lecture-07-observability/' },
         { text: '08 · Human-in-the-Loop Governance', link: '/en/lectures/lecture-08-human-in-the-loop/' },
+        { text: '09 · Bibliography', link: '/en/lectures/lecture-09-bibliography/' },
       ],
     },
     {
       text: 'Projects',
       items: [
         { text: 'Overview', link: '/en/projects/' },
-        { text: 'Project 01 · Baseline vs Agentic', link: '/en/projects/project-01-baseline-vs-agentic/' },
+        { text: 'Project 01 · Vibe Coding vs Harness Engineering', link: '/en/projects/project-01-baseline-vs-agentic/' },
         { text: 'Project 02 · Minimal Harness', link: '/en/projects/project-02-minimal-harness/' },
         { text: 'Project 03 · Multi-Agent Pipeline', link: '/en/projects/project-03-multi-agent-pipeline/' },
       ],
@@ -31,6 +32,7 @@ const enSidebar = {
         { text: 'Library', link: '/en/resources/' },
         { text: 'Templates', link: '/en/resources/templates/' },
         { text: 'Guides', link: '/en/resources/guides/' },
+        { text: 'Share your priorities', link: '/en/share-your-priorities/' },
       ],
     },
   ],
@@ -56,7 +58,7 @@ const frSidebar = {
       text: 'Projets',
       items: [
         { text: 'Vue d\'ensemble', link: '/fr/projects/' },
-        { text: 'Projet 01 · Baseline vs Agentique', link: '/fr/projects/project-01-baseline-vs-agentic/' },
+        { text: 'Projet 01 · Vibe Coding vs Harness Engineering', link: '/fr/projects/project-01-baseline-vs-agentic/' },
         { text: 'Projet 02 · Harness minimal', link: '/fr/projects/project-02-minimal-harness/' },
         { text: 'Projet 03 · Pipeline multi-agents', link: '/fr/projects/project-03-multi-agent-pipeline/' },
       ],
@@ -83,14 +85,14 @@ export default defineConfig({
       title: 'Agentic SDLC',
       description: 'A practical course on AI-driven software development lifecycles',
       themeConfig: {
+        search: {
+          provider: 'local',
+        },
         nav: [
           { text: 'Lectures', link: '/en/lectures/lecture-01-why-traditional-sdlc-breaks/' },
           { text: 'Projects', link: '/en/projects/' },
           { text: 'Resources', link: '/en/resources/' },
-          {
-            text: 'Survey ↗',
-            link: 'https://github.com/nboitout/agentic-sdlc-survey',
-          },
+          { text: 'Share your priorities', link: '/en/share-your-priorities/' },
         ],
         sidebar: enSidebar,
       },
@@ -102,6 +104,9 @@ export default defineConfig({
       title: 'SDLC Agentique',
       description: 'Un cours pratique sur les cycles de développement logiciel pilotés par l\'IA',
       themeConfig: {
+        search: {
+          provider: 'local',
+        },
         nav: [
           { text: 'Cours', link: '/fr/lectures/lecture-01-why-traditional-sdlc-breaks/' },
           { text: 'Projets', link: '/fr/projects/' },
@@ -136,6 +141,6 @@ export default defineConfig({
   },
 
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/Blog-Agentic-SDLC/favicon.svg' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/Blog-Agentic-SDLC/favicon-dots.svg' }],
   ],
 })
