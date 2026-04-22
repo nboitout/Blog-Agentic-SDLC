@@ -68,10 +68,6 @@
   }
 }
 
-.VPHero.has-image .image {
-  transform: none;
-}
-
 .VPHero.has-image .image-container {
   width: min(560px, 100%);
 }
@@ -183,46 +179,6 @@
 }
 .custom-block.tip .custom-block-title {
   color: var(--vp-c-brand-1);
-}
-
-/* Home core concepts */
-.core-concepts-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.9rem;
-  margin-top: 0.85rem;
-}
-
-.core-concept-card {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 10px;
-  padding: 0.85rem 0.95rem;
-  background: var(--vp-c-bg-soft);
-}
-
-.core-concept-card h3 {
-  margin: 0.15rem 0 0.35rem;
-  font-size: 1.02rem;
-}
-
-.core-concept-card p {
-  margin: 0.2rem 0;
-}
-
-.core-concept-icon {
-  margin: 0;
-  font-size: 1.2rem;
-  color: var(--vp-c-text-2);
-}
-
-.core-concept-card a {
-  font-weight: 600;
-}
-
-@media (max-width: 960px) {
-  .core-concepts-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* Language selector: two-column flyout for easier scanning */
