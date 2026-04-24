@@ -181,13 +181,6 @@
   color: var(--vp-c-brand-1);
 }
 
-/* Language selector temporarily hidden while i18n rollout is in progress */
-.VPNavBarTranslations,
-.VPNavScreenTranslations,
-.VPNavBarExtra .translations {
-  display: none !important;
-}
-
 /* Language selector: two-column flyout for easier scanning */
 .VPNavBarTranslations .items,
 .VPNavBarExtra .group.translations {

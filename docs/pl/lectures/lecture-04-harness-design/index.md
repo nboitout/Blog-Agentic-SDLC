@@ -1,0 +1,18 @@
+# Harness Design: ograniczenia dla niezawodności
+
+> Harness to infrastruktura wokół agenta: files, scripts, conventions i automated checks. Odpowiada deterministycznie na pytania: co agent może zrobić, co zostało zrobione, czy działa i co dalej. Minimal harness pack to AGENTS.md, feature_list.json i progress.md.
+
+## Key concepts
+
+- **Scope**: ce poate modifica agentul și ce rămâne out-of-bounds.
+- **State**: progresul scris în fișiere, nu presupus în context window.
+- **Verification**: checks automate care nu pot fi bypassed.
+- **Continuity**: handoff suficient pentru următoarea session.
+
+## Business takeaway
+
+Pentru management, întrebarea nu este dacă modelul poate genera cod. Întrebarea este dacă delivery system-ul face munca agentului auditable, recoverable și aligned cu risk tolerance-ul echipei.
+
+---
+
+*Dalej: [Multi-Agent Coordination Patterns](/pl/lectures/lecture-05-multi-agent-patterns/)*

@@ -1,45 +1,69 @@
-# La boucle agentique : Plan → Code → Vérification → Réflexion
+# The Agentic Loop : Plan → Code → Verify → Reflect
 
-> **Le sprint est la mauvaise unité de travail pour un agent IA. La boucle est la bonne.**
+> **Le sprint n'est pas la bonne unité de travail pour un AI agent. La loop, oui.**
 
-## Du sprint à la boucle {#du-sprint}
+## Des sprints aux loops {#from-sprints}
 
-Un sprint est une construction humaine — un engagement social de deux semaines qui crée une urgence artificielle et une responsabilité partagée. Cela fonctionne parce que les développeurs humains répondent à la pression sociale.
+Un sprint est une construction humaine : un engagement social de deux semaines qui crée de l'urgence artificielle et de la responsabilité partagée. Cela fonctionne parce que les développeurs humains réagissent à la pression sociale.
 
-Un agent IA ne se soucie pas des deadlines de sprint. Ce à quoi il répond, c'est le **feedback** — des signaux immédiats, précis et lisibles par machine indiquant si sa dernière action a rapproché le système de l'objectif.
+Un AI agent ne se soucie pas d'une deadline de sprint. Il ne ressent pas de responsabilité envers l'équipe. Ce à quoi il répond, c'est au **feedback** : des signaux immédiats, précis et machine-readable indiquant si sa dernière action a rapproché le système de l'objectif.
 
-La **boucle agentique** est l'unité de travail de remplacement. Elle s'exécute en secondes ou en minutes, pas en semaines, et elle est auto-correctrice par conception.
+L'**Agentic Loop** devient donc la nouvelle unité de travail. Elle s'exécute en secondes ou minutes, pas en semaines, et elle est self-correcting par design.
 
 ## Les quatre phases {#phases}
 
-```
-┌─────────────────────────────────────────┐
-│                                         │
-│  PLAN  →  CODE  →  VÉRIFIE  →  RÉFLÉCHIT│
-│    ↑                            │       │
-│    └────────────────────────────┘       │
-│                                         │
-└─────────────────────────────────────────┘
+```text
+PLAN → CODE → VERIFY → REFLECT
+  ↑                         |
+  └─────────────────────────┘
 ```
 
-### Phase 1 : Planifier
-L'agent lit son contexte et produit un plan explicite. Le plan est écrit dans un fichier, pas maintenu en mémoire.
+### Phase 1 : Plan
 
-### Phase 2 : Coder
-L'agent exécute le plan, modifiant les fichiers dans un périmètre défini. Les contraintes de périmètre sont appliquées par le harnais — pas par le jugement de l'agent.
+L'agent lit son contexte - feature list, state file courant, description de tâche - et produit un plan explicite. Ce plan est écrit dans un fichier, pas simplement conservé en mémoire.
 
-### Phase 3 : Vérifier
-Le harnais exécute une suite de vérification déterministe : tests unitaires, tests d'intégration, linters, vérifications de types. Les résultats sont écrits dans le fichier de contexte.
+**Pourquoi c'est important** : écrire le plan externalise l'intention de l'agent. Elle devient auditable, réversible et disponible pour la session suivante.
 
-### Phase 4 : Réfléchir
-L'agent lit les résultats de vérification et met à jour le fichier d'état avec ce qui a été complété, ce qui a échoué, et quelle devrait être l'étape suivante.
+### Phase 2 : Code
 
-## La boucle n'est pas l'agent {#distinction}
+L'agent exécute le plan en modifiant les fichiers dans un scope défini. Les contraintes de scope sont appliquées par le harness, pas par le jugement interne de l'agent.
 
-La boucle est conçue par l'ingénieur **avant** que l'agent s'exécute. L'agent opère à l'intérieur de la boucle — il ne la conçoit pas.
+**Pourquoi c'est important** : sans scope constraints, les agents overreach. Le harness agit comme une boundary physique.
 
-Cette distinction est critique. Elle signifie que le SDLC agentique est avant tout une **discipline d'ingénierie**, pas une discipline de prompting.
+### Phase 3 : Verify
+
+Le harness lance une verification suite déterministe : unit tests, integration tests, linters, type checks. Les résultats sont réécrits dans le context file.
+
+**Pourquoi c'est important** : la verification doit être automatique et non bypassable. Un agent qui peut éviter la vérification finira par l'éviter sous pression.
+
+### Phase 4 : Reflect
+
+L'agent lit les résultats de verification et met à jour le state file avec ce qui est terminé, ce qui a échoué et la prochaine étape ciblée.
+
+**Pourquoi c'est important** : la reflection préserve la continuité entre sessions. Sans elle, la session suivante redémarre à l'aveugle.
+
+## La loop n'est pas l'agent {#distinction}
+
+Une erreur fréquente consiste à croire que la loop est quelque chose que l'agent conçoit à runtime. Ce n'est pas le cas. **La loop est designée par l'ingénieur avant l'exécution de l'agent.** L'agent opère dans la loop ; il ne la conçoit pas.
+
+Cette distinction est critique. Elle signifie que l'agentic SDLC est d'abord une **discipline d'engineering**, pas une discipline de prompting.
+
+::: warning Erreur fréquente
+Demander à l'agent de décider quand lancer les tests, quel scope respecter et comment traiter les échecs revient à lui demander de concevoir sa propre loop. Cela échoue de manière fiable. Concevez la loop d'abord ; laissez l'agent opérer à l'intérieur.
+:::
+
+## Granularité des loops {#granularity}
+
+Toutes les loops n'ont pas la même granularité. Un agentic SDLC sain comporte au moins trois loops imbriquées :
+
+| Loop | Timescale | Trigger | Verifier |
+|---|---|---|---|
+| **Micro loop** | Secondes | Une fonction / un fichier | Unit tests |
+| **Feature loop** | Minutes | Une feature | Integration tests |
+| **Session loop** | Heures | Une session de travail | Full pipeline + human review |
+
+Le harness design (Cours 04) précise comment instrumenter chacune de ces loops.
 
 ---
 
-*Suivant : [Ingénierie du contexte →](/fr/lectures/lecture-03-context-engineering/)*
+*Suivant : [Context Engineering →](/fr/lectures/lecture-03-context-engineering/)*
