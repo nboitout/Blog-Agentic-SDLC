@@ -311,7 +311,7 @@ export default defineConfig({
         },
         nav: [
           { text: 'Cours', link: '/fr/lectures/lecture-01-why-traditional-sdlc-breaks/' },
-          { text: 'Token Cost', link: '/en/interactive/' },
+          { text: 'Token Cost', link: '/fr/interactive/' },
           { text: 'Projets', link: '/fr/projects/' },
           { text: 'Ressources', link: '/fr/resources/' },
           { text: 'Auto-évaluation', link: '/fr/executive-self-assessment/' },
