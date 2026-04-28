@@ -49,6 +49,15 @@ L'espace de context window est fini. Le remplir avec les mauvaises informations 
 - **~20%** - state context (progress file)
 - **~30%** - dynamic code context (fichiers pertinents pour la sous-tâche)
 
+<div class="widget-cta">
+  <span class="widget-cta-icon">⚡</span>
+  <div class="widget-cta-body">
+    <strong>Visualisez la courbe de coût quadratique</strong>
+    <span>Avancez tour par tour et observez la croissance des tokens — puis activez le mode Engineered pour voir l'effet de la compression de contexte.</span>
+  </div>
+  <a href="/Blog-Agentic-SDLC/context-engineering-widget.html" class="widget-cta-btn">Lancer le simulateur →</a>
+</div>
+
 ## Context rot {#rot}
 
 Le context rot apparaît lorsque l'information dans la context window dérive par rapport à l'état réel du codebase. C'est l'un des failure modes les plus insidieux dans les projets agentiques longs.

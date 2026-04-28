@@ -155,6 +155,15 @@ Context window space is finite. Filling it with the wrong information is as harm
 - **~20%** — state context (progress file)
 - **~30%** — dynamic code context (files relevant to the current subtask)
 
+<div class="widget-cta">
+  <span class="widget-cta-icon">⚡</span>
+  <div class="widget-cta-body">
+    <strong>See the quadratic cost curve in action</strong>
+    <span>Step through turns and watch input tokens grow — then enable Engineered mode to see what proactive context management changes.</span>
+  </div>
+  <a href="/Blog-Agentic-SDLC/context-engineering-widget.html" class="widget-cta-btn">Launch Widget →</a>
+</div>
+
 ## Context rot {#rot}
 
 Context rot occurs when the information in the context window drifts out of sync with the actual state of the codebase. It is one of the most insidious failure modes in long-running agentic projects.
