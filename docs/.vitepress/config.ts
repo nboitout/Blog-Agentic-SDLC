@@ -276,7 +276,8 @@ function makeLocale(locale, ui) {
 
 export default defineConfig({
   base: '/Blog-Agentic-SDLC/',
-  ignoreDeadLinks: true, 
+  ignoreDeadLinks: true,
+  markdown: { math: true },
 
   locales: {
     en: {
