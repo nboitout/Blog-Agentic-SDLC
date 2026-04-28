@@ -55,7 +55,7 @@ L'espace de context window est fini. Le remplir avec les mauvaises informations 
     <strong>Visualisez la courbe de coût quadratique</strong>
     <span>Avancez tour par tour et observez la croissance des tokens — puis activez le mode Engineered pour voir l'effet de la compression de contexte.</span>
   </div>
-  <a href="/Blog-Agentic-SDLC/context-engineering-widget.html" class="widget-cta-btn">Lancer le simulateur →</a>
+  <a href="../../interactive/" class="widget-cta-btn">Lancer le simulateur →</a>
 </div>
 
 ## Context rot {#rot}

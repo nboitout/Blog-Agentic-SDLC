@@ -291,7 +291,7 @@ export default defineConfig({
         },
         nav: [
           { text: 'Lectures', link: '/en/lectures/lecture-01-why-traditional-sdlc-breaks/' },
-          { text: 'Widget', link: '/context-engineering-widget.html' },
+          { text: 'Token Cost', link: '/en/interactive/' },
           { text: 'Projects', link: '/en/projects/' },
           { text: 'Resources', link: '/en/resources/' },
           { text: 'Share your priorities', link: '/en/share-your-priorities/' },
@@ -311,7 +311,7 @@ export default defineConfig({
         },
         nav: [
           { text: 'Cours', link: '/fr/lectures/lecture-01-why-traditional-sdlc-breaks/' },
-          { text: 'Simulateur', link: '/context-engineering-widget.html' },
+          { text: 'Token Cost', link: '/en/interactive/' },
           { text: 'Projets', link: '/fr/projects/' },
           { text: 'Ressources', link: '/fr/resources/' },
           { text: 'Auto-évaluation', link: '/fr/executive-self-assessment/' },
@@ -333,7 +333,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Kursy', link: '/pl/lectures/lecture-01-why-traditional-sdlc-breaks/' },
-          { text: 'Widget', link: '/context-engineering-widget.html' },
+          { text: 'Token Cost', link: '/en/interactive/' },
           { text: 'Projekty', link: '/pl/projects/' },
           { text: 'Zasoby', link: '/pl/resources/' },
           { text: 'Samoocena', link: '/pl/executive-self-assessment/' },
@@ -353,7 +353,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Cursuri', link: '/ro/lectures/lecture-01-why-traditional-sdlc-breaks/' },
-          { text: 'Widget', link: '/context-engineering-widget.html' },
+          { text: 'Token Cost', link: '/en/interactive/' },
           { text: 'Proiecte', link: '/ro/projects/' },
           { text: 'Resurse', link: '/ro/resources/' },
           { text: 'Autoevaluare', link: '/ro/executive-self-assessment/' },
@@ -374,7 +374,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Курси', link: '/uk/lectures/lecture-01-why-traditional-sdlc-breaks/' },
-          { text: 'Widget', link: '/context-engineering-widget.html' },
+          { text: 'Token Cost', link: '/en/interactive/' },
           { text: 'Проєкти', link: '/uk/projects/' },
           { text: 'Ресурси', link: '/uk/resources/' },
           { text: 'Самооцінка', link: '/uk/executive-self-assessment/' },

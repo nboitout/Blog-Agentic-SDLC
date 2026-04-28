@@ -161,7 +161,7 @@ Context window space is finite. Filling it with the wrong information is as harm
     <strong>See the quadratic cost curve in action</strong>
     <span>Step through turns and watch input tokens grow — then enable Engineered mode to see what proactive context management changes.</span>
   </div>
-  <a href="/Blog-Agentic-SDLC/context-engineering-widget.html" class="widget-cta-btn">Launch Widget →</a>
+  <a href="../../interactive/" class="widget-cta-btn">Launch Widget →</a>
 </div>
 
 ## Context rot {#rot}
