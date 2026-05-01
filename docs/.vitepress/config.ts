@@ -171,7 +171,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Cursuri', link: '/ro/lectures/lecture-01-why-traditional-sdlc-breaks/' },
-          { text: 'Token Cost', link: '/en/interactive/' },
+          { text: 'Token Cost', link: '/ro/interactive/' },
           { text: 'Proiecte', link: '/ro/projects/' },
           { text: 'Resurse', link: '/ro/resources/' },
           { text: 'Autoevaluare', link: '/ro/executive-self-assessment/' },

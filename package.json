@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
-    "preview": "vitepress preview docs"
+    "preview": "vitepress preview docs",
+    "check-translations": "node scripts/check-translations.js"
   },
   "devDependencies": {
     "markdown-it-mathjax3": "^4.3.2",

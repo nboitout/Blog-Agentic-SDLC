@@ -36,6 +36,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Check translation drift
+        run: npm run check-translations
+        continue-on-error: true
+
       - name: Build with VitePress
         run: npm run build
 
