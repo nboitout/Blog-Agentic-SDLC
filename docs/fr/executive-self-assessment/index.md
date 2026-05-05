@@ -105,6 +105,8 @@ const questions = [
 ]
 
 const answers = reactive({})
+const languageCode = 'fr'
+const languageLabel = 'Français'
 
 const totalScore = computed(() => questions.reduce((sum, question) => {
   const selectedKey = answers[question.id]
@@ -146,7 +148,7 @@ Cette auto-évaluation courte s'adresse aux executives et engineering leaders qu
 
 ## 10 questions
 
-<div v-for="(question, index) in questions" :key="question.id" style="margin: 1.25rem 0; padding: 1rem; border: 1px solid var(--vp-c-divider); border-radius: 10px;">
+<div v-for="(question, index) in questions" :id="question.id" :key="question.id" style="margin: 1.25rem 0; padding: 1rem; border: 1px solid var(--vp-c-divider); border-radius: 10px;">
   <p style="margin: 0 0 0.75rem 0;"><strong>{{ index + 1 }}. {{ question.text }}</strong></p>
   <label v-for="option in question.options" :key="option.key" style="display: block; margin: 0.35rem 0; cursor: pointer;">
     <input
@@ -172,6 +174,15 @@ Cette auto-évaluation courte s'adresse aux executives et engineering leaders qu
   <p style="margin: 0.45rem 0 0; color: var(--vp-c-text-2);">{{ profileInterpretation }}</p>
   <p style="margin: 0.75rem 0 0; font-size: 0.84rem; color: var(--vp-c-text-3);">Ce résultat se met à jour automatiquement au fur et à mesure que vous répondez aux questions.</p>
 </div>
+
+<SelfAssessmentSubmit
+  :answers="answers"
+  :language-code="languageCode"
+  :language-label="languageLabel"
+  :profile-name="currentProfile"
+  :questions="questions"
+  :total-score="totalScore"
+/>
 
 ## Votre profil de maturité
 
