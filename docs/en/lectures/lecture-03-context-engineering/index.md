@@ -164,14 +164,182 @@ Context window space is finite. Filling it with the wrong information is as harm
   <a href="../../interactive/" class="widget-cta-btn">Launch Widget →</a>
 </div>
 
+## Advanced: The Context Development Lifecycle {#cdlc}
+
+Context engineering is often described as the discipline of managing what enters the agent's context window.
+
+That is the first level.
+
+But in professional agentic engineering, context is no longer just a temporary input to a chat session. It becomes part of the software production system.
+
+Specifications, `AGENTS.md`, `CLAUDE.md`, architecture maps, domain vocabulary, reusable skills, library documentation, MCP context, tickets, logs, and review feedback are no longer disposable prompts. They are software artifacts that shape agent behavior.
+
+This creates a new engineering question:
+
+> If context changes agent behavior, how do we design, test, distribute, observe, and improve that context?
+
+That is the role of the **Context Development Lifecycle**.
+
+| Phase | Core question |
+|---|---|
+| **Generate** | Have we clarified intent, vocabulary, constraints, and architecture before execution? |
+| **Evaluate** | Does this context reliably cause the agent to behave correctly? |
+| **Distribute** | Can this context be packaged, versioned, reused, and governed across teams? |
+| **Observe** | What do PR reviews, agent logs, and production incidents reveal about missing or misleading context? |
+| **Improve** | How do we feed those signals back into the context stack? |
+
+The future workflow is not simply:
+
+```text
+prompt → code
+```
+
+It is closer to:
+
+```text
+shared intent → evaluated context → generated code → telemetry → improved context
+```
+
+This is the bridge from vibe coding to professional agentic engineering.
+
+## Good practices: treating context as a software artifact {#good-practices}
+
+Once context shapes agent behavior, it needs engineering discipline.
+
+### 1. Make context explicit
+
+Avoid relying on hidden conversation history.
+
+Move durable instructions into versioned artifacts:
+
+- `AGENTS.md`
+- architecture maps
+- domain vocabulary
+- task specifications
+- test instructions
+- reusable skills
+- project-specific examples
+
+A useful rule:
+
+> If the agent should remember it tomorrow, it probably does not belong only in today's chat.
+
+### 2. Separate context layers
+
+Do not put everything into a single giant instruction file.
+
+A mature context stack usually has several layers:
+
+| Layer | Examples |
+|---|---|
+| **Global context** | Company conventions, security rules, domain vocabulary |
+| **System context** | Architecture maps, repository documentation, module boundaries |
+| **Agent context** | `AGENTS.md`, `CLAUDE.md`, reusable skills, tool instructions |
+| **Task context** | Specs, tickets, MCP context, current logs, review comments |
+
+This separation matters because each layer changes at a different speed. Company conventions are relatively stable. Task context changes constantly. Mixing them creates noise and makes context harder to review.
+
+### 3. Test context, not only code
+
+A change to `AGENTS.md`, a reusable skill, or a project specification can change future agent behavior.
+
+That means context needs evals.
+
+A context eval asks:
+
+> Did this piece of context reliably shape the agent's behavior in the intended way?
+
+Useful levels of context testing include:
+
+| Level | Purpose |
+|---|---|
+| **Context linting** | Validate structure, syntax, and required fields |
+| **Clarity checks** | Check whether the instruction is explicit and complete enough for an LLM |
+| **Behavioral evals** | Test whether the agent follows a project rule |
+| **Agentic E2E** | Let an agent run the system and verify real behavior |
+
+Example:
+
+```text
+Context rule:
+All API endpoints must start with /awesome.
+
+Eval:
+Ask the agent to add a new user endpoint.
+Check whether the generated route follows the required prefix.
+```
+
+The point is not only to test the generated code. The point is to test whether the context caused the right behavior.
+
+### 4. Think probabilistically
+
+Traditional tests are deterministic: pass or fail.
+
+Context evals are different. The same context may work with one model, fail with another, or pass four times out of five.
+
+So a passing context eval might mean:
+
+```text
+This context causes the desired behavior 95% of the time
+across 5 runs, 3 models, and 2 agent configurations.
+```
+
+For agentic systems, quality increasingly means reliability under variation.
+
+### 5. Treat PR feedback as context telemetry
+
+In a traditional workflow, PR feedback is used to fix code.
+
+In an agentic workflow, PR feedback should also improve the context stack.
+
+When a reviewer finds a problem, ask: what context was missing, weak, or misleading?
+
+Possible follow-up actions:
+
+- update `AGENTS.md`
+- improve the task spec
+- add a missing architecture rule
+- update the domain vocabulary
+- create a new context eval
+- improve a reusable skill
+- add a regression test
+
+The goal is not only to fix the current PR. The goal is to prevent the same failure from recurring across future agent runs.
+
+### 6. Govern shared context
+
+For one developer, context is a productivity tool.
+
+For an organization, shared context becomes platform infrastructure.
+
+Reusable context should therefore be:
+
+- versioned
+- owned
+- reviewed
+- tested
+- documented
+- scanned for security issues
+- distributed through curated registries when used across teams
+
+Once context becomes executable through agents, it becomes part of the software supply chain.
+
 ## Context rot {#rot}
+
+Context rot is not only a session problem. At enterprise scale, it becomes a governance problem.
+
+A stale instruction in `AGENTS.md`, an outdated architecture map, or an obsolete reusable skill can quietly influence many future agent runs. In that sense, changing context without evaluation is similar to changing production behavior without tests.
 
 Context rot occurs when the information in the context window drifts out of sync with the actual state of the codebase. It is one of the most insidious failure modes in long-running agentic projects.
 
 Prevention strategies:
-- Keep AGENTS.md versioned and reviewed on every PR
-- Write state files atomically (never partial updates)
-- Use structured formats (JSON, YAML) for state — not prose
+- Keep `AGENTS.md` versioned and reviewed on every PR
+- Add context evals for important rules and reusable skills
+- Write state files atomically — never partial updates
+- Use structured formats such as JSON or YAML for state, not free-form prose
+- Keep architecture maps close to the code they describe
+- Remove obsolete context aggressively
+- Treat PR review comments and production incidents as signals to improve context
 
 ::: tip
 The harness design (Lecture 04) specifies exactly how state files are written, read, and verified. Never leave state management to the agent's discretion.
