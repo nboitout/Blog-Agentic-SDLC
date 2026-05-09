@@ -107,11 +107,11 @@ function nextQuestion() {
 
 # Context Engineering: What Your Agent Needs to Know
 
-> **A capable model with bad context produces bad results. Context engineering is the discipline of making sure that never happens.**
+> **A capable model with poor context produces poor results. Context engineering is the discipline of designing what the agent needs to know.**
 
 ## The context problem {#context-problem}
 
-Every AI agent operates inside a context window. Whatever is not in that window does not exist for the agent. This creates a fundamental engineering challenge: **you must architect what the agent knows, not just what it can do**.
+Every AI agent operates inside a context window. Whatever is not in that window is effectively invisible to the agent. This creates a fundamental engineering challenge: **you must design what the agent knows, not only what it can do**.
 
 Context engineering is the practice of designing, structuring, and maintaining the information that flows into an agent's context window — across time, across sessions, and across different stages of a task.
 
@@ -127,7 +127,7 @@ Context for a coding agent has several distinct layers:
 | **Code context** | Relevant files, interfaces, test structures | Dynamically loaded |
 
 ### The AGENTS.md pattern
-The industry standard for static context is a single file — `AGENTS.md` — committed to the repository root. It contains everything an agent needs to operate in that codebase: how to run tests, which directories are off-limits, naming conventions, and architectural constraints.
+A common emerging pattern for static context is a single file — `AGENTS.md` — committed to the repository root. It contains the stable instructions an agent needs to operate in that codebase: how to run tests, which directories are off-limits, naming conventions, and architectural constraints.
 
 ```markdown
 # AGENTS.md
@@ -148,7 +148,7 @@ The industry standard for static context is a single file — `AGENTS.md` — co
 
 ## The context window budget {#budget}
 
-Context window space is finite. Filling it with the wrong information is as harmful as filling it with nothing. A disciplined approach allocates the budget explicitly:
+Context window space is finite. Filling it with irrelevant information can be as harmful as providing too little context. A disciplined approach allocates the budget explicitly:
 
 - **~20%** — static context (AGENTS.md, architecture docs)
 - **~30%** — task context (current feature, acceptance criteria)
@@ -166,13 +166,11 @@ Context window space is finite. Filling it with the wrong information is as harm
 
 ## Advanced: The Context Development Lifecycle {#cdlc}
 
-Context engineering is often described as the discipline of managing what enters the agent's context window.
+Context engineering often starts with managing what enters the agent's context window. That is only the first level.
 
-That is the first level.
+In professional agentic engineering, context is no longer just a temporary input to a chat session. It becomes part of the software production system.
 
-But in professional agentic engineering, context is no longer just a temporary input to a chat session. It becomes part of the software production system.
-
-Specifications, `AGENTS.md`, `CLAUDE.md`, architecture maps, domain vocabulary, reusable skills, library documentation, MCP context, tickets, logs, and review feedback are no longer disposable prompts. They are software artifacts that shape agent behavior.
+Specifications, `AGENTS.md`, `CLAUDE.md`, architecture maps, domain vocabulary, reusable skills, library documentation, MCP context, tickets, logs, and review feedback are no longer disposable prompts. They are software artifacts that directly shape agent behavior.
 
 This creates a new engineering question:
 
@@ -183,18 +181,18 @@ That is the role of the **Context Development Lifecycle**.
 | Phase | Core question |
 |---|---|
 | **Generate** | Have we clarified intent, vocabulary, constraints, and architecture before execution? |
-| **Evaluate** | Does this context reliably cause the agent to behave correctly? |
+| **Evaluate** | Does this context reliably shape the agent's behavior? |
 | **Distribute** | Can this context be packaged, versioned, reused, and governed across teams? |
 | **Observe** | What do PR reviews, agent logs, and production incidents reveal about missing or misleading context? |
 | **Improve** | How do we feed those signals back into the context stack? |
 
-The future workflow is not simply:
+A mature workflow is not simply:
 
 ```text
 prompt → code
 ```
 
-It is closer to:
+It becomes:
 
 ```text
 shared intent → evaluated context → generated code → telemetry → improved context
@@ -202,13 +200,15 @@ shared intent → evaluated context → generated code → telemetry → improve
 
 This is the bridge from vibe coding to professional agentic engineering.
 
+The practical consequence is simple: context should be managed with the same seriousness as code.
+
 ## Good practices: treating context as a software artifact {#good-practices}
 
 Once context shapes agent behavior, it needs engineering discipline.
 
 ### 1. Make context explicit
 
-Avoid relying on hidden conversation history.
+Do not rely on hidden conversation history for durable project knowledge.
 
 Move durable instructions into versioned artifacts:
 
@@ -226,7 +226,7 @@ A useful rule:
 
 ### 2. Separate context layers
 
-Do not put everything into a single giant instruction file.
+Do not collapse everything into a single giant instruction file.
 
 A mature context stack usually has several layers:
 
@@ -237,13 +237,13 @@ A mature context stack usually has several layers:
 | **Agent context** | `AGENTS.md`, `CLAUDE.md`, reusable skills, tool instructions |
 | **Task context** | Specs, tickets, MCP context, current logs, review comments |
 
-This separation matters because each layer changes at a different speed. Company conventions are relatively stable. Task context changes constantly. Mixing them creates noise and makes context harder to review.
+This separation matters because each layer changes at a different speed. Company conventions are relatively stable. Task context changes constantly. Mixing them creates noise, increases drift, and makes context harder to review.
 
 ### 3. Test context, not only code
 
-A change to `AGENTS.md`, a reusable skill, or a project specification can change future agent behavior.
+A change to `AGENTS.md`, a reusable skill, or a project specification can change many future agent runs.
 
-That means context needs evals.
+That means context needs evaluation.
 
 A context eval asks:
 
@@ -269,13 +269,13 @@ Ask the agent to add a new user endpoint.
 Check whether the generated route follows the required prefix.
 ```
 
-The point is not only to test the generated code. The point is to test whether the context caused the right behavior.
+The point is not only to test the code that was generated. The point is to test whether the context caused the right behavior.
 
 ### 4. Think probabilistically
 
 Traditional tests are deterministic: pass or fail.
 
-Context evals are different. The same context may work with one model, fail with another, or pass four times out of five.
+Context evals are probabilistic. The same context may work with one model, fail with another, or pass only four times out of five.
 
 So a passing context eval might mean:
 
@@ -290,9 +290,9 @@ For agentic systems, quality increasingly means reliability under variation.
 
 In a traditional workflow, PR feedback is used to fix code.
 
-In an agentic workflow, PR feedback should also improve the context stack.
+In an agentic workflow, PR feedback should also update the context stack.
 
-When a reviewer finds a problem, ask: what context was missing, weak, or misleading?
+When a reviewer finds a problem, ask: What context was missing, weak, or misleading?
 
 Possible follow-up actions:
 
@@ -304,7 +304,7 @@ Possible follow-up actions:
 - improve a reusable skill
 - add a regression test
 
-The goal is not only to fix the current PR. The goal is to prevent the same failure from recurring across future agent runs.
+The goal is not only to fix the current PR. It is to prevent the same failure from recurring across future agent runs.
 
 ### 6. Govern shared context
 
@@ -320,15 +320,15 @@ Reusable context should therefore be:
 - tested
 - documented
 - scanned for security issues
-- distributed through curated registries when used across teams
+- distributed through curated registries when reused across teams
 
 Once context becomes executable through agents, it becomes part of the software supply chain.
 
 ## Context rot {#rot}
 
-Context rot is not only a session problem. At enterprise scale, it becomes a governance problem.
+Context rot is not only a session problem. At enterprise scale, it also becomes a governance problem.
 
-A stale instruction in `AGENTS.md`, an outdated architecture map, or an obsolete reusable skill can quietly influence many future agent runs. In that sense, changing context without evaluation is similar to changing production behavior without tests.
+A stale instruction in `AGENTS.md`, an outdated architecture map, or an obsolete reusable skill can silently influence many future agent runs. In that sense, changing context without evaluation is close to changing production behavior without tests.
 
 Context rot occurs when the information in the context window drifts out of sync with the actual state of the codebase. It is one of the most insidious failure modes in long-running agentic projects.
 
