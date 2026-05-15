@@ -387,6 +387,111 @@
   margin-bottom: 12px;
 }
 
+/* ── News / announcement banner ── */
+.news-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1.5px solid #f59e0b;
+  border-left: 4px solid #f59e0b;
+  border-radius: 10px;
+  background: #fffbeb;
+  padding: 14px 18px;
+  margin: 0 0 2rem;
+  flex-wrap: wrap;
+  text-decoration: none !important;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.news-banner:hover {
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25);
+  transform: translateY(-2px);
+  text-decoration: none !important;
+}
+
+.dark .news-banner {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.55);
+}
+
+.news-banner-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.news-banner-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.news-banner-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.news-banner-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #92400e;
+  background: #fde68a;
+  border: 1px solid #f59e0b;
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+.news-banner-date {
+  font-size: 11px;
+  color: #b45309;
+  font-weight: 600;
+}
+
+.news-banner-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #78350f;
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.dark .news-banner-title { color: #fde68a; }
+
+.news-banner-desc {
+  font-size: 0.82rem;
+  color: #92400e;
+  line-height: 1.5;
+}
+
+.dark .news-banner-desc { color: #fcd34d; }
+
+.news-banner-cta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 18px;
+  border-radius: 7px;
+  background: #f59e0b;
+  color: #fff !important;
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-decoration: none !important;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.news-banner-cta:hover {
+  background: #d97706;
+  text-decoration: none !important;
+}
+
 /* ── Widget CTA block ── */
 .widget-cta {
   display: flex;
