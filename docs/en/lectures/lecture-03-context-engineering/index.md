@@ -147,7 +147,7 @@ A common emerging pattern for static context is a single file — `AGENTS.md` �
 ```
 
 <div class="lecture-recap-floating-wrap">
-  <a class="lecture-recap-floating" href="/lecture-03-context-recap.png" target="_blank" rel="noopener" aria-label="Open the full-size visual recap of Lecture 03 in a new tab">
+  <a class="lecture-recap-floating" href="/Blog-Agentic-SDLC/lecture-03-context-recap.png" target="_blank" rel="noopener" aria-label="Open the full-size visual recap of Lecture 03 in a new tab">
     <span class="lecture-recap-floating-icon" aria-hidden="true">🗺️</span>
     <span class="lecture-recap-floating-label">Visual recap</span>
   </a>
@@ -158,16 +158,16 @@ A common emerging pattern for static context is a single file — `AGENTS.md` �
 The full picture is broader than context-window management. Context engineering starts with what the agent sees at runtime, but it matures into a lifecycle for designing, testing, governing, and continuously improving the context that shapes agent behavior.
 
 <div class="lecture-recap">
-  <a href="/lecture-03-context-recap.png" target="_blank" rel="noopener" aria-label="Open full-size visual recap in a new tab">
+  <a href="/Blog-Agentic-SDLC/lecture-03-context-recap.png" target="_blank" rel="noopener" aria-label="Open full-size visual recap in a new tab">
     <img src="/lecture-03-context-recap.png" alt="Infographic recap of Lecture 03 covering runtime context layers, the Context Development Lifecycle, good practices, and context rot prevention." loading="lazy">
   </a>
   <div class="lecture-recap-caption">
     Runtime context (layers + 20 / 30 / 20 / 30 budget) → Context Development Lifecycle (Generate · Evaluate · Distribute · Observe · Improve) → good practices → context rot prevention.
   </div>
   <div class="lecture-recap-actions">
-    <a href="/lecture-03-context-recap.png" target="_blank" rel="noopener">View full-size</a>
+    <a href="/Blog-Agentic-SDLC/lecture-03-context-recap.png" target="_blank" rel="noopener">View full-size</a>
     <span aria-hidden="true">·</span>
-    <a href="/lecture-03-context-recap.png" download>Download as PNG</a>
+    <a href="/Blog-Agentic-SDLC/lecture-03-context-recap.png" download>Download as PNG</a>
   </div>
 </div>
 
