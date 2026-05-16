@@ -17,13 +17,13 @@ aside: false
 
 **Context buffer (à gauche) :** chaque bloc représente un échange ajouté à l'historique. Le system prompt est toujours à la base.
 
-**Paquet sur la ceinture :** à chaque tour, l'intégralité du contexte accumulé est envoyée au processeur. Le paquet s'élargit — plus de tokens transportés à chaque fois.
+**Paquet sur le tapis :** à chaque tour, l'intégralité du contexte accumulé est envoyée au processeur. Le paquet s'élargit — plus de tokens transportés à chaque fois.
 
 **Processeur :** le modèle qui reçoit le contexte complet. Le nombre de tokens affiché est ce que vous payez en *input* pour ce tour.
 
-**Multiplicateur de coût :** combien le tour courant coûte de plus que le premier. Au tour 10 avec les réglages par défaut, c'est déjà ~2,7×. Le coût cumulatif atteint alors ~5× ce que facturerait un modèle à coût fixe.
+**Multiplicateur de coût :** combien le tour courant coûte de plus que le premier. Dès le tour 10 avec les réglages par défaut, c'est déjà ~2,7×. Le coût cumulatif atteint alors ~5× ce que facturerait un modèle à coût fixe.
 
-**Mode Engineered :** active un compresseur entre le buffer et le processeur, qui limite le contexte aux 3 derniers tours. La courbe verte reste plate quelle que soit la durée de la conversation.
+**Mode Engineered :** active un compresseur entre le buffer et le processeur. Il limite le contexte aux 3 derniers tours, simulant une gestion délibérée du contexte. La courbe verte reste plate quelle que soit la durée de la conversation.
 
 **À tester :** réglez les tokens/tour sur **8 000** (réaliste pour des sessions agentiques avec des appels d'outils) et observez la fenêtre se remplir en 4 tours. Activez ensuite le mode Engineered.
 
@@ -61,7 +61,7 @@ Le mode « Engineered » du widget est un modèle simplifié de cette dernière 
 |---|---|---|
 | **Découpage de conversation** | Démarrer un nouveau chat — la parabole repart de zéro | Reset complet |
 | **Résumé à la demande** | Demander au modèle de compresser l'historique, amorcer un nouveau chat avec ce résumé | 60–80 % |
-| **Extraction d'état** | Distiller une conversation en objet structuré — `{ résolu: [...], tâche_courante: "...", contraintes: [...] }` | 90–95 % |
+| **Extraction d'état** | Distiller une conversation en objet structuré — `{ resolved: [...], current_task: "...", constraints: [...] }` | 90–95 % |
 | **Rétention sélective** | Conserver uniquement les tours causalement pertinents pour la prochaine réponse | Variable |
 | **Mémoire externe** | Déplacer les faits hors de la fenêtre vers un système de retrieval, injecter uniquement ce qui est nécessaire | Coût de transport quasi nul |
 
@@ -75,7 +75,7 @@ La différence clé avec le compacting :
 
 ## Économie des abonnements : le calcul du seuil de rentabilité
 
-Si votre abonnement mensuel est à 20 $ — combien de tours consécutifs par jour le lab peut-il absorber avant de perdre de l'argent sur votre session ?
+Si votre abonnement mensuel est à 20 $ — combien de tours consécutifs par jour le labo d'IA peut-il absorber avant de perdre de l'argent sur votre session ?
 
 **Revenu par utilisateur par jour :**
 
@@ -97,13 +97,13 @@ En posant coût = 0,667 \$ et en résolvant pour N, on obtient le nombre de tour
 
 **Trois enseignements :**
 
-**Premier — le modèle ne fonctionne que parce que la plupart des utilisateurs n'approchent pas de ce seuil.** L'utilisateur médian envoie 3 à 5 messages par jour. Les gros utilisateurs sont subventionnés par les utilisateurs légers. L'abonnement est un pari actuariel sur la distribution d'usage.
+**Premièrement — le modèle ne fonctionne que parce que la plupart des utilisateurs n'approchent pas de ce seuil.** L'utilisateur médian envoie 3 à 5 messages par jour. Les gros utilisateurs sont subventionnés par les utilisateurs légers. L'abonnement est un pari actuariel sur la distribution d'usage.
 
-**Deuxième — démarrer un nouveau chat, c'est du context engineering gratuit.** Une longue session de N tours coûte ce que vaut N² en tokens d'entrée. Deux sessions de N/2 tours chacune coûtent deux fois moins — la parabole repart de zéro. Il n'y a aucune raison technique de maintenir une seule conversation ouverte pour des tâches sans lien entre elles.
+**Deuxièmement — démarrer un nouveau chat, c'est du context engineering gratuit.** Une longue session de N tours coûte l'équivalent de N² tokens d'entrée. Deux sessions de N/2 tours chacune coûtent deux fois moins — la parabole repart de zéro. Il n'y a aucune raison technique de maintenir une seule conversation ouverte pour des tâches sans lien entre elles.
 
-**Troisième — la fenêtre glissante de ~44k tokens sur 5 heures n'est pas arbitraire.** C'est approximativement le rate limit qui maintient le coût attendu par utilisateur en dessous du revenu de l'abonnement, en supposant un mix moyen d'utilisateurs légers et intensifs. Cette limite est un garde-fou actuariel, pas technique.
+**Troisièmement — la fenêtre glissante de ~44k tokens sur 5 heures n'est pas arbitraire.** C'est approximativement le rate limit qui maintient le coût attendu par utilisateur en dessous du revenu de l'abonnement, en supposant un mix moyen d'utilisateurs légers et intensifs. Cette limite est un garde-fou actuariel, pas technique.
 
-**L'implication inconfortable :** l'intérêt du lab et le vôtre sont parfaitement alignés — vous voulez tous les deux un contexte plus court, plus dense, mieux structuré. Le context engineering n'est pas une optimisation. C'est une conséquence directe du fonctionnement de l'attention transformer et de la structure économique des abonnements.
+**L'implication inconfortable :** l'intérêt du labo d'IA et le vôtre sont parfaitement alignés — vous voulez tous les deux un contexte plus court, plus dense, mieux structuré. Le context engineering n'est pas une simple astuce d'optimisation. C'est une conséquence directe du fonctionnement de l'attention des transformeurs et de la structure économique des abonnements.
 
 ---
 
