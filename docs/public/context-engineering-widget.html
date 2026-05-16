@@ -747,7 +747,7 @@
       <div class="mcard-sub">input + output</div>
     </div>
     <div class="mcard">
-      <div class="mcard-label">Cost multiplier</div>
+      <div class="mcard-label">Per-turn cost vs turn 1</div>
       <div id="mMult" class="mcard-val" style="color:var(--amber-tx);">1×</div>
       <div class="mcard-sub">vs turn 1</div>
     </div>
@@ -761,7 +761,7 @@
     <span id="engLeg" class="leg-item" style="display:none;">
       <span class="leg-dot" style="background:#22a95c;"></span>Engineered — context managed
     </span>
-    <span class="chart-note">double the turns → quadruple the cost</span>
+    <span class="chart-note">cumulative cost grows super-linearly (quadratic term dominates asymptotically)</span>
   </div>
 
   <!-- Chart -->
@@ -777,6 +777,7 @@
       <input type="checkbox" id="engCk" onchange="toggleEng(this.checked)">
       Engineered mode
     </label>
+    <span class="chart-note" style="margin-left:8px;">sliding window: keeps the last 3 prior exchanges + current turn</span>
   </div>
 
   <!-- Explainer -->
