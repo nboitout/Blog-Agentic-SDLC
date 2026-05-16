@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Context Cockpit — Lecture 03 · Agentic SDLC</title>
+<link rel="icon" type="image/svg+xml" href="/Blog-Agentic-SDLC/favicon-dots.svg">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand:       #6366f1;
+    --brand-dark:  #4f46e5;
+    --bg:          #ffffff;
+    --bg-soft:     #f6f6f7;
+    --bg-mute:     #eeeeef;
+    --text-1:      #213547;
+    --text-2:      rgba(60,60,67,0.75);
+    --text-3:      rgba(60,60,67,0.50);
+    --divider:     rgba(60,60,67,0.14);
+    --shadow:      0 4px 16px rgba(0,0,0,0.07);
+    --font:        Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+    --static:      #0ea5e9;
+    --task:        #a855f7;
+    --state:       #f59e0b;
+    --code:        #10b981;
+    --danger:      #ef4444;
+    --success:     #10b981;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:        #1b1b1f;
+      --bg-soft:   #252529;
+      --bg-mute:   #313136;
+      --text-1:    rgba(255,255,245,0.87);
+      --text-2:    rgba(235,235,245,0.6);
+      --text-3:    rgba(235,235,245,0.4);
+      --divider:   rgba(235,235,245,0.16);
+      --shadow:    0 4px 16px rgba(0,0,0,0.3);
+    }
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text-1);
+    line-height: 1.55;
+    padding: 24px 16px 64px;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; }
+
+  header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.01em;
+  }
+  header p {
+    color: var(--text-2);
+    font-size: 0.95rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    padding: 14px 18px;
+    background: var(--bg-soft);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+  }
+  .ctrl-group { display: flex; align-items: center; gap: 0.65rem; }
+  .ctrl-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-1);
+  }
+  .turn-value {
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+    color: var(--text-2);
+    min-width: 64px;
+  }
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 220px;
+    height: 4px;
+    background: var(--bg-mute);
+    border-radius: 999px;
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--brand);
+    cursor: pointer;
+    border: 2px solid var(--bg);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--brand);
+    cursor: pointer;
+    border: 2px solid var(--bg);
+  }
+
+  .toggle {
+    position: relative;
+    width: 46px; height: 24px;
+    background: var(--bg-mute);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: 1px solid var(--divider);
+  }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+  }
+  .toggle.on { background: var(--success); }
+  .toggle.on::after { transform: translateX(22px); }
+
+  .reset-btn {
+    background: transparent;
+    border: 1px solid var(--divider);
+    color: var(--text-2);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .reset-btn:hover { background: var(--bg-mute); color: var(--text-1); }
+
+  .stage {
+    position: relative;
+    background: var(--bg-soft);
+    border: 1px solid var(--divider);
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: var(--shadow);
+  }
+  .stage svg { display: block; width: 100%; height: auto; }
+
+  .tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--text-1);
+    color: var(--bg);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    max-width: 240px;
+    opacity: 0;
+    transition: opacity 0.12s;
+    z-index: 10;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .tooltip.show { opacity: 1; }
+  .tooltip strong { display: block; margin-bottom: 2px; font-size: 0.82rem; }
+
+  .legend {
+    margin-top: 1rem;
+    padding: 12px 16px;
+    background: var(--bg-soft);
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    font-size: 0.82rem;
+    color: var(--text-2);
+  }
+  .legend strong { color: var(--text-1); }
+
+  .hover-target { cursor: pointer; }
+  .hover-target:hover { filter: brightness(1.05); }
+
+  @media (max-width: 640px) {
+    input[type=range] { width: 140px; }
+    .controls { gap: 0.6rem 1rem; padding: 12px; }
+    header h1 { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>The Context Cockpit</h1>
+  <p>Budget · Lifecycle · Drift — one panel synthesizing Lecture 03. Drag the turn slider to watch context rot grow; flip <em>Engineered mode</em> to see disciplined practices snap it back.</p>
+</header>
+
+<div class="controls">
+  <div class="ctrl-group">
+    <label class="ctrl-label" for="turn">Turn</label>
+    <input type="range" id="turn" min="1" max="25" value="1">
+    <span class="turn-value" id="turn-value">turn 1 / 25</span>
+  </div>
+  <div class="ctrl-group">
+    <span class="ctrl-label">Engineered mode</span>
+    <div class="toggle" id="eng-toggle" role="switch" aria-checked="false" tabindex="0"></div>
+  </div>
+  <button class="reset-btn" id="reset">Reset</button>
+</div>
+
+<div class="stage">
+  <div class="tooltip" id="tt"></div>
+  <svg viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="staticG" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#0ea5e9"/><stop offset="100%" stop-color="#38bdf8"/>
+      </linearGradient>
+      <linearGradient id="taskG" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#c084fc"/>
+      </linearGradient>
+      <linearGradient id="stateG" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#fbbf24"/>
+      </linearGradient>
+      <linearGradient id="codeG" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#34d399"/>
+      </linearGradient>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#10b981"/>
+      </marker>
+    </defs>
+
+    <!-- LEFT: Context window with 4 bands -->
+    <g transform="translate(30,30)">
+      <text x="0" y="0" fill="currentColor" font-size="17" font-weight="700">Context window (100%)</text>
+      <text x="0" y="22" fill="currentColor" font-size="12" opacity="0.6">each band changes at its own cadence</text>
+
+      <rect x="0" y="38" width="280" height="600" rx="14" fill="var(--bg-mute)" stroke="var(--divider)"/>
+
+      <g class="hover-target" data-tip-title="Static · 20%" data-tip="AGENTS.md, architecture rules, repo standards. Slow heartbeat — versioned, reviewed on every PR.">
+        <rect x="10" y="48" width="260" height="120" rx="8" fill="url(#staticG)" opacity="0.92">
+          <animate attributeName="opacity" values="0.85;1;0.85" dur="6s" repeatCount="indefinite"/>
+        </rect>
+        <text x="24" y="78" fill="#082f49" font-size="16" font-weight="700">STATIC · 20%</text>
+        <text x="24" y="102" fill="#0c4a6e" font-size="13">AGENTS.md · architecture</text>
+        <text x="24" y="122" fill="#0c4a6e" font-size="12" font-style="italic">slow heartbeat ♥</text>
+        <g id="static-ticks" opacity="0"></g>
+      </g>
+
+      <g class="hover-target" data-tip-title="Task · 30%" data-tip="Feature description, acceptance criteria, scope boundaries. Refreshed per task.">
+        <rect x="10" y="176" width="260" height="180" rx="8" fill="url(#taskG)" opacity="0.92">
+          <animate attributeName="opacity" values="0.88;1;0.88" dur="3s" repeatCount="indefinite"/>
+        </rect>
+        <text x="24" y="206" fill="#3b0764" font-size="16" font-weight="700">TASK · 30%</text>
+        <text x="24" y="230" fill="#581c87" font-size="13">spec · acceptance criteria</text>
+        <text x="24" y="250" fill="#581c87" font-size="12" font-style="italic">medium pulse ♥♥</text>
+      </g>
+
+      <g class="hover-target" data-tip-title="State · 20%" data-tip="Progress, completed steps, failures. Must be written atomically in JSON/YAML — never free prose.">
+        <rect x="10" y="364" width="260" height="120" rx="8" fill="url(#stateG)" opacity="0.92">
+          <animate attributeName="opacity" values="0.85;1;0.85" dur="1.5s" repeatCount="indefinite"/>
+        </rect>
+        <text x="24" y="394" fill="#451a03" font-size="16" font-weight="700">STATE · 20%</text>
+        <text x="24" y="418" fill="#78350f" font-size="13">JSON / YAML · atomic</text>
+        <text x="24" y="438" fill="#78350f" font-size="12" font-style="italic">fast pulse ♥♥♥</text>
+        <g id="state-ticks" opacity="0">
+          <text x="244" y="394" fill="#022c22" font-size="18" font-weight="700">✓</text>
+        </g>
+      </g>
+
+      <g class="hover-target" data-tip-title="Code · 30%" data-tip="Relevant files, interfaces, test structures. Loaded dynamically per subtask.">
+        <rect x="10" y="492" width="260" height="138" rx="8" fill="url(#codeG)" opacity="0.92">
+          <animate attributeName="opacity" values="0.85;1;0.85" dur="0.9s" repeatCount="indefinite"/>
+        </rect>
+        <text x="24" y="522" fill="#022c22" font-size="16" font-weight="700">CODE · 30%</text>
+        <text x="24" y="546" fill="#064e3b" font-size="13">files · interfaces · tests</text>
+        <text x="24" y="566" fill="#064e3b" font-size="12" font-style="italic">very fast ♥♥♥♥</text>
+      </g>
+    </g>
+
+    <!-- CENTER: CDLC loop -->
+    <g transform="translate(600,380)">
+      <text x="0" y="-240" text-anchor="middle" fill="currentColor" font-size="17" font-weight="700">Context Development Lifecycle</text>
+      <circle cx="0" cy="0" r="170" fill="none" stroke="var(--divider)" stroke-width="2" stroke-dasharray="5 7"/>
+
+      <g class="hover-target" data-tip-title="Generate" data-tip="Clarify intent, vocabulary, constraints, and architecture before execution.">
+        <circle cx="0" cy="-170" r="42" fill="var(--bg)" stroke="#38bdf8" stroke-width="2.5"/>
+        <text x="0" y="-165" text-anchor="middle" fill="#0ea5e9" font-size="13" font-weight="700">Generate</text>
+      </g>
+      <g class="hover-target" data-tip-title="Evaluate" data-tip="Does this context reliably shape the agent's behavior? Lint, clarity checks, behavioral evals, agentic E2E.">
+        <circle cx="162" cy="-52" r="42" fill="var(--bg)" stroke="#a855f7" stroke-width="2.5"/>
+        <text x="162" y="-47" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="700">Evaluate</text>
+      </g>
+      <g class="hover-target" data-tip-title="Distribute" data-tip="Package, version, reuse, and govern context across teams.">
+        <circle cx="100" cy="138" r="42" fill="var(--bg)" stroke="#f59e0b" stroke-width="2.5"/>
+        <text x="100" y="143" text-anchor="middle" fill="#f59e0b" font-size="13" font-weight="700">Distribute</text>
+      </g>
+      <g class="hover-target" data-tip-title="Observe" data-tip="What do PR reviews, agent logs, and incidents reveal about missing or misleading context?">
+        <circle cx="-100" cy="138" r="42" fill="var(--bg)" stroke="#10b981" stroke-width="3"/>
+        <text x="-100" y="143" text-anchor="middle" fill="#10b981" font-size="13" font-weight="700">Observe</text>
+        <circle cx="-100" cy="138" r="50" fill="none" stroke="#10b981" stroke-width="1.5" opacity="0.5">
+          <animate attributeName="r" values="46;58;46" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+      <g class="hover-target" data-tip-title="Improve" data-tip="Feed PR comments, incidents, and eval failures back into the context stack.">
+        <circle cx="-162" cy="-52" r="42" fill="var(--bg)" stroke="#ef4444" stroke-width="2.5"/>
+        <text x="-162" y="-47" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="700">Improve</text>
+      </g>
+
+      <circle r="8" fill="var(--text-1)">
+        <animateMotion dur="14s" repeatCount="indefinite"
+          path="M 0,-170 A 170,170 0 0,1 162,-52 A 170,170 0 0,1 100,138 A 170,170 0 0,1 -100,138 A 170,170 0 0,1 -162,-52 A 170,170 0 0,1 0,-170"/>
+      </circle>
+
+      <!-- arrow Observe -> Static -->
+      <path id="feedback-arrow" d="M -140,138 Q -290,220 -310,-330" stroke="#10b981" stroke-width="2.2" fill="none"
+            stroke-dasharray="6 5" marker-end="url(#arrow)" opacity="0"/>
+      <text id="feedback-label" x="-260" y="-50" fill="#10b981" font-size="12" font-weight="600" opacity="0">PR feedback → AGENTS.md</text>
+    </g>
+
+    <!-- RIGHT: Repo reality -->
+    <g transform="translate(910,30)">
+      <text x="0" y="0" fill="currentColor" font-size="17" font-weight="700">Repository reality</text>
+      <text x="0" y="22" fill="currentColor" font-size="12" opacity="0.6">git timeline keeps moving</text>
+
+      <rect x="0" y="38" width="260" height="600" rx="14" fill="var(--bg-mute)" stroke="var(--divider)"/>
+
+      <g transform="translate(16,56)">
+        <rect width="228" height="38" rx="8" fill="var(--bg)" stroke="var(--divider)"/>
+        <text x="14" y="24" fill="currentColor" font-size="13">src/api/client.ts</text>
+        <circle cx="208" cy="19" r="4" fill="#10b981"/>
+      </g>
+      <g transform="translate(16,104)">
+        <rect width="228" height="38" rx="8" fill="var(--bg)" stroke="var(--divider)"/>
+        <text x="14" y="24" fill="currentColor" font-size="13">AGENTS.md</text>
+        <circle id="agents-dot" cx="208" cy="19" r="4" fill="#10b981"/>
+      </g>
+      <g transform="translate(16,152)">
+        <rect width="228" height="38" rx="8" fill="var(--bg)" stroke="var(--divider)"/>
+        <text x="14" y="24" fill="currentColor" font-size="13">specs/feature-42.md</text>
+        <circle cx="208" cy="19" r="4" fill="#10b981"/>
+      </g>
+      <g transform="translate(16,200)">
+        <rect width="228" height="38" rx="8" fill="var(--bg)" stroke="var(--divider)"/>
+        <text x="14" y="24" fill="currentColor" font-size="13">.state/progress.json</text>
+        <circle id="state-dot" cx="208" cy="19" r="4" fill="#10b981"/>
+      </g>
+
+      <text x="16" y="280" fill="currentColor" font-size="13" font-weight="600" opacity="0.7">git timeline →</text>
+      <line x1="16" y1="300" x2="244" y2="300" stroke="var(--divider)" stroke-width="2"/>
+      <g id="git-commits"></g>
+
+      <!-- rot badge -->
+      <g id="rot-badge" opacity="0" transform="translate(16,360)">
+        <rect width="228" height="84" rx="10" fill="rgba(239,68,68,0.1)" stroke="#ef4444"/>
+        <text x="14" y="28" fill="#ef4444" font-size="14" font-weight="700">⚠ Context rot detected</text>
+        <text id="rot-line1" x="14" y="50" fill="#ef4444" font-size="12">AGENTS.md → 0 commits behind</text>
+        <text id="rot-line2" x="14" y="68" fill="#ef4444" font-size="12">state file → last write 0 turns ago</text>
+      </g>
+
+      <!-- engineered ok badge -->
+      <g id="ok-badge" opacity="0" transform="translate(16,360)">
+        <rect width="228" height="64" rx="10" fill="rgba(16,185,129,0.1)" stroke="#10b981"/>
+        <text x="14" y="26" fill="#10b981" font-size="14" font-weight="700">✓ Context in sync</text>
+        <text x="14" y="48" fill="#10b981" font-size="12">atomic writes · evals ✓ · re-synced</text>
+      </g>
+    </g>
+
+    <!-- Drift line: context window <-> repo -->
+    <path id="drift" d="M 310,380 Q 600,560 910,380" stroke="#10b981" stroke-width="3" fill="none" opacity="0.7"/>
+    <text id="drift-label" x="600" y="700" text-anchor="middle" fill="currentColor" font-size="13" font-weight="600" opacity="0.7">in sync</text>
+  </svg>
+</div>
+
+<div class="legend">
+  <strong>How to play:</strong> Drag the <em>Turn</em> slider — drift grows, AGENTS.md falls behind, the rot badge appears. Toggle <em>Engineered mode</em> — atomic state writes (✓) light up, the loop sends a PR-feedback arrow to refresh AGENTS.md, and the drift snaps back to green. Hover any band or lifecycle phase for details.
+</div>
+
+</div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const turn = $('turn');
+  const turnValue = $('turn-value');
+  const engToggle = $('eng-toggle');
+  const reset = $('reset');
+  const tt = $('tt');
+  const stage = document.querySelector('.stage');
+
+  // build git commits
+  const commitsG = $('git-commits');
+  for (let i = 0; i < 4; i++) {
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', 40 + i * 60);
+    c.setAttribute('cy', 300);
+    c.setAttribute('r', 5);
+    c.setAttribute('fill', 'currentColor');
+    c.setAttribute('opacity', '0.5');
+    commitsG.appendChild(c);
+  }
+  const head = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  head.setAttribute('id', 'head-commit');
+  head.setAttribute('cx', 220);
+  head.setAttribute('cy', 300);
+  head.setAttribute('r', 7);
+  head.setAttribute('fill', '#0ea5e9');
+  commitsG.appendChild(head);
+  const ha = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+  ha.setAttribute('attributeName', 'r');
+  ha.setAttribute('values', '6;9;6');
+  ha.setAttribute('dur', '1.6s');
+  ha.setAttribute('repeatCount', 'indefinite');
+  head.appendChild(ha);
+
+  let engineered = false;
+
+  function render() {
+    const t = +turn.value;
+    turnValue.textContent = `turn ${t} / 25`;
+    const progress = (t - 1) / 24; // 0..1
+    const driftAmount = engineered ? 0 : progress;
+
+    // drift line: green (in sync) -> red (frayed)
+    const drift = $('drift');
+    const driftLabel = $('drift-label');
+    if (engineered) {
+      drift.setAttribute('stroke', '#10b981');
+      drift.setAttribute('stroke-dasharray', '0');
+      drift.setAttribute('opacity', '0.85');
+      driftLabel.textContent = 'engineered mode — in sync';
+      driftLabel.setAttribute('fill', '#10b981');
+      driftLabel.setAttribute('opacity', '1');
+    } else if (progress < 0.25) {
+      drift.setAttribute('stroke', '#10b981');
+      drift.setAttribute('stroke-dasharray', '0');
+      drift.setAttribute('opacity', String(0.85 - progress * 0.3));
+      driftLabel.textContent = 'in sync';
+      driftLabel.setAttribute('fill', '#10b981');
+      driftLabel.setAttribute('opacity', '0.8');
+    } else {
+      // interpolate green -> red, dash widens with drift
+      const r = Math.round(16 + (239 - 16) * progress);
+      const g = Math.round(185 - (185 - 68) * progress);
+      const b = Math.round(129 - (129 - 68) * progress);
+      drift.setAttribute('stroke', `rgb(${r},${g},${b})`);
+      drift.setAttribute('stroke-dasharray', `${4 + driftAmount * 12} ${2 + driftAmount * 6}`);
+      drift.setAttribute('stroke-width', String(3 + driftAmount * 2));
+      drift.setAttribute('opacity', '0.95');
+      driftLabel.textContent = progress > 0.6
+        ? 'drift widening — context rot'
+        : 'drift growing →';
+      driftLabel.setAttribute('fill', `rgb(${r},${g},${b})`);
+      driftLabel.setAttribute('opacity', '1');
+    }
+
+    // file dots turn amber/red as turns grow (unless engineered)
+    const agentsBehind = engineered ? 0 : Math.floor(progress * 10);
+    const stateAge = engineered ? 0 : Math.floor(progress * 12);
+    $('agents-dot').setAttribute('fill',
+      engineered ? '#10b981' : (agentsBehind > 5 ? '#ef4444' : agentsBehind > 2 ? '#f59e0b' : '#10b981'));
+    $('state-dot').setAttribute('fill',
+      engineered ? '#10b981' : (stateAge > 6 ? '#ef4444' : stateAge > 3 ? '#f59e0b' : '#10b981'));
+
+    // badges
+    const showRot = !engineered && progress > 0.35;
+    $('rot-badge').setAttribute('opacity', showRot ? '1' : '0');
+    $('rot-line1').textContent = `AGENTS.md → ${agentsBehind} commits behind`;
+    $('rot-line2').textContent = `state file → last write ${stateAge} turns ago`;
+    $('ok-badge').setAttribute('opacity', engineered ? '1' : '0');
+
+    // engineered-mode visuals: state ticks + feedback arrow
+    $('state-ticks').setAttribute('opacity', engineered ? '1' : '0');
+    $('feedback-arrow').setAttribute('opacity', engineered ? '0.9' : '0');
+    $('feedback-label').setAttribute('opacity', engineered ? '1' : '0');
+  }
+
+  turn.addEventListener('input', render);
+  engToggle.addEventListener('click', () => {
+    engineered = !engineered;
+    engToggle.classList.toggle('on', engineered);
+    engToggle.setAttribute('aria-checked', String(engineered));
+    render();
+  });
+  engToggle.addEventListener('keydown', (e) => {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); engToggle.click(); }
+  });
+  reset.addEventListener('click', () => {
+    turn.value = 1;
+    engineered = false;
+    engToggle.classList.remove('on');
+    engToggle.setAttribute('aria-checked', 'false');
+    render();
+  });
+
+  // tooltips
+  document.querySelectorAll('.hover-target').forEach(el => {
+    el.addEventListener('mouseenter', (e) => {
+      const title = el.dataset.tipTitle;
+      const body = el.dataset.tip;
+      tt.innerHTML = `<strong>${title}</strong>${body}`;
+      tt.classList.add('show');
+    });
+    el.addEventListener('mousemove', (e) => {
+      const rect = stage.getBoundingClientRect();
+      const x = e.clientX - rect.left + 14;
+      const y = e.clientY - rect.top + 14;
+      tt.style.left = Math.min(x, rect.width - 260) + 'px';
+      tt.style.top = y + 'px';
+    });
+    el.addEventListener('mouseleave', () => tt.classList.remove('show'));
+  });
+
+  render();
+</script>
+</body>
+</html>
