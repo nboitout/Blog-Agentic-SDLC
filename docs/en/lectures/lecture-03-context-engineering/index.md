@@ -161,9 +161,6 @@ The full picture is broader than context-window management. Context engineering 
   <a href="/Blog-Agentic-SDLC/lecture-03-context-recap.png" target="_blank" rel="noopener" aria-label="Open full-size visual recap in a new tab">
     <img src="/lecture-03-context-recap.png" alt="Infographic recap of Lecture 03 covering runtime context layers, the Context Development Lifecycle, good practices, and context rot prevention." loading="lazy">
   </a>
-  <div class="lecture-recap-caption">
-    Runtime context (layers + 20 / 30 / 20 / 30 budget) → Context Development Lifecycle (Generate · Evaluate · Distribute · Observe · Improve) → good practices → context rot prevention.
-  </div>
   <div class="lecture-recap-actions">
     <a href="/Blog-Agentic-SDLC/lecture-03-context-recap.png" target="_blank" rel="noopener">View full-size</a>
     <span aria-hidden="true">·</span>
