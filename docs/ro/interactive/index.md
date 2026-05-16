@@ -21,7 +21,7 @@ La fiecare schimb, întreaga conversație este retrimisă modelului de la zero. 
 
 **Procesor:** modelul care primește contextul complet. Numărul de token-uri afișat este ceea ce plătiți ca *intrare* pentru acel turn.
 
-**Multiplicatorul de cost:** cât de mult mai scump este turn-ul curent față de primul. La turn-ul 10 cu setările implicite, este deja ~2,7×. Costul cumulat ajunge atunci la ~5× față de ce ar percepe un model cu cost fix.
+**Multiplicatorul de cost:** cât de mult mai scump este turn-ul curent față de primul. Deja la turn-ul 10 cu setările implicite, este ~2,7×. Costul cumulat ajunge atunci la ~5× față de ce ar percepe un model cu cost fix.
 
 **Modul Engineered:** activează un compresor între buffer și procesor, care limitează contextul la ultimele 3 turn-uri, simulând un management deliberat al contextului. Curba verde rămâne plată indiferent cât durează conversația.
 
@@ -61,7 +61,7 @@ Modul „Engineered" al widget-ului este un model simplificat al acestei ultime 
 |---|---|---|
 | **Scindarea conversației** | Pornire chat nou — parabola se resetează la zero | Reset complet |
 | **Rezumare la cerere** | Solicitați modelului să comprime istoricul, porniți un chat nou cu rezumatul | 60–80% |
-| **Extragerea stării** | Distilați conversația într-un obiect structurat — `{ rezolvat: [...], sarcina_curenta: "...", restrictii: [...] }` | 90–95% |
+| **Extragerea stării** | Distilați conversația într-un obiect structurat — `{ resolved: [...], current_task: "...", constraints: [...] }` | 90–95% |
 | **Retenție selectivă** | Păstrați doar turn-urile cauzal relevante pentru următorul răspuns | Variabil |
 | **Memorie externă** | Mutați faptele din fereastra de context într-un sistem de retrieval, injectați doar ce este necesar per turn | Cost de transport aproape zero |
 
@@ -75,7 +75,7 @@ Diferența esențială față de compacting:
 
 ## Economia abonamentelor: calculul pragului de rentabilitate
 
-Dacă abonamentul dumneavoastră lunar este de 20 $ — câte turn-uri consecutive pe zi poate absorbi lab-ul înainte de a pierde bani pe sesiunea dumneavoastră?
+Dacă abonamentul dumneavoastră lunar este de 20 $ — câte turn-uri consecutive pe zi poate absorbi laboratorul de IA înainte de a pierde bani pe sesiunea dumneavoastră?
 
 **Venit per utilizator per zi:**
 
@@ -97,13 +97,13 @@ Egalând costul cu 0,667 \$ și rezolvând pentru N, obținem numărul de turn-u
 
 **Trei concluzii:**
 
-**Prima — modelul funcționează doar pentru că majoritatea utilizatorilor nu se apropie de acest prag.** Utilizatorul median trimite 3–5 mesaje pe zi. Utilizatorii intensivi sunt subvenționați de cei cu utilizare redusă. Abonamentul este un pariu actuarial pe distribuția utilizării.
+**În primul rând — modelul funcționează doar pentru că majoritatea utilizatorilor nu se apropie de acest prag.** Utilizatorul median trimite 3–5 mesaje pe zi. Utilizatorii intensivi sunt subvenționați de cei cu utilizare redusă. Abonamentul este un pariu actuarial pe distribuția utilizării.
 
-**A doua — pornirea unui chat nou este context engineering gratuit.** O sesiune lungă de N turn-uri costă echivalentul N² în token-uri de intrare. Două sesiuni de N/2 turn-uri fiecare costă jumătate — parabola se resetează la zero. Nu există nicio justificare tehnică pentru a menține o singură conversație deschisă pentru sarcini fără legătură între ele.
+**În al doilea rând — pornirea unui chat nou este context engineering gratuit.** O sesiune lungă de N turn-uri costă echivalentul a N² token-uri de intrare. Două sesiuni de N/2 turn-uri fiecare costă jumătate — parabola se resetează la zero. Nu există nicio justificare tehnică pentru a menține o singură conversație deschisă pentru sarcini fără legătură între ele.
 
-**A treia — fereastra glisantă de ~44k token-uri pe 5 ore nu este arbitrară.** Este aproximativ rata limită care menține costul așteptat per utilizator sub venitul din abonament, presupunând un mix mediu de utilizatori ușori și intensivi. Această limită este un gardian actuarial, nu tehnic.
+**În al treilea rând — fereastra glisantă de ~44k token-uri pe 5 ore nu este arbitrară.** Este aproximativ rata limită care menține costul așteptat per utilizator sub venitul din abonament, presupunând un mix mediu de utilizatori ușori și intensivi. Această limită este un gardian actuarial, nu tehnic.
 
-**Implicația incomodă:** interesul lab-ului și al dumneavoastră sunt perfect aliniate — amândoi doriți un context mai scurt, mai dens, mai bine structurat. Context engineering nu este un truc de optimizare. Este o consecință directă a modului în care funcționează atenția transformer și a structurii economice a abonamentelor.
+**Implicația incomodă:** interesul laboratorului de IA și al dumneavoastră sunt perfect aliniate — amândoi doriți un context mai scurt, mai dens, mai bine structurat. Context engineering nu este un simplu truc de optimizare. Este o consecință directă a modului în care funcționează atenția transformerelor și a structurii economice a abonamentelor.
 
 ---
 
