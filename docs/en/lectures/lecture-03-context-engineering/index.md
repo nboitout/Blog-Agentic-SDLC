@@ -224,6 +224,15 @@ This is the bridge from vibe coding to professional agentic engineering.
 
 The practical consequence is simple: context should be managed with the same seriousness as code.
 
+<div class="widget-cta">
+  <span class="widget-cta-icon">🗺️</span>
+  <div class="widget-cta-body">
+    <strong>Try the interactive Context Cockpit</strong>
+    <span>One panel synthesizing the four context layers, the lifecycle loop, and context rot. Drag the turn slider to watch drift grow — then flip Engineered mode to snap it back.</span>
+  </div>
+  <a href="/Blog-Agentic-SDLC/context-cockpit.html" class="widget-cta-btn">Launch Widget →</a>
+</div>
+
 ## Good practices: treating context as a software artifact {#good-practices}
 
 Once context shapes agent behavior, it needs engineering discipline.
