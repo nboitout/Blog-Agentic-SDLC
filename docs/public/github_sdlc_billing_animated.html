@@ -3,616 +3,848 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GitHub-Centric AI-Native SDLC — Billing Walkthrough</title>
+<title>GitHub-Centric AI-Native SDLC - Billing Map</title>
+<link rel="icon" type="image/svg+xml" href="/Blog-Agentic-SDLC/favicon-dots.svg">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --navy:   #1a2e5a;
-    --blue:   #2563eb;
-    --green:  #16a34a;
-    --red:    #dc2626;
-    --amber:  #f59e0b;
-    --bg:     #f0f4f8;
-    --card-bg: #ffffff;
-    --border: #dde3ef;
-    --text:   #1e293b;
-    --muted:  #64748b;
-    --radius: 10px;
-    --shadow-active: 0 0 0 3px rgba(37,99,235,0.18), 0 6px 24px rgba(37,99,235,0.14);
-    --shadow-green:  0 0 0 3px rgba(22,163,74,0.18),  0 6px 24px rgba(22,163,74,0.12);
-    --shadow-red:    0 0 0 3px rgba(220,38,38,0.18),   0 6px 24px rgba(220,38,38,0.10);
+    --navy: #182c7a;
+    --navy-2: #223b9d;
+    --ink: #172033;
+    --muted: #596580;
+    --line: rgba(24, 44, 122, 0.14);
+    --panel: rgba(255, 255, 255, 0.92);
+    --bg: #f4f7ff;
+    --blue: #2563eb;
+    --blue-soft: rgba(37, 99, 235, 0.1);
+    --green: #14803c;
+    --green-soft: rgba(20, 128, 60, 0.1);
+    --gray-soft: rgba(89, 101, 128, 0.08);
+    --shadow: 0 22px 60px rgba(23, 32, 51, 0.12);
+    --radius: 24px;
+    --max: 1180px;
+    --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
-  html, body {
-    width: 100%; height: 100%;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.5;
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    color: var(--ink);
+    background:
+      radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 28%),
+      radial-gradient(circle at top right, rgba(20, 128, 60, 0.08), transparent 22%),
+      linear-gradient(180deg, #fbfcff 0%, var(--bg) 100%);
+    line-height: 1.65;
+  }
+
+  a { color: inherit; }
+
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    backdrop-filter: blur(14px) saturate(1.15);
+    background: rgba(251, 252, 255, 0.82);
+    border-bottom: 1px solid rgba(24, 44, 122, 0.08);
+  }
+
+  .nav-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 20px;
+    min-height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--navy);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .brand-mark {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--blue), var(--navy));
+    box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.12);
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 8px 10px;
+    border-radius: 999px;
+  }
+
+  .nav-links a:hover {
+    color: var(--navy);
+    background: rgba(24, 44, 122, 0.06);
+  }
+
+  .page {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 36px 20px 72px;
+  }
+
+  .hero,
+  .section,
+  .executive-band {
+    margin-bottom: 28px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.95fr);
+    gap: 22px;
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .hero-copy {
+    padding: 34px;
+  }
+
+  .eyebrow,
+  .kicker,
+  .card-label,
+  .chip,
+  .stage-meta,
+  .table th {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .kicker,
+  .eyebrow,
+  .card-label {
+    color: var(--blue);
+  }
+
+  .hero h1 {
+    margin: 10px 0 16px;
+    max-width: 10.5ch;
+    font-size: clamp(2.8rem, 5vw, 5.25rem);
+    line-height: 0.94;
+    letter-spacing: -0.06em;
+    color: var(--navy);
+  }
+
+  .lede {
+    margin: 0;
+    max-width: 58ch;
+    font-size: 1.08rem;
+    color: var(--muted);
+  }
+
+  .hero-side {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 22px;
+  }
+
+  .rule-box,
+  .reader-card,
+  .legend-card,
+  .stage-card,
+  .fork-card,
+  .table-wrap,
+  .note-card {
+    position: relative;
     overflow: hidden;
   }
 
-  /* ── Layout shell ── */
-  .shell {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    height: 100vh;
-    padding: 14px 16px 0;
+  .rule-box {
+    padding: 24px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.03));
+    border: 1px solid rgba(37, 99, 235, 0.18);
+  }
+
+  .rule-box strong {
+    display: block;
+    margin: 10px 0 12px;
+    font-size: 1.55rem;
+    line-height: 1.18;
+    color: var(--navy);
+  }
+
+  .rule-box p,
+  .meta-pills span,
+  .reader-card p,
+  .legend-card p,
+  .stage-card p,
+  .fork-card p,
+  .note-card p,
+  .table td {
+    color: var(--muted);
+  }
+
+  .meta-pills {
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
   }
 
-  /* ── Header ── */
-  .header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
-  .header-left {}
-  .title  { font-size: 20px; font-weight: 800; color: var(--navy); letter-spacing: -0.3px; line-height: 1.2; }
-  .subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
-  .billing-banner {
-    background: #fffbeb; border: 1.5px solid var(--amber); border-radius: 7px;
-    padding: 6px 12px; font-size: 12px; color: #92400e; font-weight: 700;
-    display: flex; align-items: center; gap: 6px; white-space: nowrap;
-    align-self: flex-start; margin-top: 2px;
+  .meta-pills span {
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: #fff;
+    font-size: 0.77rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
-  /* ── Legend ── */
-  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
-  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); }
-  .legend-dot  { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
-  .lg-green  { background: var(--green); }
-  .lg-blue   { background: var(--blue);  }
-  .lg-gray   { background: #9ca3af; }
-
-  /* ── Main body ── */
-  .body { display: flex; gap: 14px; min-height: 0; }
-
-  /* ── Flow area ── */
-  .flow-area { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
-
-  /* ── Rows ── */
-  .row { display: flex; align-items: stretch; gap: 0; flex: 1; min-height: 0; }
-
-  /* ── Cards ── */
-  .card {
-    background: var(--card-bg);
-    border: 2px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 13px;
-    flex: 1;
-    display: flex; flex-direction: column;
-    transition: border-color 0.35s, box-shadow 0.35s, transform 0.3s, opacity 0.35s;
-    opacity: 0.28;
-    min-width: 0;
-  }
-  .card.active {
-    border-color: var(--blue);
-    box-shadow: var(--shadow-active);
-    transform: translateY(-4px);
-    opacity: 1;
-  }
-  .card.done { opacity: 0.55; border-color: #93c5fd; }
-
-  .card-num {
-    width: 22px; height: 22px; border-radius: 50%;
-    background: var(--navy); color: white;
-    font-size: 12px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 6px; flex-shrink: 0;
-  }
-  .card.active .card-num { background: var(--blue); }
-  .card-icon  { font-size: 26px; text-align: center; margin: 4px 0 6px; }
-  .card-title { font-size: 11px; font-weight: 800; color: var(--navy); text-align: center; margin-bottom: 3px; line-height: 1.3; letter-spacing: 0.2px; }
-  .card-sub   { font-size: 10px; color: var(--blue); font-style: italic; text-align: center; margin-bottom: 4px; }
-  .card-desc  { font-size: 11px; color: #374151; line-height: 1.45; margin-bottom: 6px; }
-
-  .cbullets { list-style: none; margin-bottom: 6px; }
-  .cbullets li { font-size: 10.5px; color: #374151; padding: 2px 0 2px 12px; position: relative; line-height: 1.4; }
-  .cbullets li::before { content: "–"; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
-
-  /* ── Badges ── */
-  .bbadges { margin-top: auto; display: flex; flex-direction: column; gap: 4px; }
-  .badge {
-    border-radius: 5px; padding: 4px 7px; font-size: 10.5px; line-height: 1.35;
-    display: flex; align-items: flex-start; gap: 5px;
-  }
-  .badge-green { background: #dcfce7; border: 1px solid #86efac; color: #15803d; }
-  .badge-blue  { background: #dbeafe; border: 1px solid #93c5fd; color: #1d4ed8; }
-  .badge-gray  { background: #f3f4f6; border: 1px solid #d1d5db; color: #4b5563; }
-  .badge-icon  { font-size: 12px; flex-shrink: 0; line-height: 1.35; }
-  .badge-note  { font-size: 9.5px; color: #6b7280; font-style: italic; margin-top: 3px; line-height: 1.3; }
-
-  /* ── Arrows horizontal ── */
-  .arrow-wrap {
-    flex-shrink: 0; width: 36px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-  }
-  .arrow-line-box { display: flex; align-items: center; }
-  .arrow-line {
-    width: 24px; height: 3px;
-    background: #c8d4e8; border-radius: 2px 0 0 2px;
-    transition: background 0.35s;
-  }
-  .arrow-head {
-    width: 0; height: 0;
-    border-top: 6px solid transparent; border-bottom: 6px solid transparent;
-    border-left: 10px solid #c8d4e8;
-    transition: border-left-color 0.35s;
-  }
-  .arrow-label {
-    font-size: 9px; color: #aab4c8; text-align: center; margin-top: 4px;
-    line-height: 1.2; transition: color 0.35s; max-width: 38px;
-  }
-  .arrow-wrap.lit .arrow-line  { background: var(--blue); }
-  .arrow-wrap.lit .arrow-head  { border-left-color: var(--blue); }
-  .arrow-wrap.lit .arrow-label { color: var(--blue); font-weight: 700; }
-
-  /* ── Row connector (vertical) ── */
-  .row-connector {
-    display: flex; align-items: center; gap: 8px;
-    padding: 0 0 0 20px;
-    flex-shrink: 0;
-  }
-  .rc-col { display: flex; flex-direction: column; align-items: center; }
-  .rc-vert {
-    width: 3px; height: 16px;
-    background: #c8d4e8; border-radius: 0 0 2px 2px;
-    transition: background 0.35s;
-  }
-  .rc-head {
-    width: 0; height: 0;
-    border-left: 6px solid transparent; border-right: 6px solid transparent;
-    border-top: 10px solid #c8d4e8; margin-left: -1.5px;
-    transition: border-top-color 0.35s;
-  }
-  .rc-label { font-size: 10px; color: #aab4c8; font-style: italic; margin-left: 6px; transition: color 0.35s; }
-  .row-connector.lit .rc-vert  { background: var(--blue); }
-  .row-connector.lit .rc-head  { border-top-color: var(--blue); }
-  .row-connector.lit .rc-label { color: var(--blue); font-weight: 700; }
-
-  /* ── Step 5 split cards ── */
-  .card-5a, .card-5b {
-    background: var(--card-bg); border: 2px solid var(--border); border-radius: var(--radius);
-    padding: 14px 13px; flex: 1; display: flex; flex-direction: column;
-    transition: border-color 0.35s, box-shadow 0.35s, transform 0.3s, opacity 0.35s; opacity: 0.28;
-    min-width: 0;
-  }
-  .card-5a.active { border-color: var(--green); box-shadow: var(--shadow-green);  transform: translateY(-4px); opacity: 1; }
-  .card-5b.active { border-color: var(--red);   box-shadow: var(--shadow-red);    transform: translateY(-4px); opacity: 1; }
-  .card-5a.done   { opacity: 0.55; border-color: #86efac; }
-  .card-5b.done   { opacity: 0.55; border-color: #fca5a5; }
-
-  .label-5a { font-size: 12px; font-weight: 800; color: var(--green); margin-bottom: 6px; }
-  .label-5b { font-size: 12px; font-weight: 800; color: var(--red);   margin-bottom: 6px; }
-  .sub-5    { font-size: 11px; color: #374151; line-height: 1.45; margin-bottom: 6px; flex: 1; }
-
-  .pr-flow { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-  .pr-badge-sm  { background: var(--navy); color: white; border-radius: 4px; font-size: 10px; padding: 2px 6px; font-weight: 700; }
-  .ci-dot       { width: 18px; height: 18px; border-radius: 50%; background: #d1d5db; border: 2px solid #6b7280; display: flex; align-items: center; justify-content: center; font-size: 10px; }
-  .ready-dot    { width: 18px; height: 18px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; }
-  .arrow-sm-inner { font-size: 12px; color: #6b7280; }
-
-  /* ── Sidebar ── */
-  .sidebar { width: 230px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
-
-  .sidebar-panel {
-    background: var(--card-bg); border: 2px solid var(--border); border-radius: var(--radius);
-    padding: 10px 12px; flex: 1;
-    opacity: 0.28; transition: opacity 0.35s, border-color 0.35s, box-shadow 0.35s;
-    display: flex; flex-direction: column;
-  }
-  .sidebar-panel.active       { opacity: 1; border-color: var(--navy);  box-shadow: 0 0 0 2px rgba(26,46,90,0.12); }
-  .sidebar-panel.active-green { opacity: 1; border-color: var(--green); box-shadow: var(--shadow-green); }
-  .sidebar-panel.active-blue  { opacity: 1; border-color: var(--blue);  box-shadow: var(--shadow-active); }
-
-  .panel-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .panel-letter {
-    width: 24px; height: 24px; border-radius: 50%;
-    color: white; font-size: 12px; font-weight: 800;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .pl-navy  { background: var(--navy);   }
-  .pl-green { background: #15803d; }
-  .pl-blue  { background: #1d4ed8; }
-  .panel-title { font-size: 11px; font-weight: 800; line-height: 1.2; }
-  .pt-default { color: var(--navy);  }
-  .pt-green   { color: #15803d; }
-  .pt-blue    { color: #1d4ed8; }
-  .panel-body { font-size: 10.5px; color: #374151; line-height: 1.5; }
-
-  .pbullets { list-style: none; }
-  .pbullets li { font-size: 10.5px; color: #374151; padding: 2.5px 0 2.5px 13px; position: relative; line-height: 1.35; }
-  .pbullets li::before { content: "•"; position: absolute; left: 0; font-weight: 700; }
-  .pbullets.green li::before { color: var(--green); }
-  .pbullets.blue  li::before { color: var(--blue);  }
-
-  .key-rule {
-    background: #eff6ff; border: 1.5px solid #93c5fd; border-radius: var(--radius);
-    padding: 8px 11px; font-size: 11px; color: #1d4ed8; line-height: 1.5;
-    opacity: 0.28; transition: opacity 0.35s, border-color 0.35s;
-  }
-  .key-rule.active { opacity: 1; border-color: var(--blue); }
-
-  /* ── Controls bar (fixed bottom) ── */
-  .controls-bar {
-    background: white; border-top: 1.5px solid var(--border);
-    padding: 10px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-    flex-shrink: 0;
-  }
-  .btn {
-    padding: 7px 18px; border-radius: 7px; border: none; cursor: pointer;
-    font-size: 13px; font-weight: 600; transition: background 0.2s, opacity 0.2s;
-    white-space: nowrap;
-  }
-  .btn:disabled { opacity: 0.35; cursor: default; }
-  .btn-primary   { background: var(--blue);  color: white; }
-  .btn-primary:hover:not(:disabled)   { background: #1d4ed8; }
-  .btn-secondary { background: #e2e8f0; color: #334155; }
-  .btn-secondary:hover:not(:disabled) { background: #cbd5e1; }
-  .btn-auto      { background: var(--green); color: white; min-width: 96px; }
-  .btn-auto:hover { background: #15803d; }
-  .btn-auto.stop  { background: var(--red);  }
-  .btn-auto.stop:hover { background: #b91c1c; }
-
-  .step-label { font-size: 12px; color: var(--muted); font-weight: 600; flex: 1; }
-
-  .progress-dots { display: flex; gap: 6px; }
-  .dot { width: 9px; height: 9px; border-radius: 50%; background: #cbd5e1; transition: background 0.3s, transform 0.3s; }
-  .dot.on { background: var(--blue); transform: scale(1.3); }
-
-  /* ── Executive footer (step 7) ── */
-  .exec-footer {
-    background: var(--navy); border-radius: var(--radius); padding: 10px 14px;
-    font-size: 12px; color: #c8d4ec; line-height: 1.6;
-    opacity: 0; max-height: 0; overflow: hidden;
-    transition: opacity 0.5s, max-height 0.5s, padding 0.5s;
-    flex-shrink: 0;
-  }
-  .exec-footer.active { opacity: 1; max-height: 80px; }
-  .exec-footer strong { color: white; }
-  .exec-footer em     { color: #93c5fd; }
-</style>
-</head>
-<body>
-<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">GitHub-Centric AI-Native SDLC — Billing animated walkthrough</h2>
-
-<div class="shell">
-
-  <!-- HEADER -->
-  <div>
-    <div class="header">
-      <div class="header-left">
-        <div class="title">GitHub-Centric AI-Native SDLC</div>
-        <div class="subtitle">When GitHub becomes the control plane for spec-driven, AI-generated delivery — with Anthropic billing annotations</div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot lg-green"></div> Programmatic → separate Agent SDK credit</div>
-          <div class="legend-item"><div class="legend-dot lg-blue"></div>  Interactive → stays on subscription</div>
-          <div class="legend-item"><div class="legend-dot lg-gray"></div>  GitHub artifact — not an Anthropic item</div>
-        </div>
-      </div>
-      <div class="billing-banner">📅 Anthropic Agent SDK billing — effective June 15, 2026</div>
-    </div>
-  </div>
-
-  <!-- BODY -->
-  <div class="body">
-
-    <!-- FLOW AREA -->
-    <div class="flow-area">
-
-      <!-- ROW 1 -->
-      <div class="row">
-
-        <div class="card" id="c1">
-          <div class="card-num">1</div>
-          <div class="card-icon">⚙️</div>
-          <div class="card-title">REPO SPEC / GITHUB ISSUES</div>
-          <div class="card-desc">Project intent and execution-ready specs live in the repository. GitHub Issues or Projects hold the work graph.</div>
-          <ul class="cbullets">
-            <li>Specs versioned in repo</li>
-            <li>User Stories in GitHub Issues</li>
-            <li>Planning close to code</li>
-          </ul>
-          <div class="bbadges">
-            <div class="badge badge-gray"><span class="badge-icon">📁</span><span>GitHub / repo artifact — not an Anthropic billing item</span></div>
-          </div>
-        </div>
-
-        <div class="arrow-wrap" id="a1">
-          <div class="arrow-line-box"><div class="arrow-line"></div><div class="arrow-head"></div></div>
-          <div class="arrow-label">issue / spec</div>
-        </div>
-
-        <div class="card" id="c2">
-          <div class="card-num">2</div>
-          <div class="card-icon">⚡</div>
-          <div class="card-title">GITHUB EVENT</div>
-          <div class="card-desc">An issue update, project transition, or workflow trigger starts execution. Work item becomes agent-ready.</div>
-          <ul class="cbullets">
-            <li>Work item becomes agent-ready</li>
-            <li>Workflow state visible in Projects</li>
-          </ul>
-          <div class="bbadges">
-            <div class="badge badge-gray"><span class="badge-icon">⚡</span><span>GitHub trigger — not an Anthropic billing item</span></div>
-          </div>
-        </div>
-
-        <div class="arrow-wrap" id="a2">
-          <div class="arrow-line-box"><div class="arrow-line"></div><div class="arrow-head"></div></div>
-          <div class="arrow-label">triggers</div>
-        </div>
-
-        <div class="card" id="c3">
-          <div class="card-num">3</div>
-          <div class="card-icon">🧠</div>
-          <div class="card-title">MAIN CLAUDE ORCHESTRATOR</div>
-          <div class="card-sub">US-level orchestrator</div>
-          <div class="card-desc">Reads repo spec + GitHub context, plans the User Story, sequences work, delegates tasks to sub-agents.</div>
-          <div class="bbadges">
-            <div class="badge badge-blue"><span class="badge-icon">👤</span><span>Interactive Claude Code session → subscription usage</span></div>
-            <div class="badge badge-green"><span class="badge-icon">🤖</span><span>Via Agent SDK or <code style="background:#f0fdf4;padding:0 3px;border-radius:3px;font-size:10px">claude -p</code> → separate Agent SDK credit</span></div>
-            <div class="badge-note">Billing depends on how the orchestrator is invoked, not its role.</div>
-          </div>
-        </div>
-
-        <div class="arrow-wrap" id="a3">
-          <div class="arrow-line-box"><div class="arrow-line"></div><div class="arrow-head"></div></div>
-          <div class="arrow-label">delegates tasks</div>
-        </div>
-
-        <div class="card" id="c4">
-          <div class="card-num">4</div>
-          <div class="card-icon">👥</div>
-          <div class="card-title">CLAUDE SUB-AGENTS</div>
-          <div class="card-sub">task-level coding agents</div>
-          <ul class="cbullets">
-            <li>Read task context from issue / spec</li>
-            <li>Generate code, run tests &amp; lint</li>
-            <li>Open draft PR on branch</li>
-            <li>Update GitHub status / labels</li>
-          </ul>
-          <div class="bbadges">
-            <div class="badge badge-blue"><span class="badge-icon">👤</span><span>Inside interactive Claude Code → subscription</span></div>
-            <div class="badge badge-green"><span class="badge-icon">🤖</span><span>SDK-defined / automated → separate Agent SDK credit</span></div>
-            <div class="badge-note">Role (sub-agent) does not determine billing; invocation mode does.</div>
-          </div>
-        </div>
-
-      </div><!-- /row1 -->
-
-      <!-- ROW CONNECTOR -->
-      <div class="row-connector" id="rowArrow">
-        <div class="rc-col">
-          <div class="rc-vert"></div><div class="rc-head"></div>
-        </div>
-        <div class="rc-label">PR opens or needs resolution ↓</div>
-      </div>
-
-      <!-- ROW 2 -->
-      <div class="row">
-
-        <div class="card-5a" id="c5a">
-          <div class="label-5a">✅ 5A — Draft PR Created</div>
-          <div class="pr-flow">
-            <div class="pr-badge-sm">PR</div>
-            <div class="arrow-sm-inner">→</div>
-            <div class="ci-dot">○</div>
-            <div class="arrow-sm-inner">→</div>
-            <div class="ready-dot">✓</div>
-          </div>
-          <div class="sub-5">AI coding or CI automation via Agent SDK or Claude Code GitHub Actions is programmatic usage — each run draws from the separate Agent SDK credit pool.</div>
-          <div class="bbadges">
-            <div class="badge badge-green"><span class="badge-icon">🤖</span><span>Programmatic path → separate Agent SDK credit</span></div>
-          </div>
-        </div>
-
-        <div class="arrow-wrap" id="a4x" style="align-self:center;">
-          <div class="arrow-line-box"><div class="arrow-line"></div><div class="arrow-head"></div></div>
-          <div class="arrow-label">if ready</div>
-        </div>
-
-        <div class="card-5b" id="c5b">
-          <div class="label-5b">⚠️ 5B — Needs Resolution</div>
-          <div class="sub-5">Ambiguous spec · Task re-scoping · Environment block · Architecture decision requiring human input before the agent can proceed.</div>
-          <div class="bbadges">
-            <div class="badge badge-green"><span class="badge-icon">🤖</span><span>Programmatic attempt already used separate credit</span></div>
-            <div class="badge badge-gray"><span class="badge-icon">📁</span><span>Clarification returns to GitHub workflow — not a billing event</span></div>
-            <div class="badge-note">The clarification process itself is not an Anthropic billing item.</div>
-          </div>
-        </div>
-
-        <div class="arrow-wrap" id="a5" style="align-self:center;">
-          <div class="arrow-line-box"><div class="arrow-line"></div><div class="arrow-head"></div></div>
-          <div class="arrow-label">resolved / merged</div>
-        </div>
-
-        <div class="card" id="c6">
-          <div class="card-num">6</div>
-          <div class="card-icon">📋</div>
-          <div class="card-title">USER STORY COMPLETION</div>
-          <div class="card-desc">GitHub tracks progress and closure once tasks are resolved and PRs are merged. Spec is the ground truth throughout.</div>
-          <ul class="cbullets">
-            <li>GitHub status / label updates</li>
-            <li>PR review &amp; merge</li>
-            <li>Issue closed against spec</li>
-          </ul>
-          <div class="bbadges">
-            <div class="badge badge-gray"><span class="badge-icon">⚙️</span><span>GitHub workflow tracking — not an Anthropic billing item</span></div>
-          </div>
-        </div>
-
-      </div><!-- /row2 -->
-
-      <!-- EXECUTIVE FOOTER (animated in on step 7) -->
-      <div class="exec-footer" id="execFooter">
-        <strong>Executive reading:</strong> GitHub remains the control plane and the source of truth.
-        Claude usage <strong>stays on subscription</strong> when interactive, and moves to the separate
-        <em>Agent SDK credit</em> when automated or programmatic.
-        The architectural role (orchestrator vs. sub-agent) is irrelevant — only <em>invocation mode</em> matters.
-      </div>
-
-    </div><!-- /flow-area -->
-
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-
-      <div class="sidebar-panel" id="panelA">
-        <div class="panel-header">
-          <div class="panel-letter pl-navy">A</div>
-          <div class="panel-title pt-default">BILLING MAP</div>
-        </div>
-        <div class="panel-body">
-          Anthropic's June 15 2026 billing change separates <strong>programmatic</strong> usage from
-          <strong>interactive subscription</strong> usage. Same Claude, two billing pools.
-        </div>
-      </div>
-
-      <div class="sidebar-panel" id="panelB">
-        <div class="panel-header">
-          <div class="panel-letter pl-green">B</div>
-          <div class="panel-title pt-green">SEPARATE CREDIT WHEN PROGRAMMATIC</div>
-        </div>
-        <ul class="pbullets green">
-          <li>Claude Agent SDK</li>
-          <li><code style="font-size:10px;background:#f0fdf4;padding:0 3px;border-radius:3px">claude -p</code> (non-interactive)</li>
-          <li>Claude Code GitHub Actions</li>
-          <li>Third-party apps on Agent SDK</li>
-          <li>Orchestrators &amp; sub-agents via programmatic paths</li>
-        </ul>
-      </div>
-
-      <div class="sidebar-panel" id="panelC">
-        <div class="panel-header">
-          <div class="panel-letter pl-blue">C</div>
-          <div class="panel-title pt-blue">STAYS ON SUBSCRIPTION WHEN INTERACTIVE</div>
-        </div>
-        <ul class="pbullets blue">
-          <li>Interactive Claude Code (terminal / IDE)</li>
-          <li>Orchestrator logic in human-driven session</li>
-          <li>Sub-agents in that same interactive session</li>
-          <li>Claude web / desktop / mobile</li>
-          <li>Claude Cowork</li>
-        </ul>
-      </div>
-
-      <div class="key-rule" id="keyRule">
-        ⚖️ <strong style="color:#1d4ed8">Key rule:</strong> billing follows <em>invocation mode</em>
-        (interactive vs. programmatic), not the architectural label of the agent.
-      </div>
-
-    </div><!-- /sidebar -->
-
-  </div><!-- /body -->
-
-  <!-- CONTROLS BAR -->
-  <div class="controls-bar">
-    <button class="btn btn-secondary" id="prevBtn" onclick="prev()">← Prev</button>
-    <button class="btn btn-primary"   id="nextBtn" onclick="next()">Next →</button>
-    <button class="btn btn-auto"      id="autoBtn" onclick="toggleAuto()">▶ Auto</button>
-    <span class="step-label" id="stepLabel"></span>
-    <div class="progress-dots" id="dots"></div>
-  </div>
-
-</div><!-- /shell -->
-
-<script>
-  const STEPS = 7;
-  let current = 1, autoTimer = null;
-
-  const dotsEl = document.getElementById('dots');
-  for (let i = 1; i <= STEPS; i++) {
-    const d = document.createElement('div');
-    d.className = 'dot'; d.id = 'dot' + i;
-    dotsEl.appendChild(d);
+  .section-head {
+    margin-bottom: 16px;
   }
 
-  const CARD_IDS  = ['c1','c2','c3','c4','c5a','c5b','c6'];
-  const ARROW_IDS = ['a1','a2','a3','a4x','a5','rowArrow'];
-  const ALL_SIDEBAR = ['panelA','panelB','panelC','keyRule'];
-
-  const ACTIVE_CARDS  = {1:['c1'],       2:['c2'],       3:['c3'],       4:['c4'],           5:['c5a','c5b'],6:['c6'], 7:[]};
-  const ACTIVE_ARROWS = {1:[],           2:['a1'],        3:['a2'],       4:['a3'],           5:['rowArrow','a4x'], 6:['a5'], 7:[]};
-  const DONE_CARDS    = {1:[],           2:['c1'],        3:['c1','c2'],  4:['c1','c2','c3'], 5:['c1','c2','c3','c4'], 6:['c1','c2','c3','c4','c5a','c5b'], 7:['c1','c2','c3','c4','c5a','c5b','c6']};
-
-  const SIDEBAR_ACTIVE = {
-    1: ['panelA'],
-    2: ['panelA'],
-    3: ['panelB','panelC'],
-    4: ['panelB','panelC'],
-    5: ['panelB'],
-    6: ['panelA'],
-    7: ['panelA','panelB','panelC','keyRule']
-  };
-
-  const LABELS = [
-    'Step 1 of 7 — Repo Spec & GitHub Issues (GitHub artifact, no billing)',
-    'Step 2 of 7 — GitHub Event (GitHub trigger, no billing)',
-    'Step 3 of 7 — Main Orchestrator (invocation mode determines billing)',
-    'Step 4 of 7 — Claude Sub-Agents (invocation mode determines billing)',
-    'Step 5 of 7 — PR Created or Needs Resolution (programmatic credit)',
-    'Step 6 of 7 — User Story Completion (GitHub tracking, no billing)',
-    'Step 7 of 7 — Billing Summary'
-  ];
-
-  function applyStep(s) {
-    CARD_IDS.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.classList.remove('active', 'done');
-    });
-    ARROW_IDS.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.classList.remove('lit');
-    });
-    ALL_SIDEBAR.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.classList.remove('active', 'active-green', 'active-blue');
-    });
-    document.getElementById('execFooter').classList.remove('active');
-
-    (DONE_CARDS[s] || []).forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('done'); });
-    (ACTIVE_CARDS[s] || []).forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('active'); });
-    (ACTIVE_ARROWS[s] || []).forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('lit'); });
-
-    (SIDEBAR_ACTIVE[s] || []).forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      if (id === 'panelB') el.classList.add('active-green');
-      else if (id === 'panelC') el.classList.add('active-blue');
-      else el.classList.add('active');
-    });
-
-    if (s === 7) document.getElementById('execFooter').classList.add('active');
-
-    for (let i = 1; i <= STEPS; i++)
-      document.getElementById('dot' + i).classList.toggle('on', i === s);
-
-    document.getElementById('stepLabel').textContent = LABELS[s - 1];
-    document.getElementById('prevBtn').disabled = s <= 1;
-    document.getElementById('nextBtn').disabled = s >= STEPS;
+  .section-head h2 {
+    margin: 8px 0 0;
+    font-size: clamp(1.7rem, 3vw, 2.9rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--navy);
   }
 
-  function next() { if (current < STEPS) { current++; applyStep(current); } }
-  function prev() { if (current > 1)     { current--; applyStep(current); } }
+  .readers-grid,
+  .legend-grid,
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
 
-  function toggleAuto() {
-    const btn = document.getElementById('autoBtn');
-    if (autoTimer) {
-      clearInterval(autoTimer); autoTimer = null;
-      btn.textContent = '▶ Auto'; btn.classList.remove('stop');
-    } else {
-      btn.textContent = '⏹ Stop'; btn.classList.add('stop');
-      autoTimer = setInterval(() => {
-        if (current >= STEPS) { current = 1; applyStep(1); } else next();
-      }, 2500);
+  .reader-card,
+  .legend-card,
+  .note-card {
+    padding: 22px 24px;
+  }
+
+  .reader-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, 0.08);
+    color: var(--blue);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .legend-card {
+    min-height: 100%;
+  }
+
+  .legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+    box-shadow: 0 0 0 8px rgba(37, 99, 235, 0.09);
+  }
+
+  .tone-blue { border-color: rgba(37, 99, 235, 0.16); background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(37, 99, 235, 0.05)); }
+  .tone-blue .legend-dot { background: var(--blue); }
+
+  .tone-green { border-color: rgba(20, 128, 60, 0.16); background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(20, 128, 60, 0.05)); }
+  .tone-green .legend-dot { background: var(--green); box-shadow: 0 0 0 8px rgba(20, 128, 60, 0.09); }
+
+  .tone-gray { border-color: var(--line); background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(89, 101, 128, 0.06)); }
+  .tone-gray .legend-dot { background: #7a869f; box-shadow: 0 0 0 8px rgba(122, 134, 159, 0.08); }
+
+  .story-shell {
+    position: relative;
+    padding-top: 22px;
+  }
+
+  .timeline {
+    position: absolute;
+    inset: 42px 70px auto;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(24, 44, 122, 0.08);
+    overflow: hidden;
+  }
+
+  .timeline::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 34%;
+    background: linear-gradient(90deg, rgba(37,99,235,0), rgba(37,99,235,0.95), rgba(20,128,60,0.85));
+    animation: scan 6.2s ease-in-out infinite;
+  }
+
+  .stage-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stage-card {
+    padding: 22px;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: rise 0.7s ease forwards;
+  }
+
+  .stage-card:nth-child(1) { animation-delay: 0.04s; }
+  .stage-card:nth-child(2) { animation-delay: 0.14s; }
+  .stage-card:nth-child(3) { animation-delay: 0.24s; }
+  .stage-card:nth-child(4) { animation-delay: 0.34s; }
+  .stage-card:nth-child(5) { animation-delay: 0.44s; }
+  .stage-card:nth-child(6) { animation-delay: 0.54s; }
+
+  .stage-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .stage-id {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: rgba(24, 44, 122, 0.06);
+    font-weight: 900;
+    color: var(--navy);
+  }
+
+  .stage-card h3,
+  .legend-card h3,
+  .fork-card h3,
+  .note-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    line-height: 1.22;
+    color: var(--navy);
+  }
+
+  .stage-card ul {
+    margin: 14px 0 0;
+    padding-left: 18px;
+    color: var(--ink);
+  }
+
+  .stage-card li {
+    margin-bottom: 10px;
+  }
+
+  .fork-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 74px minmax(0, 1fr);
+    gap: 16px;
+    align-items: center;
+  }
+
+  .fork-card {
+    padding: 28px;
+  }
+
+  .chip {
+    display: inline-flex;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  .fork-connector {
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(20, 128, 60, 0.6), rgba(37, 99, 235, 0.6));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fork-connector::after {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -16%;
+    width: 22%;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    animation: drift 4.1s ease-in-out infinite;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+    min-width: 780px;
+    border-collapse: collapse;
+  }
+
+  .table th,
+  .table td {
+    text-align: left;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  .table th {
+    color: var(--blue);
+  }
+
+  .table td:first-child,
+  .table td:nth-child(2) {
+    color: var(--ink);
+  }
+
+  .executive-band {
+    padding: 30px 32px;
+    border-radius: 26px;
+    background:
+      linear-gradient(135deg, rgba(17, 53, 148, 0.97), rgba(12, 27, 82, 0.97)),
+      radial-gradient(circle at top right, rgba(255,255,255,0.2), transparent 28%);
+    color: #f8fbff;
+    box-shadow: var(--shadow);
+  }
+
+  .executive-band .eyebrow {
+    color: rgba(220, 232, 255, 0.9);
+  }
+
+  .executive-band p:last-child {
+    margin: 12px 0 0;
+    max-width: 48ch;
+    font-size: clamp(1.35rem, 2vw, 2rem);
+    line-height: 1.36;
+    letter-spacing: -0.03em;
+  }
+
+  .note-card p { margin: 0; }
+
+  @keyframes scan {
+    0% { transform: translateX(-30%); }
+    50% { transform: translateX(185%); }
+    100% { transform: translateX(-30%); }
+  }
+
+  @keyframes drift {
+    0% { transform: translateX(0); opacity: 0; }
+    16% { opacity: 1; }
+    50% { transform: translateX(320%); opacity: 1; }
+    100% { transform: translateX(460%); opacity: 0; }
+  }
+
+  @keyframes rise {
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
-  // keyboard navigation
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
-    if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
-  });
+  @media (max-width: 1080px) {
+    .hero-grid,
+    .readers-grid,
+    .legend-grid,
+    .stage-grid,
+    .notes-grid,
+    .fork-grid {
+      grid-template-columns: 1fr;
+    }
 
-  applyStep(1);
-</script>
+    .timeline {
+      display: none;
+    }
+
+    .fork-connector {
+      width: 2px;
+      height: 42px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, rgba(20, 128, 60, 0.6), rgba(37, 99, 235, 0.6));
+    }
+
+    .fork-connector::after {
+      top: -10%;
+      left: -3px;
+      width: 8px;
+      height: 24%;
+      animation: driftY 4.1s ease-in-out infinite;
+    }
+  }
+
+  @keyframes driftY {
+    0% { transform: translateY(0); opacity: 0; }
+    16% { opacity: 1; }
+    50% { transform: translateY(320%); opacity: 1; }
+    100% { transform: translateY(460%); opacity: 0; }
+  }
+
+  @media (max-width: 760px) {
+    .page {
+      padding: 24px 16px 56px;
+    }
+
+    .nav-inner {
+      padding: 10px 16px;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .hero-copy,
+    .hero-side,
+    .reader-card,
+    .legend-card,
+    .stage-card,
+    .fork-card,
+    .note-card,
+    .executive-band {
+      padding: 20px;
+    }
+
+    .hero h1 {
+      max-width: none;
+      font-size: clamp(2.2rem, 12vw, 3.8rem);
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.55rem, 8vw, 2.2rem);
+    }
+  }
+</style>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a class="brand" href="/Blog-Agentic-SDLC/en/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Agentic SDLC Blog</span>
+      </a>
+      <div class="nav-links">
+        <a href="#rule">Core Rule</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#fork">Billing Fork</a>
+        <a href="#table">Decision Table</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page">
+    <section class="hero">
+      <div class="hero-grid">
+        <article class="card hero-copy">
+          <div class="kicker">GitHub-Centric AI-Native SDLC</div>
+          <h1>When GitHub is the control plane, billing should read like a rulebook.</h1>
+          <p class="lede">
+            A clearer explanation of Anthropic's June 15, 2026 billing change for GitHub-centered,
+            spec-driven delivery. The architecture can stay sophisticated, but the billing rule is
+            simple: GitHub holds the work graph, while Claude billing depends on invocation mode.
+          </p>
+        </article>
+
+        <aside class="card hero-side" id="rule">
+          <div class="rule-box">
+            <div class="card-label">Billing map</div>
+            <strong>Billing follows invocation mode.</strong>
+            <p>
+              Interactive Claude usage stays on subscription. Programmatic usage moves to separate
+              Agent SDK credit.
+            </p>
+          </div>
+          <div class="meta-pills">
+            <span>Effective date: June 15, 2026</span>
+            <span>GitHub remains the control plane</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow">Three reading modes</div>
+        <h2>Different readers need different answers fast</h2>
+      </div>
+      <div class="readers-grid">
+        <article class="card reader-card">
+          <div class="reader-label">Executive</div>
+          <p>What is the governing rule, and where does cost move when automation increases?</p>
+        </article>
+        <article class="card reader-card">
+          <div class="reader-label">Delivery lead</div>
+          <p>Which orchestration patterns stay inside subscription and which ones become Agent SDK credit?</p>
+        </article>
+        <article class="card reader-card">
+          <div class="reader-label">Engineering</div>
+          <p>How do repo events, subagents, CI, and clarification loops behave inside the workflow?</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow">Quick scan</div>
+        <h2>Read the billing map before the workflow</h2>
+      </div>
+      <div class="legend-grid">
+        <article class="card legend-card tone-green">
+          <div class="legend-dot" aria-hidden="true"></div>
+          <h3>Programmatic usage</h3>
+          <p>
+            Claude Agent SDK, non-interactive <code>claude -p</code>, Claude Code GitHub Actions,
+            and third-party apps built on the Agent SDK move to separate Agent SDK credit.
+          </p>
+        </article>
+        <article class="card legend-card tone-blue">
+          <div class="legend-dot" aria-hidden="true"></div>
+          <h3>Interactive usage</h3>
+          <p>
+            Interactive Claude Code in the terminal or IDE, orchestrator logic inside a human-driven
+            session, and subagents inside that same session stay on subscription usage.
+          </p>
+        </article>
+        <article class="card legend-card tone-gray">
+          <div class="legend-dot" aria-hidden="true"></div>
+          <h3>GitHub artifacts</h3>
+          <p>
+            GitHub issues, PRs, workflow state, and repository artifacts remain control-plane signals.
+            They are not Anthropic billing items by themselves.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="section-head">
+        <div class="eyebrow">Narrative flow</div>
+        <h2>The workflow now reads like a sequence, not a dense poster</h2>
+      </div>
+
+      <div class="story-shell">
+        <div class="timeline" aria-hidden="true"></div>
+        <ol class="stage-grid">
+          <li class="card stage-card tone-gray">
+            <div class="stage-top">
+              <div class="stage-id">01</div>
+              <div class="stage-meta">GitHub artifact</div>
+            </div>
+            <h3>Repo spec and GitHub issues</h3>
+            <p>Execution-ready specs live in the repository while Issues or Projects track the work graph.</p>
+            <ul>
+              <li>Specs are versioned close to code</li>
+              <li>User stories and tasks stay visible in GitHub</li>
+              <li>Planning context remains attached to delivery artifacts</li>
+            </ul>
+          </li>
+
+          <li class="card stage-card tone-gray">
+            <div class="stage-top">
+              <div class="stage-id">02</div>
+              <div class="stage-meta">Workflow trigger</div>
+            </div>
+            <h3>GitHub event starts execution</h3>
+            <p>An issue update, workflow trigger, or project transition makes the selected work item agent-ready.</p>
+            <ul>
+              <li>Project state changes stay visible in GitHub</li>
+              <li>Triggers can come from issues, projects, or workflows</li>
+            </ul>
+          </li>
+
+          <li class="card stage-card tone-blue">
+            <div class="stage-top">
+              <div class="stage-id">03</div>
+              <div class="stage-meta">Billing follows invocation mode</div>
+            </div>
+            <h3>Main Claude orchestrator reads context</h3>
+            <p>The orchestrator reads repo spec and GitHub context, plans the user story, and delegates tasks.</p>
+            <ul>
+              <li>Interactive Claude Code session: stays on subscription usage</li>
+              <li>Agent SDK or non-interactive invocation: moves to separate Agent SDK credit</li>
+            </ul>
+          </li>
+
+          <li class="card stage-card tone-blue">
+            <div class="stage-top">
+              <div class="stage-id">04</div>
+              <div class="stage-meta">Role label does not define billing</div>
+            </div>
+            <h3>Sub-agents execute scoped tasks</h3>
+            <p>Subagents generate code, run tests, open PRs, and update GitHub status using scoped task context.</p>
+            <ul>
+              <li>Subagents inside the same interactive session stay on subscription</li>
+              <li>SDK-defined or automated subagents use separate Agent SDK credit</li>
+            </ul>
+          </li>
+
+          <li class="card stage-card tone-green">
+            <div class="stage-top">
+              <div class="stage-id">05</div>
+              <div class="stage-meta">Automation branch</div>
+            </div>
+            <h3>Programmatic path or clarification loop</h3>
+            <p>Automated execution either produces a ready PR through CI or loops back for clarification.</p>
+            <ul>
+              <li>Successful automated coding and CI path is programmatic usage</li>
+              <li>Clarification can return to GitHub workflow without becoming a billing item by itself</li>
+            </ul>
+          </li>
+
+          <li class="card stage-card tone-gray">
+            <div class="stage-top">
+              <div class="stage-id">06</div>
+              <div class="stage-meta">GitHub control plane</div>
+            </div>
+            <h3>User story completion in GitHub</h3>
+            <p>GitHub tracks status updates, PR reviews, merge readiness, and closure once the work is resolved.</p>
+            <ul>
+              <li>Status updates stay visible to the team</li>
+              <li>PR review and merge signals close the loop</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="fork">
+      <div class="section-head">
+        <div class="eyebrow">Decision fork</div>
+        <h2>The only branch that matters for billing</h2>
+      </div>
+
+      <div class="fork-grid">
+        <article class="card fork-card tone-green">
+          <div class="chip">Programmatic path</div>
+          <h3>Automated PR and CI execution</h3>
+          <p>
+            If the work is executed through the Agent SDK, a non-interactive Claude path, or GitHub
+            automation, usage goes to separate Agent SDK credit.
+          </p>
+        </article>
+
+        <div class="fork-connector" aria-hidden="true"></div>
+
+        <article class="card fork-card tone-blue">
+          <div class="chip">Interactive path</div>
+          <h3>Human-driven orchestration session</h3>
+          <p>
+            If the same orchestration and subagent work happens inside an interactive Claude Code
+            session, it stays on subscription usage.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="table">
+      <div class="section-head">
+        <div class="eyebrow">Decision table</div>
+        <h2>Answer the billing question in one glance</h2>
+      </div>
+
+      <div class="card table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Invocation</th>
+              <th>Billed as</th>
+              <th>Why</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Interactive Claude Code in IDE or terminal</td>
+              <td>Subscription usage</td>
+              <td>Human is driving the session</td>
+            </tr>
+            <tr>
+              <td>Subagent invoked inside that same interactive session</td>
+              <td>Subscription usage</td>
+              <td>Billing inherits the invocation mode</td>
+            </tr>
+            <tr>
+              <td>Agent SDK workflow or <code>claude -p</code> automation</td>
+              <td>Separate Agent SDK credit</td>
+              <td>Programmatic invocation</td>
+            </tr>
+            <tr>
+              <td>Claude Code GitHub Actions or automated CI path</td>
+              <td>Separate Agent SDK credit</td>
+              <td>Automation path is non-interactive</td>
+            </tr>
+            <tr>
+              <td>GitHub issue, PR, workflow state, or artifact</td>
+              <td>Not an Anthropic billing item</td>
+              <td>Control-plane metadata</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="eyebrow">Design rationale</div>
+        <h2>Why this version is easier to read</h2>
+      </div>
+
+      <div class="notes-grid">
+        <article class="card note-card">
+          <h3>Rule first</h3>
+          <p>The original slide asks the reader to decode architecture before understanding the billing principle. This version states the rule up front.</p>
+        </article>
+        <article class="card note-card">
+          <h3>Workflow second</h3>
+          <p>The 6-step sequence preserves the original logic but removes the border and annotation overload that made the page hard to scan.</p>
+        </article>
+        <article class="card note-card">
+          <h3>Decision table last</h3>
+          <p>Readers who do not want the full story can jump straight to the matrix and still leave with the correct billing answer.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="executive-band">
+      <div class="eyebrow">Executive reading</div>
+      <p>GitHub remains the control plane. Claude usage stays on subscription when interactive, and moves to separate Agent SDK credit when automated or programmatic.</p>
+    </section>
+  </main>
 </body>
 </html>
