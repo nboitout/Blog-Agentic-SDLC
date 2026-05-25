@@ -230,7 +230,7 @@ The practical consequence is simple: context should be managed with the same ser
     <strong>Try the interactive Context Cockpit</strong>
     <span>One panel synthesizing the four context layers, the lifecycle loop, and context rot. Drag the turn slider to watch drift grow — then flip Engineered mode to snap it back.</span>
   </div>
-  <a href="/Blog-Agentic-SDLC/context-cockpit.html" class="widget-cta-btn">Launch Widget →</a>
+  <a href="/Blog-Agentic-SDLC/context-cockpit.html" class="widget-cta-btn" target="_blank" rel="noopener">Launch Widget →</a>
 </div>
 
 ## Good practices: treating context as a software artifact {#good-practices}
