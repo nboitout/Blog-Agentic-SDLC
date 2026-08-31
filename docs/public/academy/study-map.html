@@ -1,0 +1,752 @@
+<title>Architect's Study Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#EEF1F4; --surface:#FFFFFF; --surface-2:#E4E9EE;
+    --ink:#16233A; --ink-dim:#51637C; --ink-faint:#8497AC;
+    --know:#1D6F9C; --know-soft:#DCEBF2;
+    --skill:#B0591A; --skill-soft:#F3E2CE;
+    --line:#D3DBE2; --line-strong:#B9C4CE;
+    --grid: rgba(22,35,58,0.07);
+    --chip-ink:#FFFFFF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0E2340; --surface:#123056; --surface-2:#163A66;
+      --ink:#EAF1F8; --ink-dim:#A9C0D6; --ink-faint:#7796B4;
+      --know:#6FC3EE; --know-soft:#163A5C;
+      --skill:#F2A65A; --skill-soft:#3A2A14;
+      --line:#23507F; --line-strong:#2E6296;
+      --grid: rgba(255,255,255,0.07);
+      --chip-ink:#0E2340;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E2340; --surface:#123056; --surface-2:#163A66;
+    --ink:#EAF1F8; --ink-dim:#A9C0D6; --ink-faint:#7796B4;
+    --know:#6FC3EE; --know-soft:#163A5C;
+    --skill:#F2A65A; --skill-soft:#3A2A14;
+    --line:#23507F; --line-strong:#2E6296;
+    --grid: rgba(255,255,255,0.07);
+    --chip-ink:#0E2340;
+  }
+
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:
+      radial-gradient(circle at 1px 1px, var(--grid) 1.3px, transparent 1.3px) 0 0/26px 26px,
+      var(--bg);
+    color:var(--ink); font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3{ font-family:"Big Shoulders Display", ui-sans-serif, sans-serif; text-wrap:balance; margin:0; }
+  .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  code{ font-family:"IBM Plex Mono", ui-monospace, monospace; background:var(--surface-2); border:1px solid var(--line); border-radius:4px; padding:.03em .38em; font-size:.9em; color:var(--ink); }
+  ::selection{ background:var(--know-soft); color:var(--ink); }
+  :focus-visible{ outline:2.5px solid var(--know); outline-offset:2px; border-radius:4px; }
+  a{ color:inherit; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 clamp(14px,3vw,28px) 80px; }
+
+  /* ---- top bar ---- */
+  .topbar{
+    position:sticky; top:0; z-index:20; background:var(--bg);
+    border-bottom:1px solid var(--line); backdrop-filter:blur(6px);
+  }
+  .topbar-inner{ max-width:1180px; margin:0 auto; padding:clamp(12px,2vw,18px) clamp(14px,3vw,28px); display:flex; flex-direction:column; gap:12px; }
+  .topbar-row1{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .kicker{ font-family:"IBM Plex Mono",monospace; font-size:clamp(10px,1.1vw,12px); letter-spacing:.16em; text-transform:uppercase; color:var(--know); font-weight:600; }
+  h1.page-title{ font-size:clamp(28px,4.6vw,46px); font-weight:900; letter-spacing:-.01em; line-height:1; margin-top:4px; }
+  .progress-block{ display:flex; flex-direction:column; align-items:flex-end; gap:6px; min-width:180px; }
+  .progress-num{ font-family:"IBM Plex Mono",monospace; font-size:clamp(12px,1.3vw,14px); color:var(--ink-dim); font-variant-numeric:tabular-nums; }
+  .progress-num b{ color:var(--ink); }
+  .progress-track{ width:180px; max-width:40vw; height:7px; border-radius:99px; background:var(--surface-2); overflow:hidden; border:1px solid var(--line); }
+  .progress-fill{ height:100%; background:linear-gradient(90deg,var(--know),var(--skill)); border-radius:99px; transition:width .3s ease; width:0%; }
+
+  .topbar-row2{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .search-wrap{ position:relative; flex:1; min-width:200px; max-width:340px; }
+  #searchInput{
+    width:100%; padding:8px 12px 8px 32px; border-radius:9px; border:1px solid var(--line-strong);
+    background:var(--surface); color:var(--ink); font-family:"IBM Plex Sans",sans-serif; font-size:13px;
+  }
+  .search-wrap svg{ position:absolute; left:9px; top:50%; transform:translateY(-50%); width:14px; height:14px; color:var(--ink-faint); pointer-events:none; }
+  .jump-pills{ display:flex; gap:6px; flex-wrap:wrap; }
+  .jump-pill{
+    font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; letter-spacing:.02em;
+    padding:6px 11px; border-radius:99px; border:1px solid var(--line-strong); background:var(--surface);
+    color:var(--ink-dim); text-decoration:none; cursor:pointer; white-space:nowrap;
+  }
+  .jump-pill:hover{ border-color:var(--know); color:var(--know); }
+  #resetBtn{
+    margin-left:auto; font-family:"IBM Plex Mono",monospace; font-size:11px; padding:6px 11px;
+    border-radius:99px; border:1px solid var(--line-strong); background:transparent; color:var(--ink-faint); cursor:pointer;
+  }
+  #resetBtn:hover{ color:var(--ink); border-color:var(--ink-faint); }
+
+  /* ---- legend ---- */
+  .legend{ display:flex; gap:18px; margin:22px 0 6px; font-size:12px; color:var(--ink-dim); flex-wrap:wrap; }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .legend i{ width:10px; height:10px; border-radius:3px; display:inline-block; }
+  .legend i.k{ background:var(--know); } .legend i.s{ background:var(--skill); }
+
+  /* ---- domain section ---- */
+  .domain{ margin-top:clamp(30px,5vw,52px); scroll-margin-top:150px; }
+  .domain-head{ display:flex; align-items:flex-end; gap:18px; border-bottom:2px solid var(--line-strong); padding-bottom:14px; margin-bottom:20px; flex-wrap:wrap; }
+  .domain-num{ font-family:"Big Shoulders Display",sans-serif; font-size:clamp(46px,7vw,74px); font-weight:900; color:var(--know); line-height:.8; opacity:.9; }
+  .domain-heading{ flex:1; min-width:220px; }
+  .domain-heading h2{ font-size:clamp(20px,3vw,30px); font-weight:800; }
+  .domain-heading p{ margin:4px 0 0; color:var(--ink-dim); font-size:clamp(12px,1.3vw,14px); max-width:60ch; }
+  .domain-progress{ display:flex; flex-direction:column; align-items:flex-end; gap:5px; min-width:120px; }
+  .domain-progress .n{ font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--ink-faint); }
+  .domain-progress .track{ width:120px; height:5px; border-radius:99px; background:var(--surface-2); overflow:hidden; }
+  .domain-progress .fill{ height:100%; background:var(--know); border-radius:99px; transition:width .3s ease; }
+
+  .subs{ display:flex; flex-direction:column; gap:14px; }
+
+  /* ---- subdomain sheet ---- */
+  .sheet{
+    background:var(--surface); border:1px solid var(--line); border-radius:13px;
+    padding:clamp(14px,2vw,20px) clamp(16px,2.2vw,24px); scroll-margin-top:150px;
+  }
+  .sheet[hidden]{ display:none; }
+  .sheet-top{ display:flex; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
+  .sheet-code{ font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--know); background:var(--know-soft); border:1px solid var(--know); border-radius:6px; padding:2px 8px; flex:none; }
+  .sheet-title{ font-size:clamp(15px,1.8vw,18px); font-weight:700; flex:1; min-width:160px; }
+  .review-toggle{ display:flex; align-items:center; gap:7px; font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); cursor:pointer; user-select:none; flex:none; }
+  .review-toggle input{ width:16px; height:16px; accent-color:var(--skill); cursor:pointer; }
+  .sheet.is-reviewed{ border-color:var(--skill); }
+  .sheet.is-reviewed .sheet-code{ opacity:.6; }
+
+  .sheet-cols{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(14px,2vw,24px); }
+  .col-head{ display:flex; align-items:center; gap:6px; font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; }
+  .col-head.k{ color:var(--know); } .col-head.s{ color:var(--skill); }
+  .col-head i{ width:7px; height:7px; border-radius:2px; }
+  .col-head.k i{ background:var(--know); } .col-head.s i{ background:var(--skill); }
+  ul.blist{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:7px; }
+  ul.blist li{ position:relative; padding-left:14px; font-size:clamp(12px,1.25vw,13.5px); color:var(--ink-dim); line-height:1.5; }
+  ul.blist li::before{ content:""; position:absolute; left:0; top:.55em; width:5px; height:5px; border-radius:50%; background:var(--line-strong); }
+  ul.blist.k li::before{ background:var(--know); opacity:.6; }
+  ul.blist.s li::before{ background:var(--skill); opacity:.6; }
+
+  #emptyState{ text-align:center; padding:60px 20px; color:var(--ink-faint); font-family:"IBM Plex Mono",monospace; font-size:13px; }
+  #emptyState[hidden]{ display:none; }
+
+  footer.credit{ text-align:center; color:var(--ink-faint); font-family:"IBM Plex Mono",monospace; font-size:11px; margin-top:50px; }
+
+  @media (max-width:680px){
+    .sheet-cols{ grid-template-columns:1fr; }
+    .domain-progress{ align-items:flex-start; }
+  }
+</style>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row1">
+      <div>
+        <div class="kicker">Claude Certified Architect &middot; Exam Blueprint</div>
+        <h1 class="page-title">Study Map</h1>
+      </div>
+      <div class="progress-block">
+        <div class="progress-num"><b id="progressCount">0</b> / 30 subdomains reviewed</div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+    </div>
+    <div class="topbar-row2">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="searchInput" type="text" placeholder="Search topics, tools, field names&hellip;" autocomplete="off">
+      </div>
+      <div class="jump-pills" id="jumpPills"></div>
+      <button id="resetBtn" type="button">Reset progress</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="legend">
+    <span><i class="k"></i> Knowledge of &mdash; concepts you need to recognize</span>
+    <span><i class="s"></i> Skills in &mdash; things you need to be able to do</span>
+  </div>
+
+  <div id="domainsRoot"></div>
+  <p id="emptyState" hidden>No subdomains match that search.</p>
+
+  <footer class="credit">30 subdomains &middot; 5 domains &middot; check one off as you review it &mdash; progress is saved in this browser</footer>
+</div>
+
+<script>
+var DOMAINS = [
+  {
+    id:'d1', num:'01', name:'Agentic Architecture & Orchestration',
+    blurb:'Loops, subagent orchestration, hooks, and workflow enforcement.',
+    subs:[
+      { code:'1.1', title:'Agentic loop lifecycle & control flow',
+        k:[
+          'Loop lifecycle: send a request &rarr; inspect <code>stop_reason</code> (<code>"tool_use"</code> vs <code>"end_turn"</code>) &rarr; execute requested tools &rarr; return results for the next iteration',
+          'Tool results are appended to conversation history so the model reasons over the updated context',
+          'Model-driven decisions (Claude chooses the next tool from context) vs pre-configured decision trees or fixed tool sequences'
+        ],
+        s:[
+          'Continue the loop while <code>stop_reason</code> is <code>"tool_use"</code>; terminate when it is <code>"end_turn"</code>',
+          'Append every tool result into conversation context before the next iteration',
+          'Avoid anti-patterns: parsing natural-language text for a stop signal, an arbitrary iteration cap as the primary stop mechanism, or checking assistant text as a completion signal'
+        ]
+      },
+      { code:'1.2', title:'Coordinator&ndash;subagent orchestration',
+        k:[
+          'Hub-and-spoke: the coordinator routes all inter-subagent communication, error handling, and information flow',
+          'Subagents run in isolated context &mdash; they do not automatically inherit the coordinator\'s conversation history',
+          'The coordinator owns task decomposition, delegation, result aggregation, and which subagents to invoke',
+          'Risk: overly narrow task decomposition leaves broad research topics incompletely covered'
+        ],
+        s:[
+          'Dynamically select which subagents to invoke by query complexity, instead of always running the full pipeline',
+          'Partition research scope across subagents (distinct subtopics or source types) to minimize duplicated work',
+          'Run iterative refinement: evaluate synthesis for gaps, re-delegate targeted queries, re-invoke synthesis until coverage is sufficient',
+          'Route all subagent communication through the coordinator for observability and consistent error handling'
+        ]
+      },
+      { code:'1.3', title:'Subagent invocation, context passing & spawning',
+        k:[
+          'The <code>Task</code> tool spawns subagents; <code>allowedTools</code> must include <code>"Task"</code> for a coordinator to invoke them',
+          'Subagent context must be explicit in the prompt &mdash; no automatic inheritance or shared memory between invocations',
+          '<code>AgentDefinition</code> covers each subagent\'s description, system prompt, and tool restrictions',
+          '<code>fork_session</code> enables exploring divergent approaches from a shared analysis baseline'
+        ],
+        s:[
+          'Include complete prior findings directly in the subagent\'s prompt (e.g. search results plus document analysis passed into a synthesis subagent)',
+          'Use structured formats that separate content from metadata (source URLs, doc names, page numbers) to preserve attribution across handoffs',
+          'Spawn parallel subagents by emitting multiple <code>Task</code> calls in one coordinator response, not across separate turns',
+          'Write coordinator prompts around goals and quality criteria, not step-by-step procedures, so subagents can adapt'
+        ]
+      },
+      { code:'1.4', title:'Multi-step workflows: enforcement & handoff',
+        k:[
+          'Programmatic enforcement (hooks, prerequisite gates) vs prompt-based guidance for ordering &mdash; prompts alone carry a non-zero failure rate',
+          'Deterministic compliance is required for things like identity verification before a financial operation',
+          'Structured handoff protocols for escalation carry customer details, root cause, and a recommended action'
+        ],
+        s:[
+          'Implement programmatic prerequisites that block a downstream call (e.g. <code>process_refund</code>) until a prerequisite (e.g. <code>get_customer</code>) has returned a verified ID',
+          'Decompose multi-concern requests into distinct items, investigate each in parallel with shared context, then synthesize one resolution',
+          'Compile structured handoff summaries (customer ID, root cause, refund amount, recommended action) for human escalation'
+        ]
+      },
+      { code:'1.5', title:'Hooks for tool interception & normalization',
+        k:[
+          'PostToolUse-style hooks intercept tool results for transformation before the model sees them',
+          'Hooks can intercept outgoing tool calls to enforce compliance rules (e.g. blocking refunds above a threshold)',
+          'Hooks give deterministic guarantees; prompt instructions only give probabilistic compliance'
+        ],
+        s:[
+          'Use PostToolUse hooks to normalize heterogeneous formats (Unix timestamps, ISO 8601, numeric status codes) across different MCP tools',
+          'Use interception hooks to block policy-violating actions (e.g. refunds over $500) and redirect to escalation',
+          'Choose hooks over prompts whenever a business rule needs guaranteed compliance'
+        ]
+      },
+      { code:'1.6', title:'Task decomposition strategies',
+        k:[
+          'Fixed sequential pipelines (prompt chaining) vs dynamic adaptive decomposition based on intermediate findings',
+          'Prompt chaining example: analyze each file individually, then run a cross-file integration pass',
+          'Adaptive plans generate subtasks from what is discovered at each step'
+        ],
+        s:[
+          'Match the pattern to the task: chaining for predictable multi-aspect reviews, dynamic decomposition for open-ended investigation',
+          'Split large code reviews into per-file local passes plus a separate cross-file integration pass to avoid attention dilution',
+          'Decompose open-ended tasks (e.g. "add tests to a legacy codebase") by mapping structure, finding high-impact areas, then building a plan that adapts as dependencies surface'
+        ]
+      },
+      { code:'1.7', title:'Session state, resumption & forking',
+        k:[
+          '<code>--resume &lt;session-name&gt;</code> continues a specific named prior conversation',
+          '<code>fork_session</code> creates independent branches from a shared analysis baseline to explore divergent approaches',
+          'Resuming after code changes requires telling the agent what changed in previously analyzed files',
+          'A fresh session with a structured summary beats resuming with stale tool results'
+        ],
+        s:[
+          'Use <code>--resume</code> with session names to continue named investigations across work sessions',
+          'Use <code>fork_session</code> for parallel exploration branches (e.g. comparing two refactoring approaches from one codebase analysis)',
+          'Choose resumption when prior context is mostly valid; start fresh with an injected summary when tool results are stale',
+          'Tell a resumed session about specific file changes for targeted re-analysis instead of full re-exploration'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d2', num:'02', name:'Tool Design & MCP Integration',
+    blurb:'Interfaces, errors, tool distribution, MCP servers, and the built-in tool set.',
+    subs:[
+      { code:'2.1', title:'Tool interface design',
+        k:[
+          'Tool descriptions are the primary signal an LLM uses for tool selection; minimal descriptions cause unreliable selection among similar tools',
+          'Good descriptions include input formats, example queries, edge cases, and boundaries',
+          'Ambiguous or overlapping descriptions cause misrouting (e.g. <code>analyze_content</code> vs <code>analyze_document</code> with near-identical wording)',
+          'System-prompt wording can create unintended, keyword-driven tool associations'
+        ],
+        s:[
+          'Write descriptions that clearly differentiate purpose, inputs, outputs, and when to use this tool vs a similar one',
+          'Rename tools and rewrite descriptions to remove overlap (e.g. <code>analyze_content</code> &rarr; <code>extract_web_results</code> with web-specific wording)',
+          'Split generic tools into purpose-specific ones with defined contracts (e.g. <code>analyze_document</code> &rarr; <code>extract_data_points</code>, <code>summarize_content</code>, <code>verify_claim_against_source</code>)',
+          'Audit system prompts for keyword-sensitive instructions that can override good tool descriptions'
+        ]
+      },
+      { code:'2.2', title:'Structured error responses for MCP tools',
+        k:[
+          'The MCP <code>isError</code> flag communicates tool failure back to the agent',
+          'Error types: transient (timeouts, unavailability), validation (bad input), business (policy violation), permission',
+          'A generic "Operation failed" response blocks the agent from making a good recovery decision',
+          'Retryable vs non-retryable, communicated as metadata, prevents wasted retries'
+        ],
+        s:[
+          'Return structured metadata: <code>errorCategory</code> (transient / validation / permission), <code>isRetryable</code>, a human-readable description',
+          'Include <code>retriable: false</code> plus a customer-friendly explanation for business-rule violations',
+          'Let subagents recover locally from transient failures; propagate to the coordinator only what cannot be resolved, with partial results and what was attempted',
+          'Distinguish access failures (need a retry decision) from valid empty results (a successful query, no matches)'
+        ]
+      },
+      { code:'2.3', title:'Distributing tools & configuring tool_choice',
+        k:[
+          'Too many tools on one agent (e.g. 18 vs 4&ndash;5) degrades selection reliability through decision complexity',
+          'Agents given tools outside their specialization tend to misuse them (e.g. a synthesis agent attempting a web search)',
+          'Scoped access: give agents only their role\'s tools, plus limited cross-role tools for specific high-frequency needs',
+          '<code>tool_choice</code>: <code>"auto"</code>, <code>"any"</code>, or forced (<code>{"type":"tool","name":"..."}</code>)'
+        ],
+        s:[
+          'Restrict each subagent\'s tools to its role to prevent cross-specialization misuse',
+          'Replace generic tools with constrained ones (e.g. <code>fetch_url</code> &rarr; <code>load_document</code> that validates URLs)',
+          'Provide scoped cross-role tools for high-frequency needs (e.g. a <code>verify_fact</code> tool on the synthesis agent), routing complex cases through the coordinator',
+          'Force a specific tool first (e.g. <code>extract_metadata</code> before enrichment), then continue in follow-up turns',
+          'Set <code>tool_choice: "any"</code> to guarantee a tool call instead of conversational text'
+        ]
+      },
+      { code:'2.4', title:'Integrating MCP servers',
+        k:[
+          'Scoping: project-level <code>.mcp.json</code> for shared team tooling vs user-level <code>~/.claude.json</code> for personal or experimental servers',
+          'Environment-variable expansion in <code>.mcp.json</code> (e.g. <code>${GITHUB_TOKEN}</code>) keeps credentials out of the repo',
+          'Tools from every configured MCP server are discovered at connection time and available simultaneously',
+          'MCP resources expose content catalogs (issue summaries, doc hierarchies, DB schemas) to cut exploratory tool calls'
+        ],
+        s:[
+          'Configure shared MCP servers in project-scoped <code>.mcp.json</code> with env-var expansion for tokens',
+          'Configure personal or experimental servers in user-scoped <code>~/.claude.json</code>',
+          'Write richer MCP tool descriptions so the agent does not default to a built-in (e.g. Grep) over a more capable MCP tool',
+          'Prefer existing community MCP servers (e.g. Jira) over custom builds; reserve custom servers for team-specific workflows',
+          'Expose content catalogs as MCP resources so agents do not need exploratory calls to see what is available'
+        ]
+      },
+      { code:'2.5', title:'Built-in tools: Read, Write, Edit, Bash, Grep, Glob',
+        k:[
+          '<code>Grep</code>: content search &mdash; patterns like function names, error messages, imports',
+          '<code>Glob</code>: file-path pattern matching &mdash; finding files by name or extension pattern',
+          '<code>Read</code>/<code>Write</code> for full-file operations; <code>Edit</code> for targeted changes via unique text matching',
+          'When <code>Edit</code> fails on a non-unique match, <code>Read</code> + <code>Write</code> is the reliable fallback'
+        ],
+        s:[
+          'Use <code>Grep</code> to search code content &mdash; find all callers of a function, locate an error message',
+          'Use <code>Glob</code> to find files by naming pattern (e.g. <code>**/*.test.tsx</code>)',
+          'Fall back to <code>Read</code> then <code>Write</code> when <code>Edit</code> cannot find unique anchor text',
+          'Build codebase understanding incrementally &mdash; <code>Grep</code> for entry points, then <code>Read</code> to follow imports, rather than reading everything upfront',
+          'Trace a function across wrapper modules by first listing exported names, then searching for each name codebase-wide'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d3', num:'03', name:'Claude Code Configuration & Workflows',
+    blurb:'CLAUDE.md, commands, skills, path rules, plan mode, iteration, and CI/CD.',
+    subs:[
+      { code:'3.1', title:'CLAUDE.md hierarchy & modular organization',
+        k:[
+          'Hierarchy: user-level (<code>~/.claude/CLAUDE.md</code>), project-level (<code>.claude/CLAUDE.md</code> or root), directory-level (subdirectory files)',
+          'User-level settings apply only to that user &mdash; not shared with teammates through version control',
+          '<code>@import</code> references external files to keep CLAUDE.md modular (e.g. package-specific standards files)',
+          '<code>.claude/rules/</code> holds topic-specific rule files as an alternative to one monolithic CLAUDE.md'
+        ],
+        s:[
+          'Diagnose hierarchy issues (e.g. a new teammate missing instructions that live at user-level instead of project-level)',
+          'Use <code>@import</code> to pull in only the standards files relevant to each package',
+          'Split a large CLAUDE.md into focused files under <code>.claude/rules/</code> (<code>testing.md</code>, <code>api-conventions.md</code>, <code>deployment.md</code>)',
+          'Use <code>/memory</code> to verify which memory files are actually loaded when behavior is inconsistent across sessions'
+        ]
+      },
+      { code:'3.2', title:'Custom slash commands & skills',
+        k:[
+          'Project-scoped commands in <code>.claude/commands/</code> (shared via version control) vs user-scoped in <code>~/.claude/commands/</code> (personal)',
+          'Skills live in <code>.claude/skills/</code> with SKILL.md frontmatter: <code>context: fork</code>, <code>allowed-tools</code>, <code>argument-hint</code>',
+          '<code>context: fork</code> runs a skill in an isolated sub-agent context so its output does not pollute the main conversation',
+          'Personal skill variants can live in <code>~/.claude/skills/</code> under different names without affecting teammates'
+        ],
+        s:[
+          'Create project-scoped slash commands in <code>.claude/commands/</code> for team-wide availability',
+          'Use <code>context: fork</code> to isolate verbose or exploratory skill output (codebase analysis, brainstorming) from the main session',
+          'Set <code>allowed-tools</code> in skill frontmatter to restrict tool access during execution (e.g. write-only, to prevent destructive actions)',
+          'Use <code>argument-hint</code> to prompt for required parameters when a skill is invoked without them',
+          'Choose skills (on-demand, task-specific) vs CLAUDE.md (always-loaded, universal)'
+        ]
+      },
+      { code:'3.3', title:'Path-specific rules',
+        k:[
+          '<code>.claude/rules/</code> files use YAML frontmatter <code>paths</code> fields with glob patterns for conditional activation',
+          'Path-scoped rules load only when editing matching files &mdash; less irrelevant context, fewer tokens',
+          'Glob rules beat directory-level CLAUDE.md when a convention spans many directories (e.g. test files scattered throughout)'
+        ],
+        s:[
+          'Create <code>.claude/rules/</code> files with <code>paths: ["terraform/**/*"]</code>-style frontmatter scoping',
+          'Use glob patterns to apply conventions by file type regardless of location (e.g. <code>**/*.test.tsx</code>)',
+          'Choose path-specific rules over subdirectory CLAUDE.md when a convention crosses the codebase'
+        ]
+      },
+      { code:'3.4', title:'Plan mode vs direct execution',
+        k:[
+          'Plan mode fits complex tasks: large-scale change, multiple valid approaches, architectural decisions, multi-file edits',
+          'Direct execution fits simple, well-scoped changes (e.g. one validation check in one function)',
+          'Plan mode lets you explore and design safely before committing, avoiding costly rework',
+          'The Explore subagent isolates verbose discovery output, returning just a summary'
+        ],
+        s:[
+          'Choose plan mode for architectural work (microservice restructuring, a 45+-file library migration, competing infra approaches)',
+          'Choose direct execution for well-understood changes (a single-file bug fix with a clear stack trace, a date-validation conditional)',
+          'Use the Explore subagent for verbose discovery phases to protect the context window',
+          'Combine plan mode (investigate) with direct execution (implement) in sequence'
+        ]
+      },
+      { code:'3.5', title:'Iterative refinement techniques',
+        k:[
+          'Concrete input/output examples communicate a transformation more reliably than prose when prose gets read inconsistently',
+          'Test-driven iteration: write the test suite first, then iterate by sharing failures',
+          'The interview pattern: have Claude ask questions to surface considerations before implementing',
+          'Interacting issues go in one message together; independent issues get fixed sequentially'
+        ],
+        s:[
+          'Give 2&ndash;3 concrete input/output examples when natural-language descriptions produce inconsistent results',
+          'Write tests for expected behavior, edge cases, and performance up front, then iterate against failures',
+          'Use the interview pattern to surface design considerations (cache invalidation, failure modes) before implementing in unfamiliar territory',
+          'Provide specific test cases (input + expected output) to fix edge cases like null handling in migrations',
+          'Bundle interacting fixes into one detailed message; keep independent fixes sequential'
+        ]
+      },
+      { code:'3.6', title:'CI/CD integration',
+        k:[
+          '<code>-p</code> / <code>--print</code> runs Claude Code non-interactively for pipelines',
+          '<code>--output-format json</code> + <code>--json-schema</code> enforce structured, machine-parseable output',
+          'CLAUDE.md carries project context (testing standards, fixture conventions, review criteria) into CI-invoked runs',
+          'The session that generated code is a weaker reviewer of its own changes than an independent instance'
+        ],
+        s:[
+          'Run with <code>-p</code> in CI to avoid hangs on interactive input',
+          'Combine <code>--output-format json</code> with <code>--json-schema</code> to post structured findings as inline PR comments',
+          'Feed prior review findings back in on re-runs so Claude reports only new or unaddressed issues',
+          'Provide existing test files in context so generation does not duplicate covered scenarios',
+          'Document testing standards and fixtures in CLAUDE.md to raise test-generation quality'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d4', num:'04', name:'Prompt Engineering & Structured Output',
+    blurb:'Precision, few-shot design, schemas and tool use, retries, batching, and multi-pass review.',
+    subs:[
+      { code:'4.1', title:'Explicit criteria for precision',
+        k:[
+          'Explicit criteria ("flag only when claimed behavior contradicts actual code behavior") beat vague instructions ("check that comments are accurate")',
+          'Generic instructions like "be conservative" or "only report high-confidence findings" do not actually improve precision',
+          'High false-positive categories erode trust in the categories that are accurate'
+        ],
+        s:[
+          'Write criteria that define what to report vs skip, rather than relying on confidence-based filtering',
+          'Temporarily disable a high-false-positive category to protect trust while its prompt gets fixed',
+          'Define severity levels with concrete code examples per level for consistent classification'
+        ]
+      },
+      { code:'4.2', title:'Few-shot prompting',
+        k:[
+          'Few-shot examples are the most effective lever for consistent, actionable output when instructions alone fall short',
+          'Examples demonstrate ambiguous-case handling (tool choice for an ambiguous request, branch-level coverage gaps)',
+          'They let the model generalize judgment to novel cases, not just match the examples given',
+          'They reduce hallucination in extraction tasks (informal measurements, varied document structures)'
+        ],
+        s:[
+          'Build 2&ndash;4 targeted examples for ambiguous scenarios, showing why one action beat plausible alternatives',
+          'Show the exact desired output format (location, issue, severity, fix) for consistency',
+          'Contrast acceptable patterns against genuine issues to cut false positives while preserving generalization',
+          'Demonstrate handling of varied document structures (inline citations vs bibliographies)',
+          'Show correct extraction across varied formats to fix empty or null fields'
+        ]
+      },
+      { code:'4.3', title:'Structured output via tool use & JSON schemas',
+        k:[
+          'Tool use with a JSON schema is the most reliable route to guaranteed schema-compliant output, eliminating JSON syntax errors',
+          '<code>tool_choice: "auto"</code> (may return text) vs <code>"any"</code> (must call a tool, model picks) vs forced (must call the named tool)',
+          'Strict schemas kill syntax errors but not semantic ones (line items that do not sum, values in the wrong field)',
+          'Design fields as required or optional; use enum + "other" + detail string for extensible categories'
+        ],
+        s:[
+          'Define extraction tools with JSON-schema inputs, and read structured data off the <code>tool_use</code> response',
+          'Set <code>tool_choice: "any"</code> when several extraction schemas exist and the document type is not known yet',
+          'Force a specific tool (<code>{"type":"tool","name":"extract_metadata"}</code>) to guarantee it runs before enrichment',
+          'Make fields nullable when a source document may simply lack the data, so the model does not fabricate values',
+          'Add "unclear" and "other" + detail enum values for ambiguous or extensible categories',
+          'Pair strict schemas with format-normalization rules in the prompt for messy source formatting'
+        ]
+      },
+      { code:'4.4', title:'Validation, retry & feedback loops',
+        k:[
+          'Retry-with-error-feedback: append the specific validation error to the prompt on retry',
+          'Retries fail when the needed information is simply not in the source &mdash; they only help with format or structural errors',
+          'A <code>detected_pattern</code> field lets you analyze which constructs trigger findings, and which get dismissed',
+          'Semantic validation errors (bad totals, misplaced values) differ from schema syntax errors (already eliminated by tool use)'
+        ],
+        s:[
+          'Send follow-up requests with the original document, the failed extraction, and the specific validation errors',
+          'Recognize when a retry cannot help (data only exists in a document you did not provide) vs when it will (a format mismatch)',
+          'Add <code>detected_pattern</code> fields to findings to analyze false-positive patterns from developer dismissals',
+          'Build self-correction checks: extract <code>calculated_total</code> alongside <code>stated_total</code> to flag mismatches, add a <code>conflict_detected</code> boolean for inconsistent sources'
+        ]
+      },
+      { code:'4.5', title:'Batch processing strategy',
+        k:[
+          'Message Batches API: 50% cost savings, up to a 24-hour window, no latency SLA',
+          'Fits non-blocking, latency-tolerant work (overnight reports, weekly audits) &mdash; not blocking workflows like pre-merge checks',
+          'The batch API does not support multi-turn tool calling within one request',
+          '<code>custom_id</code> correlates each batch request with its response'
+        ],
+        s:[
+          'Match the API to latency needs: synchronous for blocking pre-merge checks, batch for overnight or weekly runs',
+          'Size submission frequency to the SLA (e.g. 4-hour submission windows to guarantee a 30-hour SLA against 24-hour processing)',
+          'On failure, resubmit only the failed documents (by <code>custom_id</code>), adjusted as needed (e.g. chunking oversized ones)',
+          'Refine the prompt on a sample set before batching a large volume, to cut resubmission costs'
+        ]
+      },
+      { code:'4.6', title:'Multi-instance & multi-pass review',
+        k:[
+          'Self-review is weaker: a model keeps its generation-time reasoning and rarely questions its own decisions in the same session',
+          'An independent review instance (no prior reasoning context) catches more than self-review instructions or extended thinking do',
+          'Multi-pass review: per-file local passes plus a cross-file integration pass avoids attention dilution and contradictions'
+        ],
+        s:[
+          'Use a second, independent Claude instance to review generated code without the generator\'s context',
+          'Split large multi-file reviews into per-file local passes plus a separate cross-file data-flow pass',
+          'Run verification passes where the model self-reports confidence alongside each finding, to route review effort'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d5', num:'05', name:'Context Management & Reliability',
+    blurb:'Long-context preservation, escalation, error propagation, codebase exploration, review calibration, and provenance.',
+    subs:[
+      { code:'5.1', title:'Preserving context across long interactions',
+        k:[
+          'Progressive summarization risks blurring numbers, percentages, dates, and stated expectations into vague text',
+          '"Lost in the middle": models handle the start and end of long inputs reliably but can drop findings from the middle',
+          'Tool results pile up in context disproportionately to their relevance (e.g. 40+ fields returned when 5 matter)',
+          'Full conversation history in each request is what keeps the conversation coherent'
+        ],
+        s:[
+          'Pull transactional facts (amounts, dates, order numbers, statuses) into a persistent "case facts" block outside the summarized history',
+          'Persist structured issue data (order IDs, amounts, statuses) in a separate layer for multi-issue sessions',
+          'Trim verbose tool output to only the relevant fields before it accumulates',
+          'Put key findings up front in aggregated inputs, with explicit section headers, to counter position effects',
+          'Require subagents to attach metadata (dates, sources, methodology) to structured outputs for accurate downstream synthesis',
+          'Have upstream agents return structured facts, citations, and scores instead of verbose prose when downstream context budget is tight'
+        ]
+      },
+      { code:'5.2', title:'Escalation & ambiguity resolution',
+        k:[
+          'Escalate on: an explicit customer request for a human, a policy exception or gap (not just "it is complex"), or genuine inability to progress',
+          'Escalate immediately on an explicit demand; offer to resolve first when the issue is otherwise straightforward',
+          'Sentiment and self-reported confidence are unreliable proxies for actual complexity',
+          'Multiple customer matches need a clarifying question (more identifiers), not a heuristic pick'
+        ],
+        s:[
+          'Add explicit escalation criteria with few-shot examples to the system prompt',
+          'Honor an explicit request for a human immediately, without investigating first',
+          'Acknowledge frustration while offering resolution when it is within scope; escalate only if the customer reiterates',
+          'Escalate when policy is silent or ambiguous on the specific request (e.g. competitor price matching when policy only covers own-site adjustments)',
+          'Ask for additional identifiers on multiple matches instead of guessing'
+        ]
+      },
+      { code:'5.3', title:'Error propagation across multi-agent systems',
+        k:[
+          'Structured error context (failure type, attempted query, partial results, alternatives) enables real coordinator recovery decisions',
+          'Access failures (timeouts) need a retry decision; valid empty results are just a successful query with no matches &mdash; do not conflate them',
+          'A generic status ("search unavailable") hides context the coordinator needs',
+          'Silently returning empty results as success, or killing the whole workflow on one failure, are both anti-patterns'
+        ],
+        s:[
+          'Return failure type, what was attempted, partial results, and alternatives &mdash; not just a status string',
+          'Keep access failures and valid-empty-results distinct in error reporting',
+          'Have subagents recover locally from transient failures; propagate only what they cannot fix, with partial results attached',
+          'Annotate synthesis output by coverage &mdash; which findings are well-supported vs which topics have gaps from unavailable sources'
+        ]
+      },
+      { code:'5.4', title:'Context in large codebase exploration',
+        k:[
+          'Long sessions degrade: the model starts giving inconsistent answers and citing "typical patterns" instead of the specific classes it already found',
+          'Scratchpad files persist key findings across context boundaries',
+          'Subagent delegation isolates verbose exploration while the main agent keeps high-level coordination',
+          'Crash recovery: each agent exports state to a known location; the coordinator loads a manifest on resume'
+        ],
+        s:[
+          'Spawn subagents for specific questions ("find all test files," "trace refund flow dependencies") while the main agent coordinates',
+          'Maintain scratchpad files of key findings and reference them on later questions, to counter degradation',
+          'Summarize one exploration phase before spawning subagents for the next, injecting the summary as context',
+          'Design state-export manifests the coordinator loads on resume and re-injects into agent prompts',
+          'Use <code>/compact</code> mid-session when context fills with verbose discovery output'
+        ]
+      },
+      { code:'5.5', title:'Human review workflows & confidence calibration',
+        k:[
+          'Aggregate accuracy (e.g. 97% overall) can mask poor performance on a specific document type or field',
+          'Stratified random sampling measures error rates on high-confidence extractions and surfaces novel error patterns',
+          'Field-level confidence scores need calibration against labeled validation sets to route review attention properly',
+          'Validate accuracy by document type and field segment before automating away human review'
+        ],
+        s:[
+          'Stratified-sample high-confidence extractions on an ongoing basis to catch drift and new error types',
+          'Break accuracy down by document type and field before reducing review on any segment',
+          'Have the model output field-level confidence, then calibrate thresholds against a labeled set',
+          'Route low-confidence or contradictory-source extractions to human review, prioritized by reviewer capacity'
+        ]
+      },
+      { code:'5.6', title:'Provenance & uncertainty in multi-source synthesis',
+        k:[
+          'Summarization steps lose source attribution when findings get compressed without preserving claim-source mappings',
+          'Structured claim-source mappings must be preserved and merged through synthesis, not dropped',
+          'Conflicting stats from credible sources should be annotated with attribution, not arbitrarily resolved to one value',
+          'Publication or collection dates need to travel with the data, or temporal differences read as contradictions'
+        ],
+        s:[
+          'Require subagents to output claim-source mappings (URLs, doc names, excerpts) that survive synthesis',
+          'Structure reports to separate well-established findings from contested ones, keeping original source framing and methodology',
+          'Carry conflicting values through to the coordinator, explicitly annotated, rather than silently picking one',
+          'Require publication or collection dates in structured outputs for correct temporal interpretation',
+          'Match content type to output form in synthesis &mdash; tables for financial data, prose for news, structured lists for technical findings'
+        ]
+      }
+    ]
+  }
+];
+
+(function(){
+  var STORAGE_KEY = 'cca-study-map-progress-v1';
+  var progress = {};
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) progress = JSON.parse(raw) || {};
+  }catch(e){ progress = {}; }
+
+  function saveProgress(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }catch(e){}
+  }
+
+  var totalSubs = 0;
+  DOMAINS.forEach(function(d){ totalSubs += d.subs.length; });
+
+  var root = document.getElementById('domainsRoot');
+  var jumpPills = document.getElementById('jumpPills');
+  var html = '';
+
+  DOMAINS.forEach(function(dom){
+    jumpPills.innerHTML += '<a class="jump-pill" href="#'+dom.id+'">'+dom.num+'</a>';
+
+    html += '<section class="domain" id="'+dom.id+'" data-domain="'+dom.id+'">';
+    html += '  <div class="domain-head">';
+    html += '    <div class="domain-num">'+dom.num+'</div>';
+    html += '    <div class="domain-heading"><h2>'+dom.name+'</h2><p>'+dom.blurb+'</p></div>';
+    html += '    <div class="domain-progress"><span class="n mono" data-domain-count="'+dom.id+'">0 / '+dom.subs.length+'</span><div class="track"><div class="fill" data-domain-fill="'+dom.id+'"></div></div></div>';
+    html += '  </div>';
+    html += '  <div class="subs">';
+
+    dom.subs.forEach(function(sub){
+      var searchBlob = (sub.title + ' ' + sub.k.join(' ') + ' ' + sub.s.join(' ')).toLowerCase();
+      html += '<article class="sheet" id="s-'+sub.code+'" data-code="'+sub.code+'" data-search="'+searchBlob.replace(/"/g,'&quot;')+'">';
+      html += '  <div class="sheet-top">';
+      html += '    <span class="sheet-code mono">'+sub.code+'</span>';
+      html += '    <h3 class="sheet-title">'+sub.title+'</h3>';
+      html += '    <label class="review-toggle"><input type="checkbox" data-code="'+sub.code+'"> Reviewed</label>';
+      html += '  </div>';
+      html += '  <div class="sheet-cols">';
+      html += '    <div><div class="col-head k"><i></i>Knowledge of</div><ul class="blist k">'+sub.k.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';
+      html += '    <div><div class="col-head s"><i></i>Skills in</div><ul class="blist s">'+sub.s.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';
+      html += '  </div>';
+      html += '</article>';
+    });
+
+    html += '  </div>';
+    html += '</section>';
+  });
+
+  root.innerHTML = html;
+
+  var checkboxes = Array.prototype.slice.call(document.querySelectorAll('.review-toggle input'));
+  var searchInput = document.getElementById('searchInput');
+  var emptyState = document.getElementById('emptyState');
+
+  function updateProgressUI(){
+    var reviewedTotal = 0;
+    DOMAINS.forEach(function(dom){
+      var reviewedInDomain = dom.subs.filter(function(s){ return !!progress[s.code]; }).length;
+      reviewedTotal += reviewedInDomain;
+      var countEl = document.querySelector('[data-domain-count="'+dom.id+'"]');
+      var fillEl = document.querySelector('[data-domain-fill="'+dom.id+'"]');
+      if (countEl) countEl.textContent = reviewedInDomain + ' / ' + dom.subs.length;
+      if (fillEl) fillEl.style.width = (reviewedInDomain / dom.subs.length * 100) + '%';
+    });
+    document.getElementById('progressCount').textContent = reviewedTotal;
+    document.getElementById('progressFill').style.width = (reviewedTotal / totalSubs * 100) + '%';
+  }
+
+  function applyProgressToDOM(){
+    checkboxes.forEach(function(cb){
+      var code = cb.getAttribute('data-code');
+      cb.checked = !!progress[code];
+      var sheet = document.getElementById('s-'+code);
+      if (sheet) sheet.classList.toggle('is-reviewed', !!progress[code]);
+    });
+  }
+
+  checkboxes.forEach(function(cb){
+    cb.addEventListener('change', function(){
+      var code = cb.getAttribute('data-code');
+      if (cb.checked) progress[code] = true; else delete progress[code];
+      var sheet = document.getElementById('s-'+code);
+      if (sheet) sheet.classList.toggle('is-reviewed', cb.checked);
+      saveProgress();
+      updateProgressUI();
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    progress = {};
+    saveProgress();
+    applyProgressToDOM();
+    updateProgressUI();
+  });
+
+  var sheets = Array.prototype.slice.call(document.querySelectorAll('.sheet'));
+  var domainSections = Array.prototype.slice.call(document.querySelectorAll('.domain'));
+
+  searchInput.addEventListener('input', function(){
+    var q = searchInput.value.trim().toLowerCase();
+    var anyVisible = false;
+    domainSections.forEach(function(domSection){
+      var domainHasMatch = false;
+      var domSheets = domSection.querySelectorAll('.sheet');
+      domSheets.forEach(function(sheet){
+        var match = !q || sheet.getAttribute('data-search').indexOf(q) !== -1;
+        sheet.hidden = !match;
+        if (match){ domainHasMatch = true; anyVisible = true; }
+      });
+      domSection.hidden = !domainHasMatch;
+    });
+    emptyState.hidden = anyVisible;
+  });
+
+  applyProgressToDOM();
+  updateProgressUI();
+})();
+</script>
