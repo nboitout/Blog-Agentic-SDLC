@@ -1,11 +1,11 @@
-<title>Agent SDK Anatomy</title>
+<title>Claude Agent SDK Anatomy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
   :root{
-    --bg:#F1F2EE;
-    --stage:#FBFBF9;
+    --bg:#FFFFFF;
+    --stage:#FFFFFF;
     --surface:#FFFFFF;
     --surface-2:#E7E8E2;
     --ink:#1B2027;
@@ -23,46 +23,24 @@
     --bad:#B23A32;
     --shadow: 0 30px 60px -30px rgba(20,20,15,0.35), 0 2px 8px rgba(20,20,15,0.06);
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#10141A;
-      --stage:#161C24;
-      --surface:#1B222B;
-      --surface-2:#212A34;
-      --ink:#ECEEEE;
-      --ink-dim:#9BA4AF;
-      --ink-faint:#6D7682;
-      --accent:#E8A33D;
-      --accent-soft:#3A2E1B;
-      --accent-ink:#151004;
-      --accent-2:#57C2B2;
-      --accent-2-soft:#173832;
-      --line:#2A313D;
-      --line-strong:#394251;
-      --grid: rgba(255,255,255,0.06);
-      --good:#4FAE78;
-      --bad:#E0685E;
-      --shadow: 0 30px 60px -30px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
-    }
-  }
   :root[data-theme="dark"]{
-    --bg:#10141A;
-    --stage:#161C24;
-    --surface:#1B222B;
-    --surface-2:#212A34;
-    --ink:#ECEEEE;
-    --ink-dim:#9BA4AF;
-    --ink-faint:#6D7682;
-    --accent:#E8A33D;
-    --accent-soft:#3A2E1B;
-    --accent-ink:#151004;
-    --accent-2:#57C2B2;
-    --accent-2-soft:#173832;
-    --line:#2A313D;
-    --line-strong:#394251;
-    --grid: rgba(255,255,255,0.06);
-    --good:#4FAE78;
-    --bad:#E0685E;
+    --bg:#071525;
+    --stage:#0B1F35;
+    --surface:#102A45;
+    --surface-2:#173A5C;
+    --ink:#FFFFFF;
+    --ink-dim:#D7E5F2;
+    --ink-faint:#B6CDE0;
+    --accent:#FFC75A;
+    --accent-soft:#3D331D;
+    --accent-ink:#101820;
+    --accent-2:#65E0CC;
+    --accent-2-soft:#123F45;
+    --line:#86A9C7;
+    --line-strong:#D1E4F3;
+    --grid:rgba(255,255,255,0.08);
+    --good:#7BE3A6;
+    --bad:#FF9189;
     --shadow: 0 30px 60px -30px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
   }
 
@@ -131,7 +109,7 @@
   .eyebrow{
     display:flex; align-items:baseline; gap:10px;
     font-family:"IBM Plex Mono", monospace;
-    font-size:clamp(13.12px,1.44vw,16.25px);
+    font-size:clamp(10.5px,1.15vw,13px);
     letter-spacing:.14em; text-transform:uppercase;
     color:var(--accent); font-weight:600;
   }
@@ -145,7 +123,7 @@
     line-height:1.03;
   }
   .lede{
-    font-size:clamp(16.88px,1.94vw,21.25px);
+    font-size:clamp(13.5px,1.55vw,17px);
     color:var(--ink-dim); max-width:62ch; line-height:1.5;
     margin-top:clamp(8px,1.4vh,12px);
   }
@@ -159,9 +137,9 @@
   /* ---------- diagram plumbing ---------- */
   .diagram{ width:100%; height:100%; overflow:visible; }
   .diagram text{ font-family:"IBM Plex Sans", sans-serif; }
-  .diagram .label{ font-family:"IBM Plex Mono", monospace; font-size:15.62px; fill:var(--ink-faint); letter-spacing:.02em;}
-  .diagram .node-title{ font-size:18.12px; font-weight:600; fill:var(--ink); }
-  .diagram .node-sub{ font-family:"IBM Plex Mono", monospace; font-size:13.5px; fill:var(--ink-dim); }
+  .diagram .label{ font-family:"IBM Plex Mono", monospace; font-size:12.5px; fill:var(--ink-faint); letter-spacing:.02em;}
+  .diagram .node-title{ font-size:14.5px; font-weight:600; fill:var(--ink); }
+  .diagram .node-sub{ font-family:"IBM Plex Mono", monospace; font-size:10.8px; fill:var(--ink-dim); }
   .diagram .node{ fill:var(--surface); stroke:var(--line-strong); stroke-width:1.4; }
   .diagram .node-accent{ fill:var(--accent-soft); stroke:var(--accent); stroke-width:1.6; }
   .diagram .node-accent2{ fill:var(--accent-2-soft); stroke:var(--accent-2); stroke-width:1.6; }
@@ -171,8 +149,8 @@
   .diagram .dot{ fill:var(--accent); }
   .diagram .good-box{ fill:var(--accent-2-soft); stroke:var(--good); }
   .diagram .bad-box{ fill:var(--surface-2); stroke:var(--bad); }
-  .diagram .good-text{ fill:var(--good); font-weight:600; font-family:"IBM Plex Mono",monospace; font-size:15px;}
-  .diagram .bad-text{ fill:var(--bad); font-weight:600; font-family:"IBM Plex Mono",monospace; font-size:15px;}
+  .diagram .good-text{ fill:var(--good); font-weight:600; font-family:"IBM Plex Mono",monospace; font-size:12px;}
+  .diagram .bad-text{ fill:var(--bad); font-weight:600; font-family:"IBM Plex Mono",monospace; font-size:12px;}
 
   /* ---------- card grids ---------- */
   .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(10px,1.6vw,18px); }
@@ -180,9 +158,9 @@
     background:var(--surface); border:1px solid var(--line); border-radius:12px;
     padding:clamp(12px,1.7vw,20px); display:flex; flex-direction:column; gap:8px;
   }
-  .card .tag{ font-family:"IBM Plex Mono",monospace; font-size:13.75px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-2); }
-  .card h3{ font-size:clamp(17.5px,2vw,22.5px); font-weight:700; }
-  .card p{ margin:0; font-size:clamp(15px,1.62vw,17.5px); color:var(--ink-dim); line-height:1.48; }
+  .card .tag{ font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-2); }
+  .card h3{ font-size:clamp(14px,1.6vw,18px); font-weight:700; }
+  .card p{ margin:0; font-size:clamp(12px,1.3vw,14px); color:var(--ink-dim); line-height:1.48; }
   .card code{ font-family:"IBM Plex Mono",monospace; background:var(--surface-2); padding:.05em .4em; border-radius:4px; font-size:.92em; color:var(--ink);}
 
   .stat-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(10px,1.6vw,18px); }
@@ -190,9 +168,9 @@
     background:var(--surface); border:1px solid var(--line); border-radius:12px;
     padding:clamp(14px,1.8vw,22px); display:flex; flex-direction:column; gap:10px;
   }
-  .stat .mono-key{ font-family:"IBM Plex Mono",monospace; font-size:clamp(15px,1.62vw,18.12px); color:var(--accent); font-weight:600; }
-  .stat h3{ font-size:clamp(18.75px,2.12vw,23.75px); }
-  .stat p{ margin:0; color:var(--ink-dim); font-size:clamp(15px,1.56vw,16.88px); line-height:1.5; }
+  .stat .mono-key{ font-family:"IBM Plex Mono",monospace; font-size:clamp(12px,1.3vw,14.5px); color:var(--accent); font-weight:600; }
+  .stat h3{ font-size:clamp(15px,1.7vw,19px); }
+  .stat p{ margin:0; color:var(--ink-dim); font-size:clamp(12px,1.25vw,13.5px); line-height:1.5; }
   .meter{ height:8px; border-radius:99px; background:var(--surface-2); overflow:hidden; }
   .meter i{ display:block; height:100%; background:linear-gradient(90deg,var(--accent-2),var(--accent)); border-radius:99px; }
 
@@ -200,11 +178,11 @@
   .cmp .col{ background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
   .cmp .col header{
     padding:10px clamp(12px,1.6vw,18px); font-family:"IBM Plex Mono",monospace; font-weight:600;
-    font-size:clamp(15px,1.62vw,17.5px); letter-spacing:.03em; border-bottom:1px solid var(--line);
+    font-size:clamp(12px,1.3vw,14px); letter-spacing:.03em; border-bottom:1px solid var(--line);
   }
   .cmp .col.py header{ background:var(--accent-2-soft); color:var(--accent-2); }
   .cmp .col.ts header{ background:var(--accent-soft); color:var(--accent); }
-  .cmp .row{ padding:10px clamp(12px,1.6vw,18px); border-bottom:1px solid var(--line); font-size:clamp(14.38px,1.5vw,16.88px); }
+  .cmp .row{ padding:10px clamp(12px,1.6vw,18px); border-bottom:1px solid var(--line); font-size:clamp(11.5px,1.2vw,13.5px); }
   .cmp .row:last-child{ border-bottom:none; }
   .cmp .row .k{ color:var(--ink-faint); font-family:"IBM Plex Mono",monospace; font-size:.85em; display:block; margin-bottom:3px; }
   .cmp .row code{ font-family:"IBM Plex Mono",monospace; color:var(--ink); }
@@ -214,7 +192,7 @@
     border-left:3px solid var(--accent);
     background:var(--accent-soft);
     padding:10px 14px; border-radius:0 8px 8px 0;
-    font-size:clamp(14.38px,1.56vw,16.88px); color:var(--ink); line-height:1.5;
+    font-size:clamp(11.5px,1.25vw,13.5px); color:var(--ink); line-height:1.5;
     max-width:64ch;
   }
   .callout .mono{ font-family:"IBM Plex Mono",monospace; font-weight:600; }
@@ -225,10 +203,10 @@
   .cover h1{
     font-size:clamp(34px,6.4vw,64px); font-weight:900; letter-spacing:-.015em; line-height:1.0;
   }
-  .cover .sub{ margin-top:14px; font-size:clamp(17.5px,2.12vw,23.75px); color:var(--ink-dim); max-width:52ch; }
+  .cover .sub{ margin-top:14px; font-size:clamp(14px,1.7vw,19px); color:var(--ink-dim); max-width:52ch; }
   .cover .meta{
     margin-top:auto; padding-top:20px; display:flex; gap:18px; flex-wrap:wrap;
-    font-family:"IBM Plex Mono",monospace; font-size:clamp(13.12px,1.38vw,15.62px);
+    font-family:"IBM Plex Mono",monospace; font-size:clamp(10.5px,1.1vw,12.5px);
     color:var(--ink-faint); letter-spacing:.03em; border-top:1px solid var(--line); width:100%;
   }
   .cover .meta span{ padding-top:12px; }
@@ -236,7 +214,7 @@
   /* ---------- closing ---------- */
   .closing-line{
     margin-top:clamp(14px,2.2vh,20px); font-family:"Archivo",sans-serif; font-weight:700;
-    font-size:clamp(17.92px,2.24vw,24.64px); color:var(--ink);
+    font-size:clamp(16px,2vw,22px); color:var(--ink);
   }
   .closing-line .accent{ color:var(--accent); }
 
@@ -267,7 +245,7 @@
   .dot-btn{
     width:28px; height:28px; border-radius:8px; border:1px solid var(--line);
     background:var(--surface); color:var(--ink-faint); cursor:pointer;
-    font-family:"IBM Plex Mono",monospace; font-size:13.12px;
+    font-family:"IBM Plex Mono",monospace; font-size:10.5px;
     display:flex; align-items:center; justify-content:center;
     transition:all .15s ease; flex:none;
   }
@@ -281,7 +259,7 @@
   @media (prefers-reduced-motion: reduce){ .progress i{ transition:none; } }
 
   .counter{
-    font-family:"IBM Plex Mono",monospace; font-size:15.62px; color:var(--ink-dim);
+    font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink-dim);
     flex:none; font-variant-numeric:tabular-nums; min-width:52px; text-align:center;
   }
 
@@ -293,9 +271,20 @@
   .edge-zone:focus-visible{ outline-offset:-4px; }
 
   .hint{
-    text-align:center; font-family:"IBM Plex Mono",monospace; font-size:13.75px;
+    text-align:center; font-family:"IBM Plex Mono",monospace; font-size:11px;
     color:var(--ink-faint); letter-spacing:.03em;
   }
+  .theme-picker{
+    display:flex; justify-content:center; align-items:center; gap:6px;
+    font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+  }
+  .theme-picker span{ color:var(--ink-faint); margin-right:3px; }
+  .theme-btn{
+    border:1px solid var(--line); background:var(--surface); color:var(--ink-dim);
+    border-radius:999px; padding:5px 10px; cursor:pointer; font:inherit;
+  }
+  .theme-btn:hover{ border-color:var(--accent); color:var(--accent); }
+  .theme-btn.is-current{ background:var(--accent); border-color:var(--accent); color:var(--accent-ink); }
 
   @media (max-width:640px){
     .grid3, .stat-row, .cmp{ grid-template-columns:1fr; }
@@ -315,11 +304,11 @@
         <circle cx="32" cy="32" r="5" fill="var(--accent-2)"/>
       </svg>
       <h1>Agent&nbsp;SDK Anatomy</h1>
-      <p class="sub">Twelve building blocks that turn a single prompt into an autonomous, tool&#8209;using loop &mdash; and how they fit together.</p>
+      <p class="sub">The core building blocks that turn a prompt into an autonomous, tool&#8209;using loop &mdash; and how Python and TypeScript expose them.</p>
       <div class="meta">
         <span>Claude Agent SDK</span>
         <span>Python &amp; TypeScript</span>
-        <span>12 modules</span>
+        <span>13-slide anatomy</span>
       </div>
     </section>
 
@@ -345,7 +334,7 @@
           <text class="node-sub" x="300" y="83" text-anchor="middle">SystemMessage &middot; init</text>
 
           <rect class="node-accent" x="475" y="222" width="200" height="66" rx="10" transform="translate(-90,0)"/>
-          <text class="node-title" x="480" y="249" text-anchor="middle">Claude reasons</text>
+          <text class="node-title" x="480" y="249" text-anchor="middle">Claude responds</text>
           <text class="node-sub" x="480" y="270" text-anchor="middle">AssistantMessage</text>
 
           <rect class="node" x="220" y="382" width="190" height="66" rx="10"/>
@@ -354,10 +343,11 @@
 
           <rect class="node-accent2" x="30" y="222" width="200" height="66" rx="10" transform="translate(20,0)"/>
           <text class="node-title" x="140" y="249" text-anchor="middle">Result feeds back</text>
-          <text class="node-sub" x="140" y="270" text-anchor="middle">UserMessage</text>
+          <text class="node-sub" x="140" y="264" text-anchor="middle">ToolResultBlock</text>
+          <text class="node-sub" x="140" y="279" text-anchor="middle">inside UserMessage</text>
 
           <line x1="300" y1="35" x2="300" y2="4" class="flow-dash"/>
-          <text class="label" x="308" y="14">exits as ResultMessage &mdash; cost + usage</text>
+          <text class="label" x="308" y="14">ends as ResultMessage &mdash; status + cost + usage</text>
         </svg>
       </div>
     </section>
@@ -385,7 +375,8 @@
 
           <rect class="node-accent" x="182" y="40" width="156" height="80" rx="9"/>
           <text class="node-title" x="260" y="70" text-anchor="middle">PreToolUse</text>
-          <text class="node-sub" x="260" y="88" text-anchor="middle">block or edit input</text>
+          <text class="node-sub" x="260" y="88" text-anchor="middle">allow &middot; deny &middot; ask</text>
+          <text class="node-sub" x="260" y="103" text-anchor="middle">defer &middot; edit input</text>
 
           <rect class="node" x="372" y="46" width="156" height="68" rx="9"/>
           <text class="node-title" x="450" y="76" text-anchor="middle">Tool runs</text>
@@ -418,7 +409,7 @@
           <div class="card">
             <span class="tag">Loaded on demand</span>
             <h3>Pulled in mid&#8209;task</h3>
-            <p>When a request matches, Claude calls the skill and its full <code>SKILL.md</code> loads for that turn &mdash; e.g. a docx skill only when a Word file is due.</p>
+            <p>When a request matches, Claude invokes the Skill tool and loads the relevant instructions into the active context &mdash; e.g. a docx skill only when a Word file is due.</p>
           </div>
           <div class="card">
             <span class="tag">Composable</span>
@@ -433,7 +424,7 @@
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">04 &mdash; Control</span><span class="rule"></span></div>
       <h2 class="title">Permissions</h2>
-      <p class="lede">Every tool call is checked before it runs &mdash; by name pattern, by mode, and optionally by your own callback.</p>
+      <p class="lede">Tool calls pass through hooks, rules and the active permission mode. Your callback handles calls that still need an application-level decision.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 900 260" role="img" aria-label="Pipeline diagram of the permission check">
           <defs>
@@ -441,33 +432,39 @@
               <path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/>
             </marker>
           </defs>
-          <path class="flow" marker-end="url(#arrow3)" d="M138,80 L172,80"/>
-          <path class="flow" marker-end="url(#arrow3)" d="M368,80 L402,80"/>
-          <path class="flow" marker-end="url(#arrow3)" d="M598,80 L632,80"/>
-          <path class="flow" marker-end="url(#arrow3)" d="M780,60 L806,34"/>
-          <path class="flow" marker-end="url(#arrow3)" d="M780,100 L806,126"/>
+          <path class="flow" marker-end="url(#arrow3)" d="M122,80 L150,80"/>
+          <path class="flow" marker-end="url(#arrow3)" d="M302,80 L330,80"/>
+          <path class="flow" marker-end="url(#arrow3)" d="M512,80 L540,80"/>
+          <path class="flow" marker-end="url(#arrow3)" d="M702,80 L730,80"/>
+          <path class="flow" marker-end="url(#arrow3)" d="M822,60 L848,34"/>
+          <path class="flow" marker-end="url(#arrow3)" d="M822,100 L848,126"/>
 
-          <rect class="node" x="10" y="46" width="128" height="68" rx="9"/>
-          <text class="node-title" x="74" y="76" text-anchor="middle">Tool call</text>
-          <text class="node-sub" x="74" y="94" text-anchor="middle">e.g. Bash(...)</text>
+          <rect class="node" x="10" y="46" width="112" height="68" rx="9"/>
+          <text class="node-title" x="66" y="76" text-anchor="middle">Tool call</text>
+          <text class="node-sub" x="66" y="94" text-anchor="middle">e.g. Bash(...)</text>
 
-          <rect class="node" x="172" y="38" width="196" height="84" rx="9"/>
-          <text class="node-title" x="270" y="66" text-anchor="middle">allow / deny patterns</text>
-          <text class="node-sub" x="270" y="84" text-anchor="middle">Bash(npm *) &middot; Edit &middot; ...</text>
+          <rect class="node-accent2" x="150" y="38" width="152" height="84" rx="9"/>
+          <text class="node-title" x="226" y="66" text-anchor="middle">PreToolUse</text>
+          <text class="node-sub" x="226" y="84" text-anchor="middle">may block or rewrite</text>
 
-          <rect class="node-accent" x="402" y="38" width="196" height="84" rx="9"/>
-          <text class="node-title" x="500" y="60" text-anchor="middle">permissionMode</text>
-          <text class="node-sub" x="500" y="78" text-anchor="middle">default &middot; acceptEdits</text>
-          <text class="node-sub" x="500" y="92" text-anchor="middle">plan &middot; bypassPermissions</text>
+          <rect class="node" x="330" y="38" width="182" height="84" rx="9"/>
+          <text class="node-title" x="421" y="64" text-anchor="middle">deny / ask rules</text>
+          <text class="node-sub" x="421" y="84" text-anchor="middle">patterns + settings</text>
 
-          <rect class="node-accent2" x="632" y="46" width="148" height="68" rx="9"/>
-          <text class="node-title" x="706" y="70" text-anchor="middle">canUseTool()</text>
-          <text class="node-sub" x="706" y="88" text-anchor="middle">your callback</text>
+          <rect class="node-accent" x="540" y="38" width="162" height="84" rx="9"/>
+          <text class="node-title" x="621" y="60" text-anchor="middle">permissionMode</text>
+          <text class="node-sub" x="621" y="76" text-anchor="middle">default &middot; plan &middot; auto</text>
+          <text class="node-sub" x="621" y="92" text-anchor="middle">acceptEdits &middot; dontAsk</text>
+          <text class="node-sub" x="621" y="108" text-anchor="middle">bypassPermissions</text>
 
-          <rect class="good-box" x="806" y="10" width="84" height="46" rx="8"/>
-          <text class="good-text" x="848" y="38" text-anchor="middle">Approved</text>
-          <rect class="bad-box" x="806" y="104" width="84" height="46" rx="8"/>
-          <text class="bad-text" x="848" y="132" text-anchor="middle">Denied</text>
+          <rect class="node-accent2" x="730" y="46" width="92" height="68" rx="9"/>
+          <text class="node-title" x="776" y="70" text-anchor="middle">canUse</text>
+          <text class="node-title" x="776" y="88" text-anchor="middle">Tool()</text>
+
+          <rect class="good-box" x="848" y="10" width="42" height="46" rx="8"/>
+          <text class="good-text" x="869" y="38" text-anchor="middle">Run</text>
+          <rect class="bad-box" x="848" y="104" width="42" height="46" rx="8"/>
+          <text class="bad-text" x="869" y="132" text-anchor="middle">Stop</text>
         </svg>
       </div>
     </section>
@@ -490,11 +487,11 @@
 
           <rect class="node" x="10" y="36" width="172" height="68" rx="9"/>
           <text class="node-title" x="96" y="64" text-anchor="middle">Your function</text>
-          <text class="node-sub" x="96" y="84" text-anchor="middle">plain Python / TS</text>
+          <text class="node-sub" x="96" y="84" text-anchor="middle">Python / TS handler</text>
 
           <rect class="node-accent" x="214" y="30" width="200" height="80" rx="9"/>
           <text class="node-title" x="314" y="60" text-anchor="middle" class="mono">@tool / tool()</text>
-          <text class="node-sub" x="314" y="80" text-anchor="middle">declares name + schema</text>
+          <text class="node-sub" x="314" y="80" text-anchor="middle">name + description + schema</text>
 
           <rect class="node-accent" x="446" y="30" width="200" height="80" rx="9"/>
           <text class="node-sub" x="546" y="55" text-anchor="middle">createSdkMcpServer()</text>
@@ -511,7 +508,7 @@
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">06 &mdash; Delegation</span><span class="rule"></span></div>
       <h2 class="title">Subagents</h2>
-      <p class="lede">A subagent runs its own full agent loop in isolated context. Only its final message returns to the parent &mdash; the rest never touches main context.</p>
+      <p class="lede">A subagent works in its own context. The parent receives its returned result rather than the full working transcript, while the application can optionally observe intermediate activity.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 720 300" role="img" aria-label="Fan-out diagram of a parent agent spawning subagents">
           <defs>
@@ -545,7 +542,7 @@
           <path class="flow-accent" marker-end="url(#arrow5b)" d="M140,212 Q220,262 300,242"/>
           <path class="flow-accent" marker-end="url(#arrow5b)" d="M360,212 L360,242"/>
           <path class="flow-accent" marker-end="url(#arrow5b)" d="M580,212 Q500,262 420,242"/>
-          <text class="label" x="360" y="278" text-anchor="middle">final message only &mdash; rest of the context is discarded</text>
+          <text class="label" x="360" y="278" text-anchor="middle">result returns to parent &mdash; working context stays isolated</text>
         </svg>
       </div>
     </section>
@@ -554,7 +551,7 @@
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">07 &mdash; Continuity</span><span class="rule"></span></div>
       <h2 class="title">Sessions</h2>
-      <p class="lede">Every run persists to disk under a <span class="mono">session_id</span>. Resume it later with full history intact, or fork it to branch an exploration.</p>
+      <p class="lede">Each run has a <span class="mono">session_id</span>. Sessions are stored locally by default and can be continued, resumed, forked, or mirrored to external storage.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 800 260" role="img" aria-label="Timeline diagram of resuming and forking a session">
           <defs>
@@ -576,12 +573,14 @@
           <path class="flow-accent" d="M420,110 Q470,60 560,80" marker-end="url(#arrow6)"/>
           <rect class="node-accent" x="560" y="46" width="200" height="60" rx="9"/>
           <text class="node-title" x="660" y="72" text-anchor="middle">Resume</text>
-          <text class="node-sub" x="660" y="90" text-anchor="middle">continue / resume(id)</text>
+          <text class="node-sub" x="660" y="88" text-anchor="middle">continue latest</text>
+          <text class="node-sub" x="660" y="102" text-anchor="middle">or resume by ID</text>
 
           <path class="flow-dash" d="M270,110 Q300,180 420,196" marker-end="url(#arrow6b)"/>
           <rect class="node-accent2" x="420" y="166" width="200" height="60" rx="9"/>
           <text class="node-title" x="520" y="192" text-anchor="middle">Fork</text>
-          <text class="node-sub" x="520" y="210" text-anchor="middle">new branch, same history</text>
+          <text class="node-sub" x="520" y="208" text-anchor="middle">new session ID</text>
+          <text class="node-sub" x="520" y="222" text-anchor="middle">inherited history</text>
         </svg>
       </div>
     </section>
@@ -590,7 +589,7 @@
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">08 &mdash; Connections</span><span class="rule"></span></div>
       <h2 class="title">External MCP Servers</h2>
-      <p class="lede">Connect stdio, SSE, or HTTP MCP servers the same way Claude Code does. Their tool schemas defer until Claude actually needs them &mdash; exactly what you saw happen earlier in this conversation.</p>
+      <p class="lede">Connect local or remote MCP servers through stdio, SSE, or Streamable HTTP. For large catalogs, Tool Search can defer detailed schemas until Claude needs them.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 760 260" role="img" aria-label="Hub and spoke diagram of external MCP server connections">
           <defs>
@@ -600,7 +599,7 @@
           </defs>
           <rect class="node-accent" x="40" y="98" width="200" height="64" rx="9"/>
           <text class="node-title" x="140" y="124" text-anchor="middle">Your SDK agent</text>
-          <text class="node-sub" x="140" y="144" text-anchor="middle">deferred tool search</text>
+          <text class="node-sub" x="140" y="144" text-anchor="middle">optional Tool Search</text>
 
           <path class="flow" marker-end="url(#arrow7)" d="M240,110 Q380,40 480,50"/>
           <path class="flow" marker-end="url(#arrow7)" d="M240,130 L480,130"/>
@@ -612,11 +611,11 @@
 
           <rect class="node" x="480" y="100" width="240" height="58" rx="9"/>
           <text class="node-title" x="600" y="126" text-anchor="middle">SSE server</text>
-          <text class="node-sub" x="600" y="144" text-anchor="middle">streamed HTTP</text>
+          <text class="node-sub" x="600" y="144" text-anchor="middle">legacy streaming transport</text>
 
           <rect class="node" x="480" y="180" width="240" height="58" rx="9"/>
-          <text class="node-title" x="600" y="206" text-anchor="middle">HTTP server</text>
-          <text class="node-sub" x="600" y="224" text-anchor="middle">request / response</text>
+          <text class="node-title" x="600" y="206" text-anchor="middle">Streamable HTTP</text>
+          <text class="node-sub" x="600" y="224" text-anchor="middle">current remote transport</text>
         </svg>
       </div>
     </section>
@@ -624,8 +623,8 @@
     <!-- 9 : GUARDRAILS -->
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">09 &mdash; Limits</span><span class="rule"></span></div>
-      <h2 class="title">Guardrails</h2>
-      <p class="lede">Three dials keep an open&#8209;ended agent from running away.</p>
+      <h2 class="title">Runtime Limits &amp; Effort</h2>
+      <p class="lede">Two hard limits bound an open-ended run; a third control trades speed and cost for reasoning depth.</p>
       <div class="body-area">
         <div class="stat-row">
           <div class="stat">
@@ -638,7 +637,7 @@
             <span class="mono-key">maxBudgetUsd</span>
             <h3>Spend cap</h3>
             <div class="meter"><i style="width:78%"></i></div>
-            <p>Stops spawning and halts background subagents once cumulative cost crosses the threshold.</p>
+            <p>Stops the query when the SDK&rsquo;s cumulative client-side cost estimate reaches the threshold.</p>
           </div>
           <div class="stat">
             <span class="mono-key">effort</span>
@@ -654,7 +653,7 @@
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">10 &mdash; Memory</span><span class="rule"></span></div>
       <h2 class="title">Context Compaction</h2>
-      <p class="lede">As history grows toward the context limit, older turns are auto&#8209;summarized so the loop keeps running without losing the thread.</p>
+      <p class="lede">As a conversation approaches its context limit, the runtime compacts earlier context into a summary while retaining the recent working state needed to continue.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 800 200" role="img" aria-label="Timeline diagram of context compaction">
           <defs>
@@ -668,8 +667,9 @@
 
           <path class="flow-accent" marker-end="url(#arrow8)" d="M220,95 L330,75"/>
           <rect class="node-accent" x="330" y="45" width="150" height="60" rx="9"/>
-          <text class="node-title" x="405" y="70" text-anchor="middle">Auto&#8209;summary</text>
-          <text class="node-sub" x="405" y="88" text-anchor="middle">compact_boundary</text>
+          <text class="node-title" x="405" y="70" text-anchor="middle">Compaction</text>
+          <text class="node-sub" x="405" y="86" text-anchor="middle">observable via</text>
+          <text class="node-sub" x="405" y="100" text-anchor="middle">PreCompact</text>
 
           <line x1="510" y1="20" x2="510" y2="170" stroke="var(--line-strong)" stroke-dasharray="4 5"/>
 
@@ -684,7 +684,7 @@
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">11 &mdash; Two SDKs</span><span class="rule"></span></div>
       <h2 class="title">Python vs TypeScript</h2>
-      <p class="lede">Same feature set under the hood &mdash; the idiom is what changes.</p>
+      <p class="lede">Broadly the same agent runtime, exposed through different language idioms &mdash; with occasional differences in API shape and release timing.</p>
       <div class="body-area">
         <div class="cmp">
           <div class="col py">
@@ -695,7 +695,7 @@
           </div>
           <div class="col ts">
             <header>TypeScript</header>
-            <div class="row"><span class="k">Session tracking</span><code>query()</code> with <code>continue: true</code> or <code>resume: id</code></div>
+            <div class="row"><span class="k">Session tracking</span><code>query()</code> with continuation or resume options</div>
             <div class="row"><span class="k">Naming</span><code>camelCase</code> options</div>
             <div class="row"><span class="k">Custom tool</span><code>tool()</code> helper</div>
           </div>
@@ -754,8 +754,9 @@
           <text class="node-sub" x="320" y="456" text-anchor="middle">connect</text>
 
           <rect class="node" x="425" y="362" width="100" height="56" rx="8"/>
-          <text class="node-sub" x="475" y="386" text-anchor="middle">Guardrails</text>
-          <text class="node-sub" x="475" y="402" text-anchor="middle">limit &amp; compact</text>
+          <text class="node-sub" x="475" y="380" text-anchor="middle">Runtime</text>
+          <text class="node-sub" x="475" y="395" text-anchor="middle">control</text>
+          <text class="node-sub" x="475" y="410" text-anchor="middle">limits &middot; memory</text>
         </svg>
       </div>
       <p class="closing-line">The pieces change what the loop can do &mdash; <span class="accent">the loop is still the thing.</span></p>
@@ -778,6 +779,11 @@
     <button class="nav-btn" id="nextBtn" aria-label="Next slide">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
     </button>
+  </div>
+  <div class="theme-picker" aria-label="Background color">
+    <span>background</span>
+    <button class="theme-btn is-current" id="themeLight" type="button" aria-pressed="true">White</button>
+    <button class="theme-btn" id="themeDark" type="button" aria-pressed="false">Dark blue</button>
   </div>
   <div class="hint">use &larr; &rarr; or click the edges to navigate</div>
 </div>
@@ -809,6 +815,23 @@
   var progressFill = document.getElementById('progressFill');
   var edgeLeft = document.getElementById('edgeLeft');
   var edgeRight = document.getElementById('edgeRight');
+  var themeLight = document.getElementById('themeLight');
+  var themeDark = document.getElementById('themeDark');
+
+  function setTheme(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    themeLight.classList.toggle('is-current', theme === 'light');
+    themeDark.classList.toggle('is-current', theme === 'dark');
+    themeLight.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+    themeDark.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    try { localStorage.setItem('agent-sdk-deck-theme', theme); } catch(e) {}
+  }
+
+  var savedTheme = 'light';
+  try { savedTheme = localStorage.getItem('agent-sdk-deck-theme') || 'light'; } catch(e) {}
+  setTheme(savedTheme === 'dark' ? 'dark' : 'light');
+  themeLight.addEventListener('click', function(){ setTheme('light'); });
+  themeDark.addEventListener('click', function(){ setTheme('dark'); });
 
   function render(){
     slides.forEach(function(s, i){
