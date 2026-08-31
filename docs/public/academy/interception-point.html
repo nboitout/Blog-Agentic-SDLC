@@ -50,7 +50,7 @@
     color:var(--ink);
     font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
     min-height:100vh;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
     padding:clamp(14px,3vw,34px); gap:clamp(10px,2vh,18px);
   }
   h1,h2,h3{font-family:"Archivo", ui-sans-serif, sans-serif; text-wrap:balance; margin:0;}
@@ -644,7 +644,12 @@
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === total-1;
     var cd = dotEls[current];
-    if (cd && cd.scrollIntoView) cd.scrollIntoView({block:'nearest', inline:'center', behavior:'smooth'});
+    if (cd && dotsTrack.scrollTo) {
+      dotsTrack.scrollTo({
+        left: cd.offsetLeft + cd.offsetWidth / 2 - dotsTrack.clientWidth / 2,
+        behavior: 'smooth'
+      });
+    }
   }
 
   function goTo(i){ current = Math.max(0, Math.min(total-1, i)); render(); }
