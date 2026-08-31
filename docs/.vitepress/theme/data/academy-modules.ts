@@ -69,4 +69,22 @@ export const academyModules: AcademyModule[] = [
     kind: 'map',
     href: '/academy/developer-study-map.html',
   },
+  {
+    id: 'associate-study-map',
+    title: 'Associate’s Study Map',
+    tagline:
+      'All 7 domains and 30 subdomains of the Associate blueprint — prompting, output evaluation, product/model selection, workflow integration, configuration, governance, and troubleshooting — with added practice notes since the source blueprint is one line per subdomain.',
+    domains: [
+      'Domain 1 · Prompting & Task Execution',
+      'Domain 2 · Output Evaluation & Validation',
+      'Domain 3 · Product & Model Selection',
+      'Domain 4 · Workflow Integration & Solution Design',
+      'Domain 5 · Configuration & Knowledge Management',
+      'Domain 6 · Governance, Risk & Responsible Use',
+      'Domain 7 · Troubleshooting & Optimization',
+    ],
+    level: ['associate'],
+    kind: 'map',
+    href: '/academy/associate-study-map.html',
+  },
 ]

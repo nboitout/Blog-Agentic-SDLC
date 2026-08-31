@@ -1,0 +1,518 @@
+<title>Associate's Study Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#F3F0EC; --surface:#FFFFFF; --surface-2:#EAE4DF;
+    --ink:#2A1B21; --ink-dim:#6B5259; --ink-faint:#9C848A;
+    --accent:#C43B65; --accent-soft:#F6DEE6;      /* people / practice — raspberry */
+    --accent2:#2C6E76; --accent2-soft:#DCEBEC;    /* product / model layer — teal */
+    --line:#DED6D0; --line-strong:#C7BBB3;
+    --grid: rgba(42,27,33,0.06);
+    --chip-ink:#FFFFFF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#191317; --surface:#20181D; --surface-2:#281E24;
+      --ink:#F3E9EC; --ink-dim:#C2A8B0; --ink-faint:#8C7078;
+      --accent:#F0577F; --accent-soft:#3A1D28;
+      --accent2:#5FB8C2; --accent2-soft:#17343A;
+      --line:#332329; --line-strong:#4A3038;
+      --grid: rgba(255,255,255,0.06);
+      --chip-ink:#191317;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#191317; --surface:#20181D; --surface-2:#281E24;
+    --ink:#F3E9EC; --ink-dim:#C2A8B0; --ink-faint:#8C7078;
+    --accent:#F0577F; --accent-soft:#3A1D28;
+    --accent2:#5FB8C2; --accent2-soft:#17343A;
+    --line:#332329; --line-strong:#4A3038;
+    --grid: rgba(255,255,255,0.06);
+    --chip-ink:#191317;
+  }
+
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:
+      radial-gradient(circle at 1px 1px, var(--grid) 1.3px, transparent 1.3px) 0 0/26px 26px,
+      var(--bg);
+    color:var(--ink); font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    line-height:1.55;
+  }
+  h1,h2,h3{ font-family:"Big Shoulders Display", ui-sans-serif, sans-serif; text-wrap:balance; margin:0; }
+  .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  ::selection{ background:var(--accent-soft); color:var(--ink); }
+  :focus-visible{ outline:2.5px solid var(--accent); outline-offset:2px; border-radius:4px; }
+  a{ color:inherit; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 clamp(14px,3vw,28px) 80px; }
+
+  .topbar{ position:sticky; top:0; z-index:20; background:var(--bg); border-bottom:1px solid var(--line); backdrop-filter:blur(6px); }
+  .topbar-inner{ max-width:1180px; margin:0 auto; padding:clamp(12px,2vw,18px) clamp(14px,3vw,28px); display:flex; flex-direction:column; gap:12px; }
+  .topbar-row1{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .kicker{ font-family:"IBM Plex Mono",monospace; font-size:clamp(12.5px,1.38vw,15px); letter-spacing:.16em; text-transform:uppercase; color:var(--accent); font-weight:600; }
+  h1.page-title{ font-size:clamp(28px,4.6vw,46px); font-weight:900; letter-spacing:-.01em; line-height:1; margin-top:4px; }
+  .progress-block{ display:flex; flex-direction:column; align-items:flex-end; gap:6px; min-width:180px; }
+  .progress-num{ font-family:"IBM Plex Mono",monospace; font-size:clamp(15px,1.62vw,17.5px); color:var(--ink-dim); font-variant-numeric:tabular-nums; }
+  .progress-num b{ color:var(--ink); }
+  .progress-track{ width:180px; max-width:40vw; height:7px; border-radius:99px; background:var(--surface-2); overflow:hidden; border:1px solid var(--line); }
+  .progress-fill{ height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:99px; transition:width .3s ease; width:0%; }
+
+  .topbar-row2{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .search-wrap{ position:relative; flex:1; min-width:200px; max-width:340px; }
+  #searchInput{ width:100%; padding:8px 12px 8px 32px; border-radius:9px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink); font-family:"IBM Plex Sans",sans-serif; font-size:16.25px; }
+  .search-wrap svg{ position:absolute; left:9px; top:50%; transform:translateY(-50%); width:14px; height:14px; color:var(--ink-faint); pointer-events:none; }
+  .jump-pills{ display:flex; gap:6px; flex-wrap:wrap; }
+  .jump-pill{ font-family:"IBM Plex Mono",monospace; font-size:13.75px; font-weight:600; letter-spacing:.02em; padding:6px 11px; border-radius:99px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-dim); text-decoration:none; cursor:pointer; white-space:nowrap; }
+  .jump-pill:hover{ border-color:var(--accent); color:var(--accent); }
+  #resetBtn{ margin-left:auto; font-family:"IBM Plex Mono",monospace; font-size:13.75px; padding:6px 11px; border-radius:99px; border:1px solid var(--line-strong); background:transparent; color:var(--ink-faint); cursor:pointer; }
+  #resetBtn:hover{ color:var(--ink); border-color:var(--ink-faint); }
+
+  .callout-top{ margin:22px 0 6px; padding:11px 15px; border-left:3px solid var(--accent); background:var(--accent-soft); border-radius:0 8px 8px 0; font-size:15.62px; color:var(--ink); max-width:78ch; line-height:1.55; }
+
+  .domain{ margin-top:clamp(30px,5vw,52px); scroll-margin-top:150px; }
+  .domain-head{ display:flex; align-items:flex-end; gap:18px; border-bottom:2px solid var(--line-strong); padding-bottom:14px; margin-bottom:20px; flex-wrap:wrap; }
+  .domain-num{ font-family:"Big Shoulders Display",sans-serif; font-size:clamp(46px,7vw,74px); font-weight:900; color:var(--accent2); line-height:.8; opacity:.9; }
+  .domain-heading{ flex:1; min-width:220px; }
+  .domain-heading h2{ font-size:clamp(22.4px,3.36vw,33.6px); font-weight:800; }
+  .domain-heading p{ margin:4px 0 0; color:var(--ink-dim); font-size:clamp(15px,1.62vw,17.5px); max-width:60ch; }
+  .domain-progress{ display:flex; flex-direction:column; align-items:flex-end; gap:5px; min-width:120px; }
+  .domain-progress .n{ font-family:"IBM Plex Mono",monospace; font-size:14.38px; color:var(--ink-faint); }
+  .domain-progress .track{ width:120px; height:5px; border-radius:99px; background:var(--surface-2); overflow:hidden; }
+  .domain-progress .fill{ height:100%; background:var(--accent); border-radius:99px; transition:width .3s ease; }
+
+  .subs{ display:flex; flex-direction:column; gap:14px; }
+
+  .sheet{ background:var(--surface); border:1px solid var(--line); border-radius:13px; padding:clamp(14px,2vw,20px) clamp(16px,2.2vw,24px); scroll-margin-top:150px; }
+  .sheet[hidden]{ display:none; }
+  .sheet-top{ display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap; }
+  .sheet-code{ font-family:"IBM Plex Mono",monospace; font-size:15px; font-weight:600; color:var(--accent2); background:var(--accent2-soft); border:1px solid var(--accent2); border-radius:6px; padding:2px 8px; flex:none; }
+  .sheet-title{ font-size:clamp(18.75px,2.25vw,22.5px); font-weight:700; flex:1; min-width:160px; }
+  .review-toggle{ display:flex; align-items:center; gap:7px; font-family:"IBM Plex Mono",monospace; font-size:13.12px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); cursor:pointer; user-select:none; flex:none; }
+  .review-toggle input{ width:16px; height:16px; accent-color:var(--accent); cursor:pointer; }
+  .sheet.is-reviewed{ border-color:var(--accent); }
+  .sheet.is-reviewed .sheet-code{ opacity:.6; }
+
+  .col-head{ display:flex; align-items:center; gap:6px; font-family:"IBM Plex Mono",monospace; font-size:13.12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin:12px 0 8px; color:var(--accent); }
+  .col-head i{ width:7px; height:7px; border-radius:2px; background:var(--accent); }
+  ul.blist{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px; }
+  ul.blist li{ position:relative; padding-left:14px; font-size:clamp(15px,1.56vw,16.88px); color:var(--ink-dim); line-height:1.55; }
+  ul.blist li::before{ content:""; position:absolute; left:0; top:.55em; width:5px; height:5px; border-radius:50%; background:var(--accent); opacity:.6; }
+
+  #emptyState{ text-align:center; padding:60px 20px; color:var(--ink-faint); font-family:"IBM Plex Mono",monospace; font-size:16.25px; }
+  #emptyState[hidden]{ display:none; }
+
+  footer.credit{ text-align:center; color:var(--ink-faint); font-family:"IBM Plex Mono",monospace; font-size:13.75px; margin-top:50px; }
+
+  @media (max-width:680px){
+    .domain-progress{ align-items:flex-start; }
+  }
+</style>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row1">
+      <div>
+        <div class="kicker">Claude Certified Associate &middot; Exam Blueprint</div>
+        <h1 class="page-title">Study Map</h1>
+      </div>
+      <div class="progress-block">
+        <div class="progress-num"><b id="progressCount">0</b> / 30 subdomains reviewed</div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+    </div>
+    <div class="topbar-row2">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="searchInput" type="text" placeholder="Search topics&hellip;" autocomplete="off">
+      </div>
+      <div class="jump-pills" id="jumpPills"></div>
+      <button id="resetBtn" type="button">Reset progress</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="callout-top">
+    The official blueprint states each of these 30 subdomains as a single line — no elaboration. The <b>skill statement</b> on each sheet below is that line, verbatim. The <b>in practice</b> notes underneath are our own added gloss on what that looks like day to day with Claude's products — grounded in how those features actually work, not verified exam content, and worth reading with that distinction in mind.
+  </div>
+
+  <div id="domainsRoot"></div>
+  <p id="emptyState" hidden>No subdomains match that search.</p>
+
+  <footer class="credit">30 subdomains &middot; 7 domains &middot; check one off as you review it &mdash; progress is saved in this browser</footer>
+</div>
+
+<script>
+var DOMAINS = [
+  {
+    id:'d1', num:'01', name:'Prompting and Task Execution',
+    blurb:'Writing prompts that actually get the task done, and reshaping them as the task or the results demand.',
+    subs:[
+      { code:'1.1', title:'Create effective prompts for business and technical tasks',
+        statement:'Create effective prompts for business and technical tasks',
+        practice:[
+          'State the goal, the audience, and the format you want back — not just the topic',
+          'A technical prompt (summarize a clause) and a creative one (draft a tagline) call for different structure'
+        ]
+      },
+      { code:'1.2', title:'Apply task decomposition techniques',
+        statement:'Apply task decomposition techniques to structure complex requests',
+        practice:[
+          'Break a broad ask ("improve onboarding") into ordered sub-questions Claude can answer one at a time',
+          'Chain steps so one response becomes context for the next request'
+        ]
+      },
+      { code:'1.3', title:'Iterate prompts to improve output quality',
+        statement:'Iterate prompts to improve output quality',
+        practice:[
+          'Treat the first response as feedback on the prompt, not a final answer to accept or reject',
+          'Add the missing constraint (length, tone, a must-include fact) rather than starting over from scratch'
+        ]
+      },
+      { code:'1.4', title:'Adapt strategy to task type',
+        statement:'Adapt prompting strategies based on task type (analysis, research, drafting, brainstorming)',
+        practice:[
+          'Analysis wants explicit criteria; brainstorming wants volume and loose constraints',
+          'Research prompts benefit from asking Claude to show what it is drawing on'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d2', num:'02', name:'Output Evaluation and Validation',
+    blurb:'Reading Claude’s output like a skeptical editor — checking it, shaping it, and knowing when to hand it to a human.',
+    subs:[
+      { code:'2.1', title:'Evaluate outputs for accuracy and completeness',
+        statement:'Evaluate Claude-generated outputs for accuracy and completeness',
+        practice:[
+          'Check that every part of a multi-part question actually got answered',
+          'Compare specific claims against a source you trust before relying on them'
+        ]
+      },
+      { code:'2.2', title:'Identify hallucinations, inconsistencies, and biases',
+        statement:'Identify hallucinations, inconsistencies, and biases in responses',
+        practice:[
+          'A hallucination is a confident, specific-sounding claim with nothing actually backing it',
+          'Watch for a response contradicting something it said earlier in the same conversation',
+          'One-sided framing of a genuinely contested topic is a form of bias worth flagging'
+        ]
+      },
+      { code:'2.3', title:'Apply fact-checking and validation techniques',
+        statement:'Apply fact-checking and validation techniques',
+        practice:[
+          'Ask Claude to point to its reasoning or source, then verify that source yourself',
+          'Cross-check numbers, dates, and quotes against a primary document, not from memory'
+        ]
+      },
+      { code:'2.4', title:'Determine when human review is required',
+        statement:'Determine when human review or additional verification is required',
+        practice:[
+          'Higher stakes — financial, legal, medical, anything customer-facing — lowers the bar for requiring a human check',
+          'Claude expressing uncertainty is a signal to verify, not something to average away'
+        ]
+      },
+      { code:'2.5', title:'Edit, adapt, refine, and compare outputs',
+        statement:'Edit, adapt, refine, and compare outputs for the intended audience',
+        practice:[
+          'The same content needs a different register for an executive summary than for a technical reader',
+          'Generating two or three variants to compare is often faster than perfecting one in place'
+        ]
+      },
+      { code:'2.6', title:'Select the appropriate output format',
+        statement:'Organize and curate information and select appropriate output formats (artifacts, inline, structured data)',
+        practice:[
+          'A long standalone document belongs in an artifact; a quick answer belongs inline',
+          'Structured data (a table, a data block) beats prose when the output feeds another tool'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d3', num:'03', name:'Product and Model Selection',
+    blurb:'Picking the right Claude surface and the right model for what the task actually needs.',
+    subs:[
+      { code:'3.1', title:'Select appropriate Claude product features',
+        statement:'Select appropriate Claude product features (Projects, research mode, chat, artifacts)',
+        practice:[
+          'Projects hold persistent instructions and knowledge for a recurring body of work',
+          'Research mode fits multi-step, source-gathering questions rather than one quick answer',
+          'Artifacts fit a standalone deliverable you will view, edit, or share on its own'
+        ]
+      },
+      { code:'3.2', title:'Differentiate between Claude model types',
+        statement:'Differentiate between Claude model types (Haiku, Sonnet, Opus)',
+        practice:[
+          'Haiku: fastest and cheapest, suited to high-volume or latency-sensitive work',
+          'Sonnet: the balanced default for most everyday tasks',
+          'Opus: the deepest reasoning, reserved for the hardest or highest-stakes tasks'
+        ]
+      },
+      { code:'3.3', title:'Align model selection with task requirements',
+        statement:'Align model selection with task requirements (cost, speed, quality)',
+        practice:[
+          'Match the model to what the task needs — a simple lookup rarely needs the most capable model',
+          'High-volume, low-stakes work usually favors speed and cost over marginal quality gains'
+        ]
+      },
+      { code:'3.4', title:'Manage context limitations and memory',
+        statement:'Understand and manage context limitations and memory considerations (when to restart, summarize, or persist)',
+        practice:[
+          'A conversation that has drifted or grown unwieldy is often better restarted with a clean summary',
+          'Information you will need again belongs in a Project’s persistent knowledge, not one chat’s history'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d4', num:'04', name:'Workflow Integration and Solution Design',
+    blurb:'Using Claude as a working partner on requirements, planning, and the redesign of how work actually gets done.',
+    subs:[
+      { code:'4.1', title:'Analyze requirements and use cases',
+        statement:'Apply Claude to analyze requirements and use cases',
+        practice:[
+          'Use Claude to turn a vague ask ("make onboarding better") into concrete, checkable requirements'
+        ]
+      },
+      { code:'4.2', title:'Research, planning, and process optimization',
+        statement:'Leverage Claude for research, planning, and process optimization',
+        practice:[
+          'Have Claude map a current process step by step before proposing where to change it'
+        ]
+      },
+      { code:'4.3', title:'Support solution design and iteration',
+        statement:'Use Claude to support solution design, development, and iteration',
+        practice:[
+          'Treat Claude as a thinking partner across drafts of a solution, not a one-shot generator'
+        ]
+      },
+      { code:'4.4', title:'Integrate Claude into existing workflows',
+        statement:'Integrate Claude into existing workflows to augment or redesign them',
+        practice:[
+          'Augmenting keeps the existing steps and adds Claude at one point; redesigning rebuilds the workflow around it',
+          'Start by augmenting — lower risk, and it shows where a redesign would actually pay off'
+        ]
+      },
+      { code:'4.5', title:'Communicate value and limitations to stakeholders',
+        statement:'Communicate Claude’s value and limitations to stakeholders',
+        practice:[
+          'Pair every capability claim with its boundary — what it does well, and where a human is still needed',
+          'A concrete before/after example lands better with stakeholders than an abstract capability claim'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d5', num:'05', name:'Configuration and Knowledge Management',
+    blurb:'Setting up Projects, instructions, and knowledge so Claude has what it needs without being re-told every time.',
+    subs:[
+      { code:'5.1', title:'Configure Claude Projects',
+        statement:'Configure Claude Projects with instructions and knowledge sources',
+        practice:[
+          'Project instructions set the persistent voice, constraints, and context for every chat inside it',
+          'Knowledge sources give Claude reference material without re-pasting it into every conversation'
+        ]
+      },
+      { code:'5.2', title:'Manage uploaded knowledge and connectors',
+        statement:'Manage uploaded knowledge and connectors (e.g., Google Drive, Gmail)',
+        practice:[
+          'Connectors let Claude read live data from tools you already use, instead of manual exports',
+          'A stale uploaded file is a common failure mode — knowledge needs upkeep, not a one-time upload'
+        ]
+      },
+      { code:'5.3', title:'Create effective system-level instructions',
+        statement:'Create effective system-level instructions',
+        practice:[
+          'System-level instructions set the defaults — tone, format, constraints — before any specific request does',
+          'Specific, testable instructions ("always include a summary table") beat vague ones ("be helpful")'
+        ]
+      },
+      { code:'5.4', title:'Maintain configurations and knowledge sources',
+        statement:'Inform, maintain, and update Claude configurations, knowledge sources, and instructions',
+        practice:[
+          'Configuration goes stale the same way documentation does — it needs an owner and a review cadence',
+          'When the underlying process changes, the instructions describing it need to change with it'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d6', num:'06', name:'Governance, Risk, and Responsible Use',
+    blurb:'Knowing where Claude belongs, where it does not, and what your organization requires either way.',
+    subs:[
+      { code:'6.1', title:'Identify appropriate and inappropriate use cases',
+        statement:'Identify appropriate and inappropriate use cases',
+        practice:[
+          'Some tasks call for a human by policy, not just by preference — know which ones before you automate'
+        ]
+      },
+      { code:'6.2', title:'Apply data sensitivity and regulatory considerations',
+        statement:'Apply data sensitivity, regulatory, and privacy considerations',
+        practice:[
+          'Know what data-classification rules apply before pasting anything sensitive into any tool, Claude included',
+          'Regulated industries (finance, healthcare) often add constraints beyond general good practice'
+        ]
+      },
+      { code:'6.3', title:'Follow organizational AI policies',
+        statement:'Follow organizational AI policies and governance standards',
+        practice:[
+          'Your organization’s AI policy overrides general best practice whenever the two conflict',
+          'Governance standards typically cover approved use cases, data handling, and review requirements together'
+        ]
+      },
+      { code:'6.4', title:'Understand the ethical implications of AI usage',
+        statement:'Understand the ethical implications of AI usage',
+        practice:[
+          'Consider who is affected by an AI-assisted decision, not only who requested it',
+          'Transparency about AI involvement matters most in decisions that affect other people'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d7', num:'07', name:'Troubleshooting and Optimization',
+    blurb:'Turning a disappointing result into a better prompt, and a one-off success into a repeatable process.',
+    subs:[
+      { code:'7.1', title:'Diagnose issues with underperforming prompts',
+        statement:'Identify, diagnose, and resolve issues with underperforming prompts or poor outputs',
+        practice:[
+          'A vague or overly broad prompt is the most common cause of a disappointing response — narrow it before assuming the model cannot do the task'
+        ]
+      },
+      { code:'7.2', title:'Adjust approach based on feedback and results',
+        statement:'Adjust approach based on feedback and results',
+        practice:[
+          'Treat a bad output as diagnostic information about the prompt, not just a failure to route around'
+        ]
+      },
+      { code:'7.3', title:'Optimize workflows for efficiency and effectiveness',
+        statement:'Optimize workflows for efficiency and effectiveness',
+        practice:[
+          'Reusable prompt templates and Project instructions turn a one-off success into a repeatable process'
+        ]
+      }
+    ]
+  }
+];
+
+(function(){
+  var STORAGE_KEY = 'ccao-study-map-progress-v1'; // distinct from the Architect/Developer maps' keys — same site, different tier
+  var progress = {};
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) progress = JSON.parse(raw) || {};
+  }catch(e){ progress = {}; }
+
+  function saveProgress(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }catch(e){}
+  }
+
+  var totalSubs = 0;
+  DOMAINS.forEach(function(d){ totalSubs += d.subs.length; });
+
+  var root = document.getElementById('domainsRoot');
+  var jumpPills = document.getElementById('jumpPills');
+  var html = '';
+
+  DOMAINS.forEach(function(dom){
+    jumpPills.innerHTML += '<a class="jump-pill" href="#'+dom.id+'">'+dom.num+'</a>';
+
+    html += '<section class="domain" id="'+dom.id+'" data-domain="'+dom.id+'">';
+    html += '  <div class="domain-head">';
+    html += '    <div class="domain-num">'+dom.num+'</div>';
+    html += '    <div class="domain-heading"><h2>'+dom.name+'</h2><p>'+dom.blurb+'</p></div>';
+    html += '    <div class="domain-progress"><span class="n mono" data-domain-count="'+dom.id+'">0 / '+dom.subs.length+'</span><div class="track"><div class="fill" data-domain-fill="'+dom.id+'"></div></div></div>';
+    html += '  </div>';
+    html += '  <div class="subs">';
+
+    dom.subs.forEach(function(sub){
+      var searchBlob = (sub.title + ' ' + sub.statement + ' ' + sub.practice.join(' ')).toLowerCase();
+      html += '<article class="sheet" id="s-'+sub.code+'" data-code="'+sub.code+'" data-search="'+searchBlob.replace(/"/g,'&quot;')+'">';
+      html += '  <div class="sheet-top">';
+      html += '    <span class="sheet-code mono">'+sub.code+'</span>';
+      html += '    <h3 class="sheet-title">'+sub.title+'</h3>';
+      html += '    <label class="review-toggle"><input type="checkbox" data-code="'+sub.code+'"> Reviewed</label>';
+      html += '  </div>';
+      html += '  <div class="col-head" style="margin-top:0"><i></i>Skill statement</div>';
+      html += '  <ul class="blist"><li>'+sub.statement+'</li></ul>';
+      html += '  <div class="col-head"><i></i>In practice</div>';
+      html += '  <ul class="blist">'+sub.practice.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>';
+      html += '</article>';
+    });
+
+    html += '  </div>';
+    html += '</section>';
+  });
+
+  root.innerHTML = html;
+
+  var checkboxes = Array.prototype.slice.call(document.querySelectorAll('.review-toggle input'));
+  var searchInput = document.getElementById('searchInput');
+  var emptyState = document.getElementById('emptyState');
+
+  function updateProgressUI(){
+    var reviewedTotal = 0;
+    DOMAINS.forEach(function(dom){
+      var reviewedInDomain = dom.subs.filter(function(s){ return !!progress[s.code]; }).length;
+      reviewedTotal += reviewedInDomain;
+      var countEl = document.querySelector('[data-domain-count="'+dom.id+'"]');
+      var fillEl = document.querySelector('[data-domain-fill="'+dom.id+'"]');
+      if (countEl) countEl.textContent = reviewedInDomain + ' / ' + dom.subs.length;
+      if (fillEl) fillEl.style.width = (reviewedInDomain / dom.subs.length * 100) + '%';
+    });
+    document.getElementById('progressCount').textContent = reviewedTotal;
+    document.getElementById('progressFill').style.width = (reviewedTotal / totalSubs * 100) + '%';
+  }
+
+  function applyProgressToDOM(){
+    checkboxes.forEach(function(cb){
+      var code = cb.getAttribute('data-code');
+      cb.checked = !!progress[code];
+      var sheet = document.getElementById('s-'+code);
+      if (sheet) sheet.classList.toggle('is-reviewed', !!progress[code]);
+    });
+  }
+
+  checkboxes.forEach(function(cb){
+    cb.addEventListener('change', function(){
+      var code = cb.getAttribute('data-code');
+      if (cb.checked) progress[code] = true; else delete progress[code];
+      var sheet = document.getElementById('s-'+code);
+      if (sheet) sheet.classList.toggle('is-reviewed', cb.checked);
+      saveProgress();
+      updateProgressUI();
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    progress = {};
+    saveProgress();
+    applyProgressToDOM();
+    updateProgressUI();
+  });
+
+  var domainSections = Array.prototype.slice.call(document.querySelectorAll('.domain'));
+
+  searchInput.addEventListener('input', function(){
+    var q = searchInput.value.trim().toLowerCase();
+    var anyVisible = false;
+    domainSections.forEach(function(domSection){
+      var domainHasMatch = false;
+      var domSheets = domSection.querySelectorAll('.sheet');
+      domSheets.forEach(function(sheet){
+        var match = !q || sheet.getAttribute('data-search').indexOf(q) !== -1;
+        sheet.hidden = !match;
+        if (match){ domainHasMatch = true; anyVisible = true; }
+      });
+      domSection.hidden = !domainHasMatch;
+    });
+    emptyState.hidden = anyVisible;
+  });
+
+  applyProgressToDOM();
+  updateProgressUI();
+})();
+</script>
