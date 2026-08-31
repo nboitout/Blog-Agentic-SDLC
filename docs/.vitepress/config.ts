@@ -184,7 +184,21 @@ export default defineConfig({
     },
   },
 
+  // Root-level title/nav. The Academy lives at /academy/ (outside the /en/,
+  // /fr/, /ro/ locale trees) so it falls back to these rather than to a
+  // locale's — without them the page renders with no site name and no nav.
+  title: 'Agentic SDLC',
+  description: 'A practical course on AI-driven software development lifecycles',
+
   themeConfig: {
+    nav: [
+      { text: 'Lectures', link: '/en/lectures/lecture-01-why-traditional-sdlc-breaks/' },
+      { text: 'Token Cost', link: '/en/interactive/' },
+      { text: 'Projects', link: '/en/projects/' },
+      { text: 'Resources', link: '/en/resources/' },
+      { text: 'Academy', link: '/academy/' },
+      { text: 'Share your priorities', link: '/en/share-your-priorities/' },
+    ],
     logo: {
       svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
     },

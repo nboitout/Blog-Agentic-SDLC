@@ -660,3 +660,59 @@
     padding: 0.65rem 0.75rem;
   }
 }
+
+/* ── Academy: exam-tier accents ──
+   Borrowed from the module pages' own palettes so the hub and the pages it
+   links to speak the same colour language. The site's indigo stays the base;
+   these only mark which exam tier a module belongs to. */
+:root {
+  --academy-associate: #1F7A6C;
+  --academy-associate-soft: rgba(31, 122, 108, 0.12);
+  --academy-developer: #1D6F9C;
+  --academy-developer-soft: rgba(29, 111, 156, 0.12);
+  --academy-architect: #B0591A;
+  --academy-architect-soft: rgba(176, 89, 26, 0.12);
+}
+
+.dark {
+  --academy-associate: #57C2B2;
+  --academy-associate-soft: rgba(87, 194, 178, 0.16);
+  --academy-developer: #6FC3EE;
+  --academy-developer-soft: rgba(111, 195, 238, 0.16);
+  --academy-architect: #E8A33D;
+  --academy-architect-soft: rgba(232, 163, 61, 0.16);
+}
+
+/* ── Academy hub: widen the page ──
+   The default doc layout caps content at 752–784px, which squeezes the module
+   grid into two ragged columns. Scoped to .academy-page (set via pageClass in
+   docs/academy/index.md) so no other page moves. */
+@media (min-width: 960px) {
+  .Layout.academy-page .VPDoc:not(.has-sidebar) .container,
+  .Layout.academy-page .VPDoc:not(.has-sidebar) .content,
+  .Layout.academy-page .VPDoc .content-container {
+    max-width: 1152px;
+  }
+}
+
+.academy-page .academy-lede {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--vp-c-text-2);
+  max-width: 46rem;
+  margin-top: 0.6rem;
+}
+
+/* The intro prose keeps a readable measure even though the grid below it
+   spans the full widened page. */
+.academy-page .custom-block.info {
+  max-width: 46rem;
+}
+
+.academy-page .academy-outro {
+  margin-top: 2.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--vp-c-divider);
+  font-size: 0.88rem;
+  color: var(--vp-c-text-3);
+}
