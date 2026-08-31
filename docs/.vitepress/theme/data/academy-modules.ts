@@ -35,7 +35,7 @@ export const academyModules: AcademyModule[] = [
     href: '/academy/interception-point.html',
   },
   {
-    id: 'study-map',
+    id: 'architect-study-map',
     title: 'Architect’s Study Map',
     tagline:
       'All 5 domains and 30 subdomains of the Architect (Foundations) blueprint on one searchable reference page, with a review tracker saved in your browser.',
@@ -48,6 +48,25 @@ export const academyModules: AcademyModule[] = [
     ],
     level: ['architect'],
     kind: 'map',
-    href: '/academy/study-map.html',
+    href: '/academy/study-map.html', // filename kept as-is — already live under this path
+  },
+  {
+    id: 'developer-study-map',
+    title: 'Developer’s Study Map',
+    tagline:
+      'All 8 domains and 25 subdomains of the Developer blueprint — agent construction, API mechanics, Claude Code, debugging, model selection, prompt/context engineering, security, and tools/MCPs — on one searchable reference page.',
+    domains: [
+      'Domain 1 · Agents & Workflows',
+      'Domain 2 · Applications & Integration',
+      'Domain 3 · Claude Code',
+      'Domain 4 · Eval, Testing & Debugging',
+      'Domain 5 · Model Selection & Optimization',
+      'Domain 6 · Prompt & Context Engineering',
+      'Domain 7 · Security & Safety',
+      'Domain 8 · Tools & MCPs',
+    ],
+    level: ['developer'],
+    kind: 'map',
+    href: '/academy/developer-study-map.html',
   },
 ]

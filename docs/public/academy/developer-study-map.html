@@ -1,0 +1,516 @@
+<title>Developer's Study Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#F0F2ED; --surface:#FFFFFF; --surface-2:#E6E9E2;
+    --ink:#16241D; --ink-dim:#4E6153; --ink-faint:#86988A;
+    --accent:#1E8F63; --accent-soft:#DCEFE3;      /* build / engineering — green */
+    --accent2:#6C4FBE; --accent2-soft:#E7E1F5;    /* model / AI layer — violet */
+    --line:#D6DACF; --line-strong:#BCC2B0;
+    --grid: rgba(22,36,29,0.07);
+    --chip-ink:#FFFFFF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0E1712; --surface:#142019; --surface-2:#1A2820;
+      --ink:#E9F1EC; --ink-dim:#A6BCAC; --ink-faint:#708177;
+      --accent:#3FD08C; --accent-soft:#163828;
+      --accent2:#A78BFA; --accent2-soft:#2A2145;
+      --line:#223A2C; --line-strong:#2E4E3A;
+      --grid: rgba(255,255,255,0.06);
+      --chip-ink:#0E1712;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E1712; --surface:#142019; --surface-2:#1A2820;
+    --ink:#E9F1EC; --ink-dim:#A6BCAC; --ink-faint:#708177;
+    --accent:#3FD08C; --accent-soft:#163828;
+    --accent2:#A78BFA; --accent2-soft:#2A2145;
+    --line:#223A2C; --line-strong:#2E4E3A;
+    --grid: rgba(255,255,255,0.06);
+    --chip-ink:#0E1712;
+  }
+
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:
+      radial-gradient(circle at 1px 1px, var(--grid) 1.3px, transparent 1.3px) 0 0/26px 26px,
+      var(--bg);
+    color:var(--ink); font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3{ font-family:"Big Shoulders Display", ui-sans-serif, sans-serif; text-wrap:balance; margin:0; }
+  .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  code{ font-family:"IBM Plex Mono", ui-monospace, monospace; background:var(--surface-2); border:1px solid var(--line); border-radius:4px; padding:.03em .38em; font-size:.9em; color:var(--ink); }
+  ::selection{ background:var(--accent-soft); color:var(--ink); }
+  :focus-visible{ outline:2.5px solid var(--accent); outline-offset:2px; border-radius:4px; }
+  a{ color:inherit; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 clamp(14px,3vw,28px) 80px; }
+
+  .topbar{ position:sticky; top:0; z-index:20; background:var(--bg); border-bottom:1px solid var(--line); backdrop-filter:blur(6px); }
+  .topbar-inner{ max-width:1180px; margin:0 auto; padding:clamp(12px,2vw,18px) clamp(14px,3vw,28px); display:flex; flex-direction:column; gap:12px; }
+  .topbar-row1{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .kicker{ font-family:"IBM Plex Mono",monospace; font-size:clamp(12.5px,1.38vw,15px); letter-spacing:.16em; text-transform:uppercase; color:var(--accent); font-weight:600; }
+  h1.page-title{ font-size:clamp(28px,4.6vw,46px); font-weight:900; letter-spacing:-.01em; line-height:1; margin-top:4px; }
+  .progress-block{ display:flex; flex-direction:column; align-items:flex-end; gap:6px; min-width:180px; }
+  .progress-num{ font-family:"IBM Plex Mono",monospace; font-size:clamp(15px,1.62vw,17.5px); color:var(--ink-dim); font-variant-numeric:tabular-nums; }
+  .progress-num b{ color:var(--ink); }
+  .progress-track{ width:180px; max-width:40vw; height:7px; border-radius:99px; background:var(--surface-2); overflow:hidden; border:1px solid var(--line); }
+  .progress-fill{ height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:99px; transition:width .3s ease; width:0%; }
+
+  .topbar-row2{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .search-wrap{ position:relative; flex:1; min-width:200px; max-width:340px; }
+  #searchInput{ width:100%; padding:8px 12px 8px 32px; border-radius:9px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink); font-family:"IBM Plex Sans",sans-serif; font-size:16.25px; }
+  .search-wrap svg{ position:absolute; left:9px; top:50%; transform:translateY(-50%); width:14px; height:14px; color:var(--ink-faint); pointer-events:none; }
+  .jump-pills{ display:flex; gap:6px; flex-wrap:wrap; }
+  .jump-pill{ font-family:"IBM Plex Mono",monospace; font-size:13.75px; font-weight:600; letter-spacing:.02em; padding:6px 11px; border-radius:99px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-dim); text-decoration:none; cursor:pointer; white-space:nowrap; }
+  .jump-pill:hover{ border-color:var(--accent); color:var(--accent); }
+  #resetBtn{ margin-left:auto; font-family:"IBM Plex Mono",monospace; font-size:13.75px; padding:6px 11px; border-radius:99px; border:1px solid var(--line-strong); background:transparent; color:var(--ink-faint); cursor:pointer; }
+  #resetBtn:hover{ color:var(--ink); border-color:var(--ink-faint); }
+
+  .legend{ display:flex; gap:18px; margin:22px 0 6px; font-size:15px; color:var(--ink-dim); flex-wrap:wrap; }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .legend i{ width:10px; height:10px; border-radius:3px; display:inline-block; background:var(--accent); }
+
+  .domain{ margin-top:clamp(30px,5vw,52px); scroll-margin-top:150px; }
+  .domain-head{ display:flex; align-items:flex-end; gap:18px; border-bottom:2px solid var(--line-strong); padding-bottom:14px; margin-bottom:20px; flex-wrap:wrap; }
+  .domain-num{ font-family:"Big Shoulders Display",sans-serif; font-size:clamp(46px,7vw,74px); font-weight:900; color:var(--accent2); line-height:.8; opacity:.9; }
+  .domain-heading{ flex:1; min-width:220px; }
+  .domain-heading h2{ font-size:clamp(22.4px,3.36vw,33.6px); font-weight:800; }
+  .domain-heading p{ margin:4px 0 0; color:var(--ink-dim); font-size:clamp(15px,1.62vw,17.5px); max-width:60ch; }
+  .domain-progress{ display:flex; flex-direction:column; align-items:flex-end; gap:5px; min-width:120px; }
+  .domain-progress .n{ font-family:"IBM Plex Mono",monospace; font-size:14.38px; color:var(--ink-faint); }
+  .domain-progress .track{ width:120px; height:5px; border-radius:99px; background:var(--surface-2); overflow:hidden; }
+  .domain-progress .fill{ height:100%; background:var(--accent); border-radius:99px; transition:width .3s ease; }
+
+  .subs{ display:flex; flex-direction:column; gap:14px; }
+
+  .sheet{ background:var(--surface); border:1px solid var(--line); border-radius:13px; padding:clamp(14px,2vw,20px) clamp(16px,2.2vw,24px); scroll-margin-top:150px; }
+  .sheet[hidden]{ display:none; }
+  .sheet-top{ display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap; }
+  .sheet-code{ font-family:"IBM Plex Mono",monospace; font-size:15px; font-weight:600; color:var(--accent2); background:var(--accent2-soft); border:1px solid var(--accent2); border-radius:6px; padding:2px 8px; flex:none; }
+  .sheet-title{ font-size:clamp(18.75px,2.25vw,22.5px); font-weight:700; flex:1; min-width:160px; }
+  .review-toggle{ display:flex; align-items:center; gap:7px; font-family:"IBM Plex Mono",monospace; font-size:13.12px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); cursor:pointer; user-select:none; flex:none; }
+  .review-toggle input{ width:16px; height:16px; accent-color:var(--accent); cursor:pointer; }
+  .sheet.is-reviewed{ border-color:var(--accent); }
+  .sheet.is-reviewed .sheet-code{ opacity:.6; }
+
+  .col-head{ display:flex; align-items:center; gap:6px; font-family:"IBM Plex Mono",monospace; font-size:13.12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; color:var(--accent); }
+  .col-head i{ width:7px; height:7px; border-radius:2px; background:var(--accent); }
+  ul.blist{ margin:0; padding:0; list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:6px 20px; }
+  ul.blist li{ position:relative; padding-left:14px; font-size:clamp(15px,1.56vw,16.88px); color:var(--ink-dim); line-height:1.5; }
+  ul.blist li::before{ content:""; position:absolute; left:0; top:.55em; width:5px; height:5px; border-radius:50%; background:var(--accent); opacity:.6; }
+
+  #emptyState{ text-align:center; padding:60px 20px; color:var(--ink-faint); font-family:"IBM Plex Mono",monospace; font-size:16.25px; }
+  #emptyState[hidden]{ display:none; }
+
+  footer.credit{ text-align:center; color:var(--ink-faint); font-family:"IBM Plex Mono",monospace; font-size:13.75px; margin-top:50px; }
+
+  @media (max-width:680px){
+    ul.blist{ grid-template-columns:1fr; }
+    .domain-progress{ align-items:flex-start; }
+  }
+</style>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row1">
+      <div>
+        <div class="kicker">Claude Certified Developer &middot; Exam Blueprint</div>
+        <h1 class="page-title">Study Map</h1>
+      </div>
+      <div class="progress-block">
+        <div class="progress-num"><b id="progressCount">0</b> / 25 subdomains reviewed</div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+    </div>
+    <div class="topbar-row2">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="searchInput" type="text" placeholder="Search topics, tools, field names&hellip;" autocomplete="off">
+      </div>
+      <div class="jump-pills" id="jumpPills"></div>
+      <button id="resetBtn" type="button">Reset progress</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="legend">
+    <span><i></i> Each sheet condenses one subdomain's topic list into scannable items &mdash; not a knowledge/skills split, since the source blueprint doesn't draw that line at this tier.</span>
+  </div>
+
+  <div id="domainsRoot"></div>
+  <p id="emptyState" hidden>No subdomains match that search.</p>
+
+  <footer class="credit">25 subdomains &middot; 8 domains &middot; check one off as you review it &mdash; progress is saved in this browser</footer>
+</div>
+
+<script>
+var DOMAINS = [
+  {
+    id:'d1', num:'01', name:'Agents and Workflows',
+    blurb:'When to use a workflow vs an agent, construction methods, and the patterns/frameworks that show up across both.',
+    subs:[
+      { code:'1.1', title:'Agent Architecture',
+        items:[
+          'Decision criteria for a fixed <code>workflow</code> vs a dynamic tool-calling <code>agent</code>',
+          'Manager/supervisor hierarchy structure for coordinating multiple agents',
+          'How subagents improve task execution (isolation, focus, parallelism)',
+          'General tradeoffs across agent and workflow architecture patterns'
+        ]
+      },
+      { code:'1.2', title:'Agent Construction with Claude',
+        items:[
+          'The Claude Agent SDK as a construction method',
+          'Building custom agent loops and harnesses from scratch',
+          'Managed deployment models: self-hosted vs Anthropic-hosted',
+          'Hooks for deterministic (non-probabilistic) actions inside an agent'
+        ]
+      },
+      { code:'1.3', title:'Agent Patterns and Frameworks',
+        items:[
+          'Core patterns: tool-use loops, subagents, memory, context-window management',
+          'Third-party agentic frameworks: Strands, LangGraph, PydanticAI',
+          'Applying these patterns and frameworks to multi-step task workflows'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d2', num:'02', name:'Applications and Integration',
+    blurb:'From business requirements to a running Claude application — API mechanics, engineering foundations, design, and configuration.',
+    subs:[
+      { code:'2.1', title:'Understanding Requirements',
+        items:[
+          'Translating business requirements into functional requirements',
+          'Infrastructure requirements driven by solution architecture'
+        ]
+      },
+      { code:'2.2', title:'Systems Life Cycle',
+        items:[
+          'SDLC-style concepts applied to IT systems generally',
+          'Frameworks spanning develop &rarr; implement &rarr; operate &rarr; maintain'
+        ]
+      },
+      { code:'2.3', title:'Claude API Mechanics',
+        items:[
+          'Core mechanics: messages, tools, streaming, vision, extended thinking, caching',
+          'Invoking Claude through third-party vendors (e.g. Bedrock, Vertex)',
+          '<code>Messages API</code> data access patterns',
+          'Batch API usage and tradeoffs vs realtime API selection'
+        ]
+      },
+      { code:'2.4', title:'Software Engineering Foundations',
+        items:[
+          'REST APIs and JSON as the data/interface layer',
+          'Asynchronous programming patterns',
+          'Version control and SDLC integration',
+          'Code review practice',
+          'Refactoring at both small and large scale'
+        ]
+      },
+      { code:'2.5', title:'Claude Application Design',
+        items:[
+          'How instruction interpretation differs across interfaces: Claude Code, Desktop, claude.ai, API, SDKs',
+          'Content boundaries in application design',
+          'Schema design for structured interactions',
+          'Session hygiene practices',
+          'Plugin management'
+        ]
+      },
+      { code:'2.6', title:'Configuration Management',
+        items:[
+          '<code>CLAUDE.md</code> files as configuration',
+          '<code>settings.json</code> configuration',
+          'Model version pinning',
+          'Prompt versioning',
+          'Plugin dependency management'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d3', num:'03', name:'Claude Code',
+    blurb:'Claude Code as a product: its components, features, and configuration surface.',
+    subs:[
+      { code:'3.1', title:'Claude Code Operation',
+        items:[
+          'Core components: Rules, Skills, Commands, Agents, Agent Memory',
+          'Session management',
+          'Built-in and custom slash commands',
+          'Headless mode, streaming mode, auto-mode',
+          'The <code>CLAUDE.md</code> hierarchy',
+          'Repository initialization',
+          '<code>settings.json</code> configuration'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d4', num:'04', name:'Eval, Testing, and Debugging',
+    blurb:'Finding out why a Claude application misbehaved, and where in the stack the fault actually lives.',
+    subs:[
+      { code:'4.1', title:'Debugging and Error Handling',
+        items:[
+          'Error type identification',
+          'Recovery strategy selection',
+          'Trace analysis to identify failure modes',
+          'Isolating problem origin: integration layer vs model output'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d5', num:'05', name:'Model Selection and Optimization',
+    blurb:'What the models actually are underneath, and how to pick and pay for the right one.',
+    subs:[
+      { code:'5.1', title:'LLM Fundamentals',
+        items:[
+          'LLM basics: tokens, context windows, sampling, non-determinism, next-token generation',
+          'Model options: fast mode, extended thinking, adaptive thinking, effort levels',
+          'Fundamental prompting techniques: zero-shot, single-shot, multi-shot'
+        ]
+      },
+      { code:'5.2', title:'Technical Fundamentals',
+        items:[
+          'Integrating with SDKs that wrap REST APIs',
+          'Websocket-based integration basics'
+        ]
+      },
+      { code:'5.3', title:'Model Selection and Tradeoffs',
+        items:[
+          'Model use cases: Opus vs Sonnet vs Haiku',
+          'Adaptive thinking support by model',
+          'Quality / latency / cost tradeoffs',
+          'Breaking behavior changes across model releases'
+        ]
+      },
+      { code:'5.4', title:'Cost and Token Management',
+        items:[
+          'Token usage tracking',
+          'Cost modeling',
+          'Prompt caching and cache checkpointing for cost optimization'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d6', num:'06', name:'Prompt and Context Engineering',
+    blurb:'Managing what the model sees, how it’s instructed, and what to do with what it says back.',
+    subs:[
+      { code:'6.1', title:'Context Engineering',
+        items:[
+          'Context window management',
+          'Preventing context drift and bloat: tool-output pruning, compaction',
+          'Context isolation via subagents or multi-step workflows'
+        ]
+      },
+      { code:'6.2', title:'Prompt Engineering',
+        items:[
+          'Instruction clarity and few-shot examples',
+          'System vs user message placement',
+          'Output constraints',
+          'Where instructions live across components',
+          'Iterative refinement and prompt adjustment',
+          'Input sanitization'
+        ]
+      },
+      { code:'6.3', title:'Output Handling',
+        items:[
+          'Structured output patterns',
+          'Response validation',
+          'Defensive parsing',
+          'Treating confident-sounding output with appropriate skepticism'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d7', num:'07', name:'Security and Safety',
+    blurb:'Keeping a Claude application safe to run against untrusted input, and safe to deploy at all.',
+    subs:[
+      { code:'7.1', title:'AI Application Security',
+        items:[
+          'Prompt injection awareness and mitigation',
+          'Jailbreak defense',
+          'Untrusted input handling',
+          'Data leakage prevention and PII handling',
+          'Authentication, authorization, confidentiality, privacy, integrity'
+        ]
+      },
+      { code:'7.2', title:'Guardrails and Safe Deployment',
+        items:[
+          'Content policy enforcement',
+          'Layering multiple guardrails rather than relying on one',
+          'Secure-by-design: privacy, identity and access management, least privilege'
+        ]
+      },
+      { code:'7.3', title:'Claude Hooks',
+        items:[
+          'Using hooks specifically as guardrails and safety controls',
+          'Preventing destructive actions via hook interception'
+        ]
+      },
+      { code:'7.4', title:'Identity, Secrets, and Key Management',
+        items:[
+          'Managing secrets, credentials, and API keys across dev and prod',
+          'Identity validation and authentication',
+          'Access approval and level verification',
+          'Monitoring authorized access'
+        ]
+      }
+    ]
+  },
+  {
+    id:'d8', num:'08', name:'Tools and MCPs',
+    blurb:'Giving Claude capabilities — writing tools, building MCP servers, and choosing the right mechanism for the job.',
+    subs:[
+      { code:'8.1', title:'Tool Implementation',
+        items:[
+          'Tool use and function-calling mechanics',
+          'Configuring tools for external system interaction',
+          'Writing good tool descriptions',
+          'Tool error handling',
+          'Usage patterns: harness dispatch, client-side vs server-side tools, approval patterns',
+          'Best practices for constructing a tool set'
+        ]
+      },
+      { code:'8.2', title:'MCP Server Development',
+        items:[
+          'Authoring and deploying an MCP server',
+          'Integrating an MCP server with Claude applications',
+          'MCP primitives: resources, tools, prompts',
+          'Communication patterns: stdio, sockets, client vs server'
+        ]
+      },
+      { code:'8.3', title:'Agentic Customization',
+        items:[
+          'Choosing among built-in tools, custom tools, Skills, and MCPs',
+          'Matching the approach to the use case'
+        ]
+      }
+    ]
+  }
+];
+
+(function(){
+  var STORAGE_KEY = 'ccd-study-map-progress-v1'; // distinct from the Architect map's key — same site, different tier
+  var progress = {};
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) progress = JSON.parse(raw) || {};
+  }catch(e){ progress = {}; }
+
+  function saveProgress(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }catch(e){}
+  }
+
+  var totalSubs = 0;
+  DOMAINS.forEach(function(d){ totalSubs += d.subs.length; });
+
+  var root = document.getElementById('domainsRoot');
+  var jumpPills = document.getElementById('jumpPills');
+  var html = '';
+
+  DOMAINS.forEach(function(dom){
+    jumpPills.innerHTML += '<a class="jump-pill" href="#'+dom.id+'">'+dom.num+'</a>';
+
+    html += '<section class="domain" id="'+dom.id+'" data-domain="'+dom.id+'">';
+    html += '  <div class="domain-head">';
+    html += '    <div class="domain-num">'+dom.num+'</div>';
+    html += '    <div class="domain-heading"><h2>'+dom.name+'</h2><p>'+dom.blurb+'</p></div>';
+    html += '    <div class="domain-progress"><span class="n mono" data-domain-count="'+dom.id+'">0 / '+dom.subs.length+'</span><div class="track"><div class="fill" data-domain-fill="'+dom.id+'"></div></div></div>';
+    html += '  </div>';
+    html += '  <div class="subs">';
+
+    dom.subs.forEach(function(sub){
+      var searchBlob = (sub.title + ' ' + sub.items.join(' ')).toLowerCase();
+      html += '<article class="sheet" id="s-'+sub.code+'" data-code="'+sub.code+'" data-search="'+searchBlob.replace(/"/g,'&quot;')+'">';
+      html += '  <div class="sheet-top">';
+      html += '    <span class="sheet-code mono">'+sub.code+'</span>';
+      html += '    <h3 class="sheet-title">'+sub.title+'</h3>';
+      html += '    <label class="review-toggle"><input type="checkbox" data-code="'+sub.code+'"> Reviewed</label>';
+      html += '  </div>';
+      html += '  <div class="col-head"><i></i>Covers</div>';
+      html += '  <ul class="blist">'+sub.items.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>';
+      html += '</article>';
+    });
+
+    html += '  </div>';
+    html += '</section>';
+  });
+
+  root.innerHTML = html;
+
+  var checkboxes = Array.prototype.slice.call(document.querySelectorAll('.review-toggle input'));
+  var searchInput = document.getElementById('searchInput');
+  var emptyState = document.getElementById('emptyState');
+
+  function updateProgressUI(){
+    var reviewedTotal = 0;
+    DOMAINS.forEach(function(dom){
+      var reviewedInDomain = dom.subs.filter(function(s){ return !!progress[s.code]; }).length;
+      reviewedTotal += reviewedInDomain;
+      var countEl = document.querySelector('[data-domain-count="'+dom.id+'"]');
+      var fillEl = document.querySelector('[data-domain-fill="'+dom.id+'"]');
+      if (countEl) countEl.textContent = reviewedInDomain + ' / ' + dom.subs.length;
+      if (fillEl) fillEl.style.width = (reviewedInDomain / dom.subs.length * 100) + '%';
+    });
+    document.getElementById('progressCount').textContent = reviewedTotal;
+    document.getElementById('progressFill').style.width = (reviewedTotal / totalSubs * 100) + '%';
+  }
+
+  function applyProgressToDOM(){
+    checkboxes.forEach(function(cb){
+      var code = cb.getAttribute('data-code');
+      cb.checked = !!progress[code];
+      var sheet = document.getElementById('s-'+code);
+      if (sheet) sheet.classList.toggle('is-reviewed', !!progress[code]);
+    });
+  }
+
+  checkboxes.forEach(function(cb){
+    cb.addEventListener('change', function(){
+      var code = cb.getAttribute('data-code');
+      if (cb.checked) progress[code] = true; else delete progress[code];
+      var sheet = document.getElementById('s-'+code);
+      if (sheet) sheet.classList.toggle('is-reviewed', cb.checked);
+      saveProgress();
+      updateProgressUI();
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    progress = {};
+    saveProgress();
+    applyProgressToDOM();
+    updateProgressUI();
+  });
+
+  var domainSections = Array.prototype.slice.call(document.querySelectorAll('.domain'));
+
+  searchInput.addEventListener('input', function(){
+    var q = searchInput.value.trim().toLowerCase();
+    var anyVisible = false;
+    domainSections.forEach(function(domSection){
+      var domainHasMatch = false;
+      var domSheets = domSection.querySelectorAll('.sheet');
+      domSheets.forEach(function(sheet){
+        var match = !q || sheet.getAttribute('data-search').indexOf(q) !== -1;
+        sheet.hidden = !match;
+        if (match){ domainHasMatch = true; anyVisible = true; }
+      });
+      domSection.hidden = !domainHasMatch;
+    });
+    emptyState.hidden = anyVisible;
+  });
+
+  applyProgressToDOM();
+  updateProgressUI();
+})();
+</script>
