@@ -1,11 +1,11 @@
-<title>The Interception Point</title>
+<title>Claude Code Hooks — The Interception Point</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
   :root{
-    --bg:#F1F2EE;
-    --stage:#FBFBF9;
+    --bg:#FFFFFF;
+    --stage:#FFFFFF;
     --surface:#FFFFFF;
     --surface-2:#E7E8E2;
     --ink:#1B2027;
@@ -27,30 +27,16 @@
     --warn-soft:#F2E9CE;
     --shadow: 0 30px 60px -30px rgba(20,20,15,0.35), 0 2px 8px rgba(20,20,15,0.06);
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#10141A; --stage:#161C24; --surface:#1B222B; --surface-2:#212A34;
-      --ink:#ECEEEE; --ink-dim:#9BA4AF; --ink-faint:#6D7682;
-      --pre:#E8A33D; --pre-soft:#3A2E1B;
-      --post:#57C2B2; --post-soft:#173832;
-      --accent-ink:#151004;
-      --line:#2A313D; --line-strong:#394251; --grid: rgba(255,255,255,0.06);
-      --good:#4FAE78; --good-soft:#173225;
-      --bad:#E0685E; --bad-soft:#3A211E;
-      --warn:#E0B94D; --warn-soft:#332A14;
-      --shadow: 0 30px 60px -30px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
-    }
-  }
   :root[data-theme="dark"]{
-    --bg:#10141A; --stage:#161C24; --surface:#1B222B; --surface-2:#212A34;
-    --ink:#ECEEEE; --ink-dim:#9BA4AF; --ink-faint:#6D7682;
-    --pre:#E8A33D; --pre-soft:#3A2E1B;
-    --post:#57C2B2; --post-soft:#173832;
-    --accent-ink:#151004;
-    --line:#2A313D; --line-strong:#394251; --grid: rgba(255,255,255,0.06);
-    --good:#4FAE78; --good-soft:#173225;
-    --bad:#E0685E; --bad-soft:#3A211E;
-    --warn:#E0B94D; --warn-soft:#332A14;
+    --bg:#071525; --stage:#0B1F35; --surface:#102A45; --surface-2:#173A5C;
+    --ink:#FFFFFF; --ink-dim:#D7E5F2; --ink-faint:#B6CDE0;
+    --pre:#FFC75A; --pre-soft:#3D331D;
+    --post:#65E0CC; --post-soft:#123F45;
+    --accent-ink:#101820;
+    --line:#86A9C7; --line-strong:#D1E4F3; --grid:rgba(255,255,255,0.08);
+    --good:#7BE3A6; --good-soft:#173F32;
+    --bad:#FF9189; --bad-soft:#482A2D;
+    --warn:#FFD66E; --warn-soft:#43391D;
     --shadow: 0 30px 60px -30px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
   }
 
@@ -93,7 +79,7 @@
 
   .eyebrow{
     display:flex; align-items:baseline; gap:10px;
-    font-family:"IBM Plex Mono", monospace; font-size:clamp(12.5px,1.38vw,15.62px);
+    font-family:"IBM Plex Mono", monospace; font-size:clamp(10px,1.1vw,12.5px);
     letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); font-weight:600;
   }
   .eyebrow .idx{ color:var(--ink-faint); }
@@ -101,14 +87,14 @@
   .eyebrow.on-pre{ color:var(--pre); }
   .eyebrow.on-post{ color:var(--post); }
 
-  h2.title{ font-size:clamp(25.76px,4.26vw,44.8px); font-weight:800; letter-spacing:-.01em; margin-top:clamp(5px,1vh,10px); line-height:1.05; }
-  .lede{ font-size:clamp(15.62px,1.75vw,19.38px); color:var(--ink-dim); max-width:70ch; line-height:1.5; margin-top:clamp(6px,1.2vh,10px); }
+  h2.title{ font-size:clamp(23px,3.8vw,40px); font-weight:800; letter-spacing:-.01em; margin-top:clamp(5px,1vh,10px); line-height:1.05; }
+  .lede{ font-size:clamp(12.5px,1.4vw,15.5px); color:var(--ink-dim); max-width:70ch; line-height:1.5; margin-top:clamp(6px,1.2vh,10px); }
   .lede .mono{ color:var(--ink); background:var(--surface-2); padding:.05em .35em; border-radius:4px; font-size:.9em;}
 
   .body-area{ flex:1; min-height:0; margin-top:clamp(8px,1.6vh,16px); display:flex; flex-direction:column; justify-content:center; gap:10px; }
 
   /* pre/post pill tags */
-  .tag{ display:inline-flex; align-items:center; gap:5px; font-family:"IBM Plex Mono",monospace; font-size:13.12px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; padding:3px 9px; border-radius:99px; border:1px solid; }
+  .tag{ display:inline-flex; align-items:center; gap:5px; font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; padding:3px 9px; border-radius:99px; border:1px solid; }
   .tag.pre{ color:var(--pre); border-color:var(--pre); background:var(--pre-soft); }
   .tag.post{ color:var(--post); border-color:var(--post); background:var(--post-soft); }
   .tag.warn{ color:var(--warn); border-color:var(--warn); background:var(--warn-soft); }
@@ -118,9 +104,9 @@
 
   /* diagram plumbing */
   .diagram{ width:100%; height:100%; overflow:visible; }
-  .diagram .label{ font-family:"IBM Plex Mono", monospace; font-size:14.38px; fill:var(--ink-faint); }
-  .diagram .node-title{ font-size:16.88px; font-weight:600; fill:var(--ink); }
-  .diagram .node-sub{ font-family:"IBM Plex Mono", monospace; font-size:12.88px; fill:var(--ink-dim); }
+  .diagram .label{ font-family:"IBM Plex Mono", monospace; font-size:11.5px; fill:var(--ink-faint); }
+  .diagram .node-title{ font-size:13.5px; font-weight:600; fill:var(--ink); }
+  .diagram .node-sub{ font-family:"IBM Plex Mono", monospace; font-size:10.3px; fill:var(--ink-dim); }
   .diagram .node{ fill:var(--surface); stroke:var(--line-strong); stroke-width:1.4; }
   .diagram .node-pre{ fill:var(--pre-soft); stroke:var(--pre); stroke-width:1.6; }
   .diagram .node-post{ fill:var(--post-soft); stroke:var(--post); stroke-width:1.6; }
@@ -132,9 +118,9 @@
   .diagram .flow-dash{ fill:none; stroke:var(--ink-faint); stroke-width:1.5; stroke-dasharray:4 5; }
 
   /* tables */
-  .ftable{ width:100%; border-collapse:collapse; font-size:clamp(13.75px,1.5vw,16.25px); }
+  .ftable{ width:100%; border-collapse:collapse; font-size:clamp(11px,1.2vw,13px); }
   .ftable th, .ftable td{ text-align:left; padding:8px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
-  .ftable th{ font-family:"IBM Plex Mono",monospace; font-size:13.12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); font-weight:600; }
+  .ftable th{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); font-weight:600; }
   .ftable td.pre-col{ color:var(--pre); font-weight:600; }
   .ftable td.post-col{ color:var(--post); font-weight:600; }
   .ftable tr:last-child td{ border-bottom:none; }
@@ -145,17 +131,17 @@
   .card{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:clamp(11px,1.5vw,17px); display:flex; flex-direction:column; gap:6px; }
   .card.on-pre{ border-color:var(--pre); }
   .card.on-post{ border-color:var(--post); }
-  .card h3{ font-size:clamp(16.25px,1.88vw,20px); font-weight:700; }
-  .card p{ margin:0; font-size:clamp(14.38px,1.5vw,16.25px); color:var(--ink-dim); line-height:1.48; }
+  .card h3{ font-size:clamp(13px,1.5vw,16px); font-weight:700; }
+  .card p{ margin:0; font-size:clamp(11.5px,1.2vw,13px); color:var(--ink-dim); line-height:1.48; }
 
   /* code blocks */
   .code-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,1.5vw,18px); flex:1; min-height:0; }
   .code-col{ background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
-  .code-col header{ padding:8px 14px; font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:14.38px; letter-spacing:.03em; border-bottom:1px solid var(--line); color:var(--ink-dim); background:var(--surface-2); }
-  .code-col pre{ margin:0; padding:12px 14px; font-family:"IBM Plex Mono",monospace; font-size:clamp(12.5px,1.31vw,15.25px); line-height:1.6; overflow:auto; flex:1; }
+  .code-col header{ padding:8px 14px; font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:11.5px; letter-spacing:.03em; border-bottom:1px solid var(--line); color:var(--ink-dim); background:var(--surface-2); }
+  .code-col pre{ margin:0; padding:12px 14px; font-family:"IBM Plex Mono",monospace; font-size:clamp(10px,1.05vw,12.2px); line-height:1.6; overflow:auto; flex:1; }
   .tok-kw{ color:var(--post); } .tok-str{ color:var(--good); } .tok-com{ color:var(--ink-faint); font-style:italic;} .tok-fn{ color:var(--pre); } .tok-num{ color:var(--warn); }
 
-  .callout{ border-left:3px solid var(--pre); background:var(--pre-soft); padding:9px 13px; border-radius:0 8px 8px 0; font-size:clamp(13.75px,1.44vw,16px); color:var(--ink); line-height:1.5; max-width:74ch; }
+  .callout{ border-left:3px solid var(--pre); background:var(--pre-soft); padding:9px 13px; border-radius:0 8px 8px 0; font-size:clamp(11px,1.15vw,12.8px); color:var(--ink); line-height:1.5; max-width:74ch; }
   .callout.post{ border-left-color:var(--post); background:var(--post-soft); }
   .callout .mono{ font-family:"IBM Plex Mono",monospace; font-weight:600; }
   .callout .strike{ text-decoration:line-through; opacity:.6; }
@@ -164,11 +150,11 @@
   .cover{ align-items:flex-start; justify-content:center; }
   .cover .mark{ width:60px; height:60px; margin-bottom:clamp(12px,2.2vh,24px); }
   .cover h1{ font-size:clamp(30px,5.8vw,58px); font-weight:900; letter-spacing:-.015em; line-height:1.0; }
-  .cover .sub{ margin-top:12px; font-size:clamp(16.88px,2vw,22.5px); color:var(--ink-dim); max-width:56ch; }
-  .cover .meta{ margin-top:auto; padding-top:18px; display:flex; gap:16px; flex-wrap:wrap; font-family:"IBM Plex Mono",monospace; font-size:clamp(12.5px,1.31vw,15px); color:var(--ink-faint); letter-spacing:.03em; border-top:1px solid var(--line); width:100%; }
+  .cover .sub{ margin-top:12px; font-size:clamp(13.5px,1.6vw,18px); color:var(--ink-dim); max-width:56ch; }
+  .cover .meta{ margin-top:auto; padding-top:18px; display:flex; gap:16px; flex-wrap:wrap; font-family:"IBM Plex Mono",monospace; font-size:clamp(10px,1.05vw,12px); color:var(--ink-faint); letter-spacing:.03em; border-top:1px solid var(--line); width:100%; }
   .cover .meta span{ padding-top:11px; }
 
-  .closing-line{ font-family:"Archivo",sans-serif; font-weight:700; font-size:clamp(20.16px,2.91vw,31.36px); line-height:1.32; color:var(--ink); }
+  .closing-line{ font-family:"Archivo",sans-serif; font-weight:700; font-size:clamp(18px,2.6vw,28px); line-height:1.32; color:var(--ink); }
   .closing-line .pre{ color:var(--pre); } .closing-line .post{ color:var(--post); }
 
   /* controls (shared) */
@@ -182,16 +168,21 @@
   .track{ flex:1; display:flex; align-items:center; gap:clamp(10px,1.4vw,16px); overflow-x:auto; scrollbar-width:none; padding:2px 0; }
   .track::-webkit-scrollbar{ display:none; }
   .dots{ display:flex; gap:6px; flex:none; }
-  .dot-btn{ width:26px; height:26px; border-radius:7px; border:1px solid var(--line); background:var(--surface); color:var(--ink-faint); cursor:pointer; font-family:"IBM Plex Mono",monospace; font-size:12.5px; display:flex; align-items:center; justify-content:center; transition:all .15s ease; flex:none; }
+  .dot-btn{ width:26px; height:26px; border-radius:7px; border:1px solid var(--line); background:var(--surface); color:var(--ink-faint); cursor:pointer; font-family:"IBM Plex Mono",monospace; font-size:10px; display:flex; align-items:center; justify-content:center; transition:all .15s ease; flex:none; }
   .dot-btn:hover{ border-color:var(--pre); color:var(--pre); }
   .dot-btn.is-current{ background:var(--pre); border-color:var(--pre); color:var(--accent-ink); font-weight:600; }
   .progress{ height:3px; width:100%; background:var(--line); border-radius:99px; overflow:hidden; flex:none; }
   .progress i{ display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--pre),var(--post)); transition:width .35s ease; }
   @media (prefers-reduced-motion: reduce){ .progress i{ transition:none; } }
-  .counter{ font-family:"IBM Plex Mono",monospace; font-size:15px; color:var(--ink-dim); flex:none; font-variant-numeric:tabular-nums; min-width:50px; text-align:center; }
+  .counter{ font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-dim); flex:none; font-variant-numeric:tabular-nums; min-width:50px; text-align:center; }
   .edge-zone{ position:absolute; top:0; bottom:0; width:14%; z-index:4; cursor:pointer; background:transparent; border:none; padding:0; }
   .edge-zone.left{ left:0; } .edge-zone.right{ right:0; }
-  .hint{ text-align:center; font-family:"IBM Plex Mono",monospace; font-size:13.12px; color:var(--ink-faint); letter-spacing:.03em; }
+  .hint{ text-align:center; font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--ink-faint); letter-spacing:.03em; }
+  .theme-picker{ display:flex; justify-content:center; align-items:center; gap:6px; font-family:"IBM Plex Mono",monospace; font-size:10.5px; }
+  .theme-picker span{ color:var(--ink-faint); margin-right:3px; }
+  .theme-btn{ border:1px solid var(--line); background:var(--surface); color:var(--ink-dim); border-radius:999px; padding:5px 10px; cursor:pointer; font:inherit; }
+  .theme-btn:hover{ border-color:var(--pre); color:var(--pre); }
+  .theme-btn.is-current{ background:var(--pre); border-color:var(--pre); color:var(--accent-ink); }
 
   @media (max-width:680px){
     .grid2, .code-wrap{ grid-template-columns:1fr; }
@@ -211,10 +202,10 @@
         <circle cx="32" cy="44" r="3.2" fill="var(--post)"/>
       </svg>
       <h1>The Interception Point</h1>
-      <p class="sub">A close read of <strong>PreToolUse</strong> and <strong>PostToolUse</strong> &mdash; the two hooks that sit on either side of every tool call, one deciding whether it happens, the other deciding what Claude sees afterward.</p>
+      <p class="sub">A close read of <strong>PreToolUse</strong> and <strong>PostToolUse</strong> &mdash; one controls a call before execution; the other can annotate or transform a successful result before Claude continues.</p>
       <div class="meta">
         <span><span class="tag pre">Pre</span>&nbsp; gates the call</span>
-        <span><span class="tag post">Post</span>&nbsp; rewrites the result</span>
+        <span><span class="tag post">Post</span>&nbsp; shapes the result</span>
         <span>13 sections</span>
       </div>
     </section>
@@ -223,38 +214,42 @@
     <section class="slide">
       <div class="eyebrow"><span>01</span><span class="idx mono">Position</span><span class="rule"></span></div>
       <h2 class="title">Where They Sit</h2>
-      <p class="lede">Both hooks wrap the same event &mdash; a tool call &mdash; from opposite sides. Nothing else in the loop gets this vantage point.</p>
+      <p class="lede">PreToolUse runs before execution. A successful call reaches PostToolUse; a failed call reaches PostToolUseFailure.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 900 220" role="img" aria-label="Diagram showing PreToolUse before tool execution and PostToolUse after">
           <defs>
             <marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker>
           </defs>
-          <path class="flow" marker-end="url(#a1)" d="M150,90 L192,90"/>
-          <path class="flow" marker-end="url(#a1)" d="M412,90 L454,90"/>
-          <path class="flow" marker-end="url(#a1)" d="M674,90 L716,90"/>
+          <path class="flow" marker-end="url(#a1)" d="M130,110 L170,110"/>
+          <path class="flow" marker-end="url(#a1)" d="M350,110 L390,110"/>
+          <path class="flow-post" marker-end="url(#a1)" d="M550,96 Q585,56 620,56"/>
+          <path class="flow" marker-end="url(#a1)" d="M550,124 Q585,164 620,164"/>
 
-          <rect class="node" x="10" y="56" width="140" height="68" rx="9"/>
-          <text class="node-title" x="80" y="86" text-anchor="middle">Claude picks</text>
-          <text class="node-title" x="80" y="103" text-anchor="middle">a tool call</text>
+          <rect class="node" x="10" y="76" width="120" height="68" rx="9"/>
+          <text class="node-title" x="70" y="104" text-anchor="middle">Claude selects</text>
+          <text class="node-title" x="70" y="122" text-anchor="middle">a tool</text>
 
-          <rect class="node-pre" x="192" y="46" width="220" height="88" rx="10"/>
-          <text class="node-title" x="302" y="72" text-anchor="middle">PreToolUse</text>
-          <text class="node-sub" x="302" y="92" text-anchor="middle">runs before execution</text>
-          <text class="node-sub" x="302" y="108" text-anchor="middle">can allow / deny / edit input</text>
+          <rect class="node-pre" x="170" y="66" width="180" height="88" rx="10"/>
+          <text class="node-title" x="260" y="92" text-anchor="middle">PreToolUse</text>
+          <text class="node-sub" x="260" y="112" text-anchor="middle">allow &middot; deny &middot; ask &middot; defer</text>
+          <text class="node-sub" x="260" y="128" text-anchor="middle">or replace tool input</text>
 
-          <rect class="node" x="454" y="56" width="220" height="68" rx="9"/>
-          <text class="node-title" x="564" y="86" text-anchor="middle">Tool executes</text>
-          <text class="node-sub" x="564" y="104" text-anchor="middle">Bash, Edit, MCP tool&#8230;</text>
+          <rect class="node" x="390" y="76" width="160" height="68" rx="9"/>
+          <text class="node-title" x="470" y="104" text-anchor="middle">Tool executes</text>
+          <text class="node-sub" x="470" y="122" text-anchor="middle">Bash &middot; Edit &middot; MCP&#8230;</text>
 
-          <rect class="node-post" x="716" y="46" width="174" height="88" rx="10"/>
-          <text class="node-title" x="803" y="72" text-anchor="middle">PostToolUse</text>
-          <text class="node-sub" x="803" y="92" text-anchor="middle">runs after execution</text>
-          <text class="node-sub" x="803" y="108" text-anchor="middle">can annotate / rewrite output</text>
+          <rect class="node-post" x="620" y="20" width="230" height="72" rx="10"/>
+          <text class="node-title" x="735" y="47" text-anchor="middle">PostToolUse</text>
+          <text class="node-sub" x="735" y="66" text-anchor="middle">successful result</text>
+          <text class="node-sub" x="735" y="81" text-anchor="middle">annotate or replace for Claude</text>
 
-          <line x1="302" y1="46" x2="302" y2="18" class="flow-dash"/>
-          <text class="label" x="230" y="14">already ran &rarr; can't be undone</text>
-          <line x1="803" y1="46" x2="803" y2="18" class="flow-dash"/>
-          <text class="label" x="705" y="14">Claude never sees the raw result</text>
+          <rect class="node" x="620" y="128" width="230" height="72" rx="10"/>
+          <text class="node-title" x="735" y="155" text-anchor="middle">PostToolUseFailure</text>
+          <text class="node-sub" x="735" y="174" text-anchor="middle">failed result</text>
+          <text class="node-sub" x="735" y="189" text-anchor="middle">observe or guide recovery</text>
+
+          <text class="label" x="565" y="54">success</text>
+          <text class="label" x="565" y="171">failure</text>
         </svg>
       </div>
     </section>
@@ -262,18 +257,16 @@
     <!-- 2: SHARED INPUT SHAPE -->
     <section class="slide">
       <div class="eyebrow"><span>02</span><span class="idx mono">Input shape</span><span class="rule"></span></div>
-      <h2 class="title">One Envelope, Two Moments</h2>
-      <p class="lede">Both events receive the same JSON shape on stdin &mdash; only <span class="field">hook_event_name</span> tells you which side you're on.</p>
+      <h2 class="title">A Shared Base, Specific Payloads</h2>
+      <p class="lede">Both hooks receive common session and tool-call metadata. PostToolUse additionally receives the successful <span class="field">tool_response</span>.</p>
       <div class="body-area">
         <table class="ftable">
-          <tr><th>Field</th><th>Carries</th></tr>
-          <tr><td class="mono field">tool_name</td><td>The tool being called &mdash; <span class="mono">"Bash"</span>, <span class="mono">"Edit"</span>, an MCP tool name&#8230;</td></tr>
-          <tr><td class="mono field">tool_input</td><td>The arguments the tool is about to run (or just ran) with</td></tr>
-          <tr><td class="mono field">hook_event_name</td><td><span class="mono">"PreToolUse"</span> or <span class="mono">"PostToolUse"</span></td></tr>
-          <tr><td class="mono field">session_id / transcript_path / cwd</td><td>Which conversation, its log file, and the working directory</td></tr>
-          <tr><td class="mono field">permission_mode</td><td>The active mode &mdash; default, acceptEdits, plan, bypassPermissions&#8230;</td></tr>
-          <tr><td class="mono field">tool_use_id</td><td>Unique id for this specific call, for correlating Pre with Post</td></tr>
-          <tr><td class="mono field">agent_id / agent_type</td><td>Present only when the call happens inside a subagent</td></tr>
+          <tr><th>Scope</th><th>Fields and meaning</th></tr>
+          <tr><td class="mono field">shared</td><td><span class="mono">tool_name</span>, <span class="mono">tool_input</span> and <span class="mono">tool_use_id</span> identify and correlate the call</td></tr>
+          <tr><td class="mono field">shared</td><td><span class="mono">session_id</span>, <span class="mono">transcript_path</span>, <span class="mono">cwd</span> and <span class="mono">hook_event_name</span> locate the event</td></tr>
+          <tr><td class="mono field">shared</td><td><span class="mono">permission_mode</span>: default, auto, acceptEdits, dontAsk, bypassPermissions or plan</td></tr>
+          <tr><td class="mono field">conditional</td><td><span class="mono">agent_id</span> / <span class="mono">agent_type</span> identify subagent calls; agent type may also identify a configured session agent</td></tr>
+          <tr><td class="mono field">Post only</td><td><span class="mono">tool_response</span> contains the successful tool&rsquo;s structured output</td></tr>
         </table>
       </div>
     </section>
@@ -311,10 +304,10 @@
 
           <text class="label" x="470" y="30">runs, no prompt</text>
           <text class="label" x="470" y="92">forces a user prompt</text>
-          <text class="label" x="470" y="156">falls through to normal rules</text>
+          <text class="label" x="470" y="156">pause non-interactive run; resume later</text>
           <text class="label" x="470" y="212">blocked &mdash; reason sent to Claude</text>
         </svg>
-        <div class="callout">Add <span class="mono">updatedInput</span> alongside <span class="mono">allow</span> to rewrite the call's arguments before it runs &mdash; e.g. redact a flag, inject a safer default, normalize a path.</div>
+        <div class="callout"><span class="mono">updatedInput</span> replaces the full input object. Pair it with <span class="mono">allow</span> to auto-approve, <span class="mono">ask</span> to request confirmation, or omit the decision to continue through normal permission evaluation. With <span class="mono">defer</span>, it is ignored.</div>
       </div>
     </section>
 
@@ -322,7 +315,7 @@
     <section class="slide">
       <div class="eyebrow on-post"><span>04</span><span class="idx mono">PostToolUse</span><span class="rule"></span></div>
       <h2 class="title">The Rewrite</h2>
-      <p class="lede">The tool already ran &mdash; PostToolUse can no longer stop it. It can only shape what Claude reads next.</p>
+      <p class="lede">The tool succeeded and already ran &mdash; PostToolUse cannot undo it. Its principal role is to shape the result and context Claude receives next.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 860 170" role="img" aria-label="Diagram of PostToolUse output fields">
           <defs><marker id="a4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
@@ -352,10 +345,10 @@
         <table class="ftable">
           <tr><th>Exit code</th><th class="pre-col">PreToolUse</th><th class="post-col">PostToolUse</th></tr>
           <tr><td class="mono">0</td><td>Success &mdash; JSON on stdout is read, no block</td><td>Success &mdash; JSON on stdout is read</td></tr>
-          <tr><td class="mono">2</td><td><strong>Blocks the call</strong> &mdash; stderr becomes the reason Claude sees</td><td>Not honored &mdash; the tool already ran; stderr is informational only</td></tr>
+          <tr><td class="mono">2</td><td><strong>Blocks the call</strong> &mdash; stderr becomes the reason Claude sees</td><td>Cannot block &mdash; the tool already ran; stderr is sent to Claude as feedback</td></tr>
           <tr><td class="mono">other</td><td>Non&#8209;blocking error &mdash; call proceeds</td><td>Non&#8209;blocking error &mdash; nothing to stop</td></tr>
         </table>
-        <div class="callout">If stdout starts with <span class="mono">{</span> and ends with <span class="mono">}</span>, structured JSON is parsed and takes precedence over the exit code &mdash; on PreToolUse, JSON with <span class="mono">permissionDecision: "allow"</span> can even override an exit&nbsp;2.</div>
+        <div class="callout">When stdout contains a valid JSON object that passes the hook-output schema, JSON alone decides the outcome for standard decision events. On PreToolUse, <span class="mono">permissionDecision: "allow"</span> can therefore override exit&nbsp;2.</div>
       </div>
     </section>
 
@@ -379,7 +372,7 @@
             <p class="mono">"mcp__memory__.*" &middot; "^mcp__" &middot; ".*"</p>
           </div>
         </div>
-        <div class="callout">An empty or omitted matcher catches every tool. MCP tools are named <span class="mono">mcp__&lt;server&gt;__&lt;tool&gt;</span>, which is exactly why regex matchers exist &mdash; to scope a hook to one server's tools at once.</div>
+        <div class="callout">An empty, omitted or <span class="mono">*</span> matcher catches every tool. Matchers inspect the tool name, not its arguments; use handler logic or an <span class="mono">if</span> rule to narrow by command, path or operation.</div>
       </div>
     </section>
 
@@ -387,7 +380,7 @@
     <section class="slide">
       <div class="eyebrow"><span>07</span><span class="idx mono">settings.json</span><span class="rule"></span></div>
       <h2 class="title">Config Anatomy</h2>
-      <p class="lede">Four levels of nesting connect an event to the handlers that run for it.</p>
+      <p class="lede">Inside the top-level <span class="field">hooks</span> object, three conceptual levels connect an event to the handlers that run.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 900 190" role="img" aria-label="Nested box diagram of hooks configuration structure">
           <defs><marker id="a7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
@@ -416,8 +409,8 @@
           <text class="node-sub" x="840" y="86" text-anchor="middle">command</text>
           <text class="node-sub" x="840" y="102" text-anchor="middle">timeout</text>
 
-          <text class="label" x="8" y="20">handler types &mdash; command &middot; http &middot; mcp_tool &middot; prompt &middot; agent</text>
-          <text class="label" x="8" y="168">default timeout 10&nbsp;min (600s) unless a hook sets its own</text>
+          <text class="label" x="8" y="20">container &rarr; event &rarr; matcher group &rarr; one or more handlers</text>
+          <text class="label" x="8" y="168">Pre/Post support command &middot; http &middot; mcp_tool &middot; prompt &middot; agent; default 600s</text>
         </svg>
       </div>
     </section>
@@ -426,18 +419,20 @@
     <section class="slide">
       <div class="eyebrow"><span>08</span><span class="idx mono">Two ways to define one</span><span class="rule"></span></div>
       <h2 class="title">Config File or Callback</h2>
-      <p class="lede">The Agent SDK skips shell scripts entirely &mdash; a hook can be a function in your own process.</p>
+      <p class="lede">The Agent SDK can replace an external hook command with an in-process callback. It can also load settings-based hooks when configured to do so.</p>
       <div class="body-area code-wrap">
         <div class="code-col">
           <header>settings.json</header>
-          <pre><span class="tok-com">// runs an external command</span>
+          <pre><span class="tok-com">// wrapper reads tool_input.file_path</span>
 {
   <span class="tok-str">"hooks"</span>: {
     <span class="tok-str">"PostToolUse"</span>: [{
       <span class="tok-str">"matcher"</span>: <span class="tok-str">"Edit|Write"</span>,
       <span class="tok-str">"hooks"</span>: [{
         <span class="tok-str">"type"</span>: <span class="tok-str">"command"</span>,
-        <span class="tok-str">"command"</span>: <span class="tok-str">"prettier --write"</span>
+        <span class="tok-str">"command"</span>:
+          <span class="tok-str">"${CLAUDE_PROJECT_DIR}/.claude/hooks/format-file.sh"</span>,
+        <span class="tok-str">"args"</span>: []
       }]
     }]
   }
@@ -445,7 +440,9 @@
         </div>
         <div class="code-col">
           <header>Agent SDK (Python)</header>
-          <pre><span class="tok-kw">from</span> claude_agent_sdk <span class="tok-kw">import</span> HookMatcher
+          <pre><span class="tok-kw">from</span> claude_agent_sdk <span class="tok-kw">import</span> (
+  ClaudeAgentOptions, HookMatcher
+)
 
 <span class="tok-fn">options</span> = ClaudeAgentOptions(
   hooks={
@@ -480,9 +477,9 @@
           <path class="flow" marker-end="url(#a9)" d="M510,101 L560,101"/>
           <rect class="node" x="560" y="66" width="290" height="70" rx="9"/>
           <text class="node-sub" x="705" y="92" text-anchor="middle">precedence: deny &gt; defer &gt; ask &gt; allow</text>
-          <text class="node-sub" x="705" y="112" text-anchor="middle">every additionalContext is kept, not just the winner's</text>
+          <text class="node-sub" x="705" y="112" text-anchor="middle">independent hooks; no ordering contract</text>
         </svg>
-        <div class="callout warn" style="border-left-color:var(--warn); background:var(--warn-soft);">If more than one hook sets <span class="mono">updatedInput</span> on the same call, whichever finishes last wins &mdash; the order is non&#8209;deterministic. Treat that as a bug to avoid, not a feature to rely on.</div>
+        <div class="callout warn" style="border-left-color:var(--warn); background:var(--warn-soft);">Conflicting mutations are unsafe. If several checks may rewrite the same input or output, consolidate the transformation into one hook and keep the other hooks observational.</div>
       </div>
     </section>
 
@@ -509,9 +506,9 @@
             <p>By the time it runs, side effects already happened &mdash; it can only shape what Claude reads about them.</p>
           </div>
           <div class="card">
-            <span class="tag" style="color:var(--ink-dim);border-color:var(--line-strong);background:var(--surface-2)">10 min default</span>
-            <h3>Timeouts are generous</h3>
-            <p>Command, HTTP and MCP&#8209;tool hooks default to a 600s timeout &mdash; override per handler if a check should fail fast.</p>
+            <span class="tag" style="color:var(--ink-dim);border-color:var(--line-strong);background:var(--surface-2)">failure semantics</span>
+            <h3>Timeouts differ by event</h3>
+            <p>These tool hooks default to 600s. A timed-out PreToolUse callback prevents that call and returns a timeout result to Claude.</p>
           </div>
         </div>
       </div>
@@ -532,17 +529,17 @@
           <div class="card on-post">
             <span class="tag post">PostToolUse</span>
             <h3>Auto&#8209;format</h3>
-            <p>Matcher <span class="mono">Edit|Write</span> runs <span class="mono">prettier</span> or <span class="mono">black</span> on the touched file right after the edit lands.</p>
+            <p>Matcher <span class="mono">Edit|Write</span> runs a wrapper that reads <span class="mono">tool_input.file_path</span>, then formats the touched file.</p>
           </div>
           <div class="card on-post">
             <span class="tag post">PostToolUse</span>
             <h3>Output normalization</h3>
-            <p>One hook sets <span class="mono">updatedToolOutput</span> for every tool family so downstream logic never branches on MCP vs. built&#8209;in.</p>
+            <p>One hook sets <span class="mono">updatedToolOutput</span> so Claude receives one normalized result shape across MCP and built&#8209;in tools.</p>
           </div>
           <div class="card on-post">
-            <span class="tag post">PostToolUse</span>
-            <h3>Audit trail</h3>
-            <p>Every <span class="mono">Bash</span> call gets appended to a log via <span class="mono">additionalContext</span> or a side file &mdash; a record Claude never has to ask for.</p>
+            <span class="tag">Lifecycle</span>
+            <h3>Durable audit trail</h3>
+            <p>Log attempts in PreToolUse and outcomes in PostToolUse / PostToolUseFailure. Store records outside conversation context.</p>
           </div>
         </div>
       </div>
@@ -559,9 +556,9 @@
           <text class="node-sub" x="210" y="68" text-anchor="middle">decides whether it happens</text>
           <rect class="node-post" x="460" y="10" width="380" height="80" rx="10"/>
           <text class="node-title" x="650" y="46" text-anchor="middle" font-size="15">PostToolUse</text>
-          <text class="node-sub" x="650" y="68" text-anchor="middle">decides what Claude remembers</text>
+          <text class="node-sub" x="650" y="68" text-anchor="middle">shapes what Claude receives after success</text>
         </svg>
-        <p class="closing-line"><span class="pre">Before</span> the call, you're guarding the gate. <span class="post">After</span> the call, you're shaping the memory. Everything in this deck is one of those two jobs.</p>
+        <p class="closing-line"><span class="pre">Before</span> the call, you guard the gate. <span class="post">After success</span>, you shape the result. Failure has its own recovery hook.</p>
       </div>
     </section>
 
@@ -582,6 +579,11 @@
     <button class="nav-btn" id="nextBtn" aria-label="Next slide">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
     </button>
+  </div>
+  <div class="theme-picker" aria-label="Background color">
+    <span>background</span>
+    <button class="theme-btn is-current" id="themeLight" type="button" aria-pressed="true">White</button>
+    <button class="theme-btn" id="themeDark" type="button" aria-pressed="false">Dark blue</button>
   </div>
   <div class="hint">use &larr; &rarr; or click the edges to navigate</div>
 </div>
@@ -613,6 +615,23 @@
   var progressFill = document.getElementById('progressFill');
   var edgeLeft = document.getElementById('edgeLeft');
   var edgeRight = document.getElementById('edgeRight');
+  var themeLight = document.getElementById('themeLight');
+  var themeDark = document.getElementById('themeDark');
+
+  function setTheme(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    themeLight.classList.toggle('is-current', theme === 'light');
+    themeDark.classList.toggle('is-current', theme === 'dark');
+    themeLight.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+    themeDark.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    try { localStorage.setItem('claude-hooks-deck-theme', theme); } catch(e) {}
+  }
+
+  var savedTheme = 'light';
+  try { savedTheme = localStorage.getItem('claude-hooks-deck-theme') || 'light'; } catch(e) {}
+  setTheme(savedTheme === 'dark' ? 'dark' : 'light');
+  themeLight.addEventListener('click', function(){ setTheme('light'); });
+  themeDark.addEventListener('click', function(){ setTheme('dark'); });
 
   function render(){
     slides.forEach(function(s, i){
