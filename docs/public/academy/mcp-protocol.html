@@ -1,0 +1,578 @@
+<title>One Protocol, Any Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#F1F2EE;
+    --stage:#FBFBF9;
+    --surface:#FFFFFF;
+    --surface-2:#E7E8E2;
+    --ink:#1B2027;
+    --ink-dim:#5B6470;
+    --ink-faint:#8A929C;
+    --client:#B96A1E;       /* the Host/Client side — amber */
+    --client-soft:#F2E2CE;
+    --server:#1F7A6C;       /* the MCP Server side — teal */
+    --server-soft:#DCEEEA;
+    --accent-ink:#FFFFFF;
+    --line:#D8D9D2;
+    --line-strong:#C2C4BB;
+    --grid: rgba(27,32,39,0.07);
+    --good:#2E7D4F;
+    --good-soft:#DCEFE1;
+    --bad:#B23A32;
+    --bad-soft:#F7E1DE;
+    --warn:#946E1A;
+    --warn-soft:#F2E9CE;
+    --shadow: 0 30px 60px -30px rgba(20,20,15,0.35), 0 2px 8px rgba(20,20,15,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10141A; --stage:#161C24; --surface:#1B222B; --surface-2:#212A34;
+      --ink:#ECEEEE; --ink-dim:#9BA4AF; --ink-faint:#6D7682;
+      --client:#E8A33D; --client-soft:#3A2E1B;
+      --server:#57C2B2; --server-soft:#173832;
+      --accent-ink:#151004;
+      --line:#2A313D; --line-strong:#394251; --grid: rgba(255,255,255,0.06);
+      --good:#4FAE78; --good-soft:#173225;
+      --bad:#E0685E; --bad-soft:#3A211E;
+      --warn:#E0B94D; --warn-soft:#332A14;
+      --shadow: 0 30px 60px -30px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10141A; --stage:#161C24; --surface:#1B222B; --surface-2:#212A34;
+    --ink:#ECEEEE; --ink-dim:#9BA4AF; --ink-faint:#6D7682;
+    --client:#E8A33D; --client-soft:#3A2E1B;
+    --server:#57C2B2; --server-soft:#173832;
+    --accent-ink:#151004;
+    --line:#2A313D; --line-strong:#394251; --grid: rgba(255,255,255,0.06);
+    --good:#4FAE78; --good-soft:#173225;
+    --bad:#E0685E; --bad-soft:#3A211E;
+    --warn:#E0B94D; --warn-soft:#332A14;
+    --shadow: 0 30px 60px -30px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 1px 1px, var(--grid) 1.4px, transparent 1.4px) 0 0/28px 28px,
+      var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:clamp(14px,3vw,34px); gap:clamp(10px,2vh,18px);
+  }
+  h1,h2,h3{font-family:"Archivo", ui-sans-serif, sans-serif; text-wrap:balance; margin:0;}
+  .mono{font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;}
+  ::selection{background:var(--client-soft); color:var(--ink);}
+  :focus-visible{outline:2.5px solid var(--client); outline-offset:3px; border-radius:4px;}
+
+  .deck{ width:100%; max-width:1220px; display:flex; flex-direction:column; gap:clamp(10px,1.6vh,16px); }
+
+  .stage-wrap{
+    position:relative; width:100%; aspect-ratio:16/9.3;
+    border-radius:18px; box-shadow:var(--shadow); background:var(--stage);
+    border:1px solid var(--line); overflow:hidden;
+  }
+
+  .slide{
+    position:absolute; inset:0;
+    padding:clamp(20px,4.2vw,48px) clamp(24px,5vw,60px);
+    display:flex; flex-direction:column;
+    opacity:0; visibility:hidden; transform:translateX(18px);
+    transition:opacity .38s ease, transform .38s ease;
+  }
+  .slide.is-active{ opacity:1; visibility:visible; transform:translateX(0); z-index:2; }
+  .slide.is-prev{ transform:translateX(-18px); }
+  @media (prefers-reduced-motion: reduce){ .slide{ transition:opacity .01s linear; transform:none !important; } }
+
+  .eyebrow{
+    display:flex; align-items:baseline; gap:10px;
+    font-family:"IBM Plex Mono", monospace; font-size:clamp(10px,1.1vw,12.5px);
+    letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); font-weight:600;
+  }
+  .eyebrow .idx{ color:var(--ink-faint); }
+  .eyebrow .rule{ flex:1; height:1px; background:var(--line); }
+  .eyebrow.on-client{ color:var(--client); }
+  .eyebrow.on-server{ color:var(--server); }
+
+  h2.title{ font-size:clamp(23px,3.8vw,40px); font-weight:800; letter-spacing:-.01em; margin-top:clamp(5px,1vh,10px); line-height:1.05; }
+  .lede{ font-size:clamp(12.5px,1.4vw,15.5px); color:var(--ink-dim); max-width:70ch; line-height:1.5; margin-top:clamp(6px,1.2vh,10px); }
+  .lede .mono{ color:var(--ink); background:var(--surface-2); padding:.05em .35em; border-radius:4px; font-size:.9em;}
+
+  .body-area{ flex:1; min-height:0; margin-top:clamp(8px,1.6vh,16px); display:flex; flex-direction:column; justify-content:center; gap:10px; }
+
+  .tag{ display:inline-flex; align-items:center; gap:5px; font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; padding:3px 9px; border-radius:99px; border:1px solid; }
+  .tag.client{ color:var(--client); border-color:var(--client); background:var(--client-soft); }
+  .tag.server{ color:var(--server); border-color:var(--server); background:var(--server-soft); }
+  .tag.warn{ color:var(--warn); border-color:var(--warn); background:var(--warn-soft); }
+  .tag.good{ color:var(--good); border-color:var(--good); background:var(--good-soft); }
+
+  .field{ font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); border:1px solid var(--line); border-radius:5px; padding:.06em .42em; color:var(--ink); white-space:nowrap; }
+
+  .diagram{ width:100%; height:100%; overflow:visible; }
+  .diagram .label{ font-family:"IBM Plex Mono", monospace; font-size:11.5px; fill:var(--ink-faint); }
+  .diagram .node-title{ font-size:13.5px; font-weight:600; fill:var(--ink); }
+  .diagram .node-sub{ font-family:"IBM Plex Mono", monospace; font-size:10.3px; fill:var(--ink-dim); }
+  .diagram .node{ fill:var(--surface); stroke:var(--line-strong); stroke-width:1.4; }
+  .diagram .node-client{ fill:var(--client-soft); stroke:var(--client); stroke-width:1.6; }
+  .diagram .node-server{ fill:var(--server-soft); stroke:var(--server); stroke-width:1.6; }
+  .diagram .node-good{ fill:var(--good-soft); stroke:var(--good); stroke-width:1.6; }
+  .diagram .node-bad{ fill:var(--bad-soft); stroke:var(--bad); stroke-width:1.6; }
+  .diagram .flow{ fill:none; stroke:var(--line-strong); stroke-width:1.8; }
+  .diagram .flow-client{ fill:none; stroke:var(--client); stroke-width:2; }
+  .diagram .flow-server{ fill:none; stroke:var(--server); stroke-width:2; }
+  .diagram .flow-dash{ fill:none; stroke:var(--ink-faint); stroke-width:1.5; stroke-dasharray:4 5; }
+
+  .ftable{ width:100%; border-collapse:collapse; font-size:clamp(11px,1.2vw,13px); }
+  .ftable th, .ftable td{ text-align:left; padding:8px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  .ftable th{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); font-weight:600; }
+  .ftable td.client-col{ color:var(--client); font-weight:600; }
+  .ftable td.server-col{ color:var(--server); font-weight:600; }
+  .ftable tr:last-child td{ border-bottom:none; }
+
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,1.5vw,18px); }
+  .grid3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:clamp(9px,1.3vw,14px); }
+  .grid4{ display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:clamp(9px,1.3vw,14px); }
+  .card{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:clamp(11px,1.5vw,17px); display:flex; flex-direction:column; gap:6px; }
+  .card.on-client{ border-color:var(--client); }
+  .card.on-server{ border-color:var(--server); }
+  .card h3{ font-size:clamp(13px,1.5vw,16px); font-weight:700; }
+  .card p{ margin:0; font-size:clamp(11.5px,1.2vw,13px); color:var(--ink-dim); line-height:1.48; }
+
+  .code-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,1.5vw,18px); flex:1; min-height:0; }
+  .code-col{ background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
+  .code-col header{ padding:8px 14px; font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:11.5px; letter-spacing:.03em; border-bottom:1px solid var(--line); color:var(--ink-dim); background:var(--surface-2); }
+  .code-col pre{ margin:0; padding:12px 14px; font-family:"IBM Plex Mono",monospace; font-size:clamp(10px,1.05vw,12.2px); line-height:1.6; overflow:auto; flex:1; }
+  .tok-kw{ color:var(--server); } .tok-str{ color:var(--good); } .tok-com{ color:var(--ink-faint); font-style:italic;} .tok-fn{ color:var(--client); } .tok-num{ color:var(--warn); }
+
+  .callout{ border-left:3px solid var(--client); background:var(--client-soft); padding:9px 13px; border-radius:0 8px 8px 0; font-size:clamp(11px,1.15vw,12.8px); color:var(--ink); line-height:1.5; max-width:74ch; }
+  .callout.server{ border-left-color:var(--server); background:var(--server-soft); }
+  .callout.warn{ border-left-color:var(--warn); background:var(--warn-soft); }
+  .callout .mono{ font-family:"IBM Plex Mono",monospace; font-weight:600; }
+  .callout .strike{ text-decoration:line-through; opacity:.6; }
+
+  .cover{ align-items:flex-start; justify-content:center; }
+  .cover .mark{ width:60px; height:60px; margin-bottom:clamp(12px,2.2vh,24px); }
+  .cover h1{ font-size:clamp(30px,5.8vw,58px); font-weight:900; letter-spacing:-.015em; line-height:1.0; }
+  .cover .sub{ margin-top:12px; font-size:clamp(13.5px,1.6vw,18px); color:var(--ink-dim); max-width:58ch; }
+  .cover .meta{ margin-top:auto; padding-top:18px; display:flex; gap:16px; flex-wrap:wrap; font-family:"IBM Plex Mono",monospace; font-size:clamp(10px,1.05vw,12px); color:var(--ink-faint); letter-spacing:.03em; border-top:1px solid var(--line); width:100%; }
+  .cover .meta span{ padding-top:11px; }
+
+  .closing-line{ font-family:"Archivo",sans-serif; font-weight:700; font-size:clamp(18px,2.6vw,28px); line-height:1.32; color:var(--ink); }
+  .closing-line .client{ color:var(--client); } .closing-line .server{ color:var(--server); }
+
+  .controls{ display:flex; align-items:center; gap:clamp(8px,1.4vw,14px); padding:0 4px; }
+  .nav-btn{ display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:var(--surface); border:1px solid var(--line); color:var(--ink); cursor:pointer; flex:none; transition:background .15s ease, border-color .15s ease, transform .1s ease; }
+  .nav-btn:hover{ border-color:var(--client); color:var(--client); }
+  .nav-btn:active{ transform:scale(.94); }
+  .nav-btn:disabled{ opacity:.35; cursor:default; }
+  .nav-btn:disabled:hover{ border-color:var(--line); color:var(--ink); }
+  .nav-btn svg{ width:16px; height:16px; }
+  .track{ flex:1; display:flex; align-items:center; gap:clamp(10px,1.4vw,16px); overflow-x:auto; scrollbar-width:none; padding:2px 0; }
+  .track::-webkit-scrollbar{ display:none; }
+  .dots{ display:flex; gap:6px; flex:none; }
+  .dot-btn{ width:26px; height:26px; border-radius:7px; border:1px solid var(--line); background:var(--surface); color:var(--ink-faint); cursor:pointer; font-family:"IBM Plex Mono",monospace; font-size:10px; display:flex; align-items:center; justify-content:center; transition:all .15s ease; flex:none; }
+  .dot-btn:hover{ border-color:var(--client); color:var(--client); }
+  .dot-btn.is-current{ background:var(--client); border-color:var(--client); color:var(--accent-ink); font-weight:600; }
+  .progress{ height:3px; width:100%; background:var(--line); border-radius:99px; overflow:hidden; flex:none; }
+  .progress i{ display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--client),var(--server)); transition:width .35s ease; }
+  @media (prefers-reduced-motion: reduce){ .progress i{ transition:none; } }
+  .counter{ font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-dim); flex:none; font-variant-numeric:tabular-nums; min-width:50px; text-align:center; }
+  .edge-zone{ position:absolute; top:0; bottom:0; width:14%; z-index:4; cursor:pointer; background:transparent; border:none; padding:0; }
+  .edge-zone.left{ left:0; } .edge-zone.right{ right:0; }
+  .hint{ text-align:center; font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--ink-faint); letter-spacing:.03em; }
+
+  @media (max-width:680px){
+    .grid2, .grid3, .code-wrap{ grid-template-columns:1fr; }
+    .grid4{ grid-template-columns:1fr; grid-template-rows:auto; }
+    .edge-zone{ display:none; }
+  }
+</style>
+
+<div class="deck">
+  <div class="stage-wrap" id="stage">
+
+    <!-- 0: COVER -->
+    <section class="slide cover">
+      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="16" cy="32" r="11" fill="var(--client-soft)" stroke="var(--client)" stroke-width="3"/>
+        <circle cx="48" cy="32" r="11" fill="var(--server-soft)" stroke="var(--server)" stroke-width="3"/>
+        <path d="M25 32 L39 32" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <h1>One Protocol, Any Tool</h1>
+      <p class="sub">A close read of the <strong>Model Context Protocol</strong> &mdash; how a Host, a Client, and a Server agree on what an LLM is allowed to touch, and the wire format underneath every MCP server you've ever connected.</p>
+      <div class="meta">
+        <span><span class="tag client">Client</span>&nbsp; lives inside the host</span>
+        <span><span class="tag server">Server</span>&nbsp; exposes the capability</span>
+        <span>13 sections</span>
+      </div>
+    </section>
+
+    <!-- 1: THE M×N PROBLEM -->
+    <section class="slide">
+      <div class="eyebrow"><span>01</span><span class="idx mono">Why it exists</span><span class="rule"></span></div>
+      <h2 class="title">The M&times;N Problem</h2>
+      <p class="lede">Before MCP, every AI application needed a bespoke integration for every data source. <span class="field">M</span> apps &times; <span class="field">N</span> tools meant <span class="field">M&times;N</span> integrations &mdash; each one rebuilt from scratch.</p>
+      <div class="body-area">
+        <svg class="diagram" viewBox="0 0 900 210" role="img" aria-label="Diagram contrasting M times N bespoke integrations with M plus N through one protocol">
+          <text class="node-sub" x="10" y="18">before &mdash; M&times;N bespoke integrations</text>
+          <rect class="node" x="10" y="30" width="120" height="30" rx="6"/><text class="node-sub" x="70" y="50" text-anchor="middle">App A</text>
+          <rect class="node" x="10" y="66" width="120" height="30" rx="6"/><text class="node-sub" x="70" y="86" text-anchor="middle">App B</text>
+          <rect class="node" x="10" y="102" width="120" height="30" rx="6"/><text class="node-sub" x="70" y="122" text-anchor="middle">App C</text>
+          <rect class="node" x="260" y="12" width="110" height="26" rx="6"/><text class="node-sub" x="315" y="30" text-anchor="middle">Tool 1</text>
+          <rect class="node" x="260" y="48" width="110" height="26" rx="6"/><text class="node-sub" x="315" y="66" text-anchor="middle">Tool 2</text>
+          <rect class="node" x="260" y="84" width="110" height="26" rx="6"/><text class="node-sub" x="315" y="102" text-anchor="middle">Tool 3</text>
+          <rect class="node" x="260" y="120" width="110" height="26" rx="6"/><text class="node-sub" x="315" y="138" text-anchor="middle">Tool 4</text>
+          <g stroke="var(--line-strong)" stroke-width="1" opacity="0.6">
+            <line x1="130" y1="45" x2="260" y2="25"/><line x1="130" y1="45" x2="260" y2="61"/><line x1="130" y1="45" x2="260" y2="97"/><line x1="130" y1="45" x2="260" y2="133"/>
+            <line x1="130" y1="81" x2="260" y2="25"/><line x1="130" y1="81" x2="260" y2="61"/><line x1="130" y1="81" x2="260" y2="97"/><line x1="130" y1="81" x2="260" y2="133"/>
+            <line x1="130" y1="117" x2="260" y2="25"/><line x1="130" y1="117" x2="260" y2="61"/><line x1="130" y1="117" x2="260" y2="97"/><line x1="130" y1="117" x2="260" y2="133"/>
+          </g>
+
+          <line x1="440" y1="76" x2="480" y2="76" class="flow-dash"/>
+          <text class="label" x="410" y="150">every line is its own auth,</text>
+          <text class="label" x="410" y="164">schema, error handling</text>
+
+          <text class="node-sub" x="520" y="18">after &mdash; one protocol, M+N integrations</text>
+          <rect class="node-client" x="520" y="60" width="110" height="30" rx="6"/><text class="node-title" x="575" y="80" text-anchor="middle" font-size="11.5">App A</text>
+          <rect class="node-client" x="520" y="96" width="110" height="30" rx="6"/><text class="node-title" x="575" y="116" text-anchor="middle" font-size="11.5">App B</text>
+          <rect class="node" x="670" y="78" width="90" height="34" rx="8" fill="var(--surface)" stroke="var(--line-strong)"/>
+          <text class="node-title" x="715" y="99" text-anchor="middle" font-size="11.5">MCP</text>
+          <rect class="node-server" x="800" y="30" width="90" height="26" rx="6"/><text class="node-sub" x="845" y="48" text-anchor="middle">Server 1</text>
+          <rect class="node-server" x="800" y="64" width="90" height="26" rx="6"/><text class="node-sub" x="845" y="82" text-anchor="middle">Server 2</text>
+          <rect class="node-server" x="800" y="98" width="90" height="26" rx="6"/><text class="node-sub" x="845" y="116" text-anchor="middle">Server 3</text>
+          <line x1="630" y1="75" x2="670" y2="90" class="flow-client"/>
+          <line x1="630" y1="111" x2="670" y2="98" class="flow-client"/>
+          <line x1="760" y1="90" x2="800" y2="43" class="flow-server"/>
+          <line x1="760" y1="98" x2="800" y2="77" class="flow-server"/>
+          <line x1="760" y1="102" x2="800" y2="111" class="flow-server"/>
+        </svg>
+        <div class="callout">Anthropic's own framing: MCP is to AI context what the <strong>Language Server Protocol</strong> is to code editors &mdash; one interface, any editor, any language server, no N&times;M rewrite.</div>
+      </div>
+    </section>
+
+    <!-- 2: HOST, CLIENT, SERVER -->
+    <section class="slide">
+      <div class="eyebrow"><span>02</span><span class="idx mono">Architecture</span><span class="rule"></span></div>
+      <h2 class="title">Host, Client, Server</h2>
+      <p class="lede">Three roles, not two. The <strong>Host</strong> is the application you're using; it creates one <strong>Client</strong> per connection, and each Client speaks 1:1 to exactly one <strong>Server</strong>.</p>
+      <div class="body-area">
+        <svg class="diagram" viewBox="0 0 900 210" role="img" aria-label="Diagram of Host application containing multiple Clients each connected one to one to a Server">
+          <defs><marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
+          <rect class="node" x="10" y="10" width="330" height="190" rx="12" stroke-dasharray="5 4"/>
+          <text class="node-sub" x="26" y="30">Host application &mdash; e.g. Claude Code</text>
+          <rect class="node-client" x="30" y="46" width="130" height="56" rx="9"/>
+          <text class="node-title" x="95" y="70" text-anchor="middle" font-size="12">Client A</text>
+          <text class="node-sub" x="95" y="88" text-anchor="middle">1 connection</text>
+          <rect class="node-client" x="30" y="112" width="130" height="56" rx="9"/>
+          <text class="node-title" x="95" y="136" text-anchor="middle" font-size="12">Client B</text>
+          <text class="node-sub" x="95" y="154" text-anchor="middle">1 connection</text>
+          <path class="flow-client" marker-end="url(#a2)" d="M160,74 L392,50"/>
+          <path class="flow-client" marker-end="url(#a2)" d="M160,140 L392,150"/>
+          <rect class="node-server" x="392" y="20" width="220" height="66" rx="10"/>
+          <text class="node-title" x="502" y="46" text-anchor="middle">Server 1</text>
+          <text class="node-sub" x="502" y="64" text-anchor="middle">e.g. filesystem, Git</text>
+          <rect class="node-server" x="392" y="122" width="220" height="66" rx="10"/>
+          <text class="node-title" x="502" y="148" text-anchor="middle">Server 2</text>
+          <text class="node-sub" x="502" y="166" text-anchor="middle">e.g. a SaaS API</text>
+          <text class="label" x="660" y="56">isolated context per server &mdash;</text>
+          <text class="label" x="660" y="70">servers can't see each other</text>
+        </svg>
+        <div class="callout">One Client per Server is a hard rule, not a convention &mdash; it's what keeps a compromised or misbehaving server from reading traffic meant for another.</div>
+      </div>
+    </section>
+
+    <!-- 3: TRANSPORTS -->
+    <section class="slide">
+      <div class="eyebrow"><span>03</span><span class="idx mono">Transports</span><span class="rule"></span></div>
+      <h2 class="title">Two Ways to Connect</h2>
+      <p class="lede">The primitives above are transport-agnostic &mdash; the same <span class="mono">tools/call</span> works whether the server is a subprocess or a website.</p>
+      <div class="body-area">
+        <div class="grid2">
+          <div class="card on-client">
+            <span class="tag client">stdio</span>
+            <h3>Local subprocess</h3>
+            <p>The client spawns the server and talks over its stdin/stdout. No network, no auth handshake &mdash; the process boundary <em>is</em> the security boundary.</p>
+          </div>
+          <div class="card on-server">
+            <span class="tag server">Streamable HTTP</span>
+            <h3>Remote server</h3>
+            <p>A single HTTP endpoint accepts POSTs and can stream responses back over SSE. Supports auth, multiple concurrent clients, resumable sessions.</p>
+          </div>
+        </div>
+        <div class="callout warn">The original two-endpoint <span class="mono strike">HTTP+SSE</span> transport (separate <span class="mono">/sse</span> and <span class="mono">/messages</span> endpoints) was superseded by Streamable HTTP in the <span class="mono">2025-03-26</span> spec revision &mdash; if you see it in older docs, it's the predecessor, not an alternative.</div>
+      </div>
+    </section>
+
+    <!-- 4: JSON-RPC ENVELOPE -->
+    <section class="slide">
+      <div class="eyebrow"><span>04</span><span class="idx mono">Wire format</span><span class="rule"></span></div>
+      <h2 class="title">Underneath: JSON-RPC 2.0</h2>
+      <p class="lede">Every MCP message is one of three JSON-RPC shapes &mdash; the transport changes, this doesn't.</p>
+      <div class="body-area code-wrap">
+        <div class="code-col">
+          <header>request — expects a response</header>
+          <pre>{
+  <span class="tok-str">"jsonrpc"</span>: <span class="tok-str">"2.0"</span>,
+  <span class="tok-str">"id"</span>: <span class="tok-num">7</span>,
+  <span class="tok-str">"method"</span>: <span class="tok-str">"tools/call"</span>,
+  <span class="tok-str">"params"</span>: { <span class="tok-com">...</span> }
+}</pre>
+        </div>
+        <div class="code-col">
+          <header>notification — no response expected</header>
+          <pre>{
+  <span class="tok-str">"jsonrpc"</span>: <span class="tok-str">"2.0"</span>,
+  <span class="tok-str">"method"</span>: <span class="tok-str">"notifications/tools/list_changed"</span>
+}
+<span class="tok-com">// no "id" field at all</span></pre>
+        </div>
+      </div>
+      <div class="callout">A <span class="mono">response</span> carries the same <span class="mono">id</span> as its request, and either a <span class="mono">result</span> or an <span class="mono">error</span> &mdash; never both. Requests can flow in either direction: the server can call back into the client too.</div>
+    </section>
+
+    <!-- 5: THE CLASSIC LIFECYCLE -->
+    <section class="slide">
+      <div class="eyebrow on-client"><span>05</span><span class="idx mono">Lifecycle — stable baseline</span><span class="rule"></span></div>
+      <h2 class="title">Initialize, Then Go</h2>
+      <p class="lede">The handshake every MCP implementation you'll meet today still runs: negotiate a protocol version and capabilities, then confirm you're ready.</p>
+      <div class="body-area">
+        <svg class="diagram" viewBox="0 0 860 160" role="img" aria-label="Sequence diagram of initialize request, initialize response, and initialized notification">
+          <defs><marker id="a5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
+          <rect class="node-client" x="10" y="60" width="150" height="40" rx="8"/><text class="node-title" x="85" y="85" text-anchor="middle" font-size="12.5">Client</text>
+          <rect class="node-server" x="700" y="60" width="150" height="40" rx="8"/><text class="node-title" x="775" y="85" text-anchor="middle" font-size="12.5">Server</text>
+          <path class="flow-client" marker-end="url(#a5)" d="M160,68 L700,30"/>
+          <text class="label" x="330" y="20" text-anchor="middle"><tspan class="mono">initialize</tspan> request &mdash; protocolVersion, capabilities</text>
+          <path class="flow-server" marker-end="url(#a5)" d="M700,70 L160,72"/>
+          <text class="label" x="330" y="66" text-anchor="middle">response &mdash; server's own capabilities</text>
+          <path class="flow-client" marker-end="url(#a5)" d="M160,96 L700,130"/>
+          <text class="label" x="330" y="150" text-anchor="middle"><tspan class="mono">notifications/initialized</tspan> &mdash; ready for normal operation</text>
+        </svg>
+        <div class="callout">Both sides **MUST** hold off on non-ping requests until this completes &mdash; the client waits for the response, the server waits for <span class="mono">initialized</span>. This is the <span class="mono">2025-06-18</span> spec's lifecycle, and it's what essentially every deployed server implements right now.</div>
+      </div>
+    </section>
+
+    <!-- 6: THE 2026-07-28 REWRITE -->
+    <section class="slide">
+      <div class="eyebrow on-server"><span>06</span><span class="idx mono">Lifecycle — the 2026-07-28 rewrite</span><span class="rule"></span></div>
+      <h2 class="title">Going Stateless</h2>
+      <p class="lede">The most recent spec revision removes the handshake entirely &mdash; worth knowing about, still landing across the ecosystem.</p>
+      <div class="body-area">
+        <div class="grid2">
+          <div class="card">
+            <span class="tag" style="color:var(--ink-dim);border-color:var(--line-strong);background:var(--surface-2)">2025-06-18 · stable</span>
+            <h3>Session-based</h3>
+            <p>One <span class="mono">initialize</span> handshake opens a session; an <span class="mono">Mcp-Session-Id</span> ties every later request back to it.</p>
+          </div>
+          <div class="card on-server">
+            <span class="tag server">2026-07-28 · latest</span>
+            <h3>Stateless</h3>
+            <p>No handshake, no session id. Every request carries its own protocol version and capabilities in <span class="mono">_meta</span>; an optional <span class="mono">server/discover</span> call learns capabilities upfront.</p>
+          </div>
+        </div>
+        <div class="callout server">The stated payoff: "any request can now land on any server instance behind a plain round-robin load balancer without needing shared storage." This deck flags it as the newest layer, not the one to assume is deployed everywhere &mdash; check which spec version a given server actually targets.</div>
+      </div>
+    </section>
+
+    <!-- 7: THE PRIMITIVES -->
+    <section class="slide">
+      <div class="eyebrow"><span>07</span><span class="idx mono">Vocabulary</span><span class="rule"></span></div>
+      <h2 class="title">Six Primitives, Two Directions</h2>
+      <p class="lede">Three things a server offers a client; three things a client can offer back to a server.</p>
+      <div class="body-area">
+        <div class="grid3">
+          <div class="card on-server"><span class="tag server">server &rarr; client</span><h3>Tools</h3><p>Model-controlled actions the LLM can invoke &mdash; <span class="mono">tools/list</span>, <span class="mono">tools/call</span>.</p></div>
+          <div class="card on-server"><span class="tag server">server &rarr; client</span><h3>Resources</h3><p>App-controlled readable data &mdash; files, records &mdash; addressed by URI.</p></div>
+          <div class="card on-server"><span class="tag server">server &rarr; client</span><h3>Prompts</h3><p>User-controlled reusable templates the host can surface as slash commands.</p></div>
+          <div class="card on-client"><span class="tag client">client &rarr; server</span><h3>Sampling</h3><p>Lets a server ask the client's LLM to complete something, without seeing raw model access itself.</p></div>
+          <div class="card on-client"><span class="tag client">client &rarr; server</span><h3>Roots</h3><p>The client tells a server which filesystem boundaries it's allowed to operate within.</p></div>
+          <div class="card on-client"><span class="tag client">client &rarr; server</span><h3>Elicitation</h3><p>A server can ask the client to collect a specific piece of missing input from the user mid-task.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8: DEPRECATION WATCH -->
+    <section class="slide">
+      <div class="eyebrow"><span>08</span><span class="idx mono">Deprecation watch</span><span class="rule"></span></div>
+      <h2 class="title">Sampling, Roots &amp; Logging: Deprecated</h2>
+      <p class="lede">Accepted proposal <span class="mono">SEP-2577</span> deprecates all three &mdash; low adoption relative to their implementation cost was the stated reason.</p>
+      <div class="body-area">
+        <table class="ftable">
+          <tr><th>What</th><th>Why deprecated</th></tr>
+          <tr><td>Roots</td><td>Vague semantics, overlapping with tool parameters and server-side config</td></tr>
+          <tr><td>Sampling</td><td>Complex to implement correctly; adoption stayed low</td></tr>
+          <tr><td>Logging</td><td>Redundant with stderr and OpenTelemetry-based alternatives</td></tr>
+        </table>
+        <div class="callout warn">It's <strong>advisory only</strong> &mdash; no wire-level break. Deprecated features keep working for at least 12 months from the deprecating spec version. What's replacing the server-to-client interaction pattern they enabled: <span class="mono">Multi Round-Trip Requests (MRTR)</span>, where a stateless call can return <span class="mono">resultType: "input_required"</span> and get retried with <span class="mono">inputResponses</span>.</div>
+      </div>
+    </section>
+
+    <!-- 9: DISCOVERY -->
+    <section class="slide">
+      <div class="eyebrow"><span>09</span><span class="idx mono">Discovery</span><span class="rule"></span></div>
+      <h2 class="title">Listing &amp; Change Notifications</h2>
+      <p class="lede">A client doesn't hardcode what a server offers &mdash; it asks, and can be told when the answer changes.</p>
+      <div class="body-area">
+        <svg class="diagram" viewBox="0 0 860 170" role="img" aria-label="Sequence diagram of tools list request response and a later list changed notification">
+          <defs><marker id="a9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
+          <rect class="node-client" x="10" y="10" width="140" height="36" rx="7"/><text class="node-title" x="80" y="33" text-anchor="middle" font-size="12">Client</text>
+          <rect class="node-server" x="700" y="10" width="140" height="36" rx="7"/><text class="node-title" x="770" y="33" text-anchor="middle" font-size="12">Server</text>
+          <path class="flow-client" marker-end="url(#a9)" d="M150,40 L700,40"/>
+          <text class="label" x="420" y="34" text-anchor="middle" class="mono">tools/list</text>
+          <path class="flow-server" marker-end="url(#a9)" d="M700,58 L150,58"/>
+          <text class="label" x="420" y="72" text-anchor="middle">tool array + optional pagination cursor</text>
+          <line x1="10" y1="90" x2="850" y2="90" class="flow-dash"/>
+          <text class="label" x="10" y="106">&#8230; later, the tool set changes on the server &#8230;</text>
+          <path class="flow-server" marker-end="url(#a9)" d="M700,128 L150,128"/>
+          <text class="label" x="420" y="122" text-anchor="middle" class="mono">notifications/tools/list_changed</text>
+          <path class="flow-client" marker-end="url(#a9)" d="M150,146 L700,146"/>
+          <text class="label" x="420" y="160" text-anchor="middle">client re-fetches with another tools/list</text>
+        </svg>
+        <div class="callout">The same shape repeats for <span class="mono">resources/list</span> and <span class="mono">prompts/list</span> &mdash; each gated behind its own <span class="mono">listChanged</span> capability flag from initialization.</div>
+      </div>
+    </section>
+
+    <!-- 10: TOOL ANNOTATIONS -->
+    <section class="slide">
+      <div class="eyebrow"><span>10</span><span class="idx mono">Trust signals</span><span class="rule"></span></div>
+      <h2 class="title">Tool Annotations: Hints, Not Guarantees</h2>
+      <p class="lede">Stable since the <span class="mono">2025-03-26</span> revision &mdash; four booleans a tool definition can carry to describe its own behavior.</p>
+      <div class="body-area">
+        <div class="grid4">
+          <div class="card"><span class="tag good">readOnlyHint</span><h3>Doesn't modify state</h3><p>Safe-looking calls a client might auto-approve more readily.</p></div>
+          <div class="card"><span class="tag warn">destructiveHint</span><h3>May cause real damage</h3><p>Deletion, overwrites &mdash; the kind of call worth a confirmation.</p></div>
+          <div class="card"><span class="tag good">idempotentHint</span><h3>Safe to repeat</h3><p>Calling it twice with the same input has no extra effect.</p></div>
+          <div class="card"><span class="tag warn">openWorldHint</span><h3>Touches the outside world</h3><p>Web search, external APIs &mdash; results a client can't fully predict.</p></div>
+        </div>
+        <div class="callout warn">The spec is explicit: annotations are <strong>self-reported and untrusted by default</strong>. "A server can claim <span class="mono">readOnlyHint: true</span> and delete your files anyway." Clients <strong>MUST</strong> treat them as untrusted unless the server itself is trusted &mdash; real safety comes from sandboxing and access control, not from reading these hints.</div>
+      </div>
+    </section>
+
+    <!-- 11: AUTHORIZATION -->
+    <section class="slide">
+      <div class="eyebrow"><span>11</span><span class="idx mono">Remote servers</span><span class="rule"></span></div>
+      <h2 class="title">Authorization: OAuth 2.1</h2>
+      <p class="lede">Only relevant over HTTP &mdash; a local stdio server just inherits credentials from its environment.</p>
+      <div class="body-area">
+        <svg class="diagram" viewBox="0 0 900 190" role="img" aria-label="Sequence diagram of the MCP OAuth 2.1 authorization flow with a resource server and authorization server">
+          <defs><marker id="a11" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
+          <rect class="node-client" x="10" y="76" width="140" height="40" rx="8"/><text class="node-title" x="80" y="100" text-anchor="middle" font-size="12">Client</text>
+          <rect class="node-server" x="380" y="76" width="150" height="40" rx="8"/><text class="node-title" x="455" y="100" text-anchor="middle" font-size="12">MCP Server</text>
+          <rect class="node" x="700" y="76" width="180" height="40" rx="8"/><text class="node-title" x="790" y="100" text-anchor="middle" font-size="12">Auth Server</text>
+
+          <path class="flow" marker-end="url(#a11)" d="M150,86 L380,86"/>
+          <text class="label" x="160" y="80">1. request, no token &rarr; 401</text>
+          <path class="flow" marker-end="url(#a11)" d="M150,106 L380,106"/>
+          <text class="label" x="160" y="126">2. RFC 9728 metadata &rarr; auth server URL</text>
+          <path class="flow-server" marker-end="url(#a11)" d="M530,90 L700,90"/>
+          <text class="label" x="545" y="84">3. RFC 8414 metadata</text>
+          <path class="flow-client" marker-end="url(#a11)" d="M530,108 Q640,150 150,150"/>
+          <text class="label" x="200" y="168">4. PKCE authorize &rarr; code &rarr; token, with resource= (RFC 8707)</text>
+        </svg>
+        <div class="callout">Dynamic Client Registration (<span class="mono">RFC 7591</span>) lets a client register with a server it's never seen before, no manual setup. PKCE is mandatory &mdash; not optional hardening. The <span class="mono">resource</span> parameter binds a token to one specific server, which is exactly what stops a stolen token for Server A from working against Server B.</div>
+      </div>
+    </section>
+
+    <!-- 12: CLOSING -->
+    <section class="slide">
+      <div class="eyebrow"><span>12</span><span class="idx mono">The model</span><span class="rule"></span></div>
+      <h2 class="title">Client Asks, Server Answers</h2>
+      <div class="body-area">
+        <svg class="diagram" viewBox="0 0 860 130" role="img" aria-label="Summary diagram of client and server roles in MCP" style="max-height:120px">
+          <rect class="node-client" x="20" y="10" width="380" height="80" rx="10"/>
+          <text class="node-title" x="210" y="46" text-anchor="middle" font-size="15">Client</text>
+          <text class="node-sub" x="210" y="68" text-anchor="middle">lives inside the host, one per server</text>
+          <rect class="node-server" x="460" y="10" width="380" height="80" rx="10"/>
+          <text class="node-title" x="650" y="46" text-anchor="middle" font-size="15">Server</text>
+          <text class="node-sub" x="650" y="68" text-anchor="middle">exposes tools, resources, prompts</text>
+        </svg>
+        <p class="closing-line">Everything else &mdash; transports, JSON-RPC, the handshake, annotations, OAuth &mdash; exists to answer one question honestly: <span class="client">what can this client see</span>, and <span class="server">what will this server actually do</span>. Every MCP server your Agent SDK Host connects to is this same shape.</p>
+      </div>
+    </section>
+
+  </div>
+
+    <button class="edge-zone left" id="edgeLeft" aria-label="Previous slide"></button>
+    <button class="edge-zone right" id="edgeRight" aria-label="Next slide"></button>
+  </div>
+
+  <div class="progress"><i id="progressFill"></i></div>
+
+  <div class="controls">
+    <button class="nav-btn" id="prevBtn" aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="track" id="dotsTrack"></div>
+    <span class="counter mono" id="counter">01 / 13</span>
+    <button class="nav-btn" id="nextBtn" aria-label="Next slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+  <div class="hint">use &larr; &rarr; or click the edges to navigate</div>
+</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var current = 0;
+
+  var dotsTrack = document.getElementById('dotsTrack');
+  var dotsWrap = document.createElement('div');
+  dotsWrap.className = 'dots';
+  var dotEls = [];
+  slides.forEach(function(_, i){
+    var b = document.createElement('button');
+    b.className = 'dot-btn';
+    b.textContent = String(i+1).padStart(2,'0');
+    b.setAttribute('aria-label', 'Go to slide ' + (i+1) + ' of ' + total);
+    b.addEventListener('click', function(){ goTo(i); });
+    dotsWrap.appendChild(b);
+    dotEls.push(b);
+  });
+  dotsTrack.appendChild(dotsWrap);
+
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var counter = document.getElementById('counter');
+  var progressFill = document.getElementById('progressFill');
+  var edgeLeft = document.getElementById('edgeLeft');
+  var edgeRight = document.getElementById('edgeRight');
+
+  function render(){
+    slides.forEach(function(s, i){
+      s.classList.toggle('is-active', i === current);
+      s.classList.toggle('is-prev', i < current);
+    });
+    dotEls.forEach(function(d, i){ d.classList.toggle('is-current', i === current); });
+    counter.textContent = String(current+1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+    progressFill.style.width = ((current) / (total-1) * 100) + '%';
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total-1;
+    var cd = dotEls[current];
+    if (cd && cd.scrollIntoView) cd.scrollIntoView({block:'nearest', inline:'center', behavior:'smooth'});
+  }
+
+  function goTo(i){ current = Math.max(0, Math.min(total-1, i)); render(); }
+
+  prevBtn.addEventListener('click', function(){ goTo(current-1); });
+  nextBtn.addEventListener('click', function(){ goTo(current+1); });
+  edgeLeft.addEventListener('click', function(){ goTo(current-1); });
+  edgeRight.addEventListener('click', function(){ goTo(current+1); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === 'PageDown'){ goTo(current+1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ goTo(current-1); e.preventDefault(); }
+    else if (e.key === 'Home'){ goTo(0); e.preventDefault(); }
+    else if (e.key === 'End'){ goTo(total-1); e.preventDefault(); }
+  });
+
+  render();
+})();
+</script>

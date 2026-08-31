@@ -1,0 +1,545 @@
+<title>You Decide, Claude Code Enforces</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#F1F2EE;
+    --stage:#FBFBF9;
+    --surface:#FFFFFF;
+    --surface-2:#E7E8E2;
+    --ink:#1B2027;
+    --ink-dim:#5B6470;
+    --ink-faint:#8A929C;
+    --you:#B96A1E;           /* the human decision — amber */
+    --you-soft:#F2E2CE;
+    --gate:#1F7A6C;          /* the enforcement layer — teal */
+    --gate-soft:#DCEEEA;
+    --accent-ink:#FFFFFF;
+    --line:#D8D9D2;
+    --line-strong:#C2C4BB;
+    --grid: rgba(27,32,39,0.07);
+    --good:#2E7D4F;
+    --good-soft:#DCEFE1;
+    --bad:#B23A32;
+    --bad-soft:#F7E1DE;
+    --warn:#946E1A;
+    --warn-soft:#F2E9CE;
+    --shadow: 0 30px 60px -30px rgba(20,20,15,0.35), 0 2px 8px rgba(20,20,15,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10141A; --stage:#161C24; --surface:#1B222B; --surface-2:#212A34;
+      --ink:#ECEEEE; --ink-dim:#9BA4AF; --ink-faint:#6D7682;
+      --you:#E8A33D; --you-soft:#3A2E1B;
+      --gate:#57C2B2; --gate-soft:#173832;
+      --accent-ink:#151004;
+      --line:#2A313D; --line-strong:#394251; --grid: rgba(255,255,255,0.06);
+      --good:#4FAE78; --good-soft:#173225;
+      --bad:#E0685E; --bad-soft:#3A211E;
+      --warn:#E0B94D; --warn-soft:#332A14;
+      --shadow: 0 30px 60px -30px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10141A; --stage:#161C24; --surface:#1B222B; --surface-2:#212A34;
+    --ink:#ECEEEE; --ink-dim:#9BA4AF; --ink-faint:#6D7682;
+    --you:#E8A33D; --you-soft:#3A2E1B;
+    --gate:#57C2B2; --gate-soft:#173832;
+    --accent-ink:#151004;
+    --line:#2A313D; --line-strong:#394251; --grid: rgba(255,255,255,0.06);
+    --good:#4FAE78; --good-soft:#173225;
+    --bad:#E0685E; --bad-soft:#3A211E;
+    --warn:#E0B94D; --warn-soft:#332A14;
+    --shadow: 0 30px 60px -30px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 1px 1px, var(--grid) 1.4px, transparent 1.4px) 0 0/28px 28px,
+      var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:clamp(14px,3vw,34px); gap:clamp(10px,2vh,18px);
+  }
+  h1,h2,h3{font-family:"Archivo", ui-sans-serif, sans-serif; text-wrap:balance; margin:0;}
+  .mono{font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;}
+  ::selection{background:var(--you-soft); color:var(--ink);}
+  :focus-visible{outline:2.5px solid var(--you); outline-offset:3px; border-radius:4px;}
+
+  .deck{ width:100%; max-width:1220px; display:flex; flex-direction:column; gap:clamp(10px,1.6vh,16px); }
+
+  .stage-wrap{
+    position:relative; width:100%; aspect-ratio:16/9.3;
+    border-radius:18px; box-shadow:var(--shadow); background:var(--stage);
+    border:1px solid var(--line); overflow:hidden;
+  }
+
+  .slide{
+    position:absolute; inset:0;
+    padding:clamp(20px,4.2vw,48px) clamp(24px,5vw,60px);
+    display:flex; flex-direction:column;
+    opacity:0; visibility:hidden; transform:translateX(18px);
+    transition:opacity .38s ease, transform .38s ease;
+  }
+  .slide.is-active{ opacity:1; visibility:visible; transform:translateX(0); z-index:2; }
+  .slide.is-prev{ transform:translateX(-18px); }
+  @media (prefers-reduced-motion: reduce){ .slide{ transition:opacity .01s linear; transform:none !important; } }
+
+  .eyebrow{
+    display:flex; align-items:baseline; gap:10px;
+    font-family:"IBM Plex Mono", monospace; font-size:clamp(10px,1.1vw,12.5px);
+    letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); font-weight:600;
+  }
+  .eyebrow .idx{ color:var(--ink-faint); }
+  .eyebrow .rule{ flex:1; height:1px; background:var(--line); }
+  .eyebrow.on-you{ color:var(--you); }
+  .eyebrow.on-gate{ color:var(--gate); }
+
+  h2.title{ font-size:clamp(23px,3.8vw,40px); font-weight:800; letter-spacing:-.01em; margin-top:clamp(5px,1vh,10px); line-height:1.05; }
+  .lede{ font-size:clamp(12.5px,1.4vw,15.5px); color:var(--ink-dim); max-width:70ch; line-height:1.5; margin-top:clamp(6px,1.2vh,10px); }
+  .lede .mono{ color:var(--ink); background:var(--surface-2); padding:.05em .35em; border-radius:4px; font-size:.9em;}
+
+  .body-area{ flex:1; min-height:0; margin-top:clamp(8px,1.6vh,16px); display:flex; flex-direction:column; justify-content:center; gap:10px; }
+
+  .tag{ display:inline-flex; align-items:center; gap:5px; font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; padding:3px 9px; border-radius:99px; border:1px solid; }
+  .tag.you{ color:var(--you); border-color:var(--you); background:var(--you-soft); }
+  .tag.gate{ color:var(--gate); border-color:var(--gate); background:var(--gate-soft); }
+  .tag.warn{ color:var(--warn); border-color:var(--warn); background:var(--warn-soft); }
+  .tag.good{ color:var(--good); border-color:var(--good); background:var(--good-soft); }
+  .tag.bad{ color:var(--bad); border-color:var(--bad); background:var(--bad-soft); }
+
+  .field{ font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); border:1px solid var(--line); border-radius:5px; padding:.06em .42em; color:var(--ink); white-space:nowrap; }
+
+  .diagram{ width:100%; height:100%; overflow:visible; }
+  .diagram .label{ font-family:"IBM Plex Mono", monospace; font-size:11.5px; fill:var(--ink-faint); }
+  .diagram .node-title{ font-size:13.5px; font-weight:600; fill:var(--ink); }
+  .diagram .node-sub{ font-family:"IBM Plex Mono", monospace; font-size:10.3px; fill:var(--ink-dim); }
+  .diagram .node{ fill:var(--surface); stroke:var(--line-strong); stroke-width:1.4; }
+  .diagram .node-you{ fill:var(--you-soft); stroke:var(--you); stroke-width:1.6; }
+  .diagram .node-gate{ fill:var(--gate-soft); stroke:var(--gate); stroke-width:1.6; }
+  .diagram .node-good{ fill:var(--good-soft); stroke:var(--good); stroke-width:1.6; }
+  .diagram .node-bad{ fill:var(--bad-soft); stroke:var(--bad); stroke-width:1.6; }
+  .diagram .flow{ fill:none; stroke:var(--line-strong); stroke-width:1.8; }
+  .diagram .flow-you{ fill:none; stroke:var(--you); stroke-width:2; }
+  .diagram .flow-gate{ fill:none; stroke:var(--gate); stroke-width:2; }
+  .diagram .flow-dash{ fill:none; stroke:var(--ink-faint); stroke-width:1.5; stroke-dasharray:4 5; }
+
+  .ftable{ width:100%; border-collapse:collapse; font-size:clamp(11px,1.2vw,13px); }
+  .ftable th, .ftable td{ text-align:left; padding:8px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  .ftable th{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); font-weight:600; }
+  .ftable td.you-col{ color:var(--you); font-weight:600; }
+  .ftable td.gate-col{ color:var(--gate); font-weight:600; }
+  .ftable tr:last-child td{ border-bottom:none; }
+
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,1.5vw,18px); }
+  .grid3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:clamp(9px,1.3vw,14px); }
+  .grid4{ display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:clamp(9px,1.3vw,14px); }
+  .card{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:clamp(11px,1.5vw,17px); display:flex; flex-direction:column; gap:6px; }
+  .card.on-you{ border-color:var(--you); }
+  .card.on-gate{ border-color:var(--gate); }
+  .card h3{ font-size:clamp(13px,1.5vw,16px); font-weight:700; }
+  .card p{ margin:0; font-size:clamp(11.5px,1.2vw,13px); color:var(--ink-dim); line-height:1.48; }
+
+  .code-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,1.5vw,18px); flex:1; min-height:0; }
+  .code-col{ background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
+  .code-col header{ padding:8px 14px; font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:11.5px; letter-spacing:.03em; border-bottom:1px solid var(--line); color:var(--ink-dim); background:var(--surface-2); }
+  .code-col pre{ margin:0; padding:12px 14px; font-family:"IBM Plex Mono",monospace; font-size:clamp(10px,1.05vw,12.2px); line-height:1.6; overflow:auto; flex:1; }
+  .tok-kw{ color:var(--gate); } .tok-str{ color:var(--good); } .tok-com{ color:var(--ink-faint); font-style:italic;} .tok-fn{ color:var(--you); } .tok-num{ color:var(--warn); }
+
+  .callout{ border-left:3px solid var(--you); background:var(--you-soft); padding:9px 13px; border-radius:0 8px 8px 0; font-size:clamp(11px,1.15vw,12.8px); color:var(--ink); line-height:1.5; max-width:74ch; }
+  .callout.gate{ border-left-color:var(--gate); background:var(--gate-soft); }
+  .callout.warn{ border-left-color:var(--warn); background:var(--warn-soft); }
+  .callout .mono{ font-family:"IBM Plex Mono",monospace; font-weight:600; }
+  .callout .strike{ text-decoration:line-through; opacity:.6; }
+
+  .cover{ align-items:flex-start; justify-content:center; }
+  .cover .mark{ width:60px; height:60px; margin-bottom:clamp(12px,2.2vh,24px); }
+  .cover h1{ font-size:clamp(28px,5.4vw,54px); font-weight:900; letter-spacing:-.015em; line-height:1.02; }
+  .cover .sub{ margin-top:12px; font-size:clamp(13.5px,1.6vw,18px); color:var(--ink-dim); max-width:58ch; }
+  .cover .meta{ margin-top:auto; padding-top:18px; display:flex; gap:16px; flex-wrap:wrap; font-family:"IBM Plex Mono",monospace; font-size:clamp(10px,1.05vw,12px); color:var(--ink-faint); letter-spacing:.03em; border-top:1px solid var(--line); width:100%; }
+  .cover .meta span{ padding-top:11px; }
+
+  .closing-line{ font-family:"Archivo",sans-serif; font-weight:700; font-size:clamp(18px,2.6vw,28px); line-height:1.32; color:var(--ink); }
+  .closing-line .you{ color:var(--you); } .closing-line .gate{ color:var(--gate); }
+
+  .controls{ display:flex; align-items:center; gap:clamp(8px,1.4vw,14px); padding:0 4px; }
+  .nav-btn{ display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:var(--surface); border:1px solid var(--line); color:var(--ink); cursor:pointer; flex:none; transition:background .15s ease, border-color .15s ease, transform .1s ease; }
+  .nav-btn:hover{ border-color:var(--you); color:var(--you); }
+  .nav-btn:active{ transform:scale(.94); }
+  .nav-btn:disabled{ opacity:.35; cursor:default; }
+  .nav-btn:disabled:hover{ border-color:var(--line); color:var(--ink); }
+  .nav-btn svg{ width:16px; height:16px; }
+  .track{ flex:1; display:flex; align-items:center; gap:clamp(10px,1.4vw,16px); overflow-x:auto; scrollbar-width:none; padding:2px 0; }
+  .track::-webkit-scrollbar{ display:none; }
+  .dots{ display:flex; gap:6px; flex:none; }
+  .dot-btn{ width:26px; height:26px; border-radius:7px; border:1px solid var(--line); background:var(--surface); color:var(--ink-faint); cursor:pointer; font-family:"IBM Plex Mono",monospace; font-size:10px; display:flex; align-items:center; justify-content:center; transition:all .15s ease; flex:none; }
+  .dot-btn:hover{ border-color:var(--you); color:var(--you); }
+  .dot-btn.is-current{ background:var(--you); border-color:var(--you); color:var(--accent-ink); font-weight:600; }
+  .progress{ height:3px; width:100%; background:var(--line); border-radius:99px; overflow:hidden; flex:none; }
+  .progress i{ display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--you),var(--gate)); transition:width .35s ease; }
+  @media (prefers-reduced-motion: reduce){ .progress i{ transition:none; } }
+  .counter{ font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-dim); flex:none; font-variant-numeric:tabular-nums; min-width:50px; text-align:center; }
+  .edge-zone{ position:absolute; top:0; bottom:0; width:14%; z-index:4; cursor:pointer; background:transparent; border:none; padding:0; }
+  .edge-zone.left{ left:0; } .edge-zone.right{ right:0; }
+  .hint{ text-align:center; font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--ink-faint); letter-spacing:.03em; }
+
+  @media (max-width:680px){
+    .grid2, .grid3, .code-wrap{ grid-template-columns:1fr; }
+    .grid4{ grid-template-columns:1fr; grid-template-rows:auto; }
+    .edge-zone{ display:none; }
+  }
+</style>
+
+<div class="deck">
+  <div class="stage-wrap" id="stage">
+
+    <!-- 0: COVER -->
+    <section class="slide cover">
+      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="18" y="26" width="28" height="24" rx="5" fill="var(--gate-soft)" stroke="var(--gate)" stroke-width="3"/>
+        <path d="M24 26 L24 18 A8 8 0 0 1 40 18 L40 26" fill="none" stroke="var(--you)" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="32" cy="38" r="3.2" fill="var(--gate)"/>
+      </svg>
+      <h1>You Decide, Claude Code Enforces</h1>
+      <p class="sub">A close read of the <strong>permission system</strong> &mdash; modes, rules, sandboxing, and the settings that govern them &mdash; and why none of it depends on the model behaving.</p>
+      <div class="meta">
+        <span><span class="tag you">You</span>&nbsp; grant, deny, or set the mode</span>
+        <span><span class="tag gate">Claude Code</span>&nbsp; enforces it, every call</span>
+        <span>13 sections</span>
+      </div>
+    </section>
+
+    <!-- 1: THE CORE QUESTION -->
+    <section class="slide">
+      <div class="eyebrow"><span>01</span><span class="idx mono">The core question</span><span class="rule"></span></div>
+      <h2 class="title">Not the Model's Decision</h2>
+      <p class="lede">Every tool call asks one question &mdash; allow, ask, or deny &mdash; and the answer is decided by Claude Code, not by anything in your prompt or CLAUDE.md.</p>
+      <div class="body-area">
+        <svg class="diagram" viewBox="0 0 900 180" role="img" aria-label="Diagram showing a tool call routed through the permission gate before it can execute">
+          <defs><marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
+          <rect class="node" x="10" y="60" width="200" height="60" rx="9"/>
+          <text class="node-title" x="110" y="85" text-anchor="middle" font-size="12.5">Claude wants</text>
+          <text class="node-title" x="110" y="103" text-anchor="middle" font-size="12.5">to call a tool</text>
+          <path class="flow" marker-end="url(#a1)" d="M210,90 L290,90"/>
+          <rect class="node-gate" x="290" y="46" width="230" height="88" rx="10"/>
+          <text class="node-title" x="405" y="76" text-anchor="middle">Permission system</text>
+          <text class="node-sub" x="405" y="96" text-anchor="middle">rules &rarr; mode &rarr; callback</text>
+          <text class="node-sub" x="405" y="114" text-anchor="middle">allow / ask / deny</text>
+          <path class="flow-gate" marker-end="url(#a1)" d="M520,90 L600,90"/>
+          <rect class="node" x="600" y="60" width="200" height="60" rx="9"/>
+          <text class="node-sub" x="700" y="94" text-anchor="middle">tool runs, or doesn't</text>
+          <text class="label" x="290" y="20">a prompt can shape what Claude *tries* &mdash;</text>
+          <text class="label" x="290" y="160">never what Claude Code *allows*</text>
+        </svg>
+        <div class="callout">"Permission rules are enforced by Claude Code, not by the model." Instructions in a prompt or CLAUDE.md shape what Claude attempts &mdash; only <span class="mono">/permissions</span> rules, a permission mode, or a PreToolUse hook actually grant or revoke access.</div>
+      </div>
+    </section>
+
+    <!-- 2: THE MODES -->
+    <section class="slide">
+      <div class="eyebrow"><span>02</span><span class="idx mono">Baseline</span><span class="rule"></span></div>
+      <h2 class="title">Six Modes, One Risk Ladder</h2>
+      <p class="lede">A permission mode sets the baseline for every session. Rules and hooks layer on top of whichever one is active.</p>
+      <div class="body-area">
+        <table class="ftable">
+          <tr><th>Mode</th><th>Runs without asking</th><th>Best for</th></tr>
+          <tr><td class="mono">default (Manual)</td><td>Reads only</td><td>Sensitive work, reviewing every action</td></tr>
+          <tr><td class="mono">acceptEdits</td><td>Reads, file edits, common filesystem commands</td><td>Iterating on code you're reviewing</td></tr>
+          <tr><td class="mono">plan</td><td>Reads, classifier-approved commands where available</td><td>Exploring before you change anything</td></tr>
+          <tr><td class="mono">auto</td><td>Everything, with background safety checks</td><td>Long tasks, fewer prompts</td></tr>
+          <tr><td class="mono">dontAsk</td><td>Only pre-approved tools &mdash; denies instead of asking</td><td>Locked-down CI and scripts</td></tr>
+          <tr><td class="mono">bypassPermissions</td><td>Everything</td><td>Isolated containers and VMs, nothing else</td></tr>
+        </table>
+        <div class="callout warn">Writes to protected paths are never auto-approved in any mode except <span class="mono">bypassPermissions</span>. Deny rules block in every single mode &mdash; that one is genuinely never negotiable.</div>
+      </div>
+    </section>
+
+    <!-- 3: AUTO MODE -->
+    <section class="slide">
+      <div class="eyebrow on-gate"><span>03</span><span class="idx mono">auto mode</span><span class="rule"></span></div>
+      <h2 class="title">A Second Model Reviews Instead of You</h2>
+      <p class="lede">In auto mode, a separate <strong>classifier</strong> model evaluates each action against your request &mdash; it isn't the same model doing the work and grading itself.</p>
+      <div class="body-area">
+        <div class="grid2">
+          <div class="card on-gate">
+            <span class="tag gate">blocks by default</span>
+            <h3>High-consequence actions</h3>
+            <p>Piping to a shell (<span class="mono">curl | bash</span>), production deploys, mass deletions, IAM changes, <span class="mono">terraform destroy</span>, force pushes.</p>
+          </div>
+          <div class="card on-you">
+            <span class="tag you">allows by default</span>
+            <h3>In-scope work</h3>
+            <p>Edits inside the working directory, dependency installs from a lock file, read-only HTTP, pushes to the branch you started on.</p>
+          </div>
+        </div>
+        <div class="callout">On Pro, Max, and Team plans, auto is the built-in starting mode. It requires a supported model, and an organization can remove it entirely with <span class="mono">permissions.disableAutoMode: "disable"</span>. <span class="mono">rm</span>/<span class="mono">rmdir</span> against a critical path still routes to the classifier, never a silent auto-approve.</div>
+      </div>
+    </section>
+
+    <!-- 4: RULE SYNTAX -->
+    <section class="slide">
+      <div class="eyebrow"><span>04</span><span class="idx mono">Fine-grained control</span><span class="rule"></span></div>
+      <h2 class="title"><span class="mono">Tool</span> or <span class="mono">Tool(specifier)</span></h2>
+      <p class="lede">The same shape reappears everywhere &mdash; a bare tool name for everything, parentheses to narrow it.</p>
+      <div class="body-area">
+        <table class="ftable">
+          <tr><th>Rule</th><th>Matches</th></tr>
+          <tr><td class="mono">Bash(npm run *)</td><td><span class="mono">npm run build</span>, <span class="mono">npm run test --watch</span> &mdash; not <span class="mono">npm install</span></td></tr>
+          <tr><td class="mono">Read(./.env)</td><td>Exactly that file, this directory</td></tr>
+          <tr><td class="mono">WebFetch(domain:*.example.com)</td><td>Any subdomain of example.com</td></tr>
+          <tr><td class="mono">mcp__github__get_*</td><td>Every <span class="mono">get_</span> tool from the github MCP server</td></tr>
+          <tr><td class="mono">Agent(model:opus)</td><td>Subagent calls that request the Opus tier</td></tr>
+        </table>
+        <div class="callout warn">Claude Code is shell-aware: <span class="mono">Bash(safe-cmd *)</span> does <strong>not</strong> grant <span class="mono">safe-cmd && rm -rf /</span> &mdash; each subcommand around <span class="mono">&amp;&amp; || ; |</span> is matched independently. You can't gate on a tool's primary content field (<span class="mono">command</span>, <span class="mono">file_path</span>, <span class="mono">url</span>) with a parameter rule &mdash; that's exactly the kind of rule a compound command would bypass.</div>
+      </div>
+    </section>
+
+    <!-- 5: PRECEDENCE -->
+    <section class="slide">
+      <div class="eyebrow on-you"><span>05</span><span class="idx mono">Evaluation order</span><span class="rule"></span></div>
+      <h2 class="title">Deny, Then Ask, Then Allow</h2>
+      <p class="lede">Fixed order, not configurable, and specificity never changes it. First match in that order wins.</p>
+      <div class="body-area">
+        <svg class="diagram" viewBox="0 0 860 170" role="img" aria-label="Diagram showing a broad deny rule beating a narrower allow rule for the same command">
+          <defs><marker id="a5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
+          <rect class="node" x="10" y="66" width="220" height="50" rx="8"/>
+          <text class="node-sub" x="120" y="96" text-anchor="middle">call: Bash(aws s3 ls)</text>
+          <path class="flow" marker-end="url(#a5)" d="M230,60 Q320,30 400,30"/>
+          <path class="flow" marker-end="url(#a5)" d="M230,110 Q320,150 400,150"/>
+          <rect class="node-bad" x="400" y="6" width="220" height="48" rx="8"/>
+          <text class="node-title" x="510" y="34" text-anchor="middle" font-size="12.5">deny: Bash(aws *)</text>
+          <rect class="node" x="400" y="126" width="220" height="48" rx="8"/>
+          <text class="node-sub" x="510" y="154" text-anchor="middle">allow: Bash(aws s3 ls)</text>
+          <path class="flow" marker-end="url(#a5)" d="M620,30 L720,30"/>
+          <rect class="node-bad" x="720" y="6" width="130" height="48" rx="8"/>
+          <text class="node-title" x="785" y="34" text-anchor="middle" font-size="12.5">blocked</text>
+          <text class="label" x="400" y="118">deny checked first &mdash; never reached</text>
+        </svg>
+        <div class="callout warn">A broad <span class="mono">deny</span> rule can't carry allowlist exceptions &mdash; a narrower <span class="mono">allow</span> for the same call simply never gets evaluated. A bare tool-name deny (<span class="mono">Bash</span>, not <span class="mono">Bash(rm *)</span>) removes the tool from Claude's context entirely; it never even sees the option.</div>
+      </div>
+    </section>
+
+    <!-- 6: SETTINGS HIERARCHY -->
+    <section class="slide">
+      <div class="eyebrow"><span>06</span><span class="idx mono">Where rules live</span><span class="rule"></span></div>
+      <h2 class="title">Five Files, One Precedence</h2>
+      <p class="lede">Highest wins for a single value; array-type keys like <span class="field">permissions.allow</span> merge across every level instead.</p>
+      <div class="body-area">
+        <div class="grid3">
+          <div class="card on-you"><span class="tag you">1 · highest</span><h3>Managed settings</h3><p>MDM, org console. Locks a rule so nothing below can override it.</p></div>
+          <div class="card"><span class="tag warn">2</span><h3>Command line</h3><p><span class="mono">claude --settings</span>, for one run.</p></div>
+          <div class="card"><span class="tag warn">3</span><h3>Project local</h3><p><span class="mono">.claude/settings.local.json</span> &mdash; personal, gitignored.</p></div>
+          <div class="card"><span class="tag warn">4</span><h3>Shared project</h3><p><span class="mono">.claude/settings.json</span> &mdash; checked in, whole team.</p></div>
+        </div>
+        <div class="callout">Level 5, lowest: <span class="mono">~/.claude/settings.json</span>, user-wide. "Yes, and don't ask again" on a Bash command or WebFetch domain saves permanently to project-local settings at the repository root &mdash; resolved through worktrees, so the rule reaches every checkout of that repo.</div>
+      </div>
+    </section>
+
+    <!-- 7: BYPASSPERMISSIONS -->
+    <section class="slide">
+      <div class="eyebrow on-you"><span>07</span><span class="idx mono">The risky one</span><span class="rule"></span></div>
+      <h2 class="title">Everything, Except a Short List</h2>
+      <p class="lede"><span class="field">bypassPermissions</span> skips prompts entirely &mdash; but "entirely" has real exceptions, in every mode including this one.</p>
+      <div class="body-area">
+        <div class="grid2">
+          <div class="card on-you">
+            <span class="tag warn">never auto-approved, anywhere</span>
+            <h3>Five standing exceptions</h3>
+            <p>Explicit <span class="mono">ask</span> rules &middot; <span class="mono">rm</span>/<span class="mono">rmdir</span> on a critical path &middot; <span class="mono">AskUserQuestion</span> and MCP tools requiring interaction &middot; org connector tools set to <span class="mono">ask</span> &middot; cross-session messaging safeguards.</p>
+          </div>
+          <div class="card on-gate">
+            <span class="tag bad">the warning is not boilerplate</span>
+            <h3>Isolated environments only</h3>
+            <p>A prompt-injection attack or a model error can cause destructive action with nobody in the loop. Writes to <span class="mono">.git</span> and <span class="mono">.claude</span> ARE skipped here &mdash; that's real exposure outside a sealed container.</p>
+          </div>
+        </div>
+        <div class="callout warn">An organization removes it entirely with <span class="mono">permissions.disableBypassPermissionsMode: "disable"</span> in managed settings &mdash; the setting that actually matters for a governed deployment, since it can't be overridden downstream.</div>
+      </div>
+    </section>
+
+    <!-- 8: SANDBOXING -->
+    <section class="slide">
+      <div class="eyebrow on-gate"><span>08</span><span class="idx mono">A different layer</span><span class="rule"></span></div>
+      <h2 class="title">What Runs vs. What It Can Reach</h2>
+      <p class="lede">Permission modes decide <em>whether</em> a call happens. The Bash sandbox &mdash; Seatbelt on macOS, bubblewrap on Linux/WSL2 &mdash; decides what it can touch once it does. The two are independent.</p>
+      <div class="body-area">
+        <div class="grid2">
+          <div class="card">
+            <span class="tag good">filesystem, by default</span>
+            <h3>Working directory only</h3>
+            <p>Writes stay inside the working directory, the session temp dir, and anything added via <span class="mono">--add-dir</span>. Everything else: denied automatically.</p>
+          </div>
+          <div class="card">
+            <span class="tag good">network, by default</span>
+            <h3>No domains at all</h3>
+            <p>First request to a new domain prompts &mdash; or in auto mode, goes to the classifier. Nothing is reachable until it's explicitly allowed.</p>
+          </div>
+        </div>
+        <div class="callout gate">Auto-allow mode runs sandboxed commands without asking at all &mdash; but deny rules, critical-path <span class="mono">rm</span>/<span class="mono">rmdir</span>, and content-scoped ask rules like <span class="mono">Bash(git push *)</span> still apply even then. A command the sandbox can't run falls back to the regular permission flow, visibly labeled "Bash command (unsandboxed)."</div>
+      </div>
+    </section>
+
+    <!-- 9: CANUSETOOL -->
+    <section class="slide">
+      <div class="eyebrow"><span>09</span><span class="idx mono">Agent SDK</span><span class="rule"></span></div>
+      <h2 class="title">The Callback of Last Resort</h2>
+      <p class="lede"><span class="field">canUseTool</span> only fires for whatever's left after rules and mode have already decided.</p>
+      <div class="body-area code-wrap">
+        <div class="code-col">
+          <header>canUseTool (TypeScript)</header>
+          <pre>canUseTool?: (params: {
+  tool: <span class="tok-kw">string</span>;
+  input: Record<span class="tok-com">&lt;string, unknown&gt;</span>;
+  reason?: <span class="tok-kw">string</span>;
+}) =&gt; Promise&lt;
+  <span class="tok-str">"allow"</span> | <span class="tok-str">"deny"</span> | <span class="tok-str">"ask"</span>
+&gt;;</pre>
+        </div>
+        <div class="code-col">
+          <header>when it's actually reached</header>
+          <pre><span class="tok-com">// skipped if an allow rule</span>
+<span class="tok-com">// already pre-approved the call</span>
+
+<span class="tok-com">// skipped if the mode auto-</span>
+<span class="tok-com">// approves this call type</span>
+
+<span class="tok-com">// never called in dontAsk —</span>
+<span class="tok-com">// use a PreToolUse hook instead</span></pre>
+        </div>
+      </div>
+      <div class="callout">It exists for exceptions the static rule list can't express &mdash; rules and modes handle the common cases first. For logic that must run on <strong>every</strong> call regardless of mode, a PreToolUse hook is the right tool, not this callback.</div>
+    </section>
+
+    <!-- 10: PROTECTED VS CRITICAL PATHS -->
+    <section class="slide">
+      <div class="eyebrow"><span>10</span><span class="idx mono">Two kinds of "no"</span><span class="rule"></span></div>
+      <h2 class="title">Protected Paths vs. Critical Paths</h2>
+      <p class="lede">They sound similar and behave differently &mdash; one has an escape hatch, the other doesn't.</p>
+      <div class="body-area">
+        <table class="ftable">
+          <tr><th>&nbsp;</th><th>Examples</th><th>Bypassed by bypassPermissions?</th></tr>
+          <tr><td class="you-col">Protected paths</td><td><span class="mono">.git</span>, <span class="mono">.claude</span>, <span class="mono">.mcp.json</span>, shell rc files</td><td>Yes &mdash; genuinely skipped there</td></tr>
+          <tr><td class="gate-col">Critical paths</td><td>Filesystem root, <span class="mono">/home</span>, working-directory parents</td><td><strong>No</strong> &mdash; <span class="mono">rm</span>/<span class="mono">rmdir</span> here always prompts</td></tr>
+        </table>
+        <div class="callout warn">Critical-path removal is the one guardrail no allow rule and no <span class="mono">PreToolUse</span> hook <span class="mono">"allow"</span> decision can approve away. It's the actual floor beneath every mode, bypass included.</div>
+      </div>
+    </section>
+
+    <!-- 11: GOVERNANCE -->
+    <section class="slide">
+      <div class="eyebrow on-you"><span>11</span><span class="idx mono">For an organization</span><span class="rule"></span></div>
+      <h2 class="title">Locking It Down at the Org Level</h2>
+      <p class="lede">Managed settings are the only layer nothing downstream can override &mdash; the actual governance surface.</p>
+      <div class="body-area">
+        <div class="grid4">
+          <div class="card on-you"><span class="tag you">disable a mode</span><h3 class="mono" style="font-size:12.5px">permissions.disableBypassPermissionsMode</h3><p>Removes bypass from the mode cycle for everyone, everywhere.</p></div>
+          <div class="card on-you"><span class="tag you">disable auto</span><h3 class="mono" style="font-size:12.5px">permissions.disableAutoMode</h3><p>Forces classifier-free, manual review as the ceiling.</p></div>
+          <div class="card on-gate"><span class="tag gate">force sandboxing</span><h3 class="mono" style="font-size:12.5px">sandbox.enabled + failIfUnavailable</h3><p>Makes the sandbox a hard requirement, not a best-effort fallback.</p></div>
+          <div class="card on-gate"><span class="tag gate">lock rule sources</span><h3 class="mono" style="font-size:12.5px">allowManagedPermissionRulesOnly</h3><p>Ignores project- and user-level rules entirely &mdash; only managed settings decide.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12: CLOSING -->
+    <section class="slide">
+      <div class="eyebrow"><span>12</span><span class="idx mono">The model</span><span class="rule"></span></div>
+      <h2 class="title">Layers, Not a Single Gate</h2>
+      <div class="body-area">
+        <svg class="diagram" viewBox="0 0 860 130" role="img" aria-label="Summary diagram of rules, mode, sandbox, and hooks as independent layers of the permission system" style="max-height:120px">
+          <rect class="node-you" x="20" y="10" width="380" height="80" rx="10"/>
+          <text class="node-title" x="210" y="46" text-anchor="middle" font-size="15">Rules + Mode</text>
+          <text class="node-sub" x="210" y="68" text-anchor="middle">whether a call happens at all</text>
+          <rect class="node-gate" x="460" y="10" width="380" height="80" rx="10"/>
+          <text class="node-title" x="650" y="46" text-anchor="middle" font-size="15">Sandbox + Hooks</text>
+          <text class="node-sub" x="650" y="68" text-anchor="middle">what it can reach, and what happens around it</text>
+        </svg>
+        <p class="closing-line">No single layer is the whole story. <span class="you">Rules and modes</span> decide whether Claude Code even tries, and <span class="gate">the sandbox and hooks</span> bound what happens either way &mdash; the same PreToolUse hook from the very first deck in this series is still standing at that same gate.</p>
+      </div>
+    </section>
+
+  </div>
+
+    <button class="edge-zone left" id="edgeLeft" aria-label="Previous slide"></button>
+    <button class="edge-zone right" id="edgeRight" aria-label="Next slide"></button>
+  </div>
+
+  <div class="progress"><i id="progressFill"></i></div>
+
+  <div class="controls">
+    <button class="nav-btn" id="prevBtn" aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="track" id="dotsTrack"></div>
+    <span class="counter mono" id="counter">01 / 13</span>
+    <button class="nav-btn" id="nextBtn" aria-label="Next slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+  <div class="hint">use &larr; &rarr; or click the edges to navigate</div>
+</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var current = 0;
+
+  var dotsTrack = document.getElementById('dotsTrack');
+  var dotsWrap = document.createElement('div');
+  dotsWrap.className = 'dots';
+  var dotEls = [];
+  slides.forEach(function(_, i){
+    var b = document.createElement('button');
+    b.className = 'dot-btn';
+    b.textContent = String(i+1).padStart(2,'0');
+    b.setAttribute('aria-label', 'Go to slide ' + (i+1) + ' of ' + total);
+    b.addEventListener('click', function(){ goTo(i); });
+    dotsWrap.appendChild(b);
+    dotEls.push(b);
+  });
+  dotsTrack.appendChild(dotsWrap);
+
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var counter = document.getElementById('counter');
+  var progressFill = document.getElementById('progressFill');
+  var edgeLeft = document.getElementById('edgeLeft');
+  var edgeRight = document.getElementById('edgeRight');
+
+  function render(){
+    slides.forEach(function(s, i){
+      s.classList.toggle('is-active', i === current);
+      s.classList.toggle('is-prev', i < current);
+    });
+    dotEls.forEach(function(d, i){ d.classList.toggle('is-current', i === current); });
+    counter.textContent = String(current+1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+    progressFill.style.width = ((current) / (total-1) * 100) + '%';
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total-1;
+    var cd = dotEls[current];
+    if (cd && cd.scrollIntoView) cd.scrollIntoView({block:'nearest', inline:'center', behavior:'smooth'});
+  }
+
+  function goTo(i){ current = Math.max(0, Math.min(total-1, i)); render(); }
+
+  prevBtn.addEventListener('click', function(){ goTo(current-1); });
+  nextBtn.addEventListener('click', function(){ goTo(current+1); });
+  edgeLeft.addEventListener('click', function(){ goTo(current-1); });
+  edgeRight.addEventListener('click', function(){ goTo(current+1); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === 'PageDown'){ goTo(current+1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ goTo(current-1); e.preventDefault(); }
+    else if (e.key === 'Home'){ goTo(0); e.preventDefault(); }
+    else if (e.key === 'End'){ goTo(total-1); e.preventDefault(); }
+  });
+
+  render();
+})();
+</script>

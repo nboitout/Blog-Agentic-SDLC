@@ -1,5 +1,5 @@
 // The single source of truth for the Academy section's module grid.
-// Adding module #6 later is exactly this: one new entry here, plus the
+// Adding the next module is exactly this: one new entry here, plus the
 // module's own self-contained HTML file dropped into public/academy/.
 // Nothing else in the site needs to change — the hub's headline stats,
 // its tier filter, and its two bands are all derived from this array.
@@ -104,5 +104,49 @@ export const academyModules: AcademyModule[] = [
     kind: 'deck',
     metrics: { slides: 13 },
     href: '/academy/interception-point.html',
+  },
+  {
+    id: 'mcp-protocol',
+    title: 'One Protocol, Any Tool',
+    tagline:
+      'A click-through tour of the Model Context Protocol itself — Host/Client/Server architecture, transports, the JSON-RPC envelope, the classic vs. the 2026-07-28 stateless lifecycle, all six primitives, tool annotations, and OAuth 2.1 authorization.',
+    domains: ['Domain 2 · Tool Design & MCP'],
+    level: ['developer', 'architect'],
+    kind: 'deck',
+    metrics: { slides: 13 },
+    href: '/academy/mcp-protocol.html',
+  },
+  {
+    id: 'skills-deep-dive',
+    title: 'Cheap Until Called',
+    tagline:
+      'A click-through tour of Skills — SKILL.md anatomy, the three-level progressive disclosure model, invocation control (you vs. Claude), scoping across personal/project/plugin/enterprise, tool permissions, content lifecycle, and running a skill as a forked subagent.',
+    domains: ['Domain 1 · Agentic Architecture'],
+    level: ['developer', 'architect'],
+    kind: 'deck',
+    metrics: { slides: 13 },
+    href: '/academy/skills-deep-dive.html',
+  },
+  {
+    id: 'subagents-deep-dive',
+    title: 'One Prompt, A Tree of Agents',
+    tagline:
+      'A click-through tour of subagents — context isolation, the Explore/Plan/general-purpose built-ins, automatic vs. explicit invocation, foreground vs. background execution, tool scoping, preloaded skills, depth/concurrency/spend caps, resuming, and output scanning for injection defense.',
+    domains: ['Domain 1 · Agentic Architecture'],
+    level: ['developer', 'architect'],
+    kind: 'deck',
+    metrics: { slides: 13 },
+    href: '/academy/subagents-deep-dive.html',
+  },
+  {
+    id: 'permissions-deep-dive',
+    title: 'You Decide, Claude Code Enforces',
+    tagline:
+      'A click-through tour of the permissions and security model — the six permission modes, auto mode’s classifier, rule syntax and precedence, the settings hierarchy, bypassPermissions risks, Bash sandboxing, canUseTool, protected vs. critical paths, and org-level governance controls.',
+    domains: ['Domain 3 · Claude Code Config'],
+    level: ['developer', 'architect'],
+    kind: 'deck',
+    metrics: { slides: 13 },
+    href: '/academy/permissions-deep-dive.html',
   },
 ]
