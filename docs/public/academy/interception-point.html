@@ -43,6 +43,9 @@
   *{box-sizing:border-box;}
   html,body{height:100%;}
   body{
+    --page-pad-x:clamp(14px,3vw,34px);
+    --page-pad-y:clamp(10px,2vh,34px);
+    --page-gap:clamp(6px,1vh,18px);
     margin:0;
     background:
       radial-gradient(circle at 1px 1px, var(--grid) 1.4px, transparent 1.4px) 0 0/28px 28px,
@@ -51,14 +54,21 @@
     font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
     min-height:100vh;
     display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
-    padding:clamp(14px,3vw,34px); gap:clamp(10px,2vh,18px);
+    padding:var(--page-pad-y) var(--page-pad-x); gap:var(--page-gap);
   }
   h1,h2,h3{font-family:"Archivo", ui-sans-serif, sans-serif; text-wrap:balance; margin:0;}
   .mono{font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;}
   ::selection{background:var(--pre-soft); color:var(--ink);}
   :focus-visible{outline:2.5px solid var(--pre); outline-offset:3px; border-radius:4px;}
 
-  .deck{ width:100%; max-width:1220px; display:flex; flex-direction:column; gap:clamp(10px,1.6vh,16px); }
+  .deck{
+    width:100%;
+    max-width:min(
+      1220px,
+      calc((100dvh - (2 * var(--page-pad-y)) - 80px - (4 * var(--page-gap))) * 16 / 9.3)
+    );
+    display:flex; flex-direction:column;
+  }
 
   .stage-wrap{
     position:relative; width:100%; aspect-ratio:16/9.3;
