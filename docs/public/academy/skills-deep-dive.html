@@ -1,4 +1,9 @@
-<title>Cheap Until Called</title>
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude Code Skills — Cheap Until Called</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -27,27 +32,13 @@
     --warn-soft:#F2E9CE;
     --shadow: 0 30px 60px -30px rgba(20,20,15,0.35), 0 2px 8px rgba(20,20,15,0.06);
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#10141A; --stage:#161C24; --surface:#1B222B; --surface-2:#212A34;
-      --ink:#ECEEEE; --ink-dim:#9BA4AF; --ink-faint:#6D7682;
-      --you:#E8A33D; --you-soft:#3A2E1B;
-      --claude:#57C2B2; --claude-soft:#173832;
-      --accent-ink:#151004;
-      --line:#2A313D; --line-strong:#394251; --grid: rgba(255,255,255,0.06);
-      --good:#4FAE78; --good-soft:#173225;
-      --bad:#E0685E; --bad-soft:#3A211E;
-      --warn:#E0B94D; --warn-soft:#332A14;
-      --shadow: 0 30px 60px -30px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4);
-    }
-  }
   :root[data-theme="dark"]{
     --bg:#10141A; --stage:#161C24; --surface:#1B222B; --surface-2:#212A34;
-    --ink:#ECEEEE; --ink-dim:#9BA4AF; --ink-faint:#6D7682;
+    --ink:#F5F7FA; --ink-dim:#C7D0DB; --ink-faint:#9EABB9;
     --you:#E8A33D; --you-soft:#3A2E1B;
     --claude:#57C2B2; --claude-soft:#173832;
     --accent-ink:#151004;
-    --line:#2A313D; --line-strong:#394251; --grid: rgba(255,255,255,0.06);
+    --line:#465364; --line-strong:#AAB6C5; --grid:rgba(255,255,255,0.07);
     --good:#4FAE78; --good-soft:#173225;
     --bad:#E0685E; --bad-soft:#3A211E;
     --warn:#E0B94D; --warn-soft:#332A14;
@@ -116,9 +107,9 @@
   .field{ font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); border:1px solid var(--line); border-radius:5px; padding:.06em .42em; color:var(--ink); white-space:nowrap; }
 
   .diagram{ width:100%; height:100%; overflow:visible; }
-  .diagram .label{ font-family:"IBM Plex Mono", monospace; font-size:11.5px; fill:var(--ink-faint); }
-  .diagram .node-title{ font-size:13.5px; font-weight:600; fill:var(--ink); }
-  .diagram .node-sub{ font-family:"IBM Plex Mono", monospace; font-size:10.3px; fill:var(--ink-dim); }
+  .diagram .label{ font-family:"IBM Plex Mono", monospace; font-size:12px; fill:var(--ink-faint); }
+  .diagram .node-title{ font-size:14px; font-weight:600; fill:var(--ink); }
+  .diagram .node-sub{ font-family:"IBM Plex Mono", monospace; font-size:11.2px; fill:var(--ink-dim); }
   .diagram .node{ fill:var(--surface); stroke:var(--line-strong); stroke-width:1.4; }
   .diagram .node-you{ fill:var(--you-soft); stroke:var(--you); stroke-width:1.6; }
   .diagram .node-claude{ fill:var(--claude-soft); stroke:var(--claude); stroke-width:1.6; }
@@ -129,7 +120,7 @@
   .diagram .flow-claude{ fill:none; stroke:var(--claude); stroke-width:2; }
   .diagram .flow-dash{ fill:none; stroke:var(--ink-faint); stroke-width:1.5; stroke-dasharray:4 5; }
 
-  .ftable{ width:100%; border-collapse:collapse; font-size:clamp(11px,1.2vw,13px); }
+  .ftable{ width:100%; border-collapse:collapse; font-size:clamp(12px,1.25vw,14px); }
   .ftable th, .ftable td{ text-align:left; padding:8px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
   .ftable th{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); font-weight:600; }
   .ftable td.you-col{ color:var(--you); font-weight:600; }
@@ -143,15 +134,15 @@
   .card.on-you{ border-color:var(--you); }
   .card.on-claude{ border-color:var(--claude); }
   .card h3{ font-size:clamp(13px,1.5vw,16px); font-weight:700; }
-  .card p{ margin:0; font-size:clamp(11.5px,1.2vw,13px); color:var(--ink-dim); line-height:1.48; }
+  .card p{ margin:0; font-size:clamp(12px,1.25vw,14px); color:var(--ink-dim); line-height:1.48; }
 
   .code-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,1.5vw,18px); flex:1; min-height:0; }
   .code-col{ background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
   .code-col header{ padding:8px 14px; font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:11.5px; letter-spacing:.03em; border-bottom:1px solid var(--line); color:var(--ink-dim); background:var(--surface-2); }
-  .code-col pre{ margin:0; padding:12px 14px; font-family:"IBM Plex Mono",monospace; font-size:clamp(10px,1.05vw,12.2px); line-height:1.6; overflow:auto; flex:1; }
+  .code-col pre{ margin:0; padding:12px 14px; font-family:"IBM Plex Mono",monospace; font-size:clamp(11px,1.1vw,13px); line-height:1.55; overflow:auto; flex:1; }
   .tok-kw{ color:var(--claude); } .tok-str{ color:var(--good); } .tok-com{ color:var(--ink-faint); font-style:italic;} .tok-fn{ color:var(--you); } .tok-num{ color:var(--warn); }
 
-  .callout{ border-left:3px solid var(--you); background:var(--you-soft); padding:9px 13px; border-radius:0 8px 8px 0; font-size:clamp(11px,1.15vw,12.8px); color:var(--ink); line-height:1.5; max-width:74ch; }
+  .callout{ border-left:3px solid var(--you); background:var(--you-soft); padding:9px 13px; border-radius:0 8px 8px 0; font-size:clamp(12px,1.2vw,13.5px); color:var(--ink); line-height:1.45; max-width:82ch; }
   .callout.claude{ border-left-color:var(--claude); background:var(--claude-soft); }
   .callout.warn{ border-left-color:var(--warn); background:var(--warn-soft); }
   .callout .mono{ font-family:"IBM Plex Mono",monospace; font-weight:600; }
@@ -174,6 +165,7 @@
   .nav-btn:disabled{ opacity:.35; cursor:default; }
   .nav-btn:disabled:hover{ border-color:var(--line); color:var(--ink); }
   .nav-btn svg{ width:16px; height:16px; }
+  .theme-btn{ width:auto; min-width:92px; padding:0 13px; border-radius:19px; font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; white-space:nowrap; }
   .track{ flex:1; display:flex; align-items:center; gap:clamp(10px,1.4vw,16px); overflow-x:auto; scrollbar-width:none; padding:2px 0; }
   .track::-webkit-scrollbar{ display:none; }
   .dots{ display:flex; gap:6px; flex:none; }
@@ -187,6 +179,8 @@
   .edge-zone{ position:absolute; top:0; bottom:0; width:14%; z-index:4; cursor:pointer; background:transparent; border:none; padding:0; }
   .edge-zone.left{ left:0; } .edge-zone.right{ right:0; }
   .hint{ text-align:center; font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--ink-faint); letter-spacing:.03em; }
+  .source{ margin-top:auto; padding-top:7px; font-family:"IBM Plex Mono",monospace; font-size:10px; color:var(--ink-faint); }
+  .source a{ color:var(--claude); text-decoration:none; border-bottom:1px solid currentColor; }
 
   @media (max-width:680px){
     .grid2, .grid3, .code-wrap{ grid-template-columns:1fr; }
@@ -194,6 +188,8 @@
     .edge-zone{ display:none; }
   }
 </style>
+</head>
+<body>
 
 <div class="deck">
   <div class="stage-wrap" id="stage">
@@ -206,7 +202,7 @@
         <rect x="12" y="42" width="40" height="8" rx="3" fill="none" stroke="var(--line-strong)" stroke-width="2.4" stroke-dasharray="3 3"/>
       </svg>
       <h1>Cheap Until Called</h1>
-      <p class="sub">A close read of <strong>Skills</strong> &mdash; packaged, reusable instructions that cost almost nothing until the moment they're relevant, and the frontmatter that decides who can call them and what they can touch.</p>
+      <p class="sub">A close read of <strong>Claude Code Skills</strong> &mdash; reusable instructions whose descriptions stay lightweight, while their full content loads only when invoked.</p>
       <div class="meta">
         <span><span class="tag you">You</span>&nbsp; invoke with /name</span>
         <span><span class="tag claude">Claude</span>&nbsp; invokes by matching intent</span>
@@ -218,28 +214,29 @@
     <section class="slide">
       <div class="eyebrow"><span>01</span><span class="idx mono">Why it exists</span><span class="rule"></span></div>
       <h2 class="title">The CLAUDE.md Problem</h2>
-      <p class="lede">Everything in <span class="field">CLAUDE.md</span> loads on every single turn, whether it's relevant or not. A skill only loads when it's actually needed.</p>
+      <p class="lede"><span class="field">CLAUDE.md</span> enters the session context whether the current task needs it or not. A skill keeps its full instructions deferred until invocation.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 900 200" role="img" aria-label="Diagram contrasting CLAUDE.md always loaded every turn with a skill loaded only when triggered">
-          <text class="node-sub" x="10" y="18">CLAUDE.md &mdash; paid on every turn</text>
+          <text class="node-sub" x="10" y="18">CLAUDE.md &mdash; remains in the session context</text>
           <rect class="node-bad" x="10" y="30" width="380" height="46" rx="8"/>
           <text class="node-title" x="200" y="58" text-anchor="middle" font-size="12.5">deployment checklist, API conventions, style guide&#8230;</text>
           <line x1="10" y1="94" x2="390" y2="94" class="flow-dash"/>
           <text class="label" x="10" y="112">turn 1</text>
           <text class="label" x="130" y="112">turn 2</text>
           <text class="label" x="250" y="112">turn 3</text>
-          <text class="label" x="10" y="130">full cost, full cost, full cost &mdash; even for turns that never touch deployment</text>
+          <text class="label" x="10" y="130">the same instructions occupy context, even when unrelated</text>
 
-          <text class="node-sub" x="520" y="18">a skill &mdash; paid only when it fires</text>
+          <text class="node-sub" x="520" y="18">a skill &mdash; full content deferred</text>
           <rect class="node-you" x="520" y="30" width="200" height="40" rx="8"/>
-          <text class="node-title" x="620" y="54" text-anchor="middle" font-size="12">~100 tokens, always</text>
-          <text class="label" x="520" y="86">description only, at startup</text>
+          <text class="node-title" x="620" y="54" text-anchor="middle" font-size="12">small metadata footprint</text>
+          <text class="label" x="520" y="86">description listed at startup*</text>
           <line x1="620" y1="70" x2="620" y2="100" class="flow-claude"/>
           <rect class="node-claude" x="520" y="100" width="200" height="40" rx="8"/>
           <text class="node-title" x="620" y="124" text-anchor="middle" font-size="12">full body, on trigger</text>
           <text class="label" x="520" y="156">turn where it's actually relevant</text>
         </svg>
-        <div class="callout">Create a skill exactly when you catch yourself pasting the same instructions into chat again, or when a CLAUDE.md section has grown from a fact into a procedure.</div>
+        <div class="callout">Move reusable procedures into skills; keep always-relevant project facts in CLAUDE.md. *Manual-only skills hide their description until you invoke them.</div>
+        <div class="source">Source: <a href="https://code.claude.com/docs/en/features-overview" target="_blank" rel="noopener">Claude Code · Extend Claude Code</a></div>
       </div>
     </section>
 
@@ -253,10 +250,10 @@
           <header>my-skill/</header>
           <pre>my-skill/
 ├── SKILL.md        <span class="tok-com"># required — overview + nav</span>
-├── reference.md    <span class="tok-com"># loaded only if linked-to</span>
-├── examples.md      <span class="tok-com"># loaded only if linked-to</span>
+├── reference.md    <span class="tok-com"># read only when needed</span>
+├── examples.md     <span class="tok-com"># read only when needed</span>
 └── scripts/
-    └── helper.py   <span class="tok-com"># executed, never loaded raw</span></pre>
+    └── helper.py   <span class="tok-com"># usually executed for output</span></pre>
         </div>
         <div class="code-col">
           <header>SKILL.md</header>
@@ -274,7 +271,8 @@
 3. Write a commit message</pre>
         </div>
       </div>
-      <div class="callout">All frontmatter fields are optional &mdash; only <span class="mono">description</span> is recommended, so Claude knows when to reach for it. Without one, Claude falls back to the first markdown paragraph.</div>
+      <div class="callout">All frontmatter fields are optional. <span class="mono">description</span> is recommended; without it, Claude Code uses the first markdown paragraph. A script can also be read explicitly when its implementation matters.</div>
+      <div class="source">Source: <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code · Extend Claude with skills</a></div>
     </section>
 
     <!-- 3: PROGRESSIVE DISCLOSURE -->
@@ -285,11 +283,12 @@
       <div class="body-area">
         <table class="ftable">
           <tr><th>Level</th><th>When</th><th>Cost</th><th>Content</th></tr>
-          <tr><td class="you-col">1 · Metadata</td><td>Always, at startup</td><td class="mono">~100 tokens</td><td><span class="mono">name</span> + <span class="mono">description</span> from frontmatter</td></tr>
-          <tr><td class="claude-col">2 · Instructions</td><td>When the skill is triggered</td><td class="mono">under 5,000 tokens</td><td>The rendered SKILL.md body</td></tr>
-          <tr><td>3 · Resources</td><td>As needed, if Claude follows a link</td><td class="mono">zero until accessed</td><td>reference.md, examples.md, scripts &mdash; scripts return only their output</td></tr>
+          <tr><td class="you-col">1 · Listing</td><td>At startup, when model-invocable</td><td class="mono">small, variable</td><td><span class="mono">description</span> + optional <span class="mono">when_to_use</span></td></tr>
+          <tr><td class="claude-col">2 · Instructions</td><td>When the skill is invoked</td><td class="mono">full rendered body</td><td>The rendered SKILL.md content enters as one message</td></tr>
+          <tr><td>3 · Resources</td><td>Only when Claude reads or runs them</td><td class="mono">deferred until access</td><td>References, examples, assets, and script output</td></tr>
         </table>
-        <div class="callout claude">"Progressive disclosure ensures only relevant content occupies the context window at any given time." Every other frontmatter field just fine-tunes <em>when</em> Level 2 fires and <em>who's</em> allowed to trigger it.</div>
+        <div class="callout claude">The 5,000-token figure is a <strong>post-compaction retention limit</strong>, not an invocation limit. Keep SKILL.md concise; the documentation recommends fewer than 500 lines.</div>
+        <div class="source">Source: <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code · Skill content lifecycle</a></div>
       </div>
     </section>
 
@@ -297,7 +296,7 @@
     <section class="slide">
       <div class="eyebrow on-claude"><span>04</span><span class="idx mono">The matching signal</span><span class="rule"></span></div>
       <h2 class="title">What Claude Actually Reads</h2>
-      <p class="lede">At startup, Claude sees every skill's <span class="field">description</span> and nothing else. That's the entire basis for deciding whether to invoke one.</p>
+      <p class="lede">For model-invocable skills, Claude sees the listing text &mdash; <span class="field">description</span> plus optional <span class="field">when_to_use</span> &mdash; before it sees the body.</p>
       <div class="body-area">
         <div class="grid2">
           <div class="card">
@@ -312,6 +311,7 @@
           </div>
         </div>
         <div class="callout">The combined <span class="mono">description</span> + <span class="mono">when_to_use</span> text is truncated at <strong>1,536 characters</strong> in the skill listing &mdash; front-load the part that actually distinguishes this skill from the others in context.</div>
+        <div class="source">Source: <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code · Frontmatter reference</a></div>
       </div>
     </section>
 
@@ -342,7 +342,8 @@
           <rect class="node" x="700" y="76" width="150" height="56" rx="9"/>
           <text class="node-sub" x="775" y="108" text-anchor="middle">Claude proceeds with the task</text>
         </svg>
-        <div class="callout">Arguments follow whichever path fires: <span class="mono">$ARGUMENTS</span>, positional <span class="mono">$0</span>/<span class="mono">$1</span>, or a named <span class="mono">$issue</span> declared via the <span class="mono">arguments</span> frontmatter list. You can even stack up to six skills in one line &mdash; <span class="mono">/write-tests /fix-issue 123</span> &mdash; and the trailing text becomes <span class="mono">$ARGUMENTS</span> for each.</div>
+        <div class="callout">Arguments work through <span class="mono">$ARGUMENTS</span>, positional <span class="mono">$0</span>/<span class="mono">$1</span>, or named placeholders declared by <span class="mono">arguments</span>. Up to six inline skills can stack; expansion stops at the first token that is not an inline user-invocable skill.</div>
+        <div class="source">Source: <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code · Pass arguments to skills</a></div>
       </div>
     </section>
 
@@ -358,23 +359,25 @@
           <tr><td class="mono">disable-model-invocation: true</td><td>yes</td><td><strong>no</strong></td><td>Side-effecting actions &mdash; <span class="mono">/deploy</span>, <span class="mono">/commit</span>. You decide the timing, not "the code looks ready."</td></tr>
           <tr><td class="mono">user-invocable: false</td><td><strong>no</strong></td><td>yes</td><td>Background knowledge with nothing for a person to run &mdash; <span class="mono">legacy-system-context</span></td></tr>
         </table>
-        <div class="callout warn">If Claude tries to run a <span class="mono">disable-model-invocation</span> skill anyway, Claude Code blocks the call outright and tells Claude not to reproduce the steps another way &mdash; expect it to suggest you run the command yourself instead.</div>
+        <div class="callout warn"><span class="mono">disable-model-invocation: true</span> also removes the description from Claude's startup context. Combining it with <span class="mono">user-invocable: false</span> leaves no normal invocation path.</div>
+        <div class="source">Source: <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code · Control who invokes a skill</a></div>
       </div>
     </section>
 
     <!-- 7: WHERE SKILLS LIVE -->
     <section class="slide">
       <div class="eyebrow"><span>07</span><span class="idx mono">Scoping</span><span class="rule"></span></div>
-      <h2 class="title">Where Skills Live</h2>
-      <p class="lede">Four locations, each answering "who can use this" differently &mdash; and a clear order when two of them define the same name.</p>
+      <h2 class="title">Four Primary Locations, One Resolution Order</h2>
+      <p class="lede">Location defines scope. Name collisions are resolved across levels; plugins remain namespaced alongside local skills.</p>
       <div class="body-area">
         <div class="grid4">
           <div class="card on-you"><span class="tag you">enterprise</span><h3>Managed settings</h3><p>Every user in the org. Overrides everything else with the same name.</p></div>
           <div class="card on-you"><span class="tag you">personal</span><h3>~/.claude/skills/</h3><p>All of your projects. Overrides a project skill of the same name.</p></div>
-          <div class="card"><span class="tag warn">project</span><h3>.claude/skills/</h3><p>This project only &mdash; also every parent directory up to the repo root.</p></div>
+          <div class="card"><span class="tag warn">project</span><h3>.claude/skills/</h3><p>The project and parent directories to the repo root; nested variants appear on demand.</p></div>
           <div class="card on-claude"><span class="tag claude">plugin</span><h3>plugin/skills/</h3><p>Namespaced <span class="mono">plugin:skill</span> &mdash; never conflicts, loads alongside.</p></div>
         </div>
         <div class="callout">A skill also beats a same-named <span class="mono">.claude/commands/</span> file, and any local skill beats one synced from your claude.ai account. Nested <span class="mono">apps/web/.claude/skills/</span> skills load only once Claude touches a file in that subdirectory, and surface under a directory-qualified name if they clash with the root.</div>
+        <div class="source">Source: <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code · Where skills live</a></div>
       </div>
     </section>
 
@@ -403,19 +406,20 @@
 <span class="tok-com"># ever stopping to ask a person</span></pre>
         </div>
       </div>
-      <div class="callout warn">Neither field is a security boundary against Claude &mdash; every tool stays technically callable, and your session's own permission settings still govern anything not listed. <span class="mono">allowed-tools</span> just skips the approval prompt. And it isn't gated by workspace trust: a project skill's grant applies even in a folder you've never trusted &mdash; review a repo's checked-in skills before you run Claude Code there.</div>
+      <div class="callout warn"><span class="mono">allowed-tools</span> pre-approves listed tools but does not restrict unlisted ones. <span class="mono">disallowed-tools</span> removes listed tools for the turn. Neither replaces deny rules, sandboxing, or deterministic hooks. Review repository skills: checked-in grants apply even before workspace trust.</div>
+      <div class="source">Source: <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code · Pre-approve tools for a skill</a></div>
     </section>
 
     <!-- 9: CONTENT LIFECYCLE -->
     <section class="slide">
       <div class="eyebrow"><span>09</span><span class="idx mono">Lifecycle</span><span class="rule"></span></div>
-      <h2 class="title">Loaded Once, Kept Around</h2>
-      <p class="lede">Once a skill's body enters the conversation, it stays &mdash; Claude Code never re-reads the file on later turns.</p>
+      <h2 class="title">Invoked Once, Retained Across Turns</h2>
+      <p class="lede">Rendered skill content remains in the conversation. Claude Code does not automatically re-read the file on each later turn.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 900 180" role="img" aria-label="Diagram of skill content persisting across turns and being re-attached after compaction within a token budget">
           <rect class="node-claude" x="10" y="20" width="180" height="50" rx="8"/><text class="node-title" x="100" y="50" text-anchor="middle" font-size="12">skill loads, turn 3</text>
           <line x1="190" y1="45" x2="900" y2="45" class="flow-claude"/>
-          <text class="label" x="210" y="38">content persists across every later turn, unread again</text>
+          <text class="label" x="210" y="38">rendered content persists across later turns</text>
 
           <line x1="10" y1="100" x2="900" y2="100" class="flow-dash"/>
           <text class="label" x="10" y="94">context fills &rarr; auto-compaction summarizes the conversation</text>
@@ -427,7 +431,8 @@
           <rect class="node-bad" x="510" y="118" width="230" height="46" rx="8"/>
           <text class="node-sub" x="625" y="146" text-anchor="middle">older skills: can drop entirely</text>
         </svg>
-        <div class="callout warn">Re-attached skills share a combined <strong>25,000-token budget</strong>, filled most-recent-first. Only the skill's <em>instructions</em> persist this way &mdash; an <span class="mono">allowed-tools</span> grant clears the moment you send your next message, every time, compaction or not. If a skill seems to stop influencing behavior, it's usually still loaded and Claude is just choosing something else &mdash; re-invoke it, sharpen the description, or fall back to a hook for anything that must be deterministic.</div>
+        <div class="callout warn">After compaction, the latest invocation of each skill can be reattached: first 5,000 tokens each, within a shared 25,000-token budget, newest first. Identical reinvocation adds only a short note; changed arguments or dynamic output append a fresh rendered copy.</div>
+        <div class="source">Source: <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code · Skill content lifecycle</a></div>
       </div>
     </section>
 
@@ -463,14 +468,15 @@ diff --git a/app.py b/app.py
 &#8230;</pre>
         </div>
       </div>
-      <div class="callout warn">A non-zero exit <strong>aborts the whole invocation</strong> &mdash; Claude never sees the skill content that turn. One carveout: exit code 1 from search/comparison commands like <span class="mono">grep</span> counts as a normal result. Each command runs under a 2-minute timeout, and never prompts for permission &mdash; a rule that would normally ask instead aborts the call. This never runs at all for a skill synced from your claude.ai account.</div>
+      <div class="callout warn">A failed or non-approved command <strong>aborts the whole invocation</strong>; Claude never sees the skill content. Commands use the shell tool's timeout and never pause for permission. Locally synced claude.ai skills do not execute these commands on your machine.</div>
+      <div class="source">Source: <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code · Inject dynamic context</a></div>
     </section>
 
     <!-- 11: RUN IN A SUBAGENT -->
     <section class="slide">
       <div class="eyebrow on-claude"><span>11</span><span class="idx mono">context: fork</span><span class="rule"></span></div>
-      <h2 class="title">When a Skill Needs Its Own Room</h2>
-      <p class="lede">Add <span class="field">context: fork</span> and the skill's body becomes a subagent's entire task &mdash; no access to your conversation history at all.</p>
+      <h2 class="title">Fork the Task, Not the Conversation</h2>
+      <p class="lede">With <span class="field">context: fork</span>, the skill body becomes the subagent's task. The parent conversation history is not passed into that isolated context.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 860 180" role="img" aria-label="Diagram contrasting an inline skill sharing conversation context with a forked skill running as an isolated background subagent">
           <rect class="node" x="10" y="10" width="380" height="70" rx="10"/>
@@ -479,12 +485,13 @@ diff --git a/app.py b/app.py
 
           <rect class="node-claude" x="450" y="10" width="400" height="70" rx="10"/>
           <text class="node-title" x="650" y="38" text-anchor="middle" font-size="13">context: fork</text>
-          <text class="node-sub" x="650" y="58" text-anchor="middle">isolated subagent, runs in the background by default</text>
+          <text class="node-sub" x="650" y="58" text-anchor="middle">isolated subagent; background by default*</text>
 
           <rect class="node" x="450" y="100" width="185" height="60" rx="8"/><text class="node-sub" x="542" y="132" text-anchor="middle">agent: Explore / Plan /</text><text class="node-sub" x="542" y="146" text-anchor="middle">general-purpose / custom</text>
           <rect class="node" x="665" y="100" width="185" height="60" rx="8"/><text class="node-sub" x="757" y="132" text-anchor="middle">background: false</text><text class="node-sub" x="757" y="146" text-anchor="middle">waits in this turn instead</text>
         </svg>
-        <div class="callout claude">Only makes sense for skills with an actual <strong>task</strong>, not reference guidance &mdash; a fork given "use these API conventions" gets no actionable prompt and returns nothing useful. Its edits also land outside your session's checkpoints, so <span class="mono">/rewind</span> can't undo them &mdash; that's a job for git. Explore and Plan agents skip CLAUDE.md entirely to keep the fork's context small.</div>
+        <div class="callout claude">CLAUDE.md normally still loads; Explore and Plan are exceptions. *CLI non-interactive mode, the Agent SDK, disabled background tasks, scheduled tasks, and overlapping same-skill runs wait in the foreground. Background forks use fewer tools and sit outside <span class="mono">/rewind</span> checkpoints.</div>
+        <div class="source">Source: <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code · Run skills in a subagent</a></div>
       </div>
     </section>
 
@@ -496,20 +503,18 @@ diff --git a/app.py b/app.py
         <svg class="diagram" viewBox="0 0 860 130" role="img" aria-label="Summary diagram of the three progressive disclosure levels of a skill" style="max-height:120px">
           <rect class="node-you" x="10" y="10" width="260" height="80" rx="10"/>
           <text class="node-title" x="140" y="46" text-anchor="middle" font-size="14">Metadata</text>
-          <text class="node-sub" x="140" y="68" text-anchor="middle">~100 tokens, always there</text>
+          <text class="node-sub" x="140" y="68" text-anchor="middle">small listing, when visible</text>
           <rect class="node-claude" x="300" y="10" width="260" height="80" rx="10"/>
           <text class="node-title" x="430" y="46" text-anchor="middle" font-size="14">Instructions</text>
-          <text class="node-sub" x="430" y="68" text-anchor="middle">&lt;5k tokens, on trigger</text>
+          <text class="node-sub" x="430" y="68" text-anchor="middle">full rendered body, on invocation</text>
           <rect class="node" x="590" y="10" width="260" height="80" rx="10"/>
           <text class="node-title" x="720" y="46" text-anchor="middle" font-size="14">Resources</text>
-          <text class="node-sub" x="720" y="68" text-anchor="middle">zero, until read or run</text>
+          <text class="node-sub" x="720" y="68" text-anchor="middle">deferred until read or run</text>
         </svg>
-        <p class="closing-line">A skill is just a bet that most turns won't need it &mdash; so it stays a <span class="you">description</span> until one does, and only then becomes <span class="claude">instructions Claude actually reads</span>. Everything in this deck &mdash; frontmatter, scoping, forking &mdash; exists to make that bet cheap to place and easy to control.</p>
+        <p class="closing-line">A skill is a bet that most turns will not need its full procedure: expose a <span class="you">precise matching signal</span>, load <span class="claude">instructions only on invocation</span>, and defer supporting resources until the task actually needs them.</p>
+        <div class="source">Source: <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code · Extend Claude with skills</a></div>
       </div>
     </section>
-
-  </div>
-
     <button class="edge-zone left" id="edgeLeft" aria-label="Previous slide"></button>
     <button class="edge-zone right" id="edgeRight" aria-label="Next slide"></button>
   </div>
@@ -522,6 +527,7 @@ diff --git a/app.py b/app.py
     </button>
     <div class="track" id="dotsTrack"></div>
     <span class="counter mono" id="counter">01 / 13</span>
+    <button class="nav-btn theme-btn" id="themeBtn" aria-label="Switch to dark-blue theme">Dark mode</button>
     <button class="nav-btn" id="nextBtn" aria-label="Next slide">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
     </button>
@@ -556,6 +562,14 @@ diff --git a/app.py b/app.py
   var progressFill = document.getElementById('progressFill');
   var edgeLeft = document.getElementById('edgeLeft');
   var edgeRight = document.getElementById('edgeRight');
+  var themeBtn = document.getElementById('themeBtn');
+
+  function setTheme(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    var dark = theme === 'dark';
+    themeBtn.textContent = dark ? 'Light mode' : 'Dark mode';
+    themeBtn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark-blue theme');
+  }
 
   function render(){
     slides.forEach(function(s, i){
@@ -577,6 +591,9 @@ diff --git a/app.py b/app.py
   nextBtn.addEventListener('click', function(){ goTo(current+1); });
   edgeLeft.addEventListener('click', function(){ goTo(current-1); });
   edgeRight.addEventListener('click', function(){ goTo(current+1); });
+  themeBtn.addEventListener('click', function(){
+    setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
 
   document.addEventListener('keydown', function(e){
     if (e.key === 'ArrowRight' || e.key === 'PageDown'){ goTo(current+1); e.preventDefault(); }
@@ -585,6 +602,9 @@ diff --git a/app.py b/app.py
     else if (e.key === 'End'){ goTo(total-1); e.preventDefault(); }
   });
 
+  setTheme('light');
   render();
 })();
 </script>
+</body>
+</html>
