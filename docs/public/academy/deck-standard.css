@@ -164,6 +164,10 @@ h2.title {
   font-size: 11.5px;
 }
 
+.diagram marker {
+  overflow: visible;
+}
+
 .cover .sub {
   font-size: clamp(14.5px, 1.7vw, 19px);
 }
