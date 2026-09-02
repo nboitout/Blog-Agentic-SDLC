@@ -4,6 +4,13 @@
   var nextButton = document.getElementById('nextBtn');
   var themeButton = document.getElementById('themeBtn');
 
+  document.querySelectorAll('.diagram marker').forEach(function (marker) {
+    var viewBox = marker.viewBox && marker.viewBox.baseVal;
+    if (viewBox && viewBox.width) {
+      marker.setAttribute('refX', String(viewBox.x + viewBox.width));
+    }
+  });
+
   if (!controls || !nextButton) return;
 
   if (!themeButton) {
