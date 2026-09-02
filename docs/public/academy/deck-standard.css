@@ -174,9 +174,13 @@ body {
   display: none;
 }
 
+.hint {
+  display: none;
+}
+
 @media (min-width: 681px) {
   .deck {
-    max-width: min(1220px, calc((100vh - 150px) * 1.72043));
+    max-width: min(1220px, calc((100vh - 112px) * 1.72043));
   }
 }
 
@@ -187,10 +191,6 @@ body {
 
   .deck {
     gap: 8px;
-    max-width: min(1220px, calc((100vh - 112px) * 1.72043));
-  }
-
-  .hint {
-    display: none;
+    max-width: min(1220px, calc((100vh - 84px) * 1.72043));
   }
 }
