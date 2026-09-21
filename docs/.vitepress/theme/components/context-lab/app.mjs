@@ -4,9 +4,10 @@ import { STRATEGIES, DEFAULTS, PRESETS, simulate, normalize } from './simulation
 // Keep state and DOM queries local to this mounted lesson.
 export function mountContextLab(root) {
 const $ = id => root.querySelector(`#${id}`);
-const money = (n, digits = 3) => '$' + n.toFixed(digits);
+const decimal = new Intl.NumberFormat('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const money = n => '$' + decimal.format(n);
 const integer = n => Math.round(n).toLocaleString('en-US');
-const token = n => n >= 1000000 ? (n / 1e6).toFixed(2) + 'M' : n >= 1000 ? (n / 1000).toFixed(n % 1000 ? 1 : 0) + 'k' : String(n);
+const token = n => n >= 1000000 ? decimal.format(n / 1e6) + 'M' : n >= 1000 ? decimal.format(n / 1000) + 'k' : decimal.format(n);
 let config = { ...DEFAULTS }, selected = 'summary', metric = 'cumulative', inspect = 12, runs;
 const fields = ['turns', 'tools', 'system', 'user', 'answer', 'reasoning', 'summary'];
 const model = () => MODELS.find(m => m.id === $('model').value);
@@ -28,7 +29,7 @@ root.querySelectorAll('[data-pricing-retrieved]').forEach(element => {
 const stale = (Date.now() - retrievedDate.getTime()) / 86400000 > 30;
 root.querySelectorAll('[data-pricing-freshness]').forEach(element => { element.hidden = !stale; });
 $('pricing-sources').innerHTML = Object.entries({ openai: 'OpenAI', claude: 'Anthropic', google: 'Google Gemini' }).map(([key, label]) => `<a href="${SOURCES[key]}" target="_blank" rel="noopener noreferrer">${label} pricing ↗</a>`).join('');
-$('catalog-body').innerHTML = MODELS.map(m => `<tr><td><a href="${m.source}" target="_blank" rel="noreferrer">${m.name} ↗</a></td><td>${money(m.input, 2)}</td><td>${money(m.cached, 3)}</td><td>${m.write === m.input ? '—' : money(m.write, 2)}</td><td>${money(m.output, 2)}</td><td><span class="tag">${m.status}</span></td></tr>`).join('');
+$('catalog-body').innerHTML = MODELS.map(m => `<tr><td><a href="${m.source}" target="_blank" rel="noreferrer">${m.name} ↗</a></td><td>${money(m.input)}</td><td>${money(m.cached)}</td><td>${m.write === m.input ? '—' : money(m.write)}</td><td>${money(m.output)}</td><td><span class="tag">${m.status}</span></td></tr>`).join('');
 function chart() {
   const mobile = window.matchMedia('(max-width: 760px)').matches;
   // Match the desktop drawing width to its container so text is not scaled down.
@@ -38,8 +39,8 @@ function chart() {
   const maximum = Math.max(0.001, ...all) * 1.08;
   const x = n => left + (n - 1) / Math.max(1, config.turns - 1) * (W - left - right);
   const y = n => H - bottom - n / maximum * (H - top - bottom);
-  const fmt = n => metric === 'input' ? token(n) : money(n, maximum < .1 ? 3 : 2);
-  let content = `<title>${$('chart-title').textContent} for four strategies</title><desc>Use the model-call slider and the accessible data table to inspect exact values. All four curves use the same model and workload. A curve stops when its context limit is reached.</desc>`;
+  const fmt = n => metric === 'input' ? token(n) : money(n);
+  let content = `<title>${$('chart-title').textContent} for four strategies</title><desc>Use the model-call slider and the accessible data table to inspect rounded values. Download the CSV for full precision. All four curves use the same model and workload. A curve stops when its context limit is reached.</desc>`;
   for (let t = 0; t <= 4; t++) {
     const v = maximum * t / 4;
     content += `<line x1="${left}" y1="${y(v)}" x2="${W - right}" y2="${y(v)}" stroke="#e9eeea"/><text x="${left - 10}" y="${y(v) + 4}" text-anchor="end">${fmt(v)}</text>`;
@@ -75,7 +76,7 @@ function memory() {
   $('flow-input').textContent = `${integer(r.input)} input tk`;
   $('flow-output').textContent = `${integer(r.output)} billed output tk`;
   $('memory-status').innerHTML = `<span class="status ${r.retained ? '' : 'missing'}">${r.retained ? 'REQUIREMENT PRESENT' : 'REQUIREMENT DROPPED'}</span><h3>${r.retained ? r.summarized ? 'The summary carries the constraint.' : 'The original requirement is still available.' : 'The agent no longer sees Python 3.10.'}</h3><p>${r.retained ? r.summarized ? 'This example deliberately preserves the requirement in the summary. Real summary quality needs testing.' : 'Keeping the source text makes the requirement available to this call.' : 'Discarding old exchanges lowered token use, but also removed a fact needed for the task. Retain it in task state or retrieve it when needed.'}</p>`;
-  $('bill-breakdown').innerHTML = `<div><span>Fresh input / cache writes</span><strong>${money(r.inputCost,4)}</strong></div><div><span>Cached reads · ${integer(r.cached)} tk</span><strong>${money(r.cacheCost,4)}</strong></div><div><span>Output, including reasoning</span><strong>${money(r.outputCost,4)}</strong></div><div><span>Summary call</span><strong>${money(r.summaryCost,4)}</strong></div><div><b>This call, including overhead</b><strong>${money(r.cost,4)}</strong></div>${r.long ? '<p>Long-context rates apply to this full request.</p>' : ''}`;
+  $('bill-breakdown').innerHTML = `<div><span>Fresh input / cache writes</span><strong>${money(r.inputCost)}</strong></div><div><span>Cached reads · ${integer(r.cached)} tk</span><strong>${money(r.cacheCost)}</strong></div><div><span>Output, including reasoning</span><strong>${money(r.outputCost)}</strong></div><div><span>Summary call</span><strong>${money(r.summaryCost)}</strong></div><div><b>This call, including overhead</b><strong>${money(r.cost)}</strong></div>${r.long ? '<p>Long-context rates apply to this full request.</p>' : ''}`;
 }
 function insight() {
   const r = row(selected), base = row('full'), run = runs[selected];
@@ -85,25 +86,26 @@ function insight() {
   if (selected === 'full') { $('insight').innerHTML = `<b>The bill grows with the history you carry.</b> Call ${inspect} reads ${integer(r.input)} input tokens. Total cost includes a growing-history term plus the fixed prompt and output costs; the curve is not an exact “double calls, quadruple cost” rule.`; return; }
   const baseline = last('full').cumulative, total = last('summary').cumulative, savings = baseline ? (1 - total / baseline) * 100 : 0;
   const cachedTotal = last('cache').cumulative, versusCache = cachedTotal ? (total / cachedTotal - 1) * 100 : 0;
-  $('insight').innerHTML = `<b>${savings >= 0 ? `${savings.toFixed(0)}% lower` : `${(-savings).toFixed(0)}% higher`} modeled session cost versus uncached full history.</b> Compared with cached full history, this is ${Math.abs(versusCache).toFixed(1)}% ${versusCache >= 0 ? 'more' : 'less'} expensive. Summary calls are included. At call ${inspect}, the prompt holds ${integer(r.input)} tokens${base ? ` versus ${integer(base.input)}` : ''}. Smaller context does not always mean a smaller bill.`;
+  $('insight').innerHTML = `<b>${savings >= 0 ? `${decimal.format(savings)}% lower` : `${decimal.format(-savings)}% higher`} modeled session cost versus uncached full history.</b> Compared with cached full history, this is ${decimal.format(Math.abs(versusCache))}% ${versusCache >= 0 ? 'more' : 'less'} expensive. Summary calls are included. At call ${inspect}, the prompt holds ${integer(r.input)} tokens${base ? ` versus ${integer(base.input)}` : ''}. Smaller context does not always mean a smaller bill.`;
 }
 function table() {
-  $('data-caption').textContent = `${details().name} · ${model().name} · standard USD estimate`;
-  $('data-body').innerHTML = runs[selected].rows.map(r => `<tr><td>${r.n}</td><td>${integer(r.input)}</td><td>${integer(r.cached)}</td><td>${money(r.summaryCost,4)}</td><td>${money(r.cost,4)}</td><td>${money(r.cumulative,4)}</td></tr>`).join('');
+  $('data-caption').textContent = `${details().name} · ${model().name} · standard USD estimate · rounded to one decimal`;
+  $('data-body').innerHTML = runs[selected].rows.map(r => `<tr><td>${r.n}</td><td>${integer(r.input)}</td><td>${integer(r.cached)}</td><td>${money(r.summaryCost)}</td><td>${money(r.cost)}</td><td>${money(r.cumulative)}</td></tr>`).join('');
 }
 function render() {
   config = normalize(config); inspect = Math.min(config.turns, Math.max(1, inspect));
   runs = Object.fromEntries(STRATEGIES.map(s => [s.id, simulate(model(), config, s.id)]));
   $('turn').max = config.turns; $('turn').value = inspect; $('turn-number').textContent = inspect; $('turn-total').textContent = `/ ${config.turns}`; $('next').disabled = inspect >= config.turns;
-  $('turns-value').textContent = config.turns; $('tools-value').textContent = `${integer(config.tools)} tk`; $('hit-value').textContent = `${Math.round(config.hit * 100)}%`;
+  $('turns-value').textContent = config.turns; $('tools-value').textContent = `${integer(config.tools)} tk`; $('hit-value').textContent = `${decimal.format(config.hit * 100)}%`;
   $('chart-title').textContent = { cumulative: 'Total session cost', cost: 'Cost of each model call', input: 'Input context in each call' }[metric];
   $('chart-subtitle').textContent = { cumulative: 'All calls so far, including summary overhead.', cost: 'Summary calls create visible cost spikes.', input: 'Cached tokens still occupy context capacity.' }[metric];
   const m = model();
-  $('rate-card').innerHTML = `<div><small>Input / 1M</small><b>${money(m.input,2)}</b></div><div><small>Cached / 1M</small><b>${money(m.cached,m.cached < .1 ? 3 : 2)}</b></div><div><small>Output / 1M</small><b>${money(m.output,2)}</b></div>`;
+  $('rate-card').innerHTML = `<div><small>Input / 1M</small><b>${money(m.input)}</b></div><div><small>Cached / 1M</small><b>${money(m.cached)}</b></div><div><small>Output / 1M</small><b>${money(m.output)}</b></div>`;
   const expired = m.reviewAfter && new Date() > new Date(m.reviewAfter + 'T23:59:59Z');
   $('pricing-source').href = m.source;
   $('pricing-source').textContent = `Official ${m.provider} pricing ↗`;
-  $('model-note').innerHTML = `${integer(m.limit)}-token ${m.limitKind === 'input' ? 'input limit' : 'context window'}. ${m.note || (m.provider === 'Anthropic' ? '5-minute cache-write pricing.' : 'Standard API rates; long-context pricing applies above 272k input.')}${expired ? ' <b class="stale">Promotion needs a fresh price check.</b>' : ''}`;
+  const modelNote = (m.note || (m.provider === 'Anthropic' ? '5-minute cache-write pricing.' : 'Standard API rates; long-context pricing applies above 272k input.')).replace(/\$(\d+(?:\.\d+)?)/g, (_, rate) => money(Number(rate)));
+  $('model-note').innerHTML = `${integer(m.limit)}-token ${m.limitKind === 'input' ? 'input limit' : 'context window'}. ${modelNote}${expired ? ' <b class="stale">Promotion needs a fresh price check.</b>' : ''}`;
   chart(); cards(); insight(); memory(); table();
 }
 function resetExperiment(preset) {
