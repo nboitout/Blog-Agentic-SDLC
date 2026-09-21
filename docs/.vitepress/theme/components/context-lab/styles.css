@@ -3,3 +3,97 @@
 @media(min-width:1500px){.context-lab .lab-content{max-width:1264px}.context-lab .site-header{padding-inline:max(32px,calc((100vw - 1200px)/2))}}@media(max-width:1050px){.context-lab .hero{gap:38px}.context-lab .hero h1{font-size:53px}.context-lab .experiment-grid{grid-template-columns:minmax(0,1fr) 245px;gap:15px}.context-lab .controls{padding:18px 14px}.context-lab .chart-heading{display:block}.context-lab .segmented{width:fit-content;margin-top:12px}.context-lab .site-header nav{gap:15px}.context-lab .draft{display:none}.context-lab .hero-note>p{font-size:24px}.context-lab .mini-flow{gap:5px;font-size:9px}.context-lab .mini-flow span{padding:6px}.context-lab .strategy-card{padding:11px 8px}.context-lab .strategy-card strong{font-size:20px}.context-lab .strategy-card .card-label{font-size:9px}}@media(max-width:760px){.context-lab .lab-content{padding:0 20px}.context-lab .site-header{height:66px;padding:0 20px}.context-lab .site-header nav{font-size:10px;gap:12px}.context-lab .site-header nav a:first-child{display:none}.context-lab .brand{font-size:12px}.context-lab .brand-mark{width:26px;height:26px}.context-lab .hero{grid-template-columns:1fr;padding:37px 0;gap:29px}.context-lab .hero h1{font-size:49px;letter-spacing:-2.8px;margin-bottom:18px}.context-lab .intro{font-size:15px}.context-lab .hero-note{padding:6px 0 6px 18px}.context-lab .hero-note>p{font-size:20px;margin:10px 0 17px;max-width:350px}.context-lab .mini-flow{margin-bottom:10px;font-size:10px}.context-lab .hero-link{margin-top:18px}.context-lab .learning-path{gap:10px}.context-lab .learning-path a{font-size:10px;line-height:1.6;padding:15px 0}.context-lab .learning-path b{display:block;margin-bottom:5px}.context-lab .section-heading{display:block}.context-lab .section-heading h2{font-size:25px}.context-lab .live-badge,.context-lab .section-heading>.tag{display:inline-block;margin-top:12px}.context-lab .lab-section{padding-top:32px}.context-lab .preset-row button{font-size:10px;padding:8px 10px}.context-lab .experiment-grid{display:flex;flex-direction:column}.context-lab .controls{order:-1;padding:18px}.context-lab .controls>.eyebrow{margin-bottom:12px}.context-lab .control{margin-top:15px}.context-lab .controls-footer{display:none}.context-lab .rate-card{margin:13px 0 8px}.context-lab .model-note{padding-bottom:12px;min-height:0}.context-lab .advanced{margin-top:15px;padding-top:12px}.context-lab .chart-heading{padding:20px 15px 8px}.context-lab .chart{padding:0 5px}.context-lab .legend{padding:0 15px 15px;gap:10px;font-size:9px}.context-lab .scrubber{padding:12px 10px;gap:7px}.context-lab .scrubber button{font-size:10px;padding:6px}.context-lab .scrubber label{font-size:10px}.context-lab .strategy-cards{grid-template-columns:repeat(2,1fr)}.context-lab .strategy-card .card-label{font-size:11px;min-height:0}.context-lab .strategy-card strong{font-size:24px;margin:6px 0}.context-lab .strategy-card small{font-size:10px}.context-lab .memory-section{padding-top:40px}.context-lab .memory-grid{grid-template-columns:1fr;gap:20px}.context-lab .section-intro{font-size:13px}.context-lab .memory-explanation h3{font-size:21px}.context-lab .takeaways{margin:35px 0 0;padding:29px 22px}.context-lab .takeaways h2{font-size:28px}.context-lab .takeaway-grid{grid-template-columns:1fr;gap:25px}.context-lab .transfer{grid-template-columns:1fr;gap:10px}.context-lab .catalog{padding-top:40px}.context-lab .reference-notes{grid-template-columns:1fr;gap:20px}.context-lab td,.context-lab th{padding:9px 10px;font-size:11px}.context-lab footer{flex-direction:column;gap:12px}.context-lab .token-flow{flex-wrap:wrap}.context-lab .hero-note>small{font-size:10px}}@media(prefers-reduced-motion:reduce){.context-lab{scroll-behavior:auto}.context-lab *{transition:none!important}}
 
 .context-lab section[id]{scroll-margin-top:90px}.context-lab{color-scheme:light}.context-lab .locale-note{max-width:1136px;margin:0 auto;padding:22px 32px 0;font-size:13px;color:var(--muted)}
+
+/* Desktop reading scale: give explanations, controls, and chart labels room. */
+@media (min-width: 761px) {
+  .context-lab { font-size: 18px; line-height: 1.7; }
+  .context-lab .lab-content { max-width: 1280px; }
+  .context-lab h2 { font-size: 34px; }
+  .context-lab h3 { font-size: 20px; }
+  .context-lab .intro { font-size: 19px; }
+  .context-lab .hero-note > p { font-size: 30px; }
+  .context-lab .eyebrow { font-size: 13px; letter-spacing: 1.3px; }
+  .context-lab small { font-size: 14px; }
+  .context-lab .muted,
+  .context-lab .hero-link,
+  .context-lab .learning-path a { font-size: 16px; }
+  .context-lab .learning-path b { font-size: 14px; }
+  .context-lab .mini-flow,
+  .context-lab .tag,
+  .context-lab .live-badge { font-size: 13px; }
+  .context-lab .mini-flow { flex-wrap: wrap; }
+  .context-lab .section-heading { flex-wrap: wrap; }
+  .context-lab .experiment-grid {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 24px;
+  }
+  .context-lab button,
+  .context-lab .controls select,
+  .context-lab .number-fields input { font-size: 16px; }
+  .context-lab .chart-heading { display: flex; flex-wrap: wrap; gap: 16px; }
+  .context-lab .chart-heading > div:first-child { flex: 1 1 300px; }
+  .context-lab .chart-heading .muted { font-size: 15px; }
+  .context-lab .segmented { margin-top: 0; }
+  .context-lab .segmented button { font-size: 15px; padding: 8px 11px; }
+  .context-lab .chart text { font-size: 15px; }
+  .context-lab .chart .axis-label { font-size: 14px; }
+  .context-lab .legend { font-size: 14px; gap: 12px 18px; }
+  .context-lab .scrubber { flex-wrap: wrap; gap: 12px; font-size: 15px; }
+  .context-lab .scrubber button { font-size: 15px; padding: 8px 11px; }
+  .context-lab .scrubber input { min-width: 100px; }
+  .context-lab .strategy-card { padding: 16px 13px; }
+  .context-lab .strategy-card .card-label { font-size: 15px; min-height: 45px; }
+  .context-lab .strategy-card strong { font-size: 30px; }
+  .context-lab .strategy-card small { font-size: 13px; }
+  .context-lab .insight { font-size: 16px; padding: 18px 20px; }
+  .context-lab .controls > label,
+  .context-lab .control label,
+  .context-lab .number-fields label { font-size: 15px; }
+  .context-lab .control label { flex-wrap: wrap; gap: 8px; }
+  .context-lab .control output { font-size: 14px; margin-left: auto; }
+  .context-lab .rate-card small,
+  .context-lab .model-note,
+  .context-lab .control small,
+  .context-lab .controls-footer,
+  .context-lab .controls-footer button { font-size: 14px; }
+  .context-lab .rate-card b { font-size: 22px; }
+  .context-lab summary { font-size: 16px; }
+  .context-lab .prediction > p { font-size: 18px; }
+  .context-lab .prediction-choices button,
+  .context-lab .prediction #prediction-feedback { font-size: 16px; }
+  .context-lab table { font-size: 16px; }
+  .context-lab th,
+  .context-lab caption { font-size: 14px; }
+  .context-lab .section-intro { font-size: 18px; }
+  .context-lab .panel-top,
+  .context-lab .memory-block,
+  .context-lab .token-flow { flex-wrap: wrap; }
+  .context-lab .memory-block { font-size: 16px; }
+  .context-lab .memory-block b { font-size: 16px; }
+  .context-lab .memory-block p,
+  .context-lab .memory-block > span,
+  .context-lab .token-flow { font-size: 14px; }
+  .context-lab .memory-explanation h3 { font-size: 25px; }
+  .context-lab .memory-explanation p,
+  .context-lab #bill-breakdown > div { font-size: 16px; }
+  .context-lab .memory-explanation .status { font-size: 13px; }
+  .context-lab .takeaways h2 { font-size: 38px; }
+  .context-lab .takeaway-grid article > span { font-size: 14px; }
+  .context-lab .takeaway-grid h3 { font-size: 21px; }
+  .context-lab .takeaway-grid p,
+  .context-lab .transfer,
+  .context-lab .catalog > p { font-size: 17px; }
+  .context-lab .catalog .footnote,
+  .context-lab .reference-notes p { font-size: 15px; }
+  .context-lab .methodology p { font-size: 17px; }
+  .context-lab code { font-size: 15px; }
+  .context-lab footer { font-size: 14px; }
+  .context-lab .locale-note { max-width: 1280px; font-size: 16px; }
+}
+
+@media (min-width: 761px) and (max-width: 1150px) {
+  .context-lab .strategy-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .context-lab .hero { gap: 32px; }
+  .context-lab .hero-note > p { font-size: 26px; }
+  .context-lab .memory-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+}

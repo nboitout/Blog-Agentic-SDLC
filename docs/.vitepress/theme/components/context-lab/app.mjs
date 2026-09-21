@@ -25,7 +25,9 @@ if (stale) { $('verified').classList.add('stale'); $('verified').textContent += 
 $('catalog-body').innerHTML = MODELS.map(m => `<tr><td><a href="${m.source}" target="_blank" rel="noreferrer">${m.name} ↗</a></td><td>${money(m.input, 2)}</td><td>${money(m.cached, 3)}</td><td>${m.write === m.input ? '—' : money(m.write, 2)}</td><td>${money(m.output, 2)}</td><td><span class="tag">${m.status}</span></td></tr>`).join('');
 function chart() {
   const mobile = window.matchMedia('(max-width: 760px)').matches;
-  const W = mobile ? 360 : 720, H = mobile ? 260 : 292, left = mobile ? 49 : 58, right = mobile ? 16 : 24, top = 21, bottom = 34;
+  // Match the desktop drawing width to its container so text is not scaled down.
+  const W = mobile ? 360 : Math.max(360, Math.round($('chart').clientWidth - 28));
+  const H = mobile ? 260 : 320, left = mobile ? 49 : 80, right = mobile ? 16 : 24, top = 21, bottom = mobile ? 34 : 58;
   const all = STRATEGIES.flatMap(s => runs[s.id].rows.map(r => r[metric]));
   const maximum = Math.max(0.001, ...all) * 1.08;
   const x = n => left + (n - 1) / Math.max(1, config.turns - 1) * (W - left - right);
@@ -37,8 +39,8 @@ function chart() {
     content += `<line x1="${left}" y1="${y(v)}" x2="${W - right}" y2="${y(v)}" stroke="#e9eeea"/><text x="${left - 10}" y="${y(v) + 4}" text-anchor="end">${fmt(v)}</text>`;
   }
   const labels = [...new Set([1, Math.round(config.turns / 4), Math.round(config.turns / 2), Math.round(config.turns * .75), config.turns])];
-  for (const n of labels) content += `<text x="${x(n)}" y="${H - 13}" text-anchor="middle">${n}</text>`;
-  content += `<text x="${W - right}" y="${H - 1}" text-anchor="end" class="axis-label">model calls</text><line x1="${x(inspect)}" x2="${x(inspect)}" y1="${top}" y2="${H-bottom}" stroke="#9dafa4" stroke-dasharray="4 4"/>`;
+  for (const n of labels) content += `<text x="${x(n)}" y="${H - (mobile ? 13 : 28)}" text-anchor="middle">${n}</text>`;
+  content += `<text x="${W - right}" y="${H - (mobile ? 1 : 6)}" text-anchor="end" class="axis-label">model calls</text><line x1="${x(inspect)}" x2="${x(inspect)}" y1="${top}" y2="${H-bottom}" stroke="#9dafa4" stroke-dasharray="4 4"/>`;
   for (const s of STRATEGIES) {
     const data = runs[s.id].rows;
     content += `<polyline points="${data.map(r => `${x(r.n)},${y(r[metric])}`).join(' ')}" stroke="${s.color}" fill="none" stroke-width="${s.id === selected ? 3.2 : 2}" ${s.id === 'trim' ? 'stroke-dasharray="5 4"' : ''} stroke-linejoin="round"/>`;
