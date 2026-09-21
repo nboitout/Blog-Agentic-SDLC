@@ -1,0 +1,51 @@
+/* The original reference layout remains available on larger screens. */
+.study-reader[hidden] { display: none; }
+@media (max-width: 760px) {
+  body.reader-active { background: var(--bg); }
+  .reader-active > .topbar, .reader-active > .wrap { display: none; }
+  .study-reader { max-width: 760px; margin: auto; font-family: "IBM Plex Sans", sans-serif; }
+  .study-reader [hidden] { display: none !important; }
+  .reader-header {
+    position: sticky; top: 0; z-index: 30;
+    display: flex; align-items: center; gap: 8px 16px; flex-wrap: wrap;
+    padding: 6px 16px; background: var(--surface); border-bottom: 1px solid var(--line);
+  }
+  .reader-header a, .reader-back { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 0; color: var(--ink); font: inherit; font-size: 15px; line-height: 1.4; text-align: left; }
+  .reader-back { border: 0; background: transparent; cursor: pointer; }
+  .reader-content { padding: 24px 16px 48px; }
+  .study-reader h1, .study-reader h2, .study-reader h3 { font-family: inherit; text-wrap: initial; }
+  .study-reader .reader-title { font-size: 28px; line-height: 1.25; font-weight: 700; overflow-wrap: anywhere; }
+  .reader-subtitle { margin: 12px 0 24px; color: var(--ink-dim); font-size: 16px; line-height: 1.6; }
+  .reader-progress-text { margin: 0 0 8px; font-size: 17px; color: var(--ink); }
+  .reader-progress { display: block; width: 100%; height: 10px; margin-bottom: 24px; accent-color: var(--accent); }
+  .reader-search-label { display: block; margin-bottom: 8px; font-size: 16px; font-weight: 600; }
+  .reader-search { width: 100%; min-width: 0; min-height: 48px; padding: 10px 12px; border: 1px solid var(--line-strong); border-radius: 10px; color: var(--ink); background: var(--surface); font: inherit; font-size: 17px; }
+  .reader-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 16px; border: 1px solid var(--line-strong); border-radius: 10px; background: var(--surface); color: var(--ink); font: inherit; font-size: 16px; font-weight: 600; line-height: 1.5; cursor: pointer; }
+  .reader-primary { background: var(--accent-soft); border-color: var(--accent); color: var(--ink); }
+  .reader-button:disabled { opacity: .5; cursor: default; }
+  .reader-continue { width: 100%; margin-top: 16px; }
+  .reader-settings { margin: 16px 0 24px; color: var(--ink-dim); font-size: 16px; line-height: 1.6; }
+  .reader-settings summary { padding: 12px 0; min-height: 44px; cursor: pointer; }
+  .reader-settings p { margin: 8px 0 16px; }
+  .reader-list-heading { margin: 24px 0 12px; font-size: 22px; line-height: 1.3; }
+  .reader-result-status { margin: 0 0 12px; color: var(--ink-dim); font-size: 16px; }
+  .reader-result-status:empty { display: none; }
+  .reader-list { display: grid; gap: 10px; }
+  .reader-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 64px; padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); text-decoration: none; }
+  .reader-row-words { display: flex; flex-direction: column; gap: 8px; min-width: 0; overflow-wrap: anywhere; }
+  .reader-row strong { font-size: 18px; line-height: 1.4; }
+  .reader-row-detail { font-size: 15px; line-height: 1.5; color: var(--ink-dim); }
+  .reader-row.is-reviewed { border-color: var(--accent); }
+  .reader-row-arrow { flex: none; font-size: 22px; }
+  .reader-topic .sheet { margin: 0; padding: 0; border: 0; border-radius: 0; background: none; overflow-wrap: anywhere; }
+  .reader-topic .sheet-top { display: none; }
+  .reader-topic .sheet-cols, .reader-topic ul.blist { display: block; }
+  .reader-topic .col-head { margin: 24px 0 12px; font: inherit; font-size: 19px; font-weight: 700; letter-spacing: normal; text-transform: none; color: var(--ink); }
+  .reader-topic .col-head i { display: none; }
+  .reader-topic ul.blist li { margin-bottom: 16px; font-size: 18px; line-height: 1.65; color: var(--ink); }
+  .reader-topic-actions { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .reader-review { width: 100%; }
+  .reader-topic-nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+  .reader-topic-nav .reader-button { flex: 1 1 120px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+}
