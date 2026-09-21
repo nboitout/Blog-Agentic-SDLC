@@ -43,6 +43,9 @@ jobs:
       - name: Verify context lab calculations
         run: npm run test:context-lab
 
+      - name: Verify engineering assessment scoring
+        run: npm run test:assessment
+
       - name: Build with VitePress
         run: npm run build
 

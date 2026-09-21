@@ -8,6 +8,7 @@
     "build": "vitepress build docs",
     "preview": "vitepress preview docs",
     "check-translations": "node scripts/check-translations.js",
+    "test:assessment": "node --test tests/engineering-assessment.test.mjs",
     "test:context-lab": "node --test tests/context-lab.test.mjs"
   },
   "devDependencies": {
