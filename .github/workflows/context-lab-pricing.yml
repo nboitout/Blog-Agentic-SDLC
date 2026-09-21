@@ -11,6 +11,7 @@ on:
 permissions:
   contents: write
   actions: write
+  id-token: write
 
 concurrency:
   group: context-lab-pricing-maintenance
