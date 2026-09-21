@@ -40,6 +40,9 @@ jobs:
         run: npm run check-translations
         continue-on-error: true
 
+      - name: Verify context lab calculations
+        run: npm run test:context-lab
+
       - name: Build with VitePress
         run: npm run build
 
