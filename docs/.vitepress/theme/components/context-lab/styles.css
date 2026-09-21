@@ -97,3 +97,32 @@
   .context-lab .hero-note > p { font-size: 26px; }
   .context-lab .memory-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
 }
+
+.context-lab .pricing-provenance {
+  background: #fff;
+  border: 1px solid #b9cfc3;
+  border-radius: 8px;
+  padding: 13px 14px;
+  margin: 14px 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.context-lab .pricing-retrieved { font-size: 15px; line-height: 1.6; }
+.context-lab .pricing-retrieved time { font-weight: 700; }
+.context-lab .pricing-provenance time { display: block; font-size: 17px; }
+.context-lab .pricing-provenance > a { display: inline-block; margin-top: 7px; }
+.context-lab .pricing-provenance > a,
+.context-lab .pricing-sources a {
+  color: #075e54;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.context-lab .pricing-provenance > a:hover,
+.context-lab .pricing-sources a:hover { color: var(--ink); }
+.context-lab .pricing-snapshot-note { font-size: 14px; line-height: 1.6; color: var(--muted); }
+.context-lab .pricing-provenance .pricing-snapshot-note { margin-top: 9px; }
+.context-lab .pricing-reference { margin: 20px 0; }
+.context-lab .pricing-sources { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-bottom: 9px; font-size: 16px; }
+.context-lab .pricing-freshness { font-size: 14px; line-height: 1.6; color: #854500; font-weight: 600; margin-top: 10px; }
+.context-lab .pricing-freshness[hidden] { display: none; }

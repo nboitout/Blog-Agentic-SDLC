@@ -1,4 +1,6 @@
-export const VERIFIED = '2026-09-21';
+// Date the rates below were retrieved from all three official pricing pages.
+// Advance this only after checking the prices and promotional terms, never at build time.
+export const PRICING_RETRIEVED_ON = '2026-09-21';
 export const SOURCES = {
   openai: 'https://developers.openai.com/api/docs/pricing',
   claude: 'https://platform.claude.com/docs/en/about-claude/pricing',

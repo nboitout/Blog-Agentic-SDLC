@@ -1,4 +1,4 @@
-import { MODELS, VERIFIED } from './models.mjs';
+import { MODELS, PRICING_RETRIEVED_ON, SOURCES } from './models.mjs';
 import { STRATEGIES, DEFAULTS, PRESETS, simulate, normalize } from './simulation.mjs';
 
 // Keep state and DOM queries local to this mounted lesson.
@@ -19,9 +19,15 @@ for (const provider of ['OpenAI', 'Anthropic', 'Google']) {
   $('model').append(group);
 }
 $('model').value = 'claude-sonnet-5';
-$('verified').textContent = `Verified ${VERIFIED}`;
-const stale = (Date.now() - new Date(VERIFIED + 'T00:00:00Z').getTime()) / 86400000 > 30;
-if (stale) { $('verified').classList.add('stale'); $('verified').textContent += ' · recheck rates'; }
+const retrievedDate = new Date(PRICING_RETRIEVED_ON + 'T00:00:00Z');
+const retrievedLabel = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(retrievedDate);
+root.querySelectorAll('[data-pricing-retrieved]').forEach(element => {
+  element.dateTime = PRICING_RETRIEVED_ON;
+  element.textContent = retrievedLabel;
+});
+const stale = (Date.now() - retrievedDate.getTime()) / 86400000 > 30;
+root.querySelectorAll('[data-pricing-freshness]').forEach(element => { element.hidden = !stale; });
+$('pricing-sources').innerHTML = Object.entries({ openai: 'OpenAI', claude: 'Anthropic', google: 'Google Gemini' }).map(([key, label]) => `<a href="${SOURCES[key]}" target="_blank" rel="noopener noreferrer">${label} pricing ↗</a>`).join('');
 $('catalog-body').innerHTML = MODELS.map(m => `<tr><td><a href="${m.source}" target="_blank" rel="noreferrer">${m.name} ↗</a></td><td>${money(m.input, 2)}</td><td>${money(m.cached, 3)}</td><td>${m.write === m.input ? '—' : money(m.write, 2)}</td><td>${money(m.output, 2)}</td><td><span class="tag">${m.status}</span></td></tr>`).join('');
 function chart() {
   const mobile = window.matchMedia('(max-width: 760px)').matches;
@@ -95,7 +101,9 @@ function render() {
   const m = model();
   $('rate-card').innerHTML = `<div><small>Input / 1M</small><b>${money(m.input,2)}</b></div><div><small>Cached / 1M</small><b>${money(m.cached,m.cached < .1 ? 3 : 2)}</b></div><div><small>Output / 1M</small><b>${money(m.output,2)}</b></div>`;
   const expired = m.reviewAfter && new Date() > new Date(m.reviewAfter + 'T23:59:59Z');
-  $('model-note').innerHTML = `${integer(m.limit)}-token ${m.limitKind === 'input' ? 'input limit' : 'context window'}. ${m.note || (m.provider === 'Anthropic' ? '5-minute cache-write pricing.' : 'Standard API rates; long-context pricing applies above 272k input.')} <a href="${m.source}" target="_blank" rel="noreferrer">Source ↗</a>${expired ? ' <b class="stale">Promotion needs a fresh price check.</b>' : ''}`;
+  $('pricing-source').href = m.source;
+  $('pricing-source').textContent = `Official ${m.provider} pricing ↗`;
+  $('model-note').innerHTML = `${integer(m.limit)}-token ${m.limitKind === 'input' ? 'input limit' : 'context window'}. ${m.note || (m.provider === 'Anthropic' ? '5-minute cache-write pricing.' : 'Standard API rates; long-context pricing applies above 272k input.')}${expired ? ' <b class="stale">Promotion needs a fresh price check.</b>' : ''}`;
   chart(); cards(); insight(); memory(); table();
 }
 function resetExperiment(preset) {
@@ -126,8 +134,8 @@ root.querySelectorAll('[data-answer]').forEach(b => b.addEventListener('click', 
   $('prediction-feedback').textContent = (b.dataset.answer === 'sometimes' ? 'Exactly. ' : 'Look at the assumptions. ') + 'With uncached, steadily growing history, the history term is quadratic. Fixed prompt and output terms are linear. A bounded prompt gives roughly linear total cost, with extra costs for summaries. Try the “Per call” and “Context” views.';
 }));
 $('export').addEventListener('click', () => {
-  const lines = ['model,verified,strategy,call,input_tokens,cached_tokens,output_tokens,input_cost,cache_cost,output_cost,summary_cost,call_cost,cumulative_cost'];
-  for (const s of STRATEGIES) for (const r of runs[s.id].rows) lines.push([model().id,VERIFIED,s.id,r.n,r.input,r.cached,r.output,r.inputCost,r.cacheCost,r.outputCost,r.summaryCost,r.cost,r.cumulative].join(','));
+  const lines = ['model,prices_retrieved_on,strategy,call,input_tokens,cached_tokens,output_tokens,input_cost,cache_cost,output_cost,summary_cost,call_cost,cumulative_cost,pricing_source'];
+  for (const s of STRATEGIES) for (const r of runs[s.id].rows) lines.push([model().id,PRICING_RETRIEVED_ON,s.id,r.n,r.input,r.cached,r.output,r.inputCost,r.cacheCost,r.outputCost,r.summaryCost,r.cost,r.cumulative,model().source].join(','));
   lines.push('', 'setting,value', ...Object.entries(config).map(([k,v]) => `${k},${v}`));
   for (const s of STRATEGIES) lines.push(`blocked_at_${s.id},${runs[s.id].blockedAt || ''}`);
   const url = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv' }));
