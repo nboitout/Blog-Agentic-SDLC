@@ -85,12 +85,12 @@
   }
   function placeControls() {
     dock.hidden = !mobile.matches;
-    if (mobile.matches) {
+    if (mobile.matches && controls.parentNode !== dock) {
       // Match keyboard order to the visible previous / selector / next / theme row.
       controls.append(document.getElementById('prevBtn'), selector, nextButton, themeButton);
       dock.appendChild(controls);
     }
-    else {
+    else if (!mobile.matches && controls.parentNode !== placeholder.parentNode) {
       originalControls.forEach(function (control) { controls.appendChild(control); });
       controls.appendChild(selector);
       placeholder.after(controls);
@@ -100,6 +100,6 @@
   }
   new ResizeObserver(sizeDock).observe(dock);
   mobile.addEventListener('change', placeControls);
-  window.addEventListener('resize', sizeDock);
+  window.addEventListener('resize', placeControls);
   placeControls();
 })();
