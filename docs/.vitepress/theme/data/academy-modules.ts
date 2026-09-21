@@ -1,7 +1,7 @@
 // The single source of truth for the Academy section's module grid.
 // Adding the next module is exactly this: one new entry here, plus the
 // module's own self-contained HTML file dropped into public/academy/.
-// Nothing else in the site needs to change — the hub's headline stats,
+// Nothing else in the site needs to change — the hub's catalogue summary,
 // its tier filter, and its two bands are all derived from this array.
 //
 // Order matters: entries are rendered in the order below, within their band.
@@ -15,7 +15,7 @@ export interface AcademyModule {
   level: Array<'associate' | 'developer' | 'architect'>
   kind: 'deck' | 'map'
   /**
-   * Numbers shown on the card and summed into the page's headline stats.
+   * Numbers shown on the card and summed into the page's catalogue summary.
    * Maps report `domains`/`subdomains`; decks report `slides`.
    */
   metrics: {
@@ -31,7 +31,7 @@ export const academyModules: AcademyModule[] = [
     id: 'associate-study-map',
     title: 'Associate’s Study Map',
     tagline:
-      'All 7 domains and 30 subdomains of the Associate blueprint — prompting, output evaluation, product/model selection, workflow integration, configuration, governance, and troubleshooting — with added practice notes since the source blueprint is one line per subdomain.',
+      'Practice prompting, evaluation, and everyday Claude workflows.',
     domains: [
       'Domain 1 · Prompting & Task Execution',
       'Domain 2 · Output Evaluation & Validation',
@@ -50,7 +50,7 @@ export const academyModules: AcademyModule[] = [
     id: 'developer-study-map',
     title: 'Developer’s Study Map',
     tagline:
-      'All 8 domains and 25 subdomains of the Developer blueprint — agent construction, API mechanics, Claude Code, debugging, model selection, prompt/context engineering, security, and tools/MCPs — on one searchable reference page.',
+      'Build and debug Claude applications, agents, and tool integrations.',
     domains: [
       'Domain 1 · Agents & Workflows',
       'Domain 2 · Applications & Integration',
@@ -70,7 +70,7 @@ export const academyModules: AcademyModule[] = [
     id: 'architect-study-map',
     title: 'Architect’s Study Map',
     tagline:
-      'All 5 domains and 30 subdomains of the Architect (Foundations) blueprint on one searchable reference page, with a review tracker saved in your browser.',
+      'Design reliable agent systems, tool integrations, and context strategies.',
     domains: [
       'Domain 1 · Agentic Architecture',
       'Domain 2 · Tool Design & MCP',
@@ -87,7 +87,7 @@ export const academyModules: AcademyModule[] = [
     id: 'agent-sdk-anatomy',
     title: 'Agent SDK Anatomy',
     tagline:
-      'A click-through tour of the Claude Agent SDK’s twelve building blocks — the agent loop, hooks, skills, permissions, custom tools, subagents, sessions, MCP servers, guardrails, and context compaction.',
+      'Understand the agent loop and the core building blocks of the Claude Agent SDK.',
     domains: ['Domain 1 · Agentic Architecture', 'Domain 2 · Tool Design & MCP'],
     level: ['developer', 'architect'],
     kind: 'deck',
@@ -98,7 +98,7 @@ export const academyModules: AcademyModule[] = [
     id: 'interception-point',
     title: 'The Interception Point',
     tagline:
-      'A deep dive on PreToolUse and PostToolUse hooks specifically — decision fields, exit codes, matchers, settings.json vs. SDK callbacks, and what happens when several hooks fire at once.',
+      'Use hooks to inspect, control, and transform agent tool calls.',
     domains: ['Domain 1.5 · Hooks for interception & normalization'],
     level: ['developer', 'architect'],
     kind: 'deck',
@@ -109,7 +109,7 @@ export const academyModules: AcademyModule[] = [
     id: 'mcp-protocol',
     title: 'One Protocol, Any Tool',
     tagline:
-      'A click-through tour of the Model Context Protocol itself — Host/Client/Server architecture, transports, the JSON-RPC envelope, the classic vs. the 2026-07-28 stateless lifecycle, all six primitives, tool annotations, and OAuth 2.1 authorization.',
+      'Learn how MCP connects agents to tools, resources, and prompts.',
     domains: ['Domain 2 · Tool Design & MCP'],
     level: ['developer', 'architect'],
     kind: 'deck',
@@ -120,7 +120,7 @@ export const academyModules: AcademyModule[] = [
     id: 'skills-deep-dive',
     title: 'Cheap Until Called',
     tagline:
-      'A click-through tour of Skills — SKILL.md anatomy, the three-level progressive disclosure model, invocation control (you vs. Claude), scoping across personal/project/plugin/enterprise, tool permissions, content lifecycle, and running a skill as a forked subagent.',
+      'Package reusable instructions with skills and load them when needed.',
     domains: ['Domain 1 · Agentic Architecture'],
     level: ['developer', 'architect'],
     kind: 'deck',
@@ -131,7 +131,7 @@ export const academyModules: AcademyModule[] = [
     id: 'subagents-deep-dive',
     title: 'One Prompt, A Tree of Agents',
     tagline:
-      'A click-through tour of subagents — context isolation, the Explore/Plan/general-purpose built-ins, automatic vs. explicit invocation, foreground vs. background execution, tool scoping, preloaded skills, depth/concurrency/spend caps, resuming, and output scanning for injection defense.',
+      'Delegate work to subagents with isolated context and scoped tools.',
     domains: ['Domain 1 · Agentic Architecture'],
     level: ['developer', 'architect'],
     kind: 'deck',
@@ -142,7 +142,7 @@ export const academyModules: AcademyModule[] = [
     id: 'permissions-deep-dive',
     title: 'You Decide, Claude Code Enforces',
     tagline:
-      'A click-through tour of the permissions and security model — the six permission modes, auto mode’s classifier, rule syntax and precedence, the settings hierarchy, bypassPermissions risks, Bash sandboxing, canUseTool, protected vs. critical paths, and org-level governance controls.',
+      'Control agent access with permission modes, rules, and sandboxing.',
     domains: ['Domain 3 · Claude Code Config'],
     level: ['developer', 'architect'],
     kind: 'deck',

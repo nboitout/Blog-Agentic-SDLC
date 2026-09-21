@@ -13,17 +13,17 @@ import ModuleGrid from '../.vitepress/theme/components/ModuleGrid.vue'
 # Claude SDK & Certification Prep
 
 <p class="academy-lede">
-A study track built on top of this course's own material, mapped to the public domain
-blueprints for Anthropic's Claude Certified exams — Associate, Developer, and Architect.
-Each module opens as its own page: a click-through deck, or a searchable reference you
-can work through at your own pace.
+Study maps and practical lessons for the Associate, Developer, and Architect certification levels.
 </p>
 
-::: info An independent resource
-This is not affiliated with or endorsed by Anthropic. It is our own reading of the
-published exam domains, built to teach the underlying engineering discipline — not just
-the vocabulary you would need to pass a test.
-:::
+<p class="academy-independent">Independent resource · Not affiliated with Anthropic.</p>
+
+<details class="academy-about">
+<summary>About this resource</summary>
+<p>This study track builds on our course material and our reading of the published exam
+domains. It is not endorsed by Anthropic. The lessons teach the underlying engineering
+discipline, with searchable study maps and decks you can work through at your own pace.</p>
+</details>
 
 <ModuleGrid />
 

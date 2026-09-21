@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// The Academy hub board: headline stats, a tier filter, and the modules
+// The Academy catalogue: a tier filter, a catalogue summary, and modules
 // grouped into two bands (study maps, then deep-dive decks).
 //
 // Everything here is derived from academy-modules.ts — adding a module there
@@ -20,9 +20,6 @@ const levelLabel: Record<Level, string> = {
 }
 
 const levelOrder: Level[] = ['associate', 'developer', 'architect']
-
-/** How many domain names a card spells out before collapsing into a "+N more". */
-const MAX_NAMES = 3
 
 const activeLevel = ref<Level | 'all'>('all')
 
@@ -49,6 +46,11 @@ function setLevel(level: Level | 'all') {
   history.replaceState(null, '', `${window.location.pathname}${window.location.search}${hash}`)
 }
 
+function selectLevel(event: Event) {
+  const value = (event.target as HTMLSelectElement).value
+  setLevel(isLevel(value) ? value : 'all')
+}
+
 function matches(mod: AcademyModule) {
   return activeLevel.value === 'all' || mod.level.includes(activeLevel.value)
 }
@@ -62,13 +64,13 @@ const bands = computed(() =>
     {
       id: 'maps',
       title: 'Study maps',
-      note: 'one per exam tier · searchable · progress saved in your browser',
+      note: 'Search each map and save your progress in this browser.',
       items: visible.value.filter((m) => m.kind === 'map'),
     },
     {
       id: 'decks',
       title: 'Deep-dive decks',
-      note: 'click-through explainers on one topic each',
+      note: 'Explore one topic at a time.',
       items: visible.value.filter((m) => m.kind === 'deck'),
     },
   ].filter((band) => band.items.length > 0)
@@ -96,18 +98,10 @@ const stats = computed(() => [
 
 /**
  * Single-tier modules take that tier's accent; modules that span tiers
- * (both decks are developer + architect) fall back to the site's indigo.
+ * (the decks are developer + architect) fall back to the site's indigo.
  */
 function accentVar(mod: AcademyModule) {
   return mod.level.length === 1 ? `var(--academy-${mod.level[0]})` : 'var(--vp-c-brand-1)'
-}
-
-function accentSoftVar(mod: AcademyModule) {
-  return mod.level.length === 1 ? `var(--academy-${mod.level[0]}-soft)` : 'var(--vp-c-brand-soft)'
-}
-
-function kindLabel(mod: AcademyModule) {
-  return mod.kind === 'map' ? 'Reference' : 'Deck'
 }
 
 /** "7 domains · 30 subdomains" / "13 slides" — the size of the thing. */
@@ -119,344 +113,247 @@ function metricsLine(mod: AcademyModule) {
   return parts.join(' · ')
 }
 
-/**
- * What the module covers, as one clamped line rather than a stack of chips —
- * the full domain names are long enough that chips wrap one per row and leave
- * the cards ragged. Names are dropped after MAX_NAMES and counted instead.
- */
-function coverage(mod: AcademyModule) {
-  const names = mod.domains.map((d) => d.replace(/^Domain [\d.]+ · /, ''))
-  const shown = names.slice(0, MAX_NAMES)
-  const rest = names.length - shown.length
-  return rest > 0 ? [...shown, `+${rest} more`].join('  ·  ') : shown.join('  ·  ')
-}
-
 function cta(mod: AcademyModule) {
-  return mod.kind === 'map' ? 'Open the map' : 'Open the deck'
+  return mod.kind === 'map' ? 'Open study map' : 'Open lesson'
 }
 </script>
 
 <template>
   <div class="academy-board">
-    <!-- Headline stats, summed from the module data -->
-    <dl class="academy-stats">
-      <div v-for="stat in stats" :key="stat.label" class="academy-stat">
-        <dt>{{ stat.value }}</dt>
-        <dd>{{ stat.label }}</dd>
-      </div>
-    </dl>
+    <div class="academy-mobile-filter">
+      <label for="academy-level">Exam tier</label>
+      <select id="academy-level" :value="activeLevel" @change="selectLevel">
+        <option v-for="f in filters" :key="f.id" :value="f.id">
+          {{ f.label }} ({{ f.count }})
+        </option>
+      </select>
+    </div>
 
-    <!-- Tier filter -->
     <div class="academy-filter" role="group" aria-label="Filter modules by exam tier">
       <button
         v-for="f in filters"
         :key="f.id"
         type="button"
         class="academy-filter-btn"
-        :class="[`is-${f.id}`, { 'is-active': activeLevel === f.id }]"
+        :class="{ 'is-active': activeLevel === f.id }"
         :aria-pressed="activeLevel === f.id"
         @click="setLevel(f.id)"
       >
-        {{ f.label }}<span class="academy-filter-count">{{ f.count }}</span>
+        {{ f.label }} <span class="academy-filter-count">{{ f.count }}</span>
       </button>
     </div>
+    <p class="academy-result-count" role="status">{{ visible.length }} {{ visible.length === 1 ? 'module' : 'modules' }}</p>
 
-    <!-- Bands: study maps first, then decks -->
-    <section v-for="band in bands" :key="band.id" class="academy-band">
-      <h2 class="academy-band-title">
-        {{ band.title }}
-        <span>{{ band.note }}</span>
-      </h2>
-      <div class="academy-grid" :class="{ 'is-decks': band.id === 'decks' }">
+    <section v-for="band in bands" :key="band.id" class="academy-band" :aria-labelledby="`academy-${band.id}`">
+      <h2 :id="`academy-${band.id}`" class="academy-band-title">{{ band.title }}</h2>
+      <p class="academy-band-note">{{ band.note }}</p>
+      <div class="academy-grid">
         <a
           v-for="mod in band.items"
           :key="mod.id"
           class="academy-card"
-          :style="{ '--card-accent': accentVar(mod), '--card-accent-soft': accentSoftVar(mod) }"
+          :style="{ '--card-accent': accentVar(mod) }"
           :href="withBase(mod.href)"
-          target="_blank"
-          rel="noopener"
-          :aria-label="`${mod.title} — ${mod.tagline} (opens in a new tab)`"
+          target="_self"
+          :aria-labelledby="`academy-title-${mod.id}`"
         >
-          <div class="academy-card-top">
-            <span class="academy-kind">{{ kindLabel(mod) }}</span>
-            <span class="academy-levels">
-              <span v-for="lvl in mod.level" :key="lvl" class="academy-level">{{ levelLabel[lvl] }}</span>
-            </span>
-          </div>
-          <h3>{{ mod.title }}</h3>
-          <p class="academy-metrics">{{ metricsLine(mod) }}</p>
+          <h3 :id="`academy-title-${mod.id}`">{{ mod.title }}</h3>
           <p class="academy-tagline">{{ mod.tagline }}</p>
-          <p class="academy-coverage">{{ coverage(mod) }}</p>
-          <span class="academy-cta">{{ cta(mod) }}<span aria-hidden="true">↗</span></span>
+          <div class="academy-metadata">
+            <span>{{ metricsLine(mod) }}</span>
+            <span v-if="mod.kind === 'deck'" class="academy-levels">{{ mod.level.map((level) => levelLabel[level]).join(' / ') }}</span>
+          </div>
+          <span class="academy-cta">{{ cta(mod) }} <span aria-hidden="true">→</span></span>
         </a>
       </div>
     </section>
 
+    <dl class="academy-stats" aria-label="Full catalogue at a glance">
+      <div v-for="stat in stats" :key="stat.label" class="academy-stat">
+        <dt>{{ stat.label }}</dt>
+        <dd>{{ stat.value }}</dd>
+      </div>
+    </dl>
   </div>
 </template>
 
 <style scoped>
 .academy-board {
-  margin: 28px 0 8px;
+  margin: 24px 0 8px;
 }
-
-/* ── Headline stats ── */
-.academy-stats {
+.academy-mobile-filter {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 12px;
-  margin: 0 0 28px;
-  padding: 0;
+  gap: 8px;
 }
-.academy-stat {
+.academy-mobile-filter label {
+  font-weight: 600;
+}
+.academy-mobile-filter select {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 10px 12px;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
+  border-radius: 8px;
   background: var(--vp-c-bg-soft);
-  padding: 14px 16px;
-}
-.academy-stat dt {
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1.1;
   color: var(--vp-c-text-1);
-  font-variant-numeric: tabular-nums;
+  font: inherit;
+  appearance: auto;
 }
-.academy-stat dd {
-  margin: 2px 0 0;
-  font-size: 11.5px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--vp-c-text-3);
-}
-
-/* ── Tier filter ── */
 .academy-filter {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 26px;
 }
 .academy-filter-btn {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 6px 14px;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 16px;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 999px;
+  border-radius: 99px;
   background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-2);
-  font-size: 13px;
+  color: var(--vp-c-text-1);
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
-}
-.academy-filter-btn:hover {
-  color: var(--vp-c-text-1);
-  border-color: var(--vp-c-text-3);
-}
-.academy-filter-count {
-  font-size: 11px;
-  font-family: var(--vp-font-family-mono);
-  color: var(--vp-c-text-3);
-  font-variant-numeric: tabular-nums;
 }
 .academy-filter-btn.is-active {
-  color: var(--filter-accent, var(--vp-c-brand-1));
-  border-color: var(--filter-accent, var(--vp-c-brand-1));
-  background: var(--filter-accent-soft, var(--vp-c-brand-soft));
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
 }
-.academy-filter-btn.is-active .academy-filter-count {
-  color: inherit;
+.academy-filter-count {
+  font-size: 14px;
 }
-.academy-filter-btn.is-associate {
-  --filter-accent: var(--academy-associate);
-  --filter-accent-soft: var(--academy-associate-soft);
+.academy-result-count {
+  margin: 12px 0 24px;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
 }
-.academy-filter-btn.is-developer {
-  --filter-accent: var(--academy-developer);
-  --filter-accent-soft: var(--academy-developer-soft);
-}
-.academy-filter-btn.is-architect {
-  --filter-accent: var(--academy-architect);
-  --filter-accent-soft: var(--academy-architect-soft);
-}
-
-/* ── Bands ── */
 .academy-band {
-  margin-bottom: 34px;
+  margin-bottom: 32px;
 }
 .academy-band-title {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 10px;
-  margin: 0 0 14px;
-  padding: 0 0 10px;
-  border-top: none;
-  border-bottom: 1px solid var(--vp-c-divider);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--vp-c-text-1);
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-size: 24px;
+  line-height: 1.3;
+  letter-spacing: normal;
 }
-.academy-band-title span {
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--vp-c-text-3);
+.academy-band-note {
+  margin: 8px 0 16px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
 }
-
-/* ── Cards ── */
 .academy-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
-  gap: 18px;
-}
-/* auto-fit, not auto-fill: with only two decks the pair stretches to fill the
-   row instead of leaving a phantom third column. */
-.academy-grid.is-decks {
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
 }
 .academy-card {
-  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 20px 20px 18px 23px;
+  min-width: 0;
+  gap: 12px;
+  padding: 20px 16px;
   border: 1px solid var(--vp-c-divider);
+  border-left: 4px solid var(--card-accent);
   border-radius: 12px;
   text-decoration: none !important;
   color: var(--vp-c-text-1);
   background: var(--vp-c-bg-soft);
-  overflow: hidden;
-  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-}
-/* Tier accent bar down the left edge */
-.academy-card::before {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 4px;
-  background: var(--card-accent);
-}
-.academy-card:hover {
-  border-color: var(--card-accent);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
-}
-.academy-card:focus-visible {
-  outline: 2px solid var(--card-accent);
-  outline-offset: 3px;
-}
-.academy-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-.academy-kind {
-  font-family: var(--vp-font-family-mono);
-  font-weight: 600;
-  color: var(--card-accent);
-  white-space: nowrap;
-}
-.academy-levels {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-}
-.academy-level {
-  padding: 2px 8px;
-  border-radius: 99px;
-  background: var(--card-accent-soft);
-  color: var(--card-accent);
-  font-weight: 600;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 .academy-card h3 {
   margin: 0;
-  font-size: 19px;
-  line-height: 1.25;
-  border: none;
   padding: 0;
-  letter-spacing: -0.01em;
+  border: none;
+  font-size: 22px;
+  line-height: 1.35;
+  letter-spacing: normal;
 }
 .academy-card p {
   margin: 0;
 }
-.academy-metrics {
-  margin-top: -4px !important;
-  font-family: var(--vp-font-family-mono);
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-  color: var(--vp-c-text-3);
-}
 .academy-tagline {
-  /* Clamped to keep every card the same shape; the full text stays in the
-     card's aria-label, so nothing is lost to screen readers. */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  overflow: hidden;
-  font-size: 13.5px;
-  color: var(--vp-c-text-2);
-  line-height: 1.55;
-}
-.academy-coverage {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  overflow: hidden;
-  margin-top: auto !important;
-  padding-top: 10px;
-  font-family: var(--vp-font-family-mono);
-  font-size: 10.5px;
+  font-size: 16px;
   line-height: 1.6;
-  color: var(--vp-c-text-3);
+  font-weight: 400;
+  color: var(--vp-c-text-1);
+}
+.academy-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: auto;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--vp-c-text-2);
+}
+.academy-levels {
+  overflow-wrap: anywhere;
 }
 .academy-cta {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 4px;
-  padding-top: 12px;
+  gap: 8px;
+  min-height: 44px;
   border-top: 1px solid var(--vp-c-divider);
-  font-size: 13px;
+  padding-top: 8px;
+  font-size: 16px;
   font-weight: 600;
-  color: var(--card-accent);
+  color: var(--vp-c-brand-1);
 }
-.academy-card:hover .academy-cta span {
-  transform: translate(2px, -2px);
+.academy-card:focus-visible,
+.academy-filter-btn:focus-visible,
+.academy-mobile-filter select:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 4px;
 }
-.academy-cta span {
-  transition: transform 0.15s ease;
-}
-
-@media (max-width: 640px) {
-  .academy-stat dt {
-    font-size: 22px;
+@media (hover: hover) {
+  .academy-card:hover,
+  .academy-filter-btn:hover {
+    border-color: var(--vp-c-brand-1);
   }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .academy-card,
-  .academy-cta span,
-  .academy-filter-btn {
-    transition: none;
+.academy-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin: 32px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.academy-stat {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 6px;
+}
+.academy-stat dd {
+  margin: 0;
+  font-weight: 700;
+  color: var(--vp-c-text-1);
+}
+@media (min-width: 641px) {
+  .academy-mobile-filter {
+    display: none;
   }
-  .academy-card:hover {
-    transform: none;
+  .academy-filter {
+    display: flex;
   }
-  .academy-card:hover .academy-cta span {
-    transform: none;
+  .academy-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 288px), 1fr));
+  }
+  .academy-card {
+    padding: 20px;
   }
 }
 </style>

@@ -705,8 +705,65 @@
 
 /* The intro prose keeps a readable measure even though the grid below it
    spans the full widened page. */
-.academy-page .custom-block.info {
+.academy-page .academy-about {
   max-width: 46rem;
+  margin: 4px 0 20px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.academy-page .academy-independent {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
+}
+
+.academy-page .academy-about summary {
+  padding: 10px 0;
+  min-height: 44px;
+  cursor: pointer;
+  color: var(--vp-c-brand-1);
+}
+
+.academy-page .academy-about summary:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 4px;
+}
+
+/* Keep the full navigation from overflowing tablet and landscape widths. */
+@media (min-width: 768px) and (max-width: 1100px) {
+  .academy-page .VPNavBarMenu,
+  .academy-page .VPNavBarTranslations,
+  .academy-page .VPNavBarAppearance,
+  .academy-page .VPNavBarSocialLinks,
+  .academy-page .VPNavBarExtra {
+    display: none;
+  }
+
+  .academy-page .VPNavBarHamburger {
+    display: flex;
+  }
+
+  .academy-page .VPNavScreen {
+    display: block;
+  }
+}
+
+@media (max-width: 640px) {
+  .Layout.academy-page .VPDoc {
+    padding: 24px 16px 48px;
+  }
+
+  .academy-page .vp-doc h1 {
+    font-size: 28px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  .academy-page .academy-lede {
+    font-size: 16px;
+  }
 }
 
 .academy-page .academy-outro {
