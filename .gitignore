@@ -1,4 +1,6 @@
 node_modules/
+.context-lab-pricing-report.json
+.context-lab-pricing-email.md
 docs/.vitepress/dist/
 docs/.vitepress/cache/
 .DS_Store

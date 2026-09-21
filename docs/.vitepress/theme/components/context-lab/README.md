@@ -18,4 +18,10 @@ The default scenario deliberately allows cached full history to cost slightly le
 
 Run `npm run test:context-lab` for the independent formula and boundary checks, then `npm run build` for static rendering. The tests also run before the GitHub Pages build.
 
+## Automated maintenance
+
+`.github/workflows/context-lab-pricing.yml` runs the review on the first Saturday after setup, **26 September 2026 at 09:00 Europe/Bucharest**, and then every 14 days. GitHub Actions schedules in UTC, so the workflow has both 06:00 and 07:00 UTC Saturday triggers and a Europe/Bucharest gate; this preserves 09:00 through daylight-saving changes. `workflow_dispatch` supports a manual run.
+
+The workflow uses the repository's Claude Code credential to review only the three official source pages, requires a report entry for every model, and refuses to update `PRICING_RETRIEVED_ON`, commit, deploy, or report success when a price, term, model, or source is ambiguous. A successful report is schema-checked before notification. It sends an always-run completion email through Resend. Configure the `RESEND_API_KEY` and `RESEND_FROM` GitHub Actions secrets; `RESEND_FROM` must be a Resend-verified sender. No credentials are stored in the repository.
+
 For browser verification, use `npm run preview -- --host 127.0.0.1 --port 8766` and open `/Blog-Agentic-SDLC/en/interactive/`. Check model changes, chart modes, the memory test, overflow, CSV export, narrow layouts, and navigation away and back. The mounted lab should initialize exactly once per visit.

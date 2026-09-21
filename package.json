@@ -9,7 +9,8 @@
     "preview": "vitepress preview docs",
     "check-translations": "node scripts/check-translations.js",
     "test:assessment": "node --test tests/engineering-assessment.test.mjs",
-    "test:context-lab": "node --test tests/context-lab.test.mjs"
+    "test:context-lab": "node --test tests/context-lab.test.mjs",
+    "validate:context-lab-pricing-report": "node scripts/validate-context-lab-pricing-report.mjs"
   },
   "devDependencies": {
     "markdown-it-mathjax3": "^4.3.2",
