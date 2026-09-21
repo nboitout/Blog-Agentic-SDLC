@@ -249,8 +249,9 @@ h2.title {
   display: none;
 }
 
-/* A landscape reading surface on phones. Rotate the entire deck, including
-   navigation, clockwise in portrait; native landscape needs no rotation. */
+.deck-slide-selector, .deck-navigation-dock[hidden] { display: none; }
+
+/* The slide surface rotates; navigation stays upright at the viewport bottom. */
 @media (max-width: 680px) and (orientation: portrait),
        (max-width: 1000px) and (max-height: 680px) and (orientation: landscape),
        (max-height: 680px) and (orientation: landscape) and (pointer: coarse) {
@@ -268,12 +269,12 @@ h2.title {
   body .deck {
     position: fixed;
     left: 50%;
-    top: 50%;
-    top: 50dvh;
+    top: calc((100vh - var(--deck-nav-height, 68px)) / 2);
+    top: calc((100dvh - var(--deck-nav-height, 68px)) / 2);
     width: calc(100vw - 24px);
     width: calc(100dvw - 24px);
-    height: calc(100vh - 24px);
-    height: calc(100dvh - 24px);
+    height: calc(100vh - var(--deck-nav-height, 68px) - 24px);
+    height: calc(100dvh - var(--deck-nav-height, 68px) - 24px);
     max-width: none;
     gap: 8px;
     transform: translate(-50%, -50%);
@@ -311,12 +312,50 @@ h2.title {
   .deck .nav-btn { width: 44px; height: 44px; }
   .deck .theme-btn { width: auto; }
   .deck .dot-btn { min-width: 44px; min-height: 44px; }
+
+  .deck-navigation-dock {
+    position: fixed;
+    z-index: 30;
+    inset: auto 0 0;
+    padding: 10px max(12px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    background: var(--surface);
+    border-top: 1px solid var(--line-strong);
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, .12);
+  }
+  .deck-navigation-dock .controls {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 44px 44px;
+    gap: 8px;
+    padding: 0;
+    max-width: 720px;
+    margin: auto;
+  }
+  .deck-navigation-dock .track, .deck-navigation-dock .counter { display: none; }
+  .deck-navigation-dock #prevBtn { order: 0; }
+  .deck-navigation-dock .deck-slide-selector {
+    display: block;
+    order: 1;
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    padding: 0 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: 16px;
+  }
+  .deck-navigation-dock #nextBtn { order: 2; }
+  .deck-navigation-dock .nav-btn { width: 44px; height: 44px; }
+  .deck-navigation-dock .theme-btn { order: 3; min-width: 44px; padding: 0; font-size: 0; }
+  .deck-navigation-dock .theme-btn::after { content: '◐'; font-size: 24px; }
 }
 
 @media (max-width: 680px) and (orientation: portrait) {
   body .deck {
-    width: calc(100vh - 24px);
-    width: calc(100dvh - 24px);
+    width: calc(100vh - var(--deck-nav-height, 68px) - 24px);
+    width: calc(100dvh - var(--deck-nav-height, 68px) - 24px);
     height: calc(100vw - 24px);
     height: calc(100dvw - 24px);
     transform: translate(-50%, -50%) rotate(90deg);
