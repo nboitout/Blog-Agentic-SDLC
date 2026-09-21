@@ -153,7 +153,7 @@ function download() {
 
 <style scoped>
 .decision-lab { --context-accent: #4f46e5; max-width: 1140px; margin: 0 auto; padding: 42px 24px 72px; color: var(--vp-c-text-1); line-height: 1.65; }
-:global(.dark) .decision-lab { --context-accent: #a5b4fc; }
+:global(.dark .decision-lab) { --context-accent: #a5b4fc; }
 .lab-intro { max-width: 820px; margin-bottom: 32px; }
 h1 { font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.13; font-weight: 750; letter-spacing: -.035em; margin: 12px 0; }
 h2 { font-size: 1.3rem; font-weight: 650; line-height: 1.35; margin: 4px 0 14px; }
