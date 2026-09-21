@@ -63,14 +63,16 @@ const bands = computed(() =>
   [
     {
       id: 'maps',
-      title: 'Study maps',
-      note: 'Search each map and save your progress in this browser.',
+      title: 'Prepare for your exam',
+      label: 'Study maps',
+      note: 'Search the exam domains and track what you’ve reviewed.',
       items: visible.value.filter((m) => m.kind === 'map'),
     },
     {
       id: 'decks',
-      title: 'Deep-dive decks',
-      note: 'Explore one topic at a time.',
+      title: 'Explore a topic',
+      label: 'Deep-dive decks',
+      note: 'Learn one concept through an illustrated slide deck.',
       items: visible.value.filter((m) => m.kind === 'deck'),
     },
   ].filter((band) => band.items.length > 0)
@@ -114,7 +116,7 @@ function metricsLine(mod: AcademyModule) {
 }
 
 function cta(mod: AcademyModule) {
-  return mod.kind === 'map' ? 'Open study map' : 'Open lesson'
+  return mod.kind === 'map' ? 'Open study map' : 'View slides'
 }
 </script>
 
@@ -145,23 +147,43 @@ function cta(mod: AcademyModule) {
     <p class="academy-result-count" role="status">{{ visible.length }} {{ visible.length === 1 ? 'module' : 'modules' }}</p>
 
     <section v-for="band in bands" :key="band.id" class="academy-band" :aria-labelledby="`academy-${band.id}`">
+      <p class="academy-band-label">{{ band.label }}</p>
       <h2 :id="`academy-${band.id}`" class="academy-band-title">{{ band.title }}</h2>
       <p class="academy-band-note">{{ band.note }}</p>
-      <div class="academy-grid">
+      <p v-if="band.id === 'decks'" class="academy-rotation-note">Slide decks open sideways on portrait phones.</p>
+      <div class="academy-grid" :class="`academy-${band.id}`">
         <a
           v-for="mod in band.items"
           :key="mod.id"
           class="academy-card"
+          :class="`academy-card-${mod.kind}`"
           :style="{ '--card-accent': accentVar(mod) }"
           :href="withBase(mod.href)"
           target="_self"
           :aria-labelledby="`academy-title-${mod.id}`"
         >
-          <h3 :id="`academy-title-${mod.id}`">{{ mod.title }}</h3>
-          <p class="academy-tagline">{{ mod.tagline }}</p>
-          <div class="academy-metadata">
-            <span>{{ metricsLine(mod) }}</span>
-            <span v-if="mod.kind === 'deck'" class="academy-levels">{{ mod.level.map((level) => levelLabel[level]).join(' / ') }}</span>
+          <svg v-if="mod.kind === 'map'" class="academy-checklist" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="26" height="26" rx="5" />
+            <path d="m8 11 2 2 4-4M18 11h6m-16 10 2 2 4-4m4 2h6" />
+          </svg>
+          <img
+            v-else-if="mod.preview"
+            class="academy-preview"
+            :src="withBase(mod.preview)"
+            alt=""
+            width="1152"
+            height="655"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="academy-card-body">
+            <h3 :id="`academy-title-${mod.id}`">{{ mod.title }}</h3>
+            <p v-if="mod.kind === 'deck'" class="academy-tagline">{{ mod.tagline }}</p>
+            <div class="academy-metadata">
+              <span>{{ metricsLine(mod) }}</span>
+              <span v-if="mod.kind === 'deck'" class="academy-levels">{{ mod.level.map((level) => levelLabel[level]).join(' / ') }}</span>
+              <span v-else class="academy-progress-feature">Progress tracking</span>
+            </div>
           </div>
           <span class="academy-cta">{{ cta(mod) }} <span aria-hidden="true">→</span></span>
         </a>
@@ -233,7 +255,7 @@ function cta(mod: AcademyModule) {
   font-size: 14px;
 }
 .academy-band {
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 .academy-band-title {
   margin: 0;
@@ -249,24 +271,58 @@ function cta(mod: AcademyModule) {
   line-height: 1.6;
   color: var(--vp-c-text-2);
 }
+.academy-band-label {
+  margin: 0 0 6px;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  font-weight: 600;
+}
+.academy-rotation-note {
+  margin: -6px 0 20px;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
 .academy-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
+.academy-maps {
+  gap: 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+}
 .academy-card {
+  min-width: 0;
+  text-decoration: none !important;
+  color: var(--vp-c-text-1);
+  overflow-wrap: anywhere;
+}
+.academy-card-map {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 8px 14px;
+  padding: 20px 16px;
+  border-left: 4px solid var(--card-accent);
+}
+.academy-card-map + .academy-card-map {
+  border-top: 1px solid var(--vp-c-divider);
+}
+.academy-card-map:first-child { border-radius: 11px 11px 0 0; }
+.academy-card-map:last-child { border-radius: 0 0 11px 11px; }
+.academy-card-map:only-child { border-radius: 11px; }
+.academy-checklist {
+  width: 32px;
+  height: 32px;
+  color: var(--card-accent);
+}
+.academy-card-body {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  gap: 12px;
-  padding: 20px 16px;
-  border: 1px solid var(--vp-c-divider);
-  border-left: 4px solid var(--card-accent);
-  border-radius: 12px;
-  text-decoration: none !important;
-  color: var(--vp-c-text-1);
-  background: var(--vp-c-bg-soft);
-  overflow-wrap: anywhere;
+  gap: 10px;
 }
 .academy-card h3 {
   margin: 0;
@@ -276,9 +332,7 @@ function cta(mod: AcademyModule) {
   line-height: 1.35;
   letter-spacing: normal;
 }
-.academy-card p {
-  margin: 0;
-}
+.academy-card p { margin: 0; }
 .academy-tagline {
   font-size: 16px;
   line-height: 1.6;
@@ -289,26 +343,42 @@ function cta(mod: AcademyModule) {
   display: flex;
   flex-wrap: wrap;
   gap: 4px 12px;
-  margin-top: auto;
   font-size: 14px;
   line-height: 1.6;
   font-weight: 400;
   color: var(--vp-c-text-2);
 }
-.academy-levels {
-  overflow-wrap: anywhere;
-}
+.academy-progress-feature { flex-basis: 100%; }
 .academy-cta {
   display: flex;
   align-items: center;
   gap: 8px;
   min-height: 44px;
-  border-top: 1px solid var(--vp-c-divider);
-  padding-top: 8px;
   font-size: 16px;
   font-weight: 600;
   color: var(--vp-c-brand-1);
 }
+.academy-card-map .academy-cta { grid-column: 2; }
+.academy-card-deck {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg);
+}
+.academy-preview {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9.1;
+  object-fit: contain;
+  border-radius: 11px 11px 0 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  background: #fbfbf9;
+}
+.academy-card-deck .academy-card-body { padding: 20px 20px 12px; flex: 1; }
+.academy-card-deck .academy-metadata { margin-top: auto; padding-top: 4px; }
+.academy-card-deck .academy-cta { margin: 0 20px 12px; padding-top: 8px; border-top: 1px solid var(--vp-c-divider); }
 .academy-card:focus-visible,
 .academy-filter-btn:focus-visible,
 .academy-mobile-filter select:focus-visible {
@@ -316,10 +386,12 @@ function cta(mod: AcademyModule) {
   outline-offset: 4px;
 }
 @media (hover: hover) {
-  .academy-card:hover,
+  .academy-card-deck:hover,
   .academy-filter-btn:hover {
     border-color: var(--vp-c-brand-1);
   }
+  .academy-card-map:hover { background: var(--vp-c-default-soft); }
+  .academy-card:hover h3 { text-decoration: underline; text-underline-offset: 4px; }
 }
 .academy-stats {
   display: flex;
@@ -349,11 +421,15 @@ function cta(mod: AcademyModule) {
   .academy-filter {
     display: flex;
   }
-  .academy-grid {
+  .academy-decks {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 288px), 1fr));
   }
-  .academy-card {
+  .academy-card-map {
+    grid-template-columns: 32px minmax(0, 1fr) auto;
+    align-items: center;
     padding: 20px;
   }
+  .academy-card-map .academy-cta { grid-column: 3; }
+  .academy-progress-feature { flex-basis: auto; }
 }
 </style>

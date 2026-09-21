@@ -1,6 +1,7 @@
 // The single source of truth for the Academy section's module grid.
 // Adding the next module is exactly this: one new entry here, plus the
 // module's own self-contained HTML file dropped into public/academy/.
+// Decks also provide a cover-slide screenshot in public/academy/previews/.
 // Nothing else in the site needs to change — the hub's catalogue summary,
 // its tier filter, and its two bands are all derived from this array.
 //
@@ -24,6 +25,8 @@ export interface AcademyModule {
     slides?: number
   }
   href: string
+  /** Actual cover-slide screenshot for the lesson gallery. */
+  preview?: string
 }
 
 export const academyModules: AcademyModule[] = [
@@ -93,6 +96,7 @@ export const academyModules: AcademyModule[] = [
     kind: 'deck',
     metrics: { slides: 13 },
     href: '/academy/agent-sdk-anatomy.html',
+    preview: '/academy/previews/agent-sdk-anatomy.jpg',
   },
   {
     id: 'interception-point',
@@ -104,6 +108,7 @@ export const academyModules: AcademyModule[] = [
     kind: 'deck',
     metrics: { slides: 13 },
     href: '/academy/interception-point.html',
+    preview: '/academy/previews/interception-point.jpg',
   },
   {
     id: 'mcp-protocol',
@@ -115,6 +120,7 @@ export const academyModules: AcademyModule[] = [
     kind: 'deck',
     metrics: { slides: 13 },
     href: '/academy/mcp-protocol.html',
+    preview: '/academy/previews/mcp-protocol.jpg',
   },
   {
     id: 'skills-deep-dive',
@@ -126,6 +132,7 @@ export const academyModules: AcademyModule[] = [
     kind: 'deck',
     metrics: { slides: 13 },
     href: '/academy/skills-deep-dive.html',
+    preview: '/academy/previews/skills-deep-dive.jpg',
   },
   {
     id: 'subagents-deep-dive',
@@ -137,6 +144,7 @@ export const academyModules: AcademyModule[] = [
     kind: 'deck',
     metrics: { slides: 13 },
     href: '/academy/subagents-deep-dive.html',
+    preview: '/academy/previews/subagents-deep-dive.jpg',
   },
   {
     id: 'permissions-deep-dive',
@@ -148,5 +156,6 @@ export const academyModules: AcademyModule[] = [
     kind: 'deck',
     metrics: { slides: 13 },
     href: '/academy/permissions-deep-dive.html',
+    preview: '/academy/previews/permissions-deep-dive.jpg',
   },
 ]
