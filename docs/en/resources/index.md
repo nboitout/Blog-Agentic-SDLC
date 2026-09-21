@@ -7,6 +7,11 @@ hero:
   tagline: Templates and guides you can drop directly into your repository and start using today.
 
 features:
+  - icon: 🧭
+    title: Context Engineering Lab
+    details: Practice retrieving evidence, refreshing stale sources, resolving conflicts, and handing over a bounded refactoring task.
+    link: /en/interactive/context-engineering-lab/
+    linkText: Practice Context Decisions
   - icon: 📋
     title: Templates
     details: AGENTS.md, feature_list.json, progress.md, session-log.json, and review-request.md — the complete minimal harness pack, ready to copy.

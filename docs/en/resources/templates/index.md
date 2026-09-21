@@ -1,5 +1,7 @@
 # Templates
 
+For Lecture 03's bounded validation refactor, use the [repository instructions, task brief, handover, and runnable fixture](/en/lectures/lecture-03-context-engineering/#practical). Those templates include verified fixture commands and distinguish guidance from enforcement.
+
 Copy any of these files directly into your repository. They form the **minimal harness pack** — the three files every agentic project needs to function reliably.
 
 ## AGENTS.md {#agents-md}

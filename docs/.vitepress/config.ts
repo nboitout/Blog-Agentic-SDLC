@@ -30,6 +30,7 @@ const enSidebar = {
       text: 'Resources',
       items: [
         { text: 'Library', link: '/en/resources/' },
+        { text: 'Context Engineering Lab · Decisions', link: '/en/interactive/context-engineering-lab/' },
         { text: 'Templates', link: '/en/resources/templates/' },
         { text: 'Guides', link: '/en/resources/guides/' },
         { text: 'Share your priorities', link: '/en/share-your-priorities/' },

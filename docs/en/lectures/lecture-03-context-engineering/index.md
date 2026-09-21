@@ -3,440 +3,234 @@ pageClass: lecture-01-quiz-page
 ---
 
 <script setup>
-import { computed, reactive, ref } from 'vue'
-
-const isQuizOpen = ref(false)
-const currentQuestionIndex = ref(0)
-const answers = reactive({})
-
-const questions = [
-  {
-    id: 'q11',
-    prompt: "A development team provides their agent with the codebase, the Jira ticket, and API documentation. Over multiple sessions, the agent's output becomes increasingly erratic and disconnected from the repository's current state. What phenomenon is this team experiencing?",
-    options: {
-      A: 'Token limit exhaustion, where the foundational model silently truncates the end of the context window without alerting the engineering team.',
-      B: 'Context rot, occurring when the information in the context window drifts out of sync with the actual, dynamic state of the project codebase.',
-      C: 'Scope overreach, wherein the agent begins reading files outside of its explicitly assigned directory and confuses its internal knowledge graph.',
-      D: "Competitive generation failure, where overlapping sub-agents overwrite each other's context files and corrupt the shared repository state.",
-    },
-    correct: 'B',
-    whyCorrect: 'Correct: this is context rot — session context has drifted out of sync with the repository reality.',
-    whyIncorrect: 'Not quite. The core failure mode here is context rot (drift between context and real repo state).',
-  },
-  {
-    id: 'q12',
-    prompt: 'When organizing the context window budget for a coding agent, a disciplined engineer should allocate approximately 20% of the space to which specific layer of context?',
-    options: {
-      A: 'Task context, which includes the immediate feature descriptions and acceptance criteria.',
-      B: 'Dynamic code context, which comprises the specific source files relevant to the subtask.',
-      C: 'Static context, which includes the AGENTS.md file, architectural rules, and repo standards.',
-      D: 'External context, which includes retrieved StackOverflow threads and public documentation.',
-    },
-    correct: 'C',
-    whyCorrect: 'Correct: the course budget allocates ~20% to static context (AGENTS.md, rules, architecture constraints).',
-    whyIncorrect: 'Not quite. In this model, ~20% is reserved for static context.',
-  },
-  {
-    id: 'q13',
-    prompt: 'A junior engineer decides to implement state management for their agent by asking it to write a detailed prose summary of its progress in a text file. Why is this a poor context engineering practice?',
-    options: {
-      A: 'Prose summaries lack the necessary emotional nuance required to accurately convey the difficulty of the coding task to the next agent session.',
-      B: 'Large language models cannot effectively parse prose summaries, leading to frequent hallucinations during the reflection phase of the loop.',
-      C: 'The harness design requires state files to be written in structured formats (like JSON or YAML) so they can be deterministically read and verified.',
-      D: "Writing long prose summaries consumes an excessive amount of processing time, significantly slowing down the agent's overall execution speed.",
-    },
-    correct: 'C',
-    whyCorrect: 'Correct: state should be structured (JSON/YAML) so it can be read, validated, and handed off deterministically.',
-    whyIncorrect: 'Not quite. The key issue is determinism: prose is ambiguous; structured state is verifiable.',
-  },
-  {
-    id: 'q14',
-    prompt: 'What is the primary operational purpose of implementing the industry-standard AGENTS.md file within an Agentic SDLC architecture?',
-    options: {
-      A: 'To serve as a dynamic scratchpad where the agent can temporarily store algorithmic calculations before committing them to the main codebase.',
-      B: "To act as a comprehensive, human-readable onboarding document that explains the project's history to new human developers joining the team.",
-      C: 'To provide a centralized, version-controlled repository of static context—such as scope boundaries and architectural rules—that the agent loads automatically.',
-      D: 'To replace traditional package.json or requirements.txt files by allowing the agent to dynamically manage dependencies during runtime.',
-    },
-    correct: 'C',
-    whyCorrect: 'Correct: AGENTS.md is the centralized, version-controlled static context for safe agent operation.',
-    whyIncorrect: 'Not quite. AGENTS.md is primarily for persistent operational constraints and context, not scratch storage or dependency management.',
-  },
-  {
-    id: 'q15',
-    prompt: 'To prevent "Context Rot" in a long-running agentic project, which of the following is considered a mandatory prevention strategy?',
-    options: {
-      A: "Ensuring that state files are always written atomically to prevent partial updates from corrupting the agent's understanding of its progress.",
-      B: "Completely clearing the agent's memory cache every 15 minutes to guarantee it is forced to re-read the entire codebase from scratch.",
-      C: 'Allowing the agent to independently modify the AGENTS.md file whenever it discovers a more efficient architectural pattern or library.',
-      D: 'Using only visual representations (like architecture diagrams) instead of text to communicate the current state of the repository.',
-    },
-    correct: 'A',
-    whyCorrect: 'Correct: atomic state writes are a mandatory safeguard against corrupted or partial continuity records.',
-    whyIncorrect: 'Not quite. The mandatory prevention strategy in this context is atomic state-file updates.',
-  },
-]
-
-const score = computed(() => questions.reduce((total, question) => {
-  if (answers[question.id] === question.correct) return total + 1
-  return total
-}, 0))
-
-const currentQuestion = computed(() => questions[currentQuestionIndex.value])
-
-const totalAnswered = computed(() => questions.reduce((count, question) => {
-  if (answers[question.id]) return count + 1
-  return count
-}, 0))
-
-const isCorrect = (question) => answers[question.id] === question.correct
-
-function resetQuiz() {
-  for (const question of questions) {
-    answers[question.id] = ''
-  }
-  currentQuestionIndex.value = 0
-}
-
-function nextQuestion() {
-  if (currentQuestionIndex.value < questions.length - 1) {
-    currentQuestionIndex.value += 1
-  }
-}
+import { withBase } from 'vitepress'
+import ContextLessonQuiz from '../../../.vitepress/theme/components/ContextLessonQuiz.vue'
 </script>
 
-# Context Engineering: What Your Agent Needs to Know
+# Context Engineering: Give Your Coding Agent the Right Information, at the Right Time
 
-> **A capable model with poor context produces poor results. Context engineering is the discipline of designing what the agent needs to know.**
+> **Design how the agent discovers, selects, verifies, and preserves the information needed for its next decision.**
 
-## The context problem {#context-problem}
+## A plausible refactor, a changed contract {#context-problem}
 
-Every AI agent operates inside a context window. Whatever is not in that window is effectively invisible to the agent. This creates a fundamental engineering challenge: **you must design what the agent knows, not only what it can do**.
+An agent extracts duplicated validation into a helper. The code builds. But when both `reference` and `amount` are invalid, the first error changes from `Reference is required` to `Amount must be positive`. A client that relies on the first error now behaves differently.
 
-Context engineering is the practice of designing, structuring, and maintaining the information that flows into an agent's context window — across time, across sessions, and across different stages of a task.
+This is an **illustrative failure**, not a measured agent run. What did the agent need before deciding the order of checks? The approved contract, current implementation, callers, and tests covering simultaneous invalid inputs. A build alone cannot establish behavior preservation.
 
-## What goes in the context? {#what-goes-in}
+| Task brief | Information available to guide the decision |
+|---|---|
+| Before: “Extract the duplicated validation.” | Intent to remove duplication; public behavior is underspecified. |
+| After: “Extract shared validation in the two entry points. Preserve signatures, exact errors, check order, and success returns. Start with the approved specification, implementation, caller, and tests. Record executed checks and unresolved discrepancies.” | Bounded scope, observable acceptance, starting points, and evidence requirements. |
 
-Context for a coding agent has several distinct layers:
+By the end, you should be able to write useful repository instructions and a task brief, support autonomous retrieval, diagnose context problems, choose an appropriate continuity action, evaluate a context change, and identify boundaries that require enforcement outside the model.
 
-| Layer | Content | Persistence |
+## Map the context: five components {#what-goes-in}
+
+A model brings pretrained knowledge and may retrieve external information using tools. Project-specific material outside the current context must be retrieved or supplied before it can reliably ground the next decision. A **context window** is the bounded input available to a model invocation; a file's durable existence does not mean its contents are loaded into that input.
+
+Use these five components consistently:
+
+| Component | Question | Running example |
 |---|---|---|
-| **Static context** | Architecture rules, coding standards, repo conventions | Always present |
-| **Task context** | Feature description, acceptance criteria, scope boundaries | Per-task |
-| **State context** | Current progress, what was completed, what failed | Per-session |
-| **Code context** | Relevant files, interfaces, test structures | Dynamically loaded |
+| **Rules and constraints** | How must I work here? | Preserve interfaces; no new dependencies; allowed paths. |
+| **Task and acceptance criteria** | What outcome am I trying to achieve? | Remove duplication while preserving observable validation behavior. |
+| **Evidence** | What is actually true? | Current implementation, caller, tests, approved specification, tool results. |
+| **Working state** | Where are we now? | Decisions, failed attempts, uncertainties, completed work, next step. |
+| **Tools and reusable procedures** | How can I investigate and act? | Search, file reads, test runner, a relevant reusable skill. |
 
-### The AGENTS.md pattern
-A common emerging pattern for static context is a single file — `AGENTS.md` — committed to the repository root. It contains the stable instructions an agent needs to operate in that codebase: how to run tests, which directories are off-limits, naming conventions, and architectural constraints.
+Each item also has a **scope**, **source**, **revision or freshness information**, and **loading policy**. Those are dimensions of an item, not additional content categories. For example, the specification is Evidence, applies to both entry points, comes from the fixture owner, is at revision 2, and is loaded when the decision needs it.
+
+Durable repository instructions, task-specific briefs, and evidence retrieved during execution can all contribute to the selected input. Storage and loading are separate concerns.
+
+### Visual recap: context during a task {#visual-recap}
+
+| Available sources | Selection for this decision | Next action and new evidence |
+|---|---|---|
+| Repository instructions, task, code, tests, docs, notes, tools | Load relevant items from the five components; retain provenance and headroom | Inspect or refactor → run checks → record results |
+| Changed implementation or approved contract | Refresh the affected snapshot and reconcile discrepancies | Reconsider the decision with current evidence |
+| Repeated output or a long session | Filter noise or compact while retaining decisions and uncertainty | Continue with a smaller input; freshness still needs checking |
+
+This selectable-text recap replaces the lecture's earlier allocation infographic. Across tasks, use the course's **Generate → Evaluate → Distribute → Observe → Improve** framework, developed [below](#cdlc), to keep shared context useful.
+
+## Build a useful entry point {#good-practices}
+
+The [downloadable fixture](#practical) contains two deliberately duplicated public functions in `src/entries.mjs`. Both currently follow the approved revision-2 specification:
+
+```js
+export function submitPayment({ reference, amount }) {
+  if (!reference) throw new Error('Reference is required');
+  if (amount <= 0) throw new Error('Amount must be positive');
+  return { reference, amount, status: 'submitted' };
+}
+```
+
+`previewPayment({ reference, amount })` repeats these checks and returns status `preview`. `src/caller.mjs` calls both. The input domain is string references and finite numeric amounts. Normalizing inputs or changing accepted types is outside this refactor.
+
+A candidate extraction keeps the checks in the same order:
+
+```js
+function validate({ reference, amount }) {
+  if (!reference) throw new Error('Reference is required');
+  if (amount <= 0) throw new Error('Amount must be positive');
+}
+// Each public entry point calls validate({ reference, amount })
+// and keeps its signature and successful return object unchanged.
+```
+
+This is an illustrative proposal, not an already-verified learner change. The supplied baseline tests check individual failures, simultaneous invalid inputs, public arity, and caller return values.
+
+### Repository instructions that help
+
+Include commands and constraints that matter and are easy to miss. Keep deeper explanations in their authoritative files instead of copying the entire repository tree into instructions. Here is a compact entry point for the **extracted fixture root**, not the course site's root:
 
 ```markdown
 # AGENTS.md
+Purpose: extract shared validation without changing public behavior.
+Setup: Node.js 20+; no dependencies to install.
+Syntax/build check: node --check src/entries.mjs
+Caller check: node --check src/caller.mjs
+Test: node --test tests/validation.test.mjs
+Syntax-check any new helper too; this fixture needs no compilation step.
 
-## Build & test
-- Run tests: `npm test`
-- Lint: `npm run lint`
-- Build: `npm run build`
-
-## Scope rules
-- Never modify files in `legacy/`
-- Never edit `package-lock.json` directly
-
-## Architecture
-- All API calls go through `src/api/client.ts`
-- Use `zod` for all data validation
+Preserve signatures, exact errors, validation order, and successful returns.
+Edit entries.mjs, a helper under src/, and targeted tests.
+Keep caller and approved specification unchanged.
+Read specification.md (approved r2), src/caller.mjs,
+and tests/validation.test.mjs when making the order decision.
+Record uncertainty and actual verification evidence in handover.md.
 ```
 
-<div class="lecture-recap-floating-wrap">
-  <a class="lecture-recap-floating" href="/Blog-Agentic-SDLC/lecture-03-context-recap.png" target="_blank" rel="noopener" aria-label="Open the full-size visual recap of Lecture 03 in a new tab">
-    <span class="lecture-recap-floating-icon" aria-hidden="true">🗺️</span>
-    <span class="lecture-recap-floating-label">Visual recap</span>
-  </a>
-</div>
+These commands are exercised against the supplied fixture during repository validation. Learners must rerun them after making changes; an earlier pass does not validate a later diff.
 
-## Visual recap: Context Engineering at a glance {#visual-recap}
+Repository-wide instructions establish common conventions. Directory-scoped instructions can describe module-specific boundaries: for example, a hypothetical `src/payments/AGENTS.md` might point to the payment contract. That path is an adaptation example, not a file in this fixture. Scope, discovery, inheritance, and precedence depend on the agent; there is no universal ordering across `AGENTS.md`, `CLAUDE.md`, skills, and user instructions. Consult the [AGENTS.md guidance](https://agents.md/) and your tool's documentation.
 
-The full picture is broader than context-window management. Context engineering starts with what the agent sees at runtime, but it matures into a lifecycle for designing, testing, governing, and continuously improving the context that shapes agent behavior.
+For example, Claude Code documents launch-time and on-demand loading of different instruction files. A reusable **skill** packages a procedure that can load when relevant. Its discovery description can still consume context before the full procedure loads. Keep the catalog and the loaded procedure focused; behavior varies by tool and version. See [Claude Code memory](https://code.claude.com/docs/en/memory) and [skills](https://code.claude.com/docs/en/skills).
 
-<div class="lecture-recap">
-  <a href="/Blog-Agentic-SDLC/lecture-03-context-recap.png" target="_blank" rel="noopener" aria-label="Open full-size visual recap in a new tab">
-    <img src="/lecture-03-context-recap.png" alt="Infographic recap of Lecture 03 covering runtime context layers, the Context Development Lifecycle, good practices, and context rot prevention." loading="lazy">
-  </a>
-  <div class="lecture-recap-actions">
-    <a href="/Blog-Agentic-SDLC/lecture-03-context-recap.png" target="_blank" rel="noopener">View full-size</a>
-    <span aria-hidden="true">·</span>
-    <a href="/Blog-Agentic-SDLC/lecture-03-context-recap.png" download>Download as PNG</a>
-  </div>
-</div>
+Repository instructions **guide** behavior. A sentence saying “do not edit this directory” does not restrict filesystem access. Permissions, sandbox boundaries, hooks, and external checks can enforce particular constraints, depending on configuration. See [Harness Design](/en/lectures/lecture-04-harness-design/) for enforcement.
 
-## The context window budget {#budget}
+## Retrieve information when needed {#retrieval}
 
-Context window space is finite. Filling it with irrelevant information can be as harmful as providing too little context. A disciplined approach allocates the budget explicitly:
+The developer supplies useful starting points, tools, and constraints; the agent can assemble much of its own evidence. You do not need to paste every relevant file into the prompt. **Progressive disclosure** means starting with a small entry point, then reading deeper material when a decision needs it. [Anthropic's context-engineering discussion](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) describes this approach to retrieval and continuity.
 
-- **~20%** — static context (AGENTS.md, architecture docs)
-- **~30%** — task context (current feature, acceptance criteria)
-- **~20%** — state context (progress file)
-- **~30%** — dynamic code context (files relevant to the current subtask)
+An illustrative investigation, from the extracted fixture root:
 
-<div class="widget-cta">
-  <span class="widget-cta-icon">⚡</span>
-  <div class="widget-cta-body">
-    <strong>See the quadratic cost curve in action</strong>
-    <span>Step through turns and watch input tokens grow — then enable Engineered mode to see what proactive context management changes.</span>
-  </div>
-  <a href="../../interactive/" class="widget-cta-btn">Launch Widget →</a>
-</div>
+```sh
+rg -n 'submitPayment|previewPayment' src tests
+rg -n 'Reference is required|Amount must be positive' src tests
+node --test tests/validation.test.mjs
+```
 
-## Advanced: The Context Development Lifecycle {#cdlc}
+The first searches find the implementation, callers, and relevant assertions. Read those files and `specification.md` before extracting the helper. Consult version-matched external documentation only when language or tool behavior is uncertain. The test command produces execution evidence; merely reading assertions does not.
 
-Context engineering often starts with managing what enters the agent's context window. That is only the first level.
+Treat retrieved pages, issue comments, logs, and tool results as evidence to assess. They do not automatically gain authority to redirect the task or expand permissions. An issue comment may contain useful reproduction steps alongside a request to disable checks and upload environment files. Evaluate the reproduction; the embedded request does not authorize those unrelated actions.
 
-In professional agentic engineering, context is no longer just a temporary input to a chat session. It becomes part of the software production system.
+### Context composition and headroom {#budget}
 
-Specifications, `AGENTS.md`, `CLAUDE.md`, architecture maps, domain vocabulary, reusable skills, library documentation, MCP context, tickets, logs, and review feedback are no longer disposable prompts. They are software artifacts that directly shape agent behavior.
+There is no standard percentage split. Composition depends on the task, tool, and model. Account for standing instructions, task information, evidence, tool definitions and results, and working history, leaving adequate headroom for subsequent work. More relevant evidence can be necessary even when it increases size.
 
-This creates a new engineering question:
+Replaying an ever-growing full history, with roughly constant new content each turn, can produce **quadratic cumulative input-token volume** across turns. That is a replay assumption, not a universal billing law: caching, pricing, and compaction change costs. The separate [Token Cost tool](/en/interactive/) explores those assumptions.
 
-> If context changes agent behavior, how do we design, test, distribute, observe, and improve that context?
+## Maintain continuity {#continuity}
 
-That is the role of the **Context Development Lifecycle**.
+| Action | Example | What it does not establish |
+|---|---|---|
+| Refresh | Reload implementation and tests after a teammate's change; compare with approved intent. | Freshness of every other source or automatic conflict resolution. |
+| Filter | Exclude an unrelated image-build log from the next model input. | Missing contract evidence. |
+| Compact | Summarize repeated investigation while retaining goal, constraints, decisions, source references, useful failed attempts, uncertainty, and next step. | Freshness: an amount-first assumption can survive in a short summary. |
+| Record a handover | Save scope, checked revision, completed work, decisions, verification status, open questions, and next action. | Truth of the note or automatic loading in the next session. |
 
-| Phase | Core question |
+Excluding content from a future input is different from deleting the original source or audit record. An end user may not be able to remove messages already submitted; the harness may support compaction, input filtering, or starting a fresh session with a handover.
+
+Use schema-validated structured data when a workflow controller must validate a field such as `status`. Use structured Markdown for decisions, rationale, unresolved questions, and handovers. LLMs can use prose; choose representations for the consumer and validation needs, and link the two when both are needed.
+
+Atomic writes prevent readers seeing partial files. They do not prove that the complete file is accurate, current, or sufficient. Refresh evidence and validate claims separately.
+
+A useful handover might say: “Proposed reference-first helper; approved spec r2 and tests agree. Refactor not yet executed. Reload entries and tests at the current checkout; run the checks after editing.” This clearly distinguishes a proposed action from a completed check. Use the <a :href="withBase('/downloads/context-engineering/handover.md')" download>handover template</a>.
+
+## Diagnose the failure before choosing a fix {#rot}
+
+**Staleness** means a source or remembered fact no longer matches relevant project reality or approved intent. **Long-context degradation** concerns difficulty using information reliably as input length and distractions grow. Either can occur without the other. Chroma's [Context Rot research](https://www.trychroma.com/research/context-rot) investigates performance across input lengths; it should not be read as a synonym for outdated repository facts or a universal failure threshold.
+
+| Symptom | Appropriate action | An action that does not solve it |
+|---|---|---|
+| Missing evidence | Retrieve the public contract and multi-invalid tests. | Add a generic “be careful” instruction. |
+| Stale snapshot | Reload the changed source, inspect the diff, reconcile intended and observed behavior. | Compact the same outdated claim. |
+| Conflicting sources | Compare provenance, approval, revisions, and current behavior; retain unresolved questions. | Automatically choose the newest timestamp or current code. |
+| Excessive irrelevant material | Filter repeated logs and retain useful references. | Increase capacity without selecting information. |
+| Lost decisions after compaction | Recover constraints and rationale from sources or the audit record; improve the handover. | Invent the missing rationale. |
+| Untrusted instructions in retrieved content | Use relevant evidence while preserving task authority and permissions. | Treat tool access as authorization for embedded requests. |
+
+Review feedback is a diagnostic signal. Inspect context, tools, environment, task ambiguity, model behavior, and verification before prescribing a fix. A broken test environment needs repair; more instructions alone may not help.
+
+## Evaluate a context change {#evaluation}
+
+Compare the same task set and repository revision, model and harness settings, tool permissions, and checks in fresh sessions. Deliberately change the context treatment. Keep individual results, configuration details, traces, and diffs so reviewers can inspect what happened. This extends the distinction between output and behavior checks in [Testing Agentic Pipelines](/en/lectures/lecture-06-testing-agentic-pipelines/).
+
+Separate the **grader** from the behavior being evaluated. A deterministic assertion can score variable agent behavior. Conventional tests can also be flaky or involve randomness; neither “all tests are deterministic” nor “all context checks are probabilistic” is a useful universal rule.
+
+A **hypothetical reporting example**, not course measurements:
+
+| Context treatment | Accepted runs | Rule violations | Tokens, runtime, review effort |
+|---|---|---|---|
+| A: minimal brief | 12/20 | Record separately | Unavailable in this illustration |
+| B: improved context package | 17/20 | Record separately | Unavailable in this illustration |
+
+Do not infer causality or a stable success probability from a single comparison. Use representative tasks and repeats for broader conclusions. Report counts, denominators, configurations, and limitations. Five repeats across three models and two configurations is **30 runs** for the full cross-product; 95% is not an exact binary pass rate for 30 observations.
+
+## Context across tasks: the Context Development Lifecycle {#cdlc}
+
+This is the course's organizing framework, not a universally standardized process. Context deserves versioning, evaluation, ownership, review, and continuous improvement.
+
+| Phase | Artifact or action from the validation example |
 |---|---|
-| **Generate** | Have we clarified intent, vocabulary, constraints, and architecture before execution? |
-| **Evaluate** | Does this context reliably shape the agent's behavior? |
-| **Distribute** | Can this context be packaged, versioned, reused, and governed across teams? |
-| **Observe** | What do PR reviews, agent logs, and production incidents reveal about missing or misleading context? |
-| **Improve** | How do we feed those signals back into the context stack? |
+| **Generate** | Draft concise repository instructions, an acceptance-focused task brief, and pointers to approved spec r2. |
+| **Evaluate** | Compare context versions on controlled refactoring tasks; score behavior preservation and rule violations separately. |
+| **Distribute** | Review and version the package; ship instructions with the fixture and make relevant procedures discoverable. |
+| **Observe** | Inspect review feedback and traces: did the first error change, was a source stale, or did verification fail to run? |
+| **Improve** | Add multi-invalid coverage or clarify an ambiguous contract; review the change, rerun relevant evals, retire the superseded note. |
 
-A mature workflow is not simply:
+Assign an owner to each shared artifact. Refresh instructions when the facts or rules they describe change: public contracts, commands, module boundaries, dependencies, or tool loading semantics. Do not require editing or rereading every instruction file on every unrelated PR.
 
-```text
-prompt → code
-```
+Agents can propose improvements from session findings. Review those proposals before promoting a local note into shared policy. Retire obsolete guidance from active distribution while retaining the revision history needed for audit and reproduction.
 
-It becomes:
+## Practice and takeaways {#practical}
 
-```text
-shared intent → evaluated context → generated code → telemetry → improved context
-```
+The **cockpit provides an overview, while the lab lets learners practice context decisions**. Both remain available:
 
-This is the bridge from vibe coding to professional agentic engineering.
+- [Open the Context Cockpit](/context-cockpit.html)
+- [Open the Context Engineering Lab — context decisions](/en/interactive/context-engineering-lab/)
+- [Open the separate Token Cost tool](/en/interactive/)
 
-The practical consequence is simple: context should be managed with the same seriousness as code.
+The new lab runs without a coding agent or external service. Try removing the irrelevant log, compacting the old assumption, loading current evidence, investigating the conflict, and saving then resuming a handover. Watch size, staleness, missing evidence, contradictions, and simulated acceptance separately.
 
-<div class="widget-cta">
-  <span class="widget-cta-icon">🗺️</span>
-  <div class="widget-cta-body">
-    <strong>Try the interactive Context Cockpit</strong>
-    <span>One panel synthesizing the four context layers, the lifecycle loop, and context rot. Drag the turn slider to watch drift grow — then flip Engineered mode to snap it back.</span>
-  </div>
-  <a href="/Blog-Agentic-SDLC/context-cockpit.html" class="widget-cta-btn" target="_blank" rel="noopener">Launch Widget →</a>
-</div>
+### Download the fixture and three templates
 
-## Good practices: treating context as a software artifact {#good-practices}
+[Download the complete validation fixture ZIP](/downloads/context-engineering/validation-fixture.zip). Extract it into a safe local directory. The archive root contains `src/`, `tests/`, the approved specification, and these Markdown templates:
 
-Once context shapes agent behavior, it needs engineering discipline.
+- <a :href="withBase('/downloads/context-engineering/repository-instructions.md')" download>Repository instructions</a> — copy to `AGENTS.md` in the fixture root when using the improved package.
+- <a :href="withBase('/downloads/context-engineering/task-brief.md')" download>Task brief</a> — real fixture paths and observable acceptance.
+- <a :href="withBase('/downloads/context-engineering/handover.md')" download>Handover</a> — decisions, evidence, uncertainties, and next action.
+- <a :href="withBase('/downloads/context-engineering/results.md')" download>Comparison results table</a> and <a :href="withBase('/downloads/context-engineering/specification.md')" download>approved specification</a>.
 
-### 1. Make context explicit
+### Optional 20–30 minute activity with a coding agent
 
-Do not rely on hidden conversation history for durable project knowledge.
+1. **Prepare (5 minutes):** extract the fixture; run its syntax checks and tests. Save a baseline Git revision and create two isolated copies at that same revision. Use fresh agent sessions.
+2. **Compare (10–15 minutes):** in copy A, request “Extract duplicated validation while preserving behavior.” In copy B, supply the improved instructions and task brief. Keep model, harness settings, permissions, and available checks consistent. Keep all other files identical, including the specification; change the context package deliberately.
+3. **Review (5 minutes):** inspect both diffs and actual test output. Compare public behavior, scope violations, evidence quality, review effort, and observable resource use. Use the results table; leave unavailable measurements blank. One pair illustrates a workflow, not established reliability.
+4. **Hand over (5 minutes):** produce repository instructions, a task brief, and a handover explaining what was verified, remaining uncertainties, sources needing refresh, and the next action.
 
-Move durable instructions into versioned artifacts:
+Your three takeaways are **useful repository instructions**, **a bounded task brief**, and **an evidence-backed handover**. Together they connect the [agentic loop](/en/lectures/lecture-02-the-agentic-loop/) to context that can be reviewed and improved. Use [harness controls](/en/lectures/lecture-04-harness-design/) for requirements that need enforcement.
 
-- `AGENTS.md`
-- architecture maps
-- domain vocabulary
-- task specifications
-- test instructions
-- reusable skills
-- project-specific examples
+## References {#references}
 
-A useful rule:
+Technical references checked for this revision; vendor behavior can vary by tool and version.
 
-> If the agent should remember it tomorrow, it probably does not belong only in today's chat.
+- [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents): retrieval and continuity techniques.
+- [AGENTS.md](https://agents.md/): repository instruction format and guidance.
+- [Chroma — Context Rot](https://www.trychroma.com/research/context-rot): experiments on using longer inputs reliably.
+- [Claude Code — Memory](https://code.claude.com/docs/en/memory) and [Skills](https://code.claude.com/docs/en/skills): implementation-specific loading and discovery.
 
-### 2. Separate context layers
-
-Do not collapse everything into a single giant instruction file.
-
-A mature context stack usually has several layers:
-
-| Layer | Examples |
-|---|---|
-| **Global context** | Company conventions, security rules, domain vocabulary |
-| **System context** | Architecture maps, repository documentation, module boundaries |
-| **Agent context** | `AGENTS.md`, `CLAUDE.md`, reusable skills, tool instructions |
-| **Task context** | Specs, tickets, MCP context, current logs, review comments |
-
-This separation matters because each layer changes at a different speed. Company conventions are relatively stable. Task context changes constantly. Mixing them creates noise, increases drift, and makes context harder to review.
-
-### 3. Test context, not only code
-
-A change to `AGENTS.md`, a reusable skill, or a project specification can change many future agent runs.
-
-That means context needs evaluation.
-
-A context eval asks:
-
-> Did this piece of context reliably shape the agent's behavior in the intended way?
-
-Useful levels of context testing include:
-
-| Level | Purpose |
-|---|---|
-| **Context linting** | Validate structure, syntax, and required fields |
-| **Clarity checks** | Check whether the instruction is explicit and complete enough for an LLM |
-| **Behavioral evals** | Test whether the agent follows a project rule |
-| **Agentic E2E** | Let an agent run the system and verify real behavior |
-
-Example:
-
-```text
-Context rule:
-All API endpoints must start with /awesome.
-
-Eval:
-Ask the agent to add a new user endpoint.
-Check whether the generated route follows the required prefix.
-```
-
-The point is not only to test the code that was generated. The point is to test whether the context caused the right behavior.
-
-### 4. Think probabilistically
-
-Traditional tests are deterministic: pass or fail.
-
-Context evals are probabilistic. The same context may work with one model, fail with another, or pass only four times out of five.
-
-So a passing context eval might mean:
-
-```text
-This context causes the desired behavior 95% of the time
-across 5 runs, 3 models, and 2 agent configurations.
-```
-
-For agentic systems, quality increasingly means reliability under variation.
-
-### 5. Treat PR feedback as context telemetry
-
-In a traditional workflow, PR feedback is used to fix code.
-
-In an agentic workflow, PR feedback should also update the context stack.
-
-When a reviewer finds a problem, ask: What context was missing, weak, or misleading?
-
-Possible follow-up actions:
-
-- update `AGENTS.md`
-- improve the task spec
-- add a missing architecture rule
-- update the domain vocabulary
-- create a new context eval
-- improve a reusable skill
-- add a regression test
-
-The goal is not only to fix the current PR. It is to prevent the same failure from recurring across future agent runs.
-
-### 6. Govern shared context
-
-For one developer, context is a productivity tool.
-
-For an organization, shared context becomes platform infrastructure.
-
-Reusable context should therefore be:
-
-- versioned
-- owned
-- reviewed
-- tested
-- documented
-- scanned for security issues
-- distributed through curated registries when reused across teams
-
-Once context becomes executable through agents, it becomes part of the software supply chain.
-
-## Context rot {#rot}
-
-Context rot is not only a session problem. At enterprise scale, it also becomes a governance problem.
-
-A stale instruction in `AGENTS.md`, an outdated architecture map, or an obsolete reusable skill can silently influence many future agent runs. In that sense, changing context without evaluation is close to changing production behavior without tests.
-
-Context rot occurs when the information in the context window drifts out of sync with the actual state of the codebase. It is one of the most insidious failure modes in long-running agentic projects.
-
-Prevention strategies:
-- Keep `AGENTS.md` versioned and reviewed on every PR
-- Add context evals for important rules and reusable skills
-- Write state files atomically — never partial updates
-- Use structured formats such as JSON or YAML for state, not free-form prose
-- Keep architecture maps close to the code they describe
-- Remove obsolete context aggressively
-- Treat PR review comments and production incidents as signals to improve context
-
-::: tip
-The harness design (Lecture 04) specifies exactly how state files are written, read, and verified. Never leave state management to the agent's discretion.
-:::
-
-<button class="lecture-quiz-trigger" @click="isQuizOpen = true">Take a short quiz</button>
-
-<div v-if="isQuizOpen" class="lecture-quiz-modal" role="dialog" aria-modal="true" aria-label="Lecture 03 quiz">
-<div class="lecture-quiz-backdrop" @click="isQuizOpen = false"></div>
-<div class="lecture-quiz-panel">
-<div class="lecture-quiz-header">
-<h2>Lecture 03: Context Engineering</h2>
-<button class="lecture-quiz-close" @click="isQuizOpen = false" aria-label="Close quiz">✕</button>
-</div>
-
-<p class="lecture-quiz-meta">Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}. Select one answer to get immediate feedback.</p>
-
-<div class="lecture-quiz-question">
-<p><strong>{{ currentQuestionIndex + 1 }}. {{ currentQuestion.prompt }}</strong></p>
-<div
-  v-if="answers[currentQuestion.id]"
-  class="lecture-quiz-feedback"
-  :class="isCorrect(currentQuestion) ? 'is-correct' : 'is-incorrect'"
->
-  <strong>{{ isCorrect(currentQuestion) ? 'Correct' : 'Incorrect' }}</strong>
-  <span>{{ isCorrect(currentQuestion) ? 'Great job! Review the rationale below.' : 'Review the rationale below.' }}</span>
-</div>
-
-<div v-for="(optionText, optionKey) in currentQuestion.options" :key="optionKey">
-  <label
-    class="lecture-quiz-option"
-    :class="{
-      'is-correct': answers[currentQuestion.id] && optionKey === currentQuestion.correct,
-      'is-selected-wrong': answers[currentQuestion.id] === optionKey && optionKey !== currentQuestion.correct
-    }"
-  >
-  <input type="radio" :name="currentQuestion.id" :value="optionKey" v-model="answers[currentQuestion.id]">
-  <span><strong>{{ optionKey }})</strong> {{ optionText }}</span>
-  <span v-if="answers[currentQuestion.id] && optionKey === currentQuestion.correct" class="lecture-quiz-marker">✓</span>
-  <span v-else-if="answers[currentQuestion.id] === optionKey && optionKey !== currentQuestion.correct" class="lecture-quiz-marker">✕</span>
-  </label>
-</div>
-
-<p v-if="answers[currentQuestion.id]" class="lecture-quiz-rationale">
-  {{ isCorrect(currentQuestion) ? currentQuestion.whyCorrect : currentQuestion.whyIncorrect }}
-</p>
-</div>
-
-<div class="lecture-quiz-actions">
-<button @click="resetQuiz" class="lecture-quiz-reset">Reset</button>
-<span class="lecture-quiz-progress">Answered: {{ totalAnswered }} / 5</span>
-<span class="lecture-quiz-progress">Score: {{ score }} / 5</span>
-<button
-  class="lecture-quiz-submit"
-  @click="nextQuestion"
-  :disabled="!answers[currentQuestion.id] || currentQuestionIndex === questions.length - 1"
->
-  Next Question
-</button>
-</div>
-
-<p v-if="currentQuestionIndex === questions.length - 1 && answers[currentQuestion.id]" class="lecture-quiz-result">
-You reached the last question. Review your score or click Reset to try again.
-</p>
-</div>
-</div>
+<ContextLessonQuiz />
 
 ---
 

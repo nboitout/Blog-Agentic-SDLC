@@ -43,6 +43,9 @@ jobs:
       - name: Verify context lab calculations
         run: npm run test:context-lab
 
+      - name: Verify context decisions and validation fixture
+        run: npm run test:context-decisions
+
       - name: Verify engineering assessment scoring
         run: npm run test:assessment
 
