@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>One Prompt, A Tree of Agents</title>
@@ -209,57 +211,57 @@
         <rect x="8" y="40" width="16" height="14" rx="4" fill="var(--sub-soft)" stroke="var(--sub)" stroke-width="3"/>
         <rect x="40" y="40" width="16" height="14" rx="4" fill="var(--sub-soft)" stroke="var(--sub)" stroke-width="3"/>
       </svg>
-      <h1>One Prompt, A Tree of Agents</h1>
-      <p class="sub">A close read of <strong>subagents</strong> &mdash; isolated Claude instances the main conversation spawns for focused work, and everything that governs what they see, what they can touch, and what comes back.</p>
+      <h1 data-i18n="s0-1">One Prompt, A Tree of Agents</h1>
+      <p class="sub" data-i18n="s0-2">A close read of <strong>subagents</strong> &mdash; isolated Claude instances the main conversation spawns for focused work, and everything that governs what they see, what they can touch, and what comes back.</p>
       <div class="meta">
-        <span><span class="tag parent">Parent</span>&nbsp; delegates and waits (or doesn't)</span>
-        <span><span class="tag sub">Subagent</span>&nbsp; starts fresh, returns a summary</span>
-        <span>13 sections</span>
+        <span data-i18n="s0-3"><span class="tag parent">Parent</span>&nbsp; delegates and waits (or doesn't)</span>
+        <span data-i18n="s0-4"><span class="tag sub">Subagent</span>&nbsp; starts fresh, returns a summary</span>
+        <span data-i18n="s0-5">13 sections</span>
       </div>
     </section>
 
     <!-- 1: WHY THEY EXIST -->
     <section class="slide">
-      <div class="eyebrow"><span>01</span><span class="idx mono">Why it exists</span><span class="rule"></span></div>
-      <h2 class="title">Four Reasons to Delegate</h2>
-      <p class="lede">A subagent isn't a shortcut for calling a tool &mdash; it's a separate agent instance, and that separation is the entire point.</p>
+      <div class="eyebrow"><span>01</span><span class="idx mono" data-i18n="s1-1">Why it exists</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s1-2">Four Reasons to Delegate</h2>
+      <p class="lede" data-i18n="s1-3">A subagent isn't a shortcut for calling a tool &mdash; it's a separate agent instance, and that separation is the entire point.</p>
       <div class="body-area">
         <div class="grid4">
-          <div class="card on-sub"><span class="tag sub">isolation</span><h3>Context stays clean</h3><p>A subagent can read dozens of files; only its final message reaches the parent, not every file it opened.</p></div>
-          <div class="card on-parent"><span class="tag parent">parallelization</span><h3>Time of the slowest, not the sum</h3><p>Style, security, and coverage checks run at once instead of one after another.</p></div>
-          <div class="card"><span class="tag good">specialization</span><h3>A tailored system prompt</h3><p>Domain expertise &mdash; SQL migration rules, security checklists &mdash; lives in the subagent, not cluttering the main prompt.</p></div>
-          <div class="card"><span class="tag warn">restriction</span><h3>A narrower blast radius</h3><p>A doc reviewer given only <span class="mono">Read</span> and <span class="mono">Grep</span> literally cannot edit a file, by omission &mdash; not by asking politely.</p></div>
+          <div class="card on-sub"><span class="tag sub" data-i18n="s1-4">isolation</span><h3 data-i18n="s1-5">Context stays clean</h3><p data-i18n="s1-6">A subagent can read dozens of files; only its final message reaches the parent, not every file it opened.</p></div>
+          <div class="card on-parent"><span class="tag parent" data-i18n="s1-7">parallelization</span><h3 data-i18n="s1-8">Time of the slowest, not the sum</h3><p data-i18n="s1-9">Style, security, and coverage checks run at once instead of one after another.</p></div>
+          <div class="card"><span class="tag good" data-i18n="s1-10">specialization</span><h3 data-i18n="s1-11">A tailored system prompt</h3><p data-i18n="s1-12">Domain expertise &mdash; SQL migration rules, security checklists &mdash; lives in the subagent, not cluttering the main prompt.</p></div>
+          <div class="card"><span class="tag warn" data-i18n="s1-13">restriction</span><h3 data-i18n="s1-14">A narrower blast radius</h3><p data-i18n="s1-15">A doc reviewer given only <span class="mono">Read</span> and <span class="mono">Grep</span> literally cannot edit a file, by omission &mdash; not by asking politely.</p></div>
         </div>
       </div>
     </section>
 
     <!-- 2: WHAT IT INHERITS -->
     <section class="slide">
-      <div class="eyebrow"><span>02</span><span class="idx mono">Isolation, precisely</span><span class="rule"></span></div>
-      <h2 class="title">What Crosses the Boundary</h2>
-      <p class="lede">Unless it's a fork, a subagent's context starts fresh &mdash; but "fresh" isn't "empty." Here's exactly what it does and doesn't get.</p>
+      <div class="eyebrow"><span>02</span><span class="idx mono" data-i18n="s2-1">Isolation, precisely</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s2-2">What Crosses the Boundary</h2>
+      <p class="lede" data-i18n="s2-3">Unless it's a fork, a subagent's context starts fresh &mdash; but "fresh" isn't "empty." Here's exactly what it does and doesn't get.</p>
       <div class="body-area">
         <table class="ftable">
-          <tr><th>&nbsp;</th><th class="sub-col">Receives</th><th class="parent-col">Does not receive</th></tr>
-          <tr><td>Prompt</td><td>Its own system prompt + the Agent tool's task string</td><td>The parent's system prompt</td></tr>
-          <tr><td>History</td><td>&mdash;</td><td>The parent's conversation history or tool results</td></tr>
-          <tr><td>Project context</td><td>CLAUDE.md hierarchy (Explore/Plan skip this)</td><td>&mdash;</td></tr>
-          <tr><td>Skills</td><td>Only what's listed in its <span class="mono">skills</span> field</td><td>Any skill content already loaded in the parent</td></tr>
-          <tr><td>Tools</td><td>Parent's set, or the subset in <span class="mono">tools</span></td><td>Anything omitted &mdash; no prompt, no error, just absent</td></tr>
+          <tr><th>&nbsp;</th><th class="sub-col" data-i18n="s2-4">Receives</th><th class="parent-col" data-i18n="s2-5">Does not receive</th></tr>
+          <tr><td data-i18n="s2-6">Prompt</td><td data-i18n="s2-7">Its own system prompt + the Agent tool's task string</td><td data-i18n="s2-8">The parent's system prompt</td></tr>
+          <tr><td data-i18n="s2-9">History</td><td>&mdash;</td><td data-i18n="s2-10">The parent's conversation history or tool results</td></tr>
+          <tr><td data-i18n="s2-11">Project context</td><td data-i18n="s2-12">CLAUDE.md hierarchy (Explore/Plan skip this)</td><td>&mdash;</td></tr>
+          <tr><td data-i18n="s2-13">Skills</td><td data-i18n="s2-14">Only what's listed in its <span class="mono">skills</span> field</td><td data-i18n="s2-15">Any skill content already loaded in the parent</td></tr>
+          <tr><td data-i18n="s2-16">Tools</td><td data-i18n="s2-17">Parent's set, or the subset in <span class="mono">tools</span></td><td data-i18n="s2-18">Anything omitted &mdash; no prompt, no error, just absent</td></tr>
         </table>
-        <div class="callout">The only thing you actively pass from parent to subagent is the Agent tool's prompt string. Put every file path, error message, and decision the subagent needs directly in it &mdash; nothing else carries over.</div>
+        <div class="callout" data-i18n="s2-19">The only thing you actively pass from parent to subagent is the Agent tool's prompt string. Put every file path, error message, and decision the subagent needs directly in it &mdash; nothing else carries over.</div>
       </div>
     </section>
 
     <!-- 3: ANATOMY -->
     <section class="slide">
-      <div class="eyebrow"><span>03</span><span class="idx mono">Definition</span><span class="rule"></span></div>
-      <h2 class="title">A File, or a Line of Code</h2>
-      <p class="lede">Filesystem-based at <span class="field">.claude/agents/&lt;name&gt;.md</span>, or defined inline via the SDK's <span class="field">agents</span> option &mdash; same shape either way.</p>
+      <div class="eyebrow"><span>03</span><span class="idx mono" data-i18n="s3-1">Definition</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s3-2">A File, or a Line of Code</h2>
+      <p class="lede" data-i18n="s3-3">Filesystem-based at <span class="field">.claude/agents/&lt;name&gt;.md</span>, or defined inline via the SDK's <span class="field">agents</span> option &mdash; same shape either way.</p>
       <div class="body-area code-wrap">
         <div class="code-col">
           <header>.claude/agents/code-reviewer.md</header>
-          <pre>---
+          <pre data-i18n="s3-4">---
 <span class="tok-str">name</span>: code-reviewer
 <span class="tok-str">description</span>: Security and quality
   review specialist.
@@ -273,7 +275,7 @@ performance, verify standards.</pre>
         </div>
         <div class="code-col">
           <header>AgentDefinition (SDK)</header>
-          <pre><span class="tok-fn">AgentDefinition</span>(
+          <pre data-i18n="s3-5"><span class="tok-fn">AgentDefinition</span>(
   description=<span class="tok-str">"Expert code review..."</span>,
   prompt=<span class="tok-str">"You are a code review..."</span>,
   tools=[<span class="tok-str">"Read"</span>, <span class="tok-str">"Grep"</span>, <span class="tok-str">"Glob"</span>],
@@ -283,216 +285,216 @@ performance, verify standards.</pre>
 <span class="tok-com"># a filesystem one with the same name</span></pre>
         </div>
       </div>
-      <div class="callout">Only <span class="mono">name</span>/<span class="mono">description</span> (filesystem) or <span class="mono">description</span>/<span class="mono">prompt</span> (SDK) are required. Everything else &mdash; <span class="mono">tools</span>, <span class="mono">model</span>, <span class="mono">skills</span>, <span class="mono">permissionMode</span>, <span class="mono">maxTurns</span>, <span class="mono">background</span>, <span class="mono">effort</span> &mdash; narrows the default.</div>
+      <div class="callout" data-i18n="s3-6">Only <span class="mono">name</span>/<span class="mono">description</span> (filesystem) or <span class="mono">description</span>/<span class="mono">prompt</span> (SDK) are required. Everything else &mdash; <span class="mono">tools</span>, <span class="mono">model</span>, <span class="mono">skills</span>, <span class="mono">permissionMode</span>, <span class="mono">maxTurns</span>, <span class="mono">background</span>, <span class="mono">effort</span> &mdash; narrows the default.</div>
     </section>
 
     <!-- 4: BUILT-IN TYPES -->
     <section class="slide">
-      <div class="eyebrow"><span>04</span><span class="idx mono">Batteries included</span><span class="rule"></span></div>
-      <h2 class="title">Three Built-Ins, No Setup</h2>
-      <p class="lede">Before writing a single custom agent, three types are already available.</p>
+      <div class="eyebrow"><span>04</span><span class="idx mono" data-i18n="s4-1">Batteries included</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s4-2">Three Built-Ins, No Setup</h2>
+      <p class="lede" data-i18n="s4-3">Before writing a single custom agent, three types are already available.</p>
       <div class="body-area">
         <div class="grid3">
           <div class="card on-sub">
-            <span class="tag sub">Explore</span>
-            <h3>Read-only search</h3>
-            <p>Skips CLAUDE.md and git status to stay fast. Write and Edit are denied outright. One-shot &mdash; no <span class="mono">agentId</span>, can't be resumed.</p>
+            <span class="tag sub" data-i18n="s4-4">Explore</span>
+            <h3 data-i18n="s4-5">Read-only search</h3>
+            <p data-i18n="s4-6">Skips CLAUDE.md and git status to stay fast. Write and Edit are denied outright. One-shot &mdash; no <span class="mono">agentId</span>, can't be resumed.</p>
           </div>
           <div class="card on-sub">
-            <span class="tag sub">Plan</span>
-            <h3>Research for plan mode</h3>
-            <p>Same read-only tool set and the same CLAUDE.md/git-status skip as Explore. Also one-shot.</p>
+            <span class="tag sub" data-i18n="s4-7">Plan</span>
+            <h3 data-i18n="s4-8">Research for plan mode</h3>
+            <p data-i18n="s4-9">Same read-only tool set and the same CLAUDE.md/git-status skip as Explore. Also one-shot.</p>
           </div>
           <div class="card on-parent">
-            <span class="tag parent">general-purpose</span>
-            <h3>Exploration + action</h3>
-            <p>Every subagent tool available. Loads the full CLAUDE.md hierarchy and a git status snapshot. Resumable via its <span class="mono">agentId</span>.</p>
+            <span class="tag parent" data-i18n="s4-10">general-purpose</span>
+            <h3 data-i18n="s4-11">Exploration + action</h3>
+            <p data-i18n="s4-12">Every subagent tool available. Loads the full CLAUDE.md hierarchy and a git status snapshot. Resumable via its <span class="mono">agentId</span>.</p>
           </div>
         </div>
-        <div class="callout">Claude can spawn <span class="mono">general-purpose</span> without you defining anything &mdash; it's the fallback when the Agent tool is called with no <span class="mono">subagent_type</span>.</div>
+        <div class="callout" data-i18n="s4-13">Claude can spawn <span class="mono">general-purpose</span> without you defining anything &mdash; it's the fallback when the Agent tool is called with no <span class="mono">subagent_type</span>.</div>
       </div>
     </section>
 
     <!-- 5: TWO WAYS IN -->
     <section class="slide">
-      <div class="eyebrow"><span>05</span><span class="idx mono">Invocation</span><span class="rule"></span></div>
-      <h2 class="title">Matched, or Named Outright</h2>
-      <p class="lede">Claude reads a subagent's <span class="field">description</span> the same way it reads a skill's &mdash; as the entire basis for an autonomous decision.</p>
+      <div class="eyebrow"><span>05</span><span class="idx mono" data-i18n="s5-1">Invocation</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s5-2">Matched, or Named Outright</h2>
+      <p class="lede" data-i18n="s5-3">Claude reads a subagent's <span class="field">description</span> the same way it reads a skill's &mdash; as the entire basis for an autonomous decision.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 860 190" role="img" aria-label="Diagram of automatic description matching and explicit naming both converging on the Agent tool call">
+        <svg class="diagram" viewBox="0 0 860 190" role="img" data-i18n-aria="invocation-diagram" aria-label="Diagram of automatic description matching and explicit naming both converging on the Agent tool call">
           <defs><marker id="a5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
           <rect class="node-sub2" x="10" y="20" width="240" height="56" rx="9"/>
-          <text class="node-title" x="130" y="46" text-anchor="middle" font-size="12.5">Automatic match</text>
-          <text class="node-sub" x="130" y="64" text-anchor="middle">description fits the task</text>
+          <text class="node-title" x="130" y="46" text-anchor="middle" font-size="12.5" data-i18n="s5-4">Automatic match</text>
+          <text class="node-sub" x="130" y="64" text-anchor="middle" data-i18n="s5-5">description fits the task</text>
 
           <rect class="node-parent" x="10" y="106" width="240" height="56" rx="9"/>
-          <text class="node-title" x="130" y="132" text-anchor="middle" font-size="12.5">Explicit mention</text>
-          <text class="node-sub" x="130" y="150" text-anchor="middle">"use the code-reviewer agent"</text>
+          <text class="node-title" x="130" y="132" text-anchor="middle" font-size="12.5" data-i18n="s5-6">Explicit mention</text>
+          <text class="node-sub" x="130" y="150" text-anchor="middle" data-i18n="s5-7">"use the code-reviewer agent"</text>
 
           <path class="flow-sub" marker-end="url(#a5)" d="M250,48 C320,48 330,90 380,90"/>
           <path class="flow-parent" marker-end="url(#a5)" d="M250,134 C320,134 330,118 380,118"/>
 
           <rect class="node" x="380" y="76" width="220" height="56" rx="9"/>
-          <text class="node-title" x="490" y="102" text-anchor="middle" font-size="12.5">Agent tool call</text>
-          <text class="node-sub" x="490" y="120" text-anchor="middle">subagent_type + prompt</text>
+          <text class="node-title" x="490" y="102" text-anchor="middle" font-size="12.5" data-i18n="s5-8">Agent tool call</text>
+          <text class="node-sub" x="490" y="120" text-anchor="middle" data-i18n="s5-9">subagent_type + prompt</text>
 
           <path class="flow" marker-end="url(#a5)" d="M600,104 L700,104"/>
           <rect class="node" x="700" y="76" width="150" height="56" rx="9"/>
-          <text class="node-sub" x="775" y="108" text-anchor="middle">runs, isolated</text>
+          <text class="node-sub" x="775" y="108" text-anchor="middle" data-i18n="s5-10">runs, isolated</text>
         </svg>
-        <div class="callout">Explicit mention bypasses matching entirely and guarantees which agent runs. Either way, <span class="mono">Agent</span> needs to be in <span class="mono">allowedTools</span> for it to auto-approve &mdash; otherwise it falls through to your permission callback.</div>
+        <div class="callout" data-i18n="s5-11">Explicit mention bypasses matching entirely and guarantees which agent runs. Either way, <span class="mono">Agent</span> needs to be in <span class="mono">allowedTools</span> for it to auto-approve &mdash; otherwise it falls through to your permission callback.</div>
       </div>
     </section>
 
     <!-- 6: FOREGROUND VS BACKGROUND -->
     <section class="slide">
-      <div class="eyebrow on-parent"><span>06</span><span class="idx mono">Execution mode</span><span class="rule"></span></div>
-      <h2 class="title">Blocking, or Not</h2>
-      <p class="lede">Since <span class="mono">v2.1.198</span>, omitting the mode defaults to <strong>background</strong> &mdash; the reverse of earlier behavior.</p>
+      <div class="eyebrow on-parent"><span>06</span><span class="idx mono" data-i18n="s6-1">Execution mode</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s6-2">Blocking, or Not</h2>
+      <p class="lede" data-i18n="s6-3">Since <span class="mono">v2.1.198</span>, omitting the mode defaults to <strong>background</strong> &mdash; the reverse of earlier behavior.</p>
       <div class="body-area">
         <table class="ftable">
-          <tr><th>&nbsp;</th><th class="parent-col">Foreground</th><th class="sub-col">Background</th></tr>
-          <tr><td>Main conversation</td><td>Blocks until the subagent finishes</td><td>Continues immediately; result lands as a later notification</td></tr>
-          <tr><td>Permission prompts</td><td>Passed straight through to you</td><td>Surface in the main session, naming the requesting subagent</td></tr>
-          <tr><td>Built-in tool set</td><td>Same as the main session</td><td>A fixed, reduced list &mdash; MCP tools are unaffected</td></tr>
+          <tr><th>&nbsp;</th><th class="parent-col" data-i18n="s6-4">Foreground</th><th class="sub-col" data-i18n="s6-5">Background</th></tr>
+          <tr><td data-i18n="s6-6">Main conversation</td><td data-i18n="s6-7">Blocks until the subagent finishes</td><td data-i18n="s6-8">Continues immediately; result lands as a later notification</td></tr>
+          <tr><td data-i18n="s6-9">Permission prompts</td><td data-i18n="s6-10">Passed straight through to you</td><td data-i18n="s6-11">Surface in the main session, naming the requesting subagent</td></tr>
+          <tr><td data-i18n="s6-12">Built-in tool set</td><td data-i18n="s6-13">Same as the main session</td><td data-i18n="s6-14">A fixed, reduced list &mdash; MCP tools are unaffected</td></tr>
         </table>
-        <div class="callout warn">Set <span class="mono">background: true</span> on a subagent definition to force it regardless of what Claude requests. And a real fix worth knowing: before <span class="mono">v2.1.211</span>, a background subagent's permission-requiring call was auto-denied; from <span class="mono">v2.1.211</span> on, you actually see the prompt and can approve it.</div>
+        <div class="callout warn" data-i18n="s6-15">Set <span class="mono">background: true</span> on a subagent definition to force it regardless of what Claude requests. And a real fix worth knowing: before <span class="mono">v2.1.211</span>, a background subagent's permission-requiring call was auto-denied; from <span class="mono">v2.1.211</span> on, you actually see the prompt and can approve it.</div>
       </div>
     </section>
 
     <!-- 7: TOOL RESTRICTION -->
     <section class="slide">
-      <div class="eyebrow"><span>07</span><span class="idx mono">Scoping</span><span class="rule"></span></div>
-      <h2 class="title">Absence, Not Denial</h2>
-      <p class="lede">A tool left out of <span class="field">tools</span> isn't refused with a prompt or an error &mdash; it simply isn't in the subagent's session at all.</p>
+      <div class="eyebrow"><span>07</span><span class="idx mono" data-i18n="s7-1">Scoping</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s7-2">Absence, Not Denial</h2>
+      <p class="lede" data-i18n="s7-3">A tool left out of <span class="field">tools</span> isn't refused with a prompt or an error &mdash; it simply isn't in the subagent's session at all.</p>
       <div class="body-area">
         <div class="grid2">
           <div class="card on-sub">
-            <span class="tag sub">Read-only analysis</span>
-            <h3><span class="mono">Read, Grep, Glob</span></h3>
-            <p>Can examine code but structurally cannot modify or execute anything.</p>
+            <span class="tag sub" data-i18n="s7-4">Read-only analysis</span>
+            <h3 data-i18n="s7-5"><span class="mono">Read, Grep, Glob</span></h3>
+            <p data-i18n="s7-6">Can examine code but structurally cannot modify or execute anything.</p>
           </div>
           <div class="card on-parent">
-            <span class="tag parent">Test execution</span>
-            <h3><span class="mono">Bash, Read, Grep</span></h3>
-            <p>Can run commands and parse their output, nothing more.</p>
+            <span class="tag parent" data-i18n="s7-7">Test execution</span>
+            <h3 data-i18n="s7-8"><span class="mono">Bash, Read, Grep</span></h3>
+            <p data-i18n="s7-9">Can run commands and parse their output, nothing more.</p>
           </div>
         </div>
-        <div class="callout">Omit <span class="mono">tools</span> entirely for full access to every tool available to subagents. <span class="mono">disallowedTools</span> works the other direction &mdash; and accepts MCP server-level patterns: <span class="mono">mcp__server</span>, <span class="mono">mcp__server__*</span>, or <span class="mono">mcp__*</span> for every MCP tool from any server.</div>
+        <div class="callout" data-i18n="s7-10">Omit <span class="mono">tools</span> entirely for full access to every tool available to subagents. <span class="mono">disallowedTools</span> works the other direction &mdash; and accepts MCP server-level patterns: <span class="mono">mcp__server</span>, <span class="mono">mcp__server__*</span>, or <span class="mono">mcp__*</span> for every MCP tool from any server.</div>
       </div>
     </section>
 
     <!-- 8: PRELOADED SKILLS -->
     <section class="slide">
-      <div class="eyebrow on-sub"><span>08</span><span class="idx mono">Skills, revisited</span><span class="rule"></span></div>
-      <h2 class="title">Loaded Upfront, Not Discovered</h2>
-      <p class="lede">A subagent's <span class="field">skills</span> field injects full skill content at startup &mdash; the opposite of the main session's on-demand matching.</p>
+      <div class="eyebrow on-sub"><span>08</span><span class="idx mono" data-i18n="s8-1">Skills, revisited</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s8-2">Loaded Upfront, Not Discovered</h2>
+      <p class="lede" data-i18n="s8-3">A subagent's <span class="field">skills</span> field injects full skill content at startup &mdash; the opposite of the main session's on-demand matching.</p>
       <div class="body-area">
         <div class="grid2">
           <div class="card on-parent">
-            <span class="tag parent">Main session</span>
-            <h3>Dynamic discovery</h3>
-            <p>Every skill's description sits in context; Claude decides at runtime whether one matches, then loads its body.</p>
+            <span class="tag parent" data-i18n="s8-4">Main session</span>
+            <h3 data-i18n="s8-5">Dynamic discovery</h3>
+            <p data-i18n="s8-6">Every skill's description sits in context; Claude decides at runtime whether one matches, then loads its body.</p>
           </div>
           <div class="card on-sub">
-            <span class="tag sub">Subagent with skills: [...]</span>
-            <h3>Preloaded at startup</h3>
-            <p>Listed skills' full bodies are already there when the subagent's first turn begins &mdash; unlisted skills stay reachable through the Skill tool.</p>
+            <span class="tag sub" data-i18n="s8-7">Subagent with skills: [...]</span>
+            <h3 data-i18n="s8-8">Preloaded at startup</h3>
+            <p data-i18n="s8-9">Listed skills' full bodies are already there when the subagent's first turn begins &mdash; unlisted skills stay reachable through the Skill tool.</p>
           </div>
         </div>
-        <div class="callout">This is the other half of what the Skills deck's <span class="mono">context: fork</span> showed: a skill can hand its content to a subagent as its task, and a subagent can hand skill content to itself as startup context. Two directions, same two building blocks.</div>
+        <div class="callout" data-i18n="s8-10">This is the other half of what the Skills deck's <span class="mono">context: fork</span> showed: a skill can hand its content to a subagent as its task, and a subagent can hand skill content to itself as startup context. Two directions, same two building blocks.</div>
       </div>
     </section>
 
     <!-- 9: CAPPING THE TREE -->
     <section class="slide">
-      <div class="eyebrow"><span>09</span><span class="idx mono">Boundaries</span><span class="rule"></span></div>
-      <h2 class="title">Depth, Concurrency, Spend</h2>
-      <p class="lede">A subagent can spawn subagents of its own &mdash; one prompt really can grow into a tree. Three caps keep that tree bounded.</p>
+      <div class="eyebrow"><span>09</span><span class="idx mono" data-i18n="s9-1">Boundaries</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s9-2">Depth, Concurrency, Spend</h2>
+      <p class="lede" data-i18n="s9-3">A subagent can spawn subagents of its own &mdash; one prompt really can grow into a tree. Three caps keep that tree bounded.</p>
       <div class="body-area">
         <div class="grid3">
           <div class="card">
-            <span class="tag warn">depth</span>
+            <span class="tag warn" data-i18n="s9-4">depth</span>
             <h3 class="mono" style="font-size:13px">CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH</h3>
-            <p>Default <strong>3</strong> layers below the main agent. At the limit, the bottom subagent just does the work itself instead of delegating further.</p>
+            <p data-i18n="s9-5">Default <strong>3</strong> layers below the main agent. At the limit, the bottom subagent just does the work itself instead of delegating further.</p>
           </div>
           <div class="card">
-            <span class="tag warn">concurrency</span>
+            <span class="tag warn" data-i18n="s9-6">concurrency</span>
             <h3 class="mono" style="font-size:13px">CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS</h3>
-            <p>Default <strong>20</strong> running at once. Past it: "Concurrent subagent limit reached" &mdash; ultracode sessions are exempt.</p>
+            <p data-i18n="s9-7">Default <strong>20</strong> running at once. Past it: "Concurrent subagent limit reached" &mdash; ultracode sessions are exempt.</p>
           </div>
           <div class="card">
-            <span class="tag warn">spend</span>
+            <span class="tag warn" data-i18n="s9-8">spend</span>
             <h3 class="mono" style="font-size:13px">maxBudgetUsd / max_budget_usd</h3>
-            <p>No default limit. At the cap: no new subagents, running background ones stop, query ends with <span class="mono">error_max_budget_usd</span>.</p>
+            <p data-i18n="s9-9">No default limit. At the cap: no new subagents, running background ones stop, query ends with <span class="mono">error_max_budget_usd</span>.</p>
           </div>
         </div>
-        <div class="callout warn">Claude Opus 5 delegates to subagents more readily than earlier models &mdash; these three caps matter most on Opus-5-driven queries.</div>
+        <div class="callout warn" data-i18n="s9-10">Claude Opus 5 delegates to subagents more readily than earlier models &mdash; these three caps matter most on Opus-5-driven queries.</div>
       </div>
     </section>
 
     <!-- 10: RESUMING -->
     <section class="slide">
-      <div class="eyebrow"><span>10</span><span class="idx mono">Continuity</span><span class="rule"></span></div>
-      <h2 class="title">Picking a Subagent Back Up</h2>
-      <p class="lede">A resumed subagent keeps its <em>full</em> history &mdash; every prior tool call, result, and reasoning step, not just its final summary.</p>
+      <div class="eyebrow"><span>10</span><span class="idx mono" data-i18n="s10-1">Continuity</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s10-2">Picking a Subagent Back Up</h2>
+      <p class="lede" data-i18n="s10-3">A resumed subagent keeps its <em>full</em> history &mdash; every prior tool call, result, and reasoning step, not just its final summary.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 900 170" role="img" aria-label="Sequence diagram of capturing session id and agent id then resuming a subagent in a later query">
+        <svg class="diagram" viewBox="0 0 900 170" role="img" data-i18n-aria="resume-diagram" aria-label="Sequence diagram of capturing session id and agent id then resuming a subagent in a later query">
           <defs><marker id="a10" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
-          <rect class="node-parent" x="10" y="10" width="220" height="50" rx="8"/><text class="node-title" x="120" y="40" text-anchor="middle" font-size="12">First query() call</text>
+          <rect class="node-parent" x="10" y="10" width="220" height="50" rx="8"/><text class="node-title" x="120" y="40" text-anchor="middle" font-size="12" data-i18n="s10-4">First query() call</text>
           <path class="flow-sub" marker-end="url(#a10)" d="M230,35 L400,35"/>
-          <rect class="node-sub2" x="400" y="10" width="240" height="50" rx="8"/><text class="node-sub" x="520" y="30" text-anchor="middle">capture session_id +</text><text class="node-sub" x="520" y="46" text-anchor="middle">agentId from the result</text>
+          <rect class="node-sub2" x="400" y="10" width="240" height="50" rx="8"/><text class="node-sub" x="520" y="30" text-anchor="middle" data-i18n="s10-5">capture session_id +</text><text class="node-sub" x="520" y="46" text-anchor="middle" data-i18n="s10-6">agentId from the result</text>
           <line x1="10" y1="90" x2="890" y2="90" class="flow-dash"/>
-          <text class="label" x="10" y="84">&#8230; later &#8230;</text>
-          <rect class="node-parent" x="10" y="106" width="300" height="50" rx="8"/><text class="node-sub" x="160" y="126" text-anchor="middle">second query(), resume: session_id,</text><text class="node-sub" x="160" y="142" text-anchor="middle">prompt references the agentId</text>
+          <text class="label" x="10" y="84" data-i18n="s10-7">&#8230; later &#8230;</text>
+          <rect class="node-parent" x="10" y="106" width="300" height="50" rx="8"/><text class="node-sub" x="160" y="126" text-anchor="middle" data-i18n="s10-8">second query(), resume: session_id,</text><text class="node-sub" x="160" y="142" text-anchor="middle" data-i18n="s10-9">prompt references the agentId</text>
           <path class="flow-sub" marker-end="url(#a10)" d="M310,131 L560,131"/>
-          <rect class="node-sub2" x="560" y="106" width="250" height="50" rx="8"/><text class="node-sub" x="685" y="136" text-anchor="middle">continues with full prior context</text>
+          <rect class="node-sub2" x="560" y="106" width="250" height="50" rx="8"/><text class="node-sub" x="685" y="136" text-anchor="middle" data-i18n="s10-10">continues with full prior context</text>
         </svg>
-        <div class="callout">Only <span class="mono">general-purpose</span> or a custom agent returns an <span class="mono">agentId</span> &mdash; Explore and Plan are one-shot by design and can't be resumed this way. Also: hitting <span class="mono">maxTurns</span> marks the output <em>partial</em>, which is exactly the signal that tells you a resume is worth doing.</div>
+        <div class="callout" data-i18n="s10-11">Only <span class="mono">general-purpose</span> or a custom agent returns an <span class="mono">agentId</span> &mdash; Explore and Plan are one-shot by design and can't be resumed this way. Also: hitting <span class="mono">maxTurns</span> marks the output <em>partial</em>, which is exactly the signal that tells you a resume is worth doing.</div>
       </div>
     </section>
 
     <!-- 11: OUTPUT SCANNING -->
     <section class="slide">
-      <div class="eyebrow"><span>11</span><span class="idx mono">Security</span><span class="rule"></span></div>
-      <h2 class="title">What Comes Back Isn't Fully Trusted</h2>
-      <p class="lede">A subagent's final message could contain text engineered to look like a system instruction. Since <span class="mono">v2.1.210</span>, Claude Code neutralizes that before the parent ever reads it.</p>
+      <div class="eyebrow"><span>11</span><span class="idx mono" data-i18n="s11-1">Security</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s11-2">What Comes Back Isn't Fully Trusted</h2>
+      <p class="lede" data-i18n="s11-3">A subagent's final message could contain text engineered to look like a system instruction. Since <span class="mono">v2.1.210</span>, Claude Code neutralizes that before the parent ever reads it.</p>
       <div class="body-area">
         <div class="grid3">
           <div class="card on-parent">
-            <span class="tag parent">control-tag imitation</span>
-            <h3>A fake <span class="mono">&lt;system-reminder&gt;</span></h3>
-            <p>A backslash goes in right after the opening angle bracket. Nothing is deleted.</p>
+            <span class="tag parent" data-i18n="s11-4">control-tag imitation</span>
+            <h3 data-i18n="s11-5">A fake <span class="mono">&lt;system-reminder&gt;</span></h3>
+            <p data-i18n="s11-6">A backslash goes in right after the opening angle bracket. Nothing is deleted.</p>
           </div>
           <div class="card">
-            <span class="tag warn">turn markers</span>
-            <h3>A line starting <span class="mono">Human:</span></h3>
-            <p>Gets a backslash before the colon, so it can't fake a conversation-turn boundary.</p>
+            <span class="tag warn" data-i18n="s11-7">turn markers</span>
+            <h3 data-i18n="s11-8">A line starting <span class="mono">Human:</span></h3>
+            <p data-i18n="s11-9">Gets a backslash before the colon, so it can't fake a conversation-turn boundary.</p>
           </div>
           <div class="card on-sub">
-            <span class="tag sub">permission mentions</span>
-            <h3>References to real config</h3>
-            <p><span class="mono">settings.json</span>, <span class="mono">bypassPermissions</span> &mdash; kept as written, not touched.</p>
+            <span class="tag sub" data-i18n="s11-10">permission mentions</span>
+            <h3 data-i18n="s11-11">References to real config</h3>
+            <p data-i18n="s11-12"><span class="mono">settings.json</span>, <span class="mono">bypassPermissions</span> &mdash; kept as written, not touched.</p>
           </div>
         </div>
-        <div class="callout warn">For the first two categories, Claude Code prepends a <span class="mono">[harness: ...]</span> marker line naming what it caught. This is escaping, not editing &mdash; the scan never removes or rewords the subagent's actual text, it just strips the ability to impersonate the harness.</div>
+        <div class="callout warn" data-i18n="s11-13">For the first two categories, Claude Code prepends a <span class="mono">[harness: ...]</span> marker line naming what it caught. This is escaping, not editing &mdash; the scan never removes or rewords the subagent's actual text, it just strips the ability to impersonate the harness.</div>
       </div>
     </section>
 
     <!-- 12: CLOSING -->
     <section class="slide">
-      <div class="eyebrow"><span>12</span><span class="idx mono">The model</span><span class="rule"></span></div>
-      <h2 class="title">Fresh Context, One Summary Back</h2>
+      <div class="eyebrow"><span>12</span><span class="idx mono" data-i18n="s12-1">The model</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s12-2">Fresh Context, One Summary Back</h2>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 860 130" role="img" aria-label="Summary diagram of parent delegating to an isolated subagent that returns a single result" style="max-height:120px">
+        <svg class="diagram" viewBox="0 0 860 130" role="img" data-i18n-aria="summary-diagram" aria-label="Summary diagram of parent delegating to an isolated subagent that returns a single result" style="max-height:120px">
           <rect class="node-parent" x="20" y="10" width="380" height="80" rx="10"/>
-          <text class="node-title" x="210" y="46" text-anchor="middle" font-size="15">Parent</text>
-          <text class="node-sub" x="210" y="68" text-anchor="middle">delegates a task, keeps its own context clean</text>
+          <text class="node-title" x="210" y="46" text-anchor="middle" font-size="15" data-i18n="s12-3">Parent</text>
+          <text class="node-sub" x="210" y="68" text-anchor="middle" data-i18n="s12-4">delegates a task, keeps its own context clean</text>
           <rect class="node-sub2" x="460" y="10" width="380" height="80" rx="10"/>
-          <text class="node-title" x="650" y="46" text-anchor="middle" font-size="15">Subagent</text>
-          <text class="node-sub" x="650" y="68" text-anchor="middle">starts fresh, does the work, returns one message</text>
+          <text class="node-title" x="650" y="46" text-anchor="middle" font-size="15" data-i18n="s12-5">Subagent</text>
+          <text class="node-sub" x="650" y="68" text-anchor="middle" data-i18n="s12-6">starts fresh, does the work, returns one message</text>
         </svg>
-        <p class="closing-line">Everything here &mdash; frontmatter, built-in types, foreground vs. background, depth and spend caps, output scanning &mdash; exists to make that one exchange safe to repeat at scale: a <span class="parent">parent</span> that stays lean, and a <span class="sub">subagent</span> whose mess never leaves the room it made it in.</p>
+        <p class="closing-line" data-i18n="s12-7">Everything here &mdash; frontmatter, built-in types, foreground vs. background, depth and spend caps, output scanning &mdash; exists to make that one exchange safe to repeat at scale: a <span class="parent">parent</span> that stays lean, and a <span class="sub">subagent</span> whose mess never leaves the room it made it in.</p>
       </div>
     </section>
 
@@ -514,7 +516,7 @@ performance, verify standards.</pre>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
     </button>
   </div>
-  <div class="hint">use &larr; &rarr; or click the edges to navigate</div>
+  <div class="hint" data-i18n="navigation-hint">use &larr; &rarr; or click the edges to navigate</div>
 </div>
 
 <script>
@@ -576,4 +578,7 @@ performance, verify standards.</pre>
   render();
 })();
 </script>
+<script src="./subagents-deep-dive.fr.js"></script>
 <script src="./deck-standard.js"></script>
+
+</html>

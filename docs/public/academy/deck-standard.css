@@ -215,6 +215,41 @@ h2.title {
   white-space: nowrap;
 }
 
+.deck-preferences {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.deck-language-picker {
+  display: flex;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface);
+}
+
+.deck-language-picker button {
+  min-width: 36px;
+  min-height: 30px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--ink-dim);
+  cursor: pointer;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.deck-language-picker button:hover { color: var(--you); }
+.deck-language-picker button[aria-pressed="true"] {
+  background: var(--you);
+  color: var(--accent-ink);
+}
+
 .track {
   flex: 1;
   display: flex;
@@ -350,6 +385,33 @@ h2.title {
   .deck-navigation-dock .nav-btn { width: 44px; height: 44px; }
   .deck-navigation-dock .theme-btn { order: 3; min-width: 44px; padding: 0; font-size: 0; }
   .deck-navigation-dock .theme-btn::after { content: '◐'; font-size: 24px; }
+
+  .deck-navigation-dock .controls.has-languages {
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+  }
+  .deck-navigation-dock .deck-preferences {
+    grid-column: 1 / -1;
+    order: 3;
+    justify-self: center;
+  }
+  .deck-navigation-dock .deck-preferences .theme-btn {
+    order: 0;
+    width: auto;
+    padding: 0 13px;
+    font-size: 12px;
+  }
+  .deck-navigation-dock .deck-preferences .theme-btn::after { content: none; }
+  .deck-navigation-dock .deck-language-picker button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  @media (min-width: 540px) {
+    .deck-navigation-dock .controls.has-languages {
+      grid-template-columns: 44px minmax(0, 1fr) 44px auto;
+    }
+    .deck-navigation-dock .deck-preferences { grid-column: auto; }
+  }
 }
 
 @media (max-width: 680px) and (orientation: portrait) {
