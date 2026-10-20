@@ -25,8 +25,19 @@
       navigation: 'Navigation des diapositives', choose: 'Choisir une diapositive', slide: 'Diapo',
       previous: 'Diapositive précédente', next: 'Diapositive suivante', language: 'Langue des diapositives',
       goTo: function (index, total) { return 'Aller à la diapositive ' + index + ' sur ' + total; }
+    },
+    ro: {
+      light: 'Mod luminos', dark: 'Mod întunecat',
+      toLight: 'Treci la modul luminos', toDark: 'Treci la modul întunecat',
+      navigation: 'Navigarea diapozitivelor', choose: 'Alege diapozitivul', slide: 'Diapozitiv',
+      previous: 'Diapozitivul anterior', next: 'Diapozitivul următor', language: 'Limba diapozitivelor',
+      goTo: function (index, total) { return 'Mergi la diapozitivul ' + index + ' din ' + total; }
     }
   };
+  var languageNames = { en: 'English', fr: 'Français', ro: 'Română' };
+  var availableLanguages = ['en'].concat(Object.keys(locales || {}).filter(function (code) {
+    return code !== 'en' && labels[code] && languageNames[code];
+  }));
 
   document.querySelectorAll('.diagram marker').forEach(function (marker) {
     var viewBox = marker.viewBox && marker.viewBox.baseVal;
@@ -74,7 +85,7 @@
     applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
   }, true);
 
-  if (locales && locales.fr) {
+  if (availableLanguages.length > 1) {
     document.querySelectorAll('[data-i18n], [data-i18n-aria]').forEach(function (element) {
       var attribute = element.hasAttribute('data-i18n-aria') ? 'aria-label' : null;
       translations.push({
@@ -92,12 +103,12 @@
     languagePicker = document.createElement('div');
     languagePicker.className = 'deck-language-picker';
     languagePicker.setAttribute('role', 'group');
-    ['en', 'fr'].forEach(function (code) {
+    availableLanguages.forEach(function (code) {
       var button = document.createElement('button');
       button.type = 'button';
       button.lang = code;
       button.textContent = code.toUpperCase();
-      button.setAttribute('aria-label', code === 'en' ? 'English' : 'Français');
+      button.setAttribute('aria-label', languageNames[code]);
       button.dataset.language = code;
       button.addEventListener('click', function () { applyLanguage(code, true); });
       languagePicker.appendChild(button);
@@ -164,7 +175,7 @@
   placeControls();
 
   function applyLanguage(code, updateUrl) {
-    language = code === 'fr' ? 'fr' : 'en';
+    language = availableLanguages.indexOf(code) >= 0 ? code : 'en';
     var locale = language === 'en' ? null : locales[language];
     translations.forEach(function (entry) {
       var value = locale && locale.content[entry.key];
