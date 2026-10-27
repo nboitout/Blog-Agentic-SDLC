@@ -150,13 +150,16 @@
   .code-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,1.5vw,18px); flex:1; min-height:0; }
   .code-col{ background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
   .code-col header{ padding:8px 14px; font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:11.5px; letter-spacing:.03em; border-bottom:1px solid var(--line); color:var(--ink-dim); background:var(--surface-2); }
-  .code-col pre{ margin:0; padding:12px 14px; font-family:"IBM Plex Mono",monospace; font-size:clamp(10px,1.05vw,12.2px); line-height:1.6; overflow:auto; flex:1; }
+  .code-col pre{ margin:0; padding:12px 14px; font-family:"IBM Plex Mono",monospace; font-size:clamp(10px,1.05vw,12.2px); line-height:1.6; white-space:pre-wrap; overflow-wrap:anywhere; overflow:auto; flex:1; }
   .tok-kw{ color:var(--post); } .tok-str{ color:var(--good); } .tok-com{ color:var(--ink-faint); font-style:italic;} .tok-fn{ color:var(--pre); } .tok-num{ color:var(--warn); }
 
   .callout{ border-left:3px solid var(--pre); background:var(--pre-soft); padding:9px 13px; border-radius:0 8px 8px 0; font-size:clamp(11px,1.15vw,12.8px); color:var(--ink); line-height:1.5; max-width:74ch; }
   .callout.post{ border-left-color:var(--post); background:var(--post-soft); }
   .callout .mono{ font-family:"IBM Plex Mono",monospace; font-weight:600; }
   .callout .strike{ text-decoration:line-through; opacity:.6; }
+  .slide.sources.is-active{ z-index:5; }
+  .sources a{ color:var(--post); text-underline-offset:3px; }
+  .sources .ftable td{ padding:12px; }
 
   /* cover */
   .cover{ align-items:flex-start; justify-content:center; }
@@ -215,11 +218,11 @@
         <circle cx="32" cy="44" r="3.2" fill="var(--post)"/>
       </svg>
       <h1>The Interception Point</h1>
-      <p class="sub">A close read of <strong>PreToolUse</strong> and <strong>PostToolUse</strong> &mdash; one controls a call before execution; the other can annotate or transform a successful result before Claude continues.</p>
+      <p class="sub"><strong>PreToolUse</strong> checks a tool call before it runs. <strong>PostToolUse</strong> adds context or changes the result Claude reads after success.</p>
       <div class="meta">
         <span><span class="tag pre">Pre</span>&nbsp; gates the call</span>
         <span><span class="tag post">Post</span>&nbsp; shapes the result</span>
-        <span>13 sections</span>
+        <span>15 slides</span>
       </div>
     </section>
 
@@ -227,7 +230,7 @@
     <section class="slide">
       <div class="eyebrow"><span>01</span><span class="idx mono">Position</span><span class="rule"></span></div>
       <h2 class="title">Where They Sit</h2>
-      <p class="lede">PreToolUse runs before execution. A successful call reaches PostToolUse; a failed call reaches PostToolUseFailure.</p>
+      <p class="lede">PreToolUse runs before execution. Once a tool starts, success reaches PostToolUse and an execution error reaches PostToolUseFailure.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 900 220" role="img" aria-label="Diagram showing PreToolUse before tool execution and PostToolUse after">
           <defs>
@@ -264,6 +267,7 @@
           <text class="label" x="565" y="54">success</text>
           <text class="label" x="565" y="171">failure</text>
         </svg>
+        <div class="callout">A rejected call may never reach the tool. Invalid input can be rejected before either hook runs. A permission denial reaches PreToolUse, but does not fire PostToolUseFailure.</div>
       </div>
     </section>
 
@@ -288,7 +292,7 @@
     <section class="slide">
       <div class="eyebrow on-pre"><span>03</span><span class="idx mono">PreToolUse</span><span class="rule"></span></div>
       <h2 class="title">The Gate</h2>
-      <p class="lede">A PreToolUse hook answers one question &mdash; <em>should this call happen, and with what input?</em> &mdash; via <span class="field">hookSpecificOutput.permissionDecision</span>.</p>
+      <p class="lede">Should this tool run, and with what input? Command, HTTP, MCP and SDK hooks answer through <span class="field">hookSpecificOutput.permissionDecision</span>.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 860 220" role="img" aria-label="Decision diagram for PreToolUse permissionDecision values">
           <defs>
@@ -315,12 +319,12 @@
           <rect class="node-bad" x="300" y="186" width="150" height="42" rx="8"/>
           <text class="node-title" x="375" y="212" text-anchor="middle" font-size="12.5">deny</text>
 
-          <text class="label" x="470" y="30">runs, no prompt</text>
+          <text class="label" x="470" y="30">approve within permission limits</text>
           <text class="label" x="470" y="92">forces a user prompt</text>
           <text class="label" x="470" y="156">pause non-interactive run; resume later</text>
           <text class="label" x="470" y="212">blocked &mdash; reason sent to Claude</text>
         </svg>
-        <div class="callout"><span class="mono">updatedInput</span> replaces the full input object. Pair it with <span class="mono">allow</span> to auto-approve, <span class="mono">ask</span> to request confirmation, or omit the decision to continue through normal permission evaluation. With <span class="mono">defer</span>, it is ignored.</div>
+        <div class="callout"><span class="mono">allow</span> still respects deny rules, required user interaction and plan-mode restrictions. <span class="mono">updatedInput</span> replaces the whole input: include fields you want to keep. With no decision, normal permission checks apply. With <span class="mono">defer</span>, the replacement is ignored.</div>
       </div>
     </section>
 
@@ -328,7 +332,7 @@
     <section class="slide">
       <div class="eyebrow on-post"><span>04</span><span class="idx mono">PostToolUse</span><span class="rule"></span></div>
       <h2 class="title">The Rewrite</h2>
-      <p class="lede">The tool succeeded and already ran &mdash; PostToolUse cannot undo it. Its principal role is to shape the result and context Claude receives next.</p>
+      <p class="lede">The tool has already run. A hook can add a note, rewrite what Claude reads, or do follow-up work such as formatting a file. It does not roll back the original action.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 860 170" role="img" aria-label="Diagram of PostToolUse output fields">
           <defs><marker id="a4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
@@ -345,23 +349,23 @@
           <text class="node-title" x="542" y="80" text-anchor="middle">What Claude reads</text>
           <text class="node-sub" x="542" y="98" text-anchor="middle">as the tool result</text>
         </svg>
-        <div class="callout post"><span class="mono">updatedToolOutput</span> replaces the result for <strong>any</strong> tool, MCP or built&#8209;in. <span class="mono strike">updatedMCPToolOutput</span> is the deprecated, MCP&#8209;only predecessor. <span class="mono">additionalContext</span> appends rather than replaces &mdash; use it to annotate without discarding the original.</div>
+        <div class="callout post"><span class="mono">updatedToolOutput</span> works for built-in and MCP tools. For a built-in tool, keep its expected fields and types: an invalid replacement is ignored. Example: redact Bash&rsquo;s <span class="mono">stdout</span> while keeping the rest of its result. Use <span class="mono">additionalContext</span> to add a note.</div>
       </div>
     </section>
 
     <!-- 5: EXIT CODES -->
     <section class="slide">
       <div class="eyebrow"><span>05</span><span class="idx mono">Exit codes</span><span class="rule"></span></div>
-      <h2 class="title">The Same Code, Two Meanings</h2>
-      <p class="lede">A hook can answer purely through its exit code &mdash; but the same code means something different depending on which side of the call it runs on.</p>
+      <h2 class="title">Command Hook Exit Codes</h2>
+      <p class="lede">An exit code tells Claude Code how the hook finished. JSON can carry a decision too. For PreToolUse, exit 2 always blocks the call.</p>
       <div class="body-area">
         <table class="ftable">
           <tr><th>Exit code</th><th class="pre-col">PreToolUse</th><th class="post-col">PostToolUse</th></tr>
-          <tr><td class="mono">0</td><td>Success &mdash; JSON on stdout is read, no block</td><td>Success &mdash; JSON on stdout is read</td></tr>
-          <tr><td class="mono">2</td><td><strong>Blocks the call</strong> &mdash; stderr becomes the reason Claude sees</td><td>Cannot block &mdash; the tool already ran; stderr is sent to Claude as feedback</td></tr>
-          <tr><td class="mono">other</td><td>Non&#8209;blocking error &mdash; call proceeds</td><td>Non&#8209;blocking error &mdash; nothing to stop</td></tr>
+          <tr><td class="mono">0</td><td>Read valid JSON. A JSON <span class="mono">deny</span> still blocks.</td><td>Apply valid JSON notes or output changes.</td></tr>
+          <tr><td class="mono">2</td><td><strong>Block, even if JSON says allow.</strong> stderr explains why.</td><td>Send stderr as feedback. The tool has already run.</td></tr>
+          <tr><td class="mono">other</td><td>Usually no decision. Valid JSON can still apply.*</td><td>Usually an error notice. Valid JSON can still apply.*</td></tr>
         </table>
-        <div class="callout">When stdout contains a valid JSON object that passes the hook-output schema, JSON alone decides the outcome for standard decision events. On PreToolUse, <span class="mono">permissionDecision: "allow"</span> can therefore override exit&nbsp;2.</div>
+        <div class="callout"><strong>Simple rule:</strong> exit <span class="mono">0</span> when returning a JSON decision. Exit <span class="mono">2</span> to block a PreToolUse call. *With <span class="mono">onFailure: "block"</span>, an unexpected exit code counts as failure. Windows shell hooks without Git Bash also have stricter failure handling.</div>
       </div>
     </section>
 
@@ -423,29 +427,45 @@
           <text class="node-sub" x="840" y="102" text-anchor="middle">timeout</text>
 
           <text class="label" x="8" y="20">container &rarr; event &rarr; matcher group &rarr; one or more handlers</text>
-          <text class="label" x="8" y="168">Pre/Post support command &middot; http &middot; mcp_tool &middot; prompt &middot; agent; default 600s</text>
+          <text class="label" x="8" y="168">Pre/Post support five handler types. Their replies and timeouts differ.</text>
         </svg>
       </div>
     </section>
 
-    <!-- 8: SDK VS SETTINGS.JSON -->
+    <!-- 8: HANDLER CONTRACTS -->
     <section class="slide">
-      <div class="eyebrow"><span>08</span><span class="idx mono">Two ways to define one</span><span class="rule"></span></div>
+      <div class="eyebrow"><span>08</span><span class="idx mono">Handler types</span><span class="rule"></span></div>
+      <h2 class="title">How a Handler Answers</h2>
+      <p class="lede">The event says <em>when</em> to run. The handler type says <em>what</em> runs and how it replies. These defaults apply to PreToolUse and PostToolUse.</p>
+      <div class="body-area">
+        <table class="ftable">
+          <tr><th>Handler</th><th>How it replies</th><th>Default wait</th></tr>
+          <tr><td class="mono">command / http / mcp_tool</td><td>Your code returns hook JSON. Command hooks also use exit codes.</td><td>600 seconds</td></tr>
+          <tr><td class="mono">prompt</td><td>A model returns <span class="mono">{ "ok": true }</span>, or <span class="mono">false</span> with a reason.</td><td>30 seconds</td></tr>
+          <tr><td class="mono">agent</td><td>An agent checks files or tools, then returns <span class="mono">ok</span> and a reason. Experimental.</td><td>60 seconds</td></tr>
+          <tr><td>SDK callback</td><td>Your application function returns hook JSON directly.</td><td>600 seconds</td></tr>
+        </table>
+        <div class="callout">For a prompt hook, <span class="mono">ok: false</span> normally ends the turn. Set <span class="mono">continueOnBlock: true</span> to let Claude read the reason and continue. Agent hooks already continue this way. A PreToolUse rejection still prevents that tool call.</div>
+      </div>
+    </section>
+
+    <!-- 9: SDK VS SETTINGS.JSON -->
+    <section class="slide">
+      <div class="eyebrow"><span>09</span><span class="idx mono">Configuration</span><span class="rule"></span></div>
       <h2 class="title">Config File or Callback</h2>
-      <p class="lede">The Agent SDK can replace an external hook command with an in-process callback. It can also load settings-based hooks when configured to do so.</p>
+      <p class="lede">A settings hook starts a program. An SDK callback runs in your application. Here, both respond after a file edit. Define the formatter before using either example.</p>
       <div class="body-area code-wrap">
         <div class="code-col">
-          <header>settings.json</header>
-          <pre><span class="tok-com">// wrapper reads tool_input.file_path</span>
-{
+          <header>settings.json (Node.js required)</header>
+          <pre>{
   <span class="tok-str">"hooks"</span>: {
     <span class="tok-str">"PostToolUse"</span>: [{
       <span class="tok-str">"matcher"</span>: <span class="tok-str">"Edit|Write"</span>,
       <span class="tok-str">"hooks"</span>: [{
         <span class="tok-str">"type"</span>: <span class="tok-str">"command"</span>,
-        <span class="tok-str">"command"</span>:
-          <span class="tok-str">"${CLAUDE_PROJECT_DIR}/.claude/hooks/format-file.sh"</span>,
-        <span class="tok-str">"args"</span>: []
+        <span class="tok-str">"command"</span>: <span class="tok-str">"node"</span>,
+        <span class="tok-str">"args"</span>: [
+          <span class="tok-str">"${CLAUDE_PROJECT_DIR}/format.mjs"</span>]
       }]
     }]
   }
@@ -459,23 +479,22 @@
 
 <span class="tok-fn">options</span> = ClaudeAgentOptions(
   hooks={
-    <span class="tok-str">"PreToolUse"</span>: [
-      HookMatcher(
-        matcher=<span class="tok-str">"Bash"</span>,
-        hooks=[my_guard]  <span class="tok-com"># your fn</span>
-      )
-    ]
+    <span class="tok-str">"PostToolUse"</span>: [HookMatcher(
+      matcher=<span class="tok-str">"Edit|Write"</span>,
+      hooks=[format_file]  <span class="tok-com"># async callback</span>
+    )]
   }
 )</pre>
         </div>
       </div>
+      <div class="callout">Node runs <span class="mono">format.mjs</span> on Windows, macOS and Linux. With <span class="mono">args</span>, no shell is needed. The script reads JSON from stdin. The SDK passes it to your callback. Both read <span class="mono">tool_input.file_path</span>.</div>
     </section>
 
-    <!-- 9: WHEN HOOKS COLLIDE -->
+    <!-- 10: WHEN HOOKS COLLIDE -->
     <section class="slide">
-      <div class="eyebrow"><span>09</span><span class="idx mono">Concurrency</span><span class="rule"></span></div>
+      <div class="eyebrow"><span>10</span><span class="idx mono">Concurrency</span><span class="rule"></span></div>
       <h2 class="title">When Hooks Collide</h2>
-      <p class="lede">Every hook matching an event fires <strong>in parallel</strong>, not in the order they're declared.</p>
+      <p class="lede">Matching hooks can run <strong>in parallel</strong>. Their declaration order does not control their execution order. Prompt and agent hooks have concurrency limits, so some may wait.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 860 200" role="img" aria-label="Diagram showing three parallel hooks resolving to one decision">
           <defs><marker id="a9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
@@ -492,13 +511,13 @@
           <text class="node-sub" x="705" y="92" text-anchor="middle">precedence: deny &gt; defer &gt; ask &gt; allow</text>
           <text class="node-sub" x="705" y="112" text-anchor="middle">independent hooks; no ordering contract</text>
         </svg>
-        <div class="callout warn" style="border-left-color:var(--warn); background:var(--warn-soft);">Conflicting mutations are unsafe. If several checks may rewrite the same input or output, consolidate the transformation into one hook and keep the other hooks observational.</div>
+        <div class="callout warn" style="border-left-color:var(--warn); background:var(--warn-soft);">Use one hook to rewrite a given input or output. Other hooks can check or log it. If check B needs check A&rsquo;s result, put both steps in one handler.</div>
       </div>
     </section>
 
-    <!-- 10: SECURITY & LIMITS -->
+    <!-- 11: SECURITY & LIMITS -->
     <section class="slide">
-      <div class="eyebrow"><span>10</span><span class="idx mono">Boundaries</span><span class="rule"></span></div>
+      <div class="eyebrow"><span>11</span><span class="idx mono">Boundaries</span><span class="rule"></span></div>
       <h2 class="title">Security &amp; Limits</h2>
       <p class="lede">What hooks can enforce &mdash; and what they can't get around.</p>
       <div class="body-area">
@@ -506,7 +525,7 @@
           <div class="card">
             <span class="tag warn">runs as you</span>
             <h3>Full user permissions</h3>
-            <p>A hook script has your filesystem access and credentials &mdash; it validates its own input, nothing sandboxes it for you.</p>
+            <p>A command hook runs with your operating-system access, outside the tool sandbox. Validate its input and give it only the credentials it needs.</p>
           </div>
           <div class="card on-pre">
             <span class="tag pre">deny always wins</span>
@@ -515,29 +534,30 @@
           </div>
           <div class="card on-post">
             <span class="tag post">can't undo</span>
-            <h3>PostToolUse is too late</h3>
-            <p>By the time it runs, side effects already happened &mdash; it can only shape what Claude reads about them.</p>
+            <h3>No automatic rollback</h3>
+            <p>Changing a result does not reverse a file write or network request. Earlier telemetry may also contain the original output.</p>
           </div>
           <div class="card">
             <span class="tag" style="color:var(--ink-dim);border-color:var(--line-strong);background:var(--surface-2)">failure semantics</span>
-            <h3>Timeouts differ by event</h3>
-            <p>These tool hooks default to 600s. A timed-out PreToolUse callback prevents that call and returns a timeout result to Claude.</p>
+            <h3>SDK callback timeout</h3>
+            <p>A timed-out PreToolUse callback blocks that call. A timed-out PostToolUse callback keeps the tool result. Claude can continue in both cases.</p>
           </div>
         </div>
+        <div class="callout"><strong>If a policy check fails, should the tool run?</strong> Command and HTTP hooks usually let it proceed on failure. Set <span class="mono">onFailure: "block"</span> on a synchronous PreToolUse handler to stop it on errors or timeouts. Requires Claude Code 2.1.295+.</div>
       </div>
     </section>
 
-    <!-- 11: FOUR PATTERNS -->
+    <!-- 12: FOUR PATTERNS -->
     <section class="slide">
-      <div class="eyebrow"><span>11</span><span class="idx mono">In the wild</span><span class="rule"></span></div>
+      <div class="eyebrow"><span>12</span><span class="idx mono">Examples</span><span class="rule"></span></div>
       <h2 class="title">Four Patterns</h2>
-      <p class="lede">Most real hooks are one of these, wearing different clothes.</p>
+      <p class="lede">Choose the hook based on what you need to prevent, change or record.</p>
       <div class="body-area">
         <div class="grid4">
           <div class="card on-pre">
             <span class="tag pre">PreToolUse</span>
             <h3>Secrets gate</h3>
-            <p>Scan <span class="mono">tool_input</span> for a Bash command touching <span class="mono">.env</span> or a key pattern &rarr; <span class="mono">deny</span> with a reason.</p>
+            <p>Inspect <span class="mono">tool_input</span> and deny a forbidden file access. A Bash text check is only one guard: other tools or indirect commands need protection too.</p>
           </div>
           <div class="card on-post">
             <span class="tag post">PostToolUse</span>
@@ -546,22 +566,22 @@
           </div>
           <div class="card on-post">
             <span class="tag post">PostToolUse</span>
-            <h3>Output normalization</h3>
-            <p>One hook sets <span class="mono">updatedToolOutput</span> so Claude receives one normalized result shape across MCP and built&#8209;in tools.</p>
+            <h3>Clearer output</h3>
+            <p>Rewrite a result with <span class="mono">updatedToolOutput</span> while keeping that tool&rsquo;s schema. Add a common summary with <span class="mono">additionalContext</span>.</p>
           </div>
           <div class="card on-post">
             <span class="tag">Lifecycle</span>
-            <h3>Durable audit trail</h3>
-            <p>Log attempts in PreToolUse and outcomes in PostToolUse / PostToolUseFailure. Store records outside conversation context.</p>
+            <h3>Tool activity log</h3>
+            <p>Record attempts in PreToolUse and execution outcomes in the Post hooks. Record denials in your guard too. Early validation failures need separate logging.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 12: CLOSING -->
+    <!-- 13: CLOSING -->
     <section class="slide">
-      <div class="eyebrow"><span>12</span><span class="idx mono">The model</span><span class="rule"></span></div>
-      <h2 class="title">Two Questions, One Boundary</h2>
+      <div class="eyebrow"><span>13</span><span class="idx mono">Recap</span><span class="rule"></span></div>
+      <h2 class="title">Before and After a Tool Call</h2>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 860 130" role="img" aria-label="Summary diagram of PreToolUse and PostToolUse roles" style="max-height:120px">
           <rect class="node-pre" x="20" y="10" width="380" height="80" rx="10"/>
@@ -571,11 +591,27 @@
           <text class="node-title" x="650" y="46" text-anchor="middle" font-size="15">PostToolUse</text>
           <text class="node-sub" x="650" y="68" text-anchor="middle">shapes what Claude receives after success</text>
         </svg>
-        <p class="closing-line"><span class="pre">Before</span> the call, you guard the gate. <span class="post">After success</span>, you shape the result. Failure has its own recovery hook.</p>
+        <p class="closing-line"><span class="pre">Before execution</span>, check whether the call should run. <span class="post">After success</span>, add context or adjust its result. Use PostToolUseFailure for execution errors.</p>
       </div>
     </section>
 
-  </div>
+    <!-- 14: SOURCES -->
+    <section class="slide sources">
+      <div class="eyebrow"><span>14</span><span class="idx mono">Reference</span><span class="rule"></span></div>
+      <h2 class="title">Sources and Version Notes</h2>
+      <p class="lede">Reviewed 27 October 2026 against Claude Code 2.1.312 release notes and current Anthropic documentation. Older installations may behave differently.</p>
+      <div class="body-area">
+        <table class="ftable">
+          <tr><th>Read more</th><th>What it explains</th></tr>
+          <tr><td><a href="https://code.claude.com/docs/en/hooks" target="_blank" rel="noopener noreferrer">Hooks reference</a></td><td>Events, permissions, exit codes and output schemas</td></tr>
+          <tr><td><a href="https://code.claude.com/docs/en/hooks-guide" target="_blank" rel="noopener noreferrer">Hooks guide</a></td><td>Practical examples, handler types and timeout defaults</td></tr>
+          <tr><td><a href="https://code.claude.com/docs/en/agent-sdk/hooks" target="_blank" rel="noopener noreferrer">Agent SDK hooks</a> / <a href="https://code.claude.com/docs/en/agent-sdk/python" target="_blank" rel="noopener noreferrer">Python API</a></td><td>Callback setup, return values and timeout behavior</td></tr>
+          <tr><td><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">Claude Code changelog</a></td><td><span class="mono">onFailure: "block"</span> requires 2.1.295+. Prompt and agent concurrency limits can change.</td></tr>
+          <tr><td><a href="https://github.com/anthropics/claude-agent-sdk-typescript/blob/main/CHANGELOG.md#02121" target="_blank" rel="noopener noreferrer">SDK compatibility note</a></td><td><span class="mono">updatedMCPToolOutput</span> is deprecated. Use <span class="mono">updatedToolOutput</span>.</td></tr>
+        </table>
+        <div class="callout">Before a demo, check <span class="mono">claude --version</span> and <span class="mono">python -m pip show claude-agent-sdk</span>. The snippets show configuration patterns. Supply your formatter and test it with the versions you use.</div>
+      </div>
+    </section>
 
     <button class="edge-zone left" id="edgeLeft" aria-label="Previous slide"></button>
     <button class="edge-zone right" id="edgeRight" aria-label="Next slide"></button>
@@ -588,7 +624,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
     </button>
     <div class="track" id="dotsTrack"></div>
-    <span class="counter mono" id="counter">01 / 13</span>
+    <span class="counter mono" id="counter">01 / 15</span>
     <button class="nav-btn" id="nextBtn" aria-label="Next slide">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
     </button>
