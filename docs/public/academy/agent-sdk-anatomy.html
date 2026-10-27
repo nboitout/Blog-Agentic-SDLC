@@ -1,3 +1,5 @@
+<!doctype html>
+<html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Claude Agent SDK Anatomy</title>
@@ -199,6 +201,27 @@
   }
   .callout .mono{ font-family:"IBM Plex Mono",monospace; font-weight:600; }
 
+  .sources{
+    position:relative; z-index:6; flex-shrink:0; margin:10px 0 0; color:var(--ink-dim);
+    font-size:12px; line-height:1.5;
+  }
+  .sources a{ color:var(--accent-2); text-underline-offset:3px; }
+  .source-note{ max-width:76ch; }
+  .permission-steps{
+    list-style:none; padding:0; margin:0; display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px;
+  }
+  .permission-steps li{
+    padding:12px 14px; border:1px solid var(--line); border-radius:10px;
+    background:var(--surface);
+  }
+  .permission-steps h3{ font-size:16px; line-height:1.3; }
+  .permission-steps h3 span{ color:var(--accent); margin-right:6px; }
+  .permission-steps p{ margin:7px 0 0; font-size:13px; line-height:1.4; color:var(--ink-dim); }
+  .permission-steps code{ font-size:.92em; overflow-wrap:anywhere; }
+  .permission-note{ max-width:none; }
+  .permission-note .mono{ font-size:.9em; }
+
   /* ---------- cover ---------- */
   .cover{ align-items:flex-start; justify-content:center; }
   .cover .mark{ width:64px; height:64px; margin-bottom:clamp(14px,2.4vh,26px); }
@@ -266,7 +289,8 @@
   }
 
   .edge-zone{
-    position:absolute; top:0; bottom:0; width:14%; z-index:4; cursor:pointer;
+    /* Leave the source footer free for link clicks. */
+    position:absolute; top:0; bottom:140px; width:14%; z-index:4; cursor:pointer;
     background:transparent; border:none; padding:0;
   }
   .edge-zone.left{ left:0; } .edge-zone.right{ right:0; }
@@ -313,13 +337,14 @@
         <span>Python &amp; TypeScript</span>
         <span>13-slide anatomy</span>
       </div>
+      <p class="sources source-note">Documentation reviewed: <time datetime="2026-10-27">27 October 2026</time>.<br>Release references: <a href="https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk/v/0.3.312" target="_blank" rel="noopener noreferrer">TypeScript 0.3.312</a> &middot; <a href="https://pypi.org/project/claude-agent-sdk/0.2.174/" target="_blank" rel="noopener noreferrer">Python 0.2.174</a>. This is a documentation review, not a runtime compatibility test.</p>
     </section>
 
     <!-- 1 : AGENT LOOP -->
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">01 &mdash; Core model</span><span class="rule"></span></div>
       <h2 class="title">The Agent Loop</h2>
-      <p class="lede">Every SDK call runs the same cycle Claude Code runs internally: read context, decide, act, observe &mdash; repeat until the task is done or a limit stops it.</p>
+      <p class="lede">An agent query uses the same loop as Claude Code: read context, decide, act, observe &mdash; repeat until Claude finishes or a limit stops the run.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 620 460" role="img" aria-label="Circular diagram of the agent loop">
           <defs>
@@ -327,14 +352,15 @@
               <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
             </marker>
           </defs>
-          <path class="flow-accent" marker-end="url(#arrow)" d="M300,105 Q430,120 470,255"/>
-          <path class="flow-accent" marker-end="url(#arrow)" d="M470,290 Q450,400 320,415"/>
-          <path class="flow-accent" marker-end="url(#arrow)" d="M285,415 Q160,400 150,290"/>
-          <path class="flow-accent" marker-end="url(#arrow)" d="M150,255 Q170,120 300,105"/>
+          <path class="flow-accent" marker-end="url(#arrow)" d="M435,65 Q550,100 485,222"/>
+          <path class="flow-accent" marker-end="url(#arrow)" d="M485,288 Q490,395 410,415"/>
+          <path class="flow-accent" marker-end="url(#arrow)" d="M220,415 Q120,400 150,288"/>
+          <path class="flow-accent" marker-end="url(#arrow)" d="M150,222 Q80,110 165,65"/>
 
-          <rect class="node" x="205" y="35" width="190" height="66" rx="10"/>
-          <text class="node-title" x="300" y="62" text-anchor="middle">Context in</text>
-          <text class="node-sub" x="300" y="83" text-anchor="middle">SystemMessage &middot; init</text>
+          <rect class="node" x="165" y="25" width="270" height="80" rx="10"/>
+          <text class="node-title" x="300" y="49" text-anchor="middle">Context in</text>
+          <text class="node-sub" x="300" y="70" text-anchor="middle">instructions + conversation</text>
+          <text class="node-sub" x="300" y="89" text-anchor="middle">tool definitions + results</text>
 
           <rect class="node-accent" x="475" y="222" width="200" height="66" rx="10" transform="translate(-90,0)"/>
           <text class="node-title" x="480" y="249" text-anchor="middle">Claude responds</text>
@@ -349,10 +375,10 @@
           <text class="node-sub" x="140" y="264" text-anchor="middle">ToolResultBlock</text>
           <text class="node-sub" x="140" y="279" text-anchor="middle">inside UserMessage</text>
 
-          <line x1="300" y1="35" x2="300" y2="4" class="flow-dash"/>
-          <text class="label" x="308" y="14">ends as ResultMessage &mdash; status + cost + usage</text>
         </svg>
       </div>
+      <div class="callout"><span class="mono">init</span> reports session setup. <span class="mono">ResultMessage</span> reports how the run ended, with cost and usage. These are events your application receives.</div>
+      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop" target="_blank" rel="noopener noreferrer">Agent loop and message types</a>. Diagram uses Python message type names.</p>
     </section>
 
     <!-- 2 : HOOKS -->
@@ -395,19 +421,20 @@
         </svg>
         <div class="callout">One field now covers both tool families: <span class="mono">updatedToolOutput</span> replaces output for any tool &mdash; MCP or built&#8209;in. The older <span class="mono">updatedMCPToolOutput</span> is deprecated.</div>
       </div>
+      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/hooks#outputs" target="_blank" rel="noopener noreferrer">Hook decisions and output fields</a>.</p>
     </section>
 
     <!-- 3 : SKILLS -->
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">03 &mdash; Packaged know-how</span><span class="rule"></span></div>
       <h2 class="title">Skills</h2>
-      <p class="lede">A skill is a folder of instructions for one kind of task &mdash; loaded only when it's relevant, instead of sitting in context the whole session.</p>
+      <p class="lede">A skill packages instructions for a kind of task. Claude loads them when it invokes the skill; you can also request a skill by name.</p>
       <div class="body-area">
         <div class="grid3">
           <div class="card">
             <span class="tag">Discovered</span>
             <h3>Listed, not loaded</h3>
-            <p>Claude sees a name and one&#8209;line description for every available skill up front &mdash; the full instructions stay out of context until needed.</p>
+            <p>Claude sees short descriptions of the skills available to this session. Full instructions load when a skill is invoked.</p>
           </div>
           <div class="card">
             <span class="tag">Loaded on demand</span>
@@ -421,55 +448,27 @@
           </div>
         </div>
       </div>
+      <div class="callout">Skills must be discovered through your configured settings sources and enabled for the session. The <span class="mono">skills</span> option controls which ones Claude may invoke.</div>
+      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/skills" target="_blank" rel="noopener noreferrer">Configure and invoke skills</a>.</p>
     </section>
 
     <!-- 4 : PERMISSIONS -->
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">04 &mdash; Control</span><span class="rule"></span></div>
       <h2 class="title">Permissions</h2>
-      <p class="lede">Tool calls pass through hooks, rules and the active permission mode. Your callback handles calls that still need an application-level decision.</p>
+      <p class="lede">Read these checks in order. A call can be approved, blocked, or sent for a decision before it reaches the last step.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 900 260" role="img" aria-label="Pipeline diagram of the permission check">
-          <defs>
-            <marker id="arrow3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
-              <path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/>
-            </marker>
-          </defs>
-          <path class="flow" marker-end="url(#arrow3)" d="M122,80 L150,80"/>
-          <path class="flow" marker-end="url(#arrow3)" d="M302,80 L330,80"/>
-          <path class="flow" marker-end="url(#arrow3)" d="M512,80 L540,80"/>
-          <path class="flow" marker-end="url(#arrow3)" d="M702,80 L730,80"/>
-          <path class="flow" marker-end="url(#arrow3)" d="M822,60 L848,34"/>
-          <path class="flow" marker-end="url(#arrow3)" d="M822,100 L848,126"/>
-
-          <rect class="node" x="10" y="46" width="112" height="68" rx="9"/>
-          <text class="node-title" x="66" y="76" text-anchor="middle">Tool call</text>
-          <text class="node-sub" x="66" y="94" text-anchor="middle">e.g. Bash(...)</text>
-
-          <rect class="node-accent2" x="150" y="38" width="152" height="84" rx="9"/>
-          <text class="node-title" x="226" y="66" text-anchor="middle">PreToolUse</text>
-          <text class="node-sub" x="226" y="84" text-anchor="middle">may block or rewrite</text>
-
-          <rect class="node" x="330" y="38" width="182" height="84" rx="9"/>
-          <text class="node-title" x="421" y="64" text-anchor="middle">deny / ask rules</text>
-          <text class="node-sub" x="421" y="84" text-anchor="middle">patterns + settings</text>
-
-          <rect class="node-accent" x="540" y="38" width="162" height="84" rx="9"/>
-          <text class="node-title" x="621" y="60" text-anchor="middle">permissionMode</text>
-          <text class="node-sub" x="621" y="76" text-anchor="middle">default &middot; plan &middot; auto</text>
-          <text class="node-sub" x="621" y="92" text-anchor="middle">acceptEdits &middot; dontAsk</text>
-          <text class="node-sub" x="621" y="108" text-anchor="middle">bypassPermissions</text>
-
-          <rect class="node-accent2" x="730" y="46" width="92" height="68" rx="9"/>
-          <text class="node-title" x="776" y="70" text-anchor="middle">canUse</text>
-          <text class="node-title" x="776" y="88" text-anchor="middle">Tool()</text>
-
-          <rect class="good-box" x="848" y="10" width="42" height="46" rx="8"/>
-          <text class="good-text" x="869" y="38" text-anchor="middle">Run</text>
-          <rect class="bad-box" x="848" y="104" width="42" height="46" rx="8"/>
-          <text class="bad-text" x="869" y="132" text-anchor="middle">Stop</text>
-        </svg>
+        <ol class="permission-steps" aria-label="Permission checks in evaluation order">
+          <li><h3><span>1</span>Hooks</h3><p>Can block, defer or edit a call. A hook&rsquo;s approval still goes through deny and ask rules.</p></li>
+          <li><h3><span>2</span>Deny rules</h3><p>A matching deny rule blocks the call. The approval callback is skipped.</p></li>
+          <li><h3><span>3</span>Ask rules</h3><p>A match goes to the callback for a decision, or is denied in <code>dontAsk</code> mode.</p></li>
+          <li><h3><span>4</span>Permission mode</h3><p>May approve the call or apply extra checks. For example, <code>acceptEdits</code> approves eligible file edits.</p></li>
+          <li><h3><span>5</span>Allow rules</h3><p>An eligible match approves the call. Calls needing no approval also finish here.</p></li>
+          <li><h3><span>6</span>Your callback</h3><p><code>canUseTool</code> / <code>can_use_tool</code> decides remaining calls. In <code>dontAsk</code>, they are denied instead.</p></li>
+        </ol>
+        <div class="callout permission-note">Modes: <span class="mono">default &middot; acceptEdits &middot; plan &middot; auto &middot; dontAsk &middot; bypassPermissions</span>.<br>Already-approved calls skip your callback. Use a <span class="mono">PreToolUse</span> hook for checks that must see every call.</div>
       </div>
+      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/permissions#how-permissions-are-evaluated" target="_blank" rel="noopener noreferrer">Permission order and exceptions</a>. Some protected actions always need extra checks.</p>
     </section>
 
     <!-- 5 : CUSTOM TOOLS -->
@@ -493,18 +492,21 @@
           <text class="node-sub" x="96" y="84" text-anchor="middle">Python / TS handler</text>
 
           <rect class="node-accent" x="214" y="30" width="200" height="80" rx="9"/>
-          <text class="node-title" x="314" y="60" text-anchor="middle" class="mono">@tool / tool()</text>
+          <text class="node-title" x="314" y="60" text-anchor="middle">@tool / tool()</text>
           <text class="node-sub" x="314" y="80" text-anchor="middle">name + description + schema</text>
 
           <rect class="node-accent" x="446" y="30" width="200" height="80" rx="9"/>
-          <text class="node-sub" x="546" y="55" text-anchor="middle">createSdkMcpServer()</text>
-          <text class="node-sub" x="546" y="73" text-anchor="middle">bundles tools together</text>
+          <text class="node-title" x="546" y="54" text-anchor="middle">Bundle the tools</text>
+          <text class="node-sub" x="546" y="76" text-anchor="middle">create_sdk_mcp_server()</text>
+          <text class="node-sub" x="546" y="96" text-anchor="middle">createSdkMcpServer()</text>
 
           <rect class="node-accent2" x="678" y="36" width="212" height="68" rx="9"/>
-          <text class="node-title" x="784" y="60" text-anchor="middle">In the loop</text>
-          <text class="node-sub" x="784" y="80" text-anchor="middle">via mcpServers option</text>
+          <text class="node-title" x="784" y="58" text-anchor="middle">Add to query options</text>
+          <text class="node-sub" x="784" y="78" text-anchor="middle">Python: mcp_servers</text>
+          <text class="node-sub" x="784" y="96" text-anchor="middle">TypeScript: mcpServers</text>
         </svg>
       </div>
+      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/custom-tools" target="_blank" rel="noopener noreferrer">Custom tools in Python and TypeScript</a>. Tool handlers run inside your application process.</p>
     </section>
 
     <!-- 6 : SUBAGENTS -->
@@ -548,13 +550,14 @@
           <text class="label" x="360" y="278" text-anchor="middle">result returns to parent &mdash; working context stays isolated</text>
         </svg>
       </div>
+      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/subagents" target="_blank" rel="noopener noreferrer">Subagent context and returned reports</a>.</p>
     </section>
 
     <!-- 7 : SESSIONS -->
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">07 &mdash; Continuity</span><span class="rule"></span></div>
       <h2 class="title">Sessions</h2>
-      <p class="lede">Each run has a <span class="mono">session_id</span>. Sessions are stored locally by default and can be continued, resumed, forked, or mirrored to external storage.</p>
+      <p class="lede">A <span class="mono">session_id</span> identifies a conversation. Its history is saved locally by default, so a later run can pick up where it left off. You can also mirror it to external storage.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 800 260" role="img" aria-label="Timeline diagram of resuming and forking a session">
           <defs>
@@ -586,13 +589,15 @@
           <text class="node-sub" x="520" y="222" text-anchor="middle">inherited history</text>
         </svg>
       </div>
+      <div class="callout">A fork copies the conversation history. It does not copy your files: edits in the same working directory are visible to both sessions.</div>
+      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/sessions" target="_blank" rel="noopener noreferrer">Continue, resume and fork sessions</a>.</p>
     </section>
 
     <!-- 8 : MCP SERVERS -->
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">08 &mdash; Connections</span><span class="rule"></span></div>
       <h2 class="title">External MCP Servers</h2>
-      <p class="lede">Connect local or remote MCP servers through stdio, SSE, or Streamable HTTP. For large catalogs, Tool Search can defer detailed schemas until Claude needs them.</p>
+      <p class="lede">Connect local or remote MCP servers through stdio, SSE, or Streamable HTTP. Tool Search loads tool definitions when needed and is on by default where supported.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 760 260" role="img" aria-label="Hub and spoke diagram of external MCP server connections">
           <defs>
@@ -602,7 +607,7 @@
           </defs>
           <rect class="node-accent" x="40" y="98" width="200" height="64" rx="9"/>
           <text class="node-title" x="140" y="124" text-anchor="middle">Your SDK agent</text>
-          <text class="node-sub" x="140" y="144" text-anchor="middle">optional Tool Search</text>
+          <text class="node-sub" x="140" y="144" text-anchor="middle">find tools on demand</text>
 
           <path class="flow" marker-end="url(#arrow7)" d="M240,110 Q380,40 480,50"/>
           <path class="flow" marker-end="url(#arrow7)" d="M240,130 L480,130"/>
@@ -621,42 +626,45 @@
           <text class="node-sub" x="600" y="224" text-anchor="middle">current remote transport</text>
         </svg>
       </div>
+      <p class="sources">Sources: <a href="https://code.claude.com/docs/en/agent-sdk/mcp#transport-types" target="_blank" rel="noopener noreferrer">MCP transports</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/tool-search" target="_blank" rel="noopener noreferrer">Tool Search defaults and supported configurations</a>.</p>
     </section>
 
     <!-- 9 : GUARDRAILS -->
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">09 &mdash; Limits</span><span class="rule"></span></div>
       <h2 class="title">Runtime Limits &amp; Effort</h2>
-      <p class="lede">Two hard limits bound an open-ended run; a third control trades speed and cost for reasoning depth.</p>
+      <p class="lede">Limit tool-use turns, set an estimated spending threshold, and choose how much reasoning Claude applies to each response.</p>
       <div class="body-area">
         <div class="stat-row">
           <div class="stat">
             <span class="mono-key">maxTurns</span>
-            <h3>Round&#8209;trip cap</h3>
+            <h3>Tool-use turn limit</h3>
             <div class="meter"><i style="width:55%"></i></div>
-            <p>Caps tool&#8209;use round trips. Hit it and the run stops with <code class="mono">error_max_turns</code> plus partial output.</p>
+            <p>Stops with <code class="mono">error_max_turns</code>. Keep earlier streamed messages: this error has no final <code class="mono">result</code> answer.</p>
           </div>
           <div class="stat">
             <span class="mono-key">maxBudgetUsd</span>
-            <h3>Spend cap</h3>
+            <h3>Budget threshold</h3>
             <div class="meter"><i style="width:78%"></i></div>
-            <p>Stops the query when the SDK&rsquo;s cumulative client-side cost estimate reaches the threshold.</p>
+            <p>Stops when estimated spend reaches the threshold, checked after each response. That response and running subagents can push the total higher.</p>
           </div>
           <div class="stat">
             <span class="mono-key">effort</span>
             <h3>Reasoning depth</h3>
             <div class="meter"><i style="width:35%"></i></div>
-            <p><code class="mono">low</code> to <code class="mono">max</code> &mdash; trades speed and cost for reasoning depth, per turn.</p>
+            <p><code class="mono">low</code> to <code class="mono">max</code> &mdash; trades speed and token cost for reasoning depth. Available levels depend on the model.</p>
           </div>
         </div>
       </div>
+      <div class="callout">For example, a <span class="mono">$1</span> threshold can finish above <span class="mono">$1</span>. Leave headroom, and use billing records for the actual charge.</div>
+      <p class="sources">Sources: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#turns-and-budget" target="_blank" rel="noopener noreferrer">Limits and effort</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/cost-tracking" target="_blank" rel="noopener noreferrer">Cost estimates</a>. Option names here are TypeScript.</p>
     </section>
 
     <!-- 10 : COMPACTION -->
     <section class="slide">
       <div class="eyebrow"><span>Module</span><span class="idx mono">10 &mdash; Memory</span><span class="rule"></span></div>
       <h2 class="title">Context Compaction</h2>
-      <p class="lede">As a conversation approaches its context limit, the runtime compacts earlier context into a summary while retaining the recent working state needed to continue.</p>
+      <p class="lede">When context fills up, the runtime summarizes older conversation history and keeps recent exchanges so Claude can continue. Some older details can be lost.</p>
       <div class="body-area">
         <svg class="diagram" viewBox="0 0 800 200" role="img" aria-label="Timeline diagram of context compaction">
           <defs>
@@ -668,19 +676,19 @@
           <text class="node-title" x="120" y="88" text-anchor="middle">Older turns</text>
           <text class="node-sub" x="120" y="108" text-anchor="middle">full detail, growing</text>
 
-          <path class="flow-accent" marker-end="url(#arrow8)" d="M220,95 L330,75"/>
-          <rect class="node-accent" x="330" y="45" width="150" height="60" rx="9"/>
-          <text class="node-title" x="405" y="70" text-anchor="middle">Compaction</text>
-          <text class="node-sub" x="405" y="86" text-anchor="middle">observable via</text>
-          <text class="node-sub" x="405" y="100" text-anchor="middle">PreCompact</text>
-
-          <line x1="510" y1="20" x2="510" y2="170" stroke="var(--line-strong)" stroke-dasharray="4 5"/>
+          <path class="flow-accent" marker-end="url(#arrow8)" d="M220,95 L300,95"/>
+          <rect class="node-accent" x="300" y="60" width="180" height="70" rx="9"/>
+          <text class="node-title" x="390" y="88" text-anchor="middle">Summary</text>
+          <text class="node-sub" x="390" y="108" text-anchor="middle">key points from history</text>
+          <path class="flow-accent" marker-end="url(#arrow8)" d="M480,95 L540,95"/>
 
           <rect class="node-accent2" x="540" y="60" width="240" height="70" rx="9"/>
-          <text class="node-title" x="660" y="88" text-anchor="middle">Recent turns</text>
-          <text class="node-sub" x="660" y="108" text-anchor="middle">kept in full, untouched</text>
+          <text class="node-title" x="660" y="88" text-anchor="middle">Continue with</text>
+          <text class="node-sub" x="660" y="108" text-anchor="middle">summary + recent exchanges</text>
         </svg>
       </div>
+      <div class="callout"><span class="mono">PreCompact</span> runs before compaction; <span class="mono">compact_boundary</span> marks it afterward. Put lasting project rules in <span class="mono">CLAUDE.md</span>, loaded through your settings sources.</div>
+      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#automatic-compaction" target="_blank" rel="noopener noreferrer">Compaction and persistent instructions</a>.</p>
     </section>
 
     <!-- 11 : PYTHON VS TS -->
@@ -693,17 +701,19 @@
           <div class="col py">
             <header>Python</header>
             <div class="row"><span class="k">Session tracking</span><code>ClaudeSDKClient</code> auto&#8209;tracks across calls</div>
-            <div class="row"><span class="k">Naming</span><code>snake_case</code> options</div>
+            <div class="row"><span class="k">Top-level options</span><code>snake_case</code>, e.g. <code>max_turns</code></div>
             <div class="row"><span class="k">Custom tool</span><code>@tool</code> decorator</div>
           </div>
           <div class="col ts">
             <header>TypeScript</header>
             <div class="row"><span class="k">Session tracking</span><code>query()</code> with continuation or resume options</div>
-            <div class="row"><span class="k">Naming</span><code>camelCase</code> options</div>
+            <div class="row"><span class="k">Top-level options</span><code>camelCase</code>, e.g. <code>maxTurns</code></div>
             <div class="row"><span class="k">Custom tool</span><code>tool()</code> helper</div>
           </div>
         </div>
       </div>
+      <div class="callout">Python has exceptions: hook fields and <span class="mono">AgentDefinition</span> use names such as <span class="mono">updatedInput</span> and <span class="mono">maxTurns</span>. Check the type you are configuring.</div>
+      <p class="sources">Sources: <a href="https://code.claude.com/docs/en/agent-sdk/python" target="_blank" rel="noopener noreferrer">Python reference</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/typescript" target="_blank" rel="noopener noreferrer">TypeScript reference</a>.</p>
     </section>
 
     <!-- 12 : SYNTHESIS -->
@@ -763,9 +773,8 @@
         </svg>
       </div>
       <p class="closing-line">The pieces change what the loop can do &mdash; <span class="accent">the loop is still the thing.</span></p>
+      <p class="sources">Start here: <a href="https://code.claude.com/docs/en/agent-sdk/overview" target="_blank" rel="noopener noreferrer">Official Agent SDK overview</a>. Each slide links to the details behind its explanation.</p>
     </section>
-
-  </div>
 
     <button class="edge-zone left" id="edgeLeft" aria-label="Previous slide"></button>
     <button class="edge-zone right" id="edgeRight" aria-label="Next slide"></button>
@@ -871,3 +880,5 @@
 })();
 </script>
 <script src="./deck-standard.js"></script>
+
+</html>
