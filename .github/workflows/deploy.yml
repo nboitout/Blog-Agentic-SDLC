@@ -49,6 +49,9 @@ jobs:
       - name: Verify engineering assessment scoring
         run: npm run test:assessment
 
+      - name: Verify academy deck translations
+        run: npm run test:academy-locales
+
       - name: Build with VitePress
         run: npm run build
 

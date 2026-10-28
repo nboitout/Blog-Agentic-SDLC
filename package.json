@@ -9,6 +9,7 @@
     "preview": "vitepress preview docs",
     "check-translations": "node scripts/check-translations.js",
     "test:assessment": "node --test tests/engineering-assessment.test.mjs",
+    "test:academy-locales": "node --test tests/*deck-locales.test.mjs",
     "test:context-lab": "node --test tests/context-lab.test.mjs",
     "validate:context-lab-pricing-report": "node scripts/validate-context-lab-pricing-report.mjs",
     "test:context-decisions": "node --test tests/context-decisions.test.mjs docs/public/downloads/context-engineering/tests/validation.test.mjs",

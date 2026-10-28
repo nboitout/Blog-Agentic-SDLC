@@ -330,155 +330,155 @@
         <path d="M11.5 24 L8 16 M11.5 24 L20 22" fill="none" stroke="var(--accent)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
         <circle cx="32" cy="32" r="5" fill="var(--accent-2)"/>
       </svg>
-      <h1>Agent&nbsp;SDK Anatomy</h1>
-      <p class="sub">The core building blocks that turn a prompt into an autonomous, tool&#8209;using loop &mdash; and how Python and TypeScript expose them.</p>
+      <h1 data-i18n="s0-1">Agent&nbsp;SDK Anatomy</h1>
+      <p class="sub" data-i18n="s0-2">The core building blocks that turn a prompt into an autonomous, tool&#8209;using loop &mdash; and how Python and TypeScript expose them.</p>
       <div class="meta">
-        <span>Claude Agent SDK</span>
-        <span>Python &amp; TypeScript</span>
-        <span>13-slide anatomy</span>
+        <span data-i18n="s0-3">Claude Agent SDK</span>
+        <span data-i18n="s0-4">Python &amp; TypeScript</span>
+        <span data-i18n="s0-5">13-slide anatomy</span>
       </div>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/overview" target="_blank" rel="noopener noreferrer">Agent SDK overview</a>.</p>
-      <p class="sources source-note">Documentation reviewed: <time datetime="2026-10-27">27 October 2026</time>.</p>
+      <p class="sources" data-i18n="s0-6">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/overview" target="_blank" rel="noopener noreferrer">Agent SDK overview</a>.</p>
+      <p class="sources source-note" data-i18n="s0-7">Documentation reviewed: <time datetime="2026-10-27">27 October 2026</time>.</p>
     </section>
 
     <!-- 1 : AGENT LOOP -->
     <section class="slide">
-      <div class="eyebrow"><span>Module</span><span class="idx mono">01 &mdash; Core model</span><span class="rule"></span></div>
-      <h2 class="title">The Agent Loop</h2>
-      <p class="lede">An agent query uses the same loop as Claude Code: read context, decide, act, observe &mdash; repeat until Claude finishes or a limit stops the run.</p>
+      <div class="eyebrow"><span data-i18n="s1-1">Module</span><span class="idx mono" data-i18n="s1-2">01 &mdash; Core model</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s1-3">The Agent Loop</h2>
+      <p class="lede" data-i18n="s1-4">An agent query uses the same loop as Claude Code: read context, decide, act, observe &mdash; repeat until Claude finishes or a limit stops the run.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 620 460" role="img" aria-label="Circular diagram of the agent loop">
+        <svg class="diagram" viewBox="0 0 620 460" role="img" aria-label="Circular diagram of the agent loop" data-i18n-aria="s1-diagram">
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
             </marker>
           </defs>
           <path class="flow-accent" marker-end="url(#arrow)" d="M435,65 Q550,100 485,222"/>
-          <path class="flow-accent" marker-end="url(#arrow)" d="M485,288 Q490,395 410,415"/>
-          <path class="flow-accent" marker-end="url(#arrow)" d="M220,415 Q120,400 150,288"/>
+          <path class="flow-accent" marker-end="url(#arrow)" d="M485,288 Q490,395 425,415"/>
+          <path class="flow-accent" marker-end="url(#arrow)" d="M205,415 Q120,400 150,288"/>
           <path class="flow-accent" marker-end="url(#arrow)" d="M150,222 Q80,110 165,65"/>
 
           <rect class="node" x="165" y="25" width="270" height="80" rx="10"/>
-          <text class="node-title" x="300" y="49" text-anchor="middle">Context in</text>
-          <text class="node-sub" x="300" y="70" text-anchor="middle">instructions + conversation</text>
-          <text class="node-sub" x="300" y="89" text-anchor="middle">tool definitions + results</text>
+          <text class="node-title" x="300" y="49" text-anchor="middle" data-i18n="s1-5">Context in</text>
+          <text class="node-sub" x="300" y="70" text-anchor="middle" data-i18n="s1-6">instructions + conversation</text>
+          <text class="node-sub" x="300" y="89" text-anchor="middle" data-i18n="s1-7">tool definitions + results</text>
 
           <rect class="node-accent" x="475" y="222" width="200" height="66" rx="10" transform="translate(-90,0)"/>
-          <text class="node-title" x="480" y="249" text-anchor="middle">Claude responds</text>
-          <text class="node-sub" x="480" y="270" text-anchor="middle">AssistantMessage</text>
+          <text class="node-title" x="480" y="249" text-anchor="middle" data-i18n="s1-8">Claude responds</text>
+          <text class="node-sub" x="480" y="270" text-anchor="middle" data-i18n="s1-9">AssistantMessage</text>
 
-          <rect class="node" x="220" y="382" width="190" height="66" rx="10"/>
-          <text class="node-title" x="315" y="409" text-anchor="middle">Tool executes</text>
-          <text class="node-sub" x="315" y="430" text-anchor="middle">built&#8209;in / MCP / custom</text>
+          <rect class="node" x="205" y="382" width="220" height="66" rx="10"/>
+          <text class="node-title" x="315" y="409" text-anchor="middle" data-i18n="s1-10">Tool executes</text>
+          <text class="node-sub" x="315" y="430" text-anchor="middle" data-i18n="s1-11">built&#8209;in / MCP / custom</text>
 
           <rect class="node-accent2" x="30" y="222" width="200" height="66" rx="10" transform="translate(20,0)"/>
-          <text class="node-title" x="140" y="249" text-anchor="middle">Result feeds back</text>
-          <text class="node-sub" x="140" y="264" text-anchor="middle">ToolResultBlock</text>
-          <text class="node-sub" x="140" y="279" text-anchor="middle">inside UserMessage</text>
+          <text class="node-title" x="140" y="249" text-anchor="middle" data-i18n="s1-12">Result feeds back</text>
+          <text class="node-sub" x="140" y="264" text-anchor="middle" data-i18n="s1-13">ToolResultBlock</text>
+          <text class="node-sub" x="140" y="279" text-anchor="middle" data-i18n="s1-14">inside UserMessage</text>
 
         </svg>
       </div>
-      <div class="callout"><span class="mono">init</span> reports session setup. <span class="mono">ResultMessage</span> reports how the run ended, with cost and usage. These are events your application receives.</div>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop" target="_blank" rel="noopener noreferrer">Agent loop and message types</a>. Diagram uses Python message type names.</p>
+      <div class="callout" data-i18n="s1-15"><span class="mono">init</span> reports session setup. <span class="mono">ResultMessage</span> reports how the run ended, with cost and usage. These are events your application receives.</div>
+      <p class="sources" data-i18n="s1-16">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop" target="_blank" rel="noopener noreferrer">Agent loop and message types</a>. Diagram uses Python message type names.</p>
     </section>
 
     <!-- 2 : HOOKS -->
     <section class="slide">
-      <div class="eyebrow"><span>Module</span><span class="idx mono">02 &mdash; Interception</span><span class="rule"></span></div>
-      <h2 class="title">Hooks: Pre / PostToolUse</h2>
-      <p class="lede">Hooks sit inside the loop, not beside it &mdash; intercepting a call before it runs, or rewriting its result after, without touching the tool's own code.</p>
+      <div class="eyebrow"><span data-i18n="s2-1">Module</span><span class="idx mono" data-i18n="s2-2">02 &mdash; Interception</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s2-3">Hooks: Pre / PostToolUse</h2>
+      <p class="lede" data-i18n="s2-4">Hooks sit inside the loop, not beside it &mdash; intercepting a call before it runs, or rewriting its result after, without touching the tool's own code.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 900 260" role="img" aria-label="Pipeline diagram of PreToolUse and PostToolUse hooks">
+        <svg class="diagram" viewBox="0 0 900 260" role="img" aria-label="Pipeline diagram of PreToolUse and PostToolUse hooks" data-i18n-aria="s2-diagram">
           <defs>
             <marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/>
             </marker>
           </defs>
-          <path class="flow" marker-end="url(#arrow2)" d="M148,80 L182,80"/>
-          <path class="flow" marker-end="url(#arrow2)" d="M338,80 L372,80"/>
-          <path class="flow" marker-end="url(#arrow2)" d="M528,80 L562,80"/>
-          <path class="flow" marker-end="url(#arrow2)" d="M718,80 L752,80"/>
+          <path class="flow" marker-end="url(#arrow2)" d="M148,80 L168,80"/>
+          <path class="flow" marker-end="url(#arrow2)" d="M352,80 L372,80"/>
+          <path class="flow" marker-end="url(#arrow2)" d="M528,80 L548,80"/>
+          <path class="flow" marker-end="url(#arrow2)" d="M732,80 L752,80"/>
 
           <rect class="node" x="10" y="46" width="138" height="68" rx="9"/>
-          <text class="node-title" x="79" y="76" text-anchor="middle">Claude picks</text>
-          <text class="node-title" x="79" y="93" text-anchor="middle">a tool</text>
+          <text class="node-title" x="79" y="76" text-anchor="middle" data-i18n="s2-5">Claude picks</text>
+          <text class="node-title" x="79" y="93" text-anchor="middle" data-i18n="s2-6">a tool</text>
 
-          <rect class="node-accent" x="182" y="40" width="156" height="80" rx="9"/>
-          <text class="node-title" x="260" y="70" text-anchor="middle">PreToolUse</text>
-          <text class="node-sub" x="260" y="88" text-anchor="middle">allow &middot; deny &middot; ask</text>
-          <text class="node-sub" x="260" y="103" text-anchor="middle">defer &middot; edit input</text>
+          <rect class="node-accent" x="168" y="40" width="184" height="80" rx="9"/>
+          <text class="node-title" x="260" y="70" text-anchor="middle" data-i18n="s2-7">PreToolUse</text>
+          <text class="node-sub" x="260" y="88" text-anchor="middle" data-i18n="s2-8">allow &middot; deny &middot; ask</text>
+          <text class="node-sub" x="260" y="103" text-anchor="middle" data-i18n="s2-9">defer &middot; edit input</text>
 
           <rect class="node" x="372" y="46" width="156" height="68" rx="9"/>
-          <text class="node-title" x="450" y="76" text-anchor="middle">Tool runs</text>
+          <text class="node-title" x="450" y="76" text-anchor="middle" data-i18n="s2-10">Tool runs</text>
 
-          <rect class="node-accent" x="562" y="40" width="156" height="80" rx="9"/>
-          <text class="node-title" x="640" y="66" text-anchor="middle">PostToolUse</text>
-          <text class="node-sub" x="640" y="84" text-anchor="middle">updatedToolOutput</text>
-          <text class="node-sub" x="640" y="98" text-anchor="middle">additionalContext</text>
+          <rect class="node-accent" x="548" y="40" width="184" height="80" rx="9"/>
+          <text class="node-title" x="640" y="66" text-anchor="middle" data-i18n="s2-11">PostToolUse</text>
+          <text class="node-sub" x="640" y="84" text-anchor="middle" data-i18n="s2-12">updatedToolOutput</text>
+          <text class="node-sub" x="640" y="98" text-anchor="middle" data-i18n="s2-13">additionalContext</text>
 
           <rect class="node" x="752" y="46" width="138" height="68" rx="9"/>
-          <text class="node-title" x="821" y="76" text-anchor="middle">Result to</text>
-          <text class="node-title" x="821" y="93" text-anchor="middle">Claude</text>
+          <text class="node-title" x="821" y="76" text-anchor="middle" data-i18n="s2-14">Result to</text>
+          <text class="node-title" x="821" y="93" text-anchor="middle" data-i18n="s2-15">Claude</text>
         </svg>
-        <div class="callout">One field now covers both tool families: <span class="mono">updatedToolOutput</span> replaces output for any tool &mdash; MCP or built&#8209;in. The older <span class="mono">updatedMCPToolOutput</span> is deprecated.</div>
+        <div class="callout" data-i18n="s2-16">One field now covers both tool families: <span class="mono">updatedToolOutput</span> replaces output for any tool &mdash; MCP or built&#8209;in. The older <span class="mono">updatedMCPToolOutput</span> is deprecated.</div>
       </div>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/hooks#outputs" target="_blank" rel="noopener noreferrer">Hook decisions and output fields</a>.</p>
+      <p class="sources" data-i18n="s2-17">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/hooks#outputs" target="_blank" rel="noopener noreferrer">Hook decisions and output fields</a>.</p>
     </section>
 
     <!-- 3 : SKILLS -->
     <section class="slide">
-      <div class="eyebrow"><span>Module</span><span class="idx mono">03 &mdash; Packaged know-how</span><span class="rule"></span></div>
-      <h2 class="title">Skills</h2>
-      <p class="lede">A skill packages instructions for a kind of task. Claude loads them when it invokes the skill; you can also request a skill by name.</p>
+      <div class="eyebrow"><span data-i18n="s3-1">Module</span><span class="idx mono" data-i18n="s3-2">03 &mdash; Packaged know-how</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s3-3">Skills</h2>
+      <p class="lede" data-i18n="s3-4">A skill packages instructions for a kind of task. Claude loads them when it invokes the skill; you can also request a skill by name.</p>
       <div class="body-area">
         <div class="grid3">
           <div class="card">
-            <span class="tag">Discovered</span>
-            <h3>Listed, not loaded</h3>
-            <p>Claude sees short descriptions of the skills available to this session. Full instructions load when a skill is invoked.</p>
+            <span class="tag" data-i18n="s3-5">Discovered</span>
+            <h3 data-i18n="s3-6">Listed, not loaded</h3>
+            <p data-i18n="s3-7">Claude sees short descriptions of the skills available to this session. Full instructions load when a skill is invoked.</p>
           </div>
           <div class="card">
-            <span class="tag">Loaded on demand</span>
-            <h3>Pulled in mid&#8209;task</h3>
-            <p>When a request matches, Claude invokes the Skill tool and loads the relevant instructions into the active context &mdash; e.g. a docx skill only when a Word file is due.</p>
+            <span class="tag" data-i18n="s3-8">Loaded on demand</span>
+            <h3 data-i18n="s3-9">Pulled in mid&#8209;task</h3>
+            <p data-i18n="s3-10">When a request matches, Claude invokes the Skill tool and loads the relevant instructions into the active context &mdash; e.g. a docx skill only when a Word file is due.</p>
           </div>
           <div class="card">
-            <span class="tag">Composable</span>
-            <h3>Stack when needed</h3>
-            <p>Several skills can combine in one task &mdash; a research skill to gather facts, then a document skill to format the result.</p>
+            <span class="tag" data-i18n="s3-11">Composable</span>
+            <h3 data-i18n="s3-12">Stack when needed</h3>
+            <p data-i18n="s3-13">Several skills can combine in one task &mdash; a research skill to gather facts, then a document skill to format the result.</p>
           </div>
         </div>
       </div>
-      <div class="callout">Skills must be discovered through your configured settings sources and enabled for the session. The <span class="mono">skills</span> option controls which ones Claude may invoke.</div>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/skills" target="_blank" rel="noopener noreferrer">Configure and invoke skills</a>.</p>
+      <div class="callout" data-i18n="s3-14">Skills must be discovered through your configured settings sources and enabled for the session. The <span class="mono">skills</span> option controls which ones Claude may invoke.</div>
+      <p class="sources" data-i18n="s3-15">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/skills" target="_blank" rel="noopener noreferrer">Configure and invoke skills</a>.</p>
     </section>
 
     <!-- 4 : PERMISSIONS -->
     <section class="slide">
-      <div class="eyebrow"><span>Module</span><span class="idx mono">04 &mdash; Control</span><span class="rule"></span></div>
-      <h2 class="title">Permissions</h2>
-      <p class="lede">Read these checks in order. A call can be approved, blocked, or sent for a decision before it reaches the last step.</p>
+      <div class="eyebrow"><span data-i18n="s4-1">Module</span><span class="idx mono" data-i18n="s4-2">04 &mdash; Control</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s4-3">Permissions</h2>
+      <p class="lede" data-i18n="s4-4">Read these checks in order. A call can be approved, blocked, or sent for a decision before it reaches the last step.</p>
       <div class="body-area">
-        <ol class="permission-steps" aria-label="Permission checks in evaluation order">
-          <li><h3><span>1</span>Hooks</h3><p>Can block, defer or edit a call. A hook&rsquo;s approval still goes through deny and ask rules.</p></li>
-          <li><h3><span>2</span>Deny rules</h3><p>A matching deny rule blocks the call. The approval callback is skipped.</p></li>
-          <li><h3><span>3</span>Ask rules</h3><p>A match goes to the callback for a decision, or is denied in <code>dontAsk</code> mode.</p></li>
-          <li><h3><span>4</span>Permission mode</h3><p>May approve the call or apply extra checks. For example, <code>acceptEdits</code> approves eligible file edits.</p></li>
-          <li><h3><span>5</span>Allow rules</h3><p>An eligible match approves the call. Calls needing no approval also finish here.</p></li>
-          <li><h3><span>6</span>Your callback</h3><p><code>canUseTool</code> / <code>can_use_tool</code> decides remaining calls. In <code>dontAsk</code>, they are denied instead.</p></li>
+        <ol class="permission-steps" aria-label="Permission checks in evaluation order" data-i18n-aria="s4-diagram">
+          <li><h3 data-i18n="s4-5"><span>1</span>Hooks</h3><p data-i18n="s4-6">Can block, defer or edit a call. A hook&rsquo;s approval still goes through deny and ask rules.</p></li>
+          <li><h3 data-i18n="s4-7"><span>2</span>Deny rules</h3><p data-i18n="s4-8">A matching deny rule blocks the call. The approval callback is skipped.</p></li>
+          <li><h3 data-i18n="s4-9"><span>3</span>Ask rules</h3><p data-i18n="s4-10">A match goes to the callback for a decision, or is denied in <code>dontAsk</code> mode.</p></li>
+          <li><h3 data-i18n="s4-11"><span>4</span>Permission mode</h3><p data-i18n="s4-12">May approve the call or apply extra checks. For example, <code>acceptEdits</code> approves eligible file edits.</p></li>
+          <li><h3 data-i18n="s4-13"><span>5</span>Allow rules</h3><p data-i18n="s4-14">An eligible match approves the call. Calls needing no approval also finish here.</p></li>
+          <li><h3 data-i18n="s4-15"><span>6</span>Your callback</h3><p data-i18n="s4-16"><code>canUseTool</code> / <code>can_use_tool</code> decides remaining calls. In <code>dontAsk</code>, they are denied instead.</p></li>
         </ol>
-        <div class="callout permission-note">Modes: <span class="mono">default &middot; acceptEdits &middot; plan &middot; auto &middot; dontAsk &middot; bypassPermissions</span>.<br>Already-approved calls skip your callback. Use a <span class="mono">PreToolUse</span> hook for checks that must see every call.</div>
+        <div class="callout permission-note" data-i18n="s4-17">Modes: <span class="mono">default &middot; acceptEdits &middot; plan &middot; auto &middot; dontAsk &middot; bypassPermissions</span>.<br>Already-approved calls skip your callback. Use a <span class="mono">PreToolUse</span> hook for checks that must see every call.</div>
       </div>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/permissions#how-permissions-are-evaluated" target="_blank" rel="noopener noreferrer">Permission order and exceptions</a>. Some protected actions always need extra checks.</p>
+      <p class="sources" data-i18n="s4-18">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/permissions#how-permissions-are-evaluated" target="_blank" rel="noopener noreferrer">Permission order and exceptions</a>. Some protected actions always need extra checks.</p>
     </section>
 
     <!-- 5 : CUSTOM TOOLS -->
     <section class="slide">
-      <div class="eyebrow"><span>Module</span><span class="idx mono">05 &mdash; Extensibility</span><span class="rule"></span></div>
-      <h2 class="title">Custom Tools</h2>
-      <p class="lede">Wrap your own function so Claude can call it like any built&#8209;in &mdash; no separate process to run or manage.</p>
+      <div class="eyebrow"><span data-i18n="s5-1">Module</span><span class="idx mono" data-i18n="s5-2">05 &mdash; Extensibility</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s5-3">Custom Tools</h2>
+      <p class="lede" data-i18n="s5-4">Wrap your own function so Claude can call it like any built&#8209;in &mdash; no separate process to run or manage.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 900 220" role="img" aria-label="Pipeline diagram of defining a custom tool">
+        <svg class="diagram" viewBox="0 0 900 220" role="img" aria-label="Pipeline diagram of defining a custom tool" data-i18n-aria="s5-diagram">
           <defs>
             <marker id="arrow4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/>
@@ -489,34 +489,34 @@
           <path class="flow" marker-end="url(#arrow4)" d="M646,70 L678,70"/>
 
           <rect class="node" x="10" y="36" width="172" height="68" rx="9"/>
-          <text class="node-title" x="96" y="64" text-anchor="middle">Your function</text>
-          <text class="node-sub" x="96" y="84" text-anchor="middle">Python / TS handler</text>
+          <text class="node-title" x="96" y="64" text-anchor="middle" data-i18n="s5-5">Your function</text>
+          <text class="node-sub" x="96" y="84" text-anchor="middle" data-i18n="s5-6">Python / TS handler</text>
 
           <rect class="node-accent" x="214" y="30" width="200" height="80" rx="9"/>
-          <text class="node-title" x="314" y="60" text-anchor="middle">@tool / tool()</text>
-          <text class="node-sub" x="314" y="80" text-anchor="middle">name + description + schema</text>
+          <text class="node-title" x="314" y="60" text-anchor="middle" data-i18n="s5-7">@tool / tool()</text>
+          <text class="node-sub" x="314" y="80" text-anchor="middle" data-i18n="s5-8">name + description + schema</text>
 
           <rect class="node-accent" x="446" y="30" width="200" height="80" rx="9"/>
-          <text class="node-title" x="546" y="54" text-anchor="middle">Bundle the tools</text>
-          <text class="node-sub" x="546" y="76" text-anchor="middle">create_sdk_mcp_server()</text>
-          <text class="node-sub" x="546" y="96" text-anchor="middle">createSdkMcpServer()</text>
+          <text class="node-title" x="546" y="54" text-anchor="middle" data-i18n="s5-9">Bundle the tools</text>
+          <text class="node-sub" x="546" y="76" text-anchor="middle" data-i18n="s5-10">create_sdk_mcp_server()</text>
+          <text class="node-sub" x="546" y="96" text-anchor="middle" data-i18n="s5-11">createSdkMcpServer()</text>
 
           <rect class="node-accent2" x="678" y="36" width="212" height="68" rx="9"/>
-          <text class="node-title" x="784" y="58" text-anchor="middle">Add to query options</text>
-          <text class="node-sub" x="784" y="78" text-anchor="middle">Python: mcp_servers</text>
-          <text class="node-sub" x="784" y="96" text-anchor="middle">TypeScript: mcpServers</text>
+          <text class="node-title" x="784" y="58" text-anchor="middle" data-i18n="s5-12">Add to query options</text>
+          <text class="node-sub" x="784" y="78" text-anchor="middle" data-i18n="s5-13">Python: mcp_servers</text>
+          <text class="node-sub" x="784" y="96" text-anchor="middle" data-i18n="s5-14">TypeScript: mcpServers</text>
         </svg>
       </div>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/custom-tools" target="_blank" rel="noopener noreferrer">Custom tools in Python and TypeScript</a>. Tool handlers run inside your application process.</p>
+      <p class="sources" data-i18n="s5-15">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/custom-tools" target="_blank" rel="noopener noreferrer">Custom tools in Python and TypeScript</a>. Tool handlers run inside your application process.</p>
     </section>
 
     <!-- 6 : SUBAGENTS -->
     <section class="slide">
-      <div class="eyebrow"><span>Module</span><span class="idx mono">06 &mdash; Delegation</span><span class="rule"></span></div>
-      <h2 class="title">Subagents</h2>
-      <p class="lede">A subagent works in its own context. The parent receives its returned result rather than the full working transcript, while the application can optionally observe intermediate activity.</p>
+      <div class="eyebrow"><span data-i18n="s6-1">Module</span><span class="idx mono" data-i18n="s6-2">06 &mdash; Delegation</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s6-3">Subagents</h2>
+      <p class="lede" data-i18n="s6-4">A subagent works in its own context. The parent receives its returned result rather than the full working transcript, while the application can optionally observe intermediate activity.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 720 300" role="img" aria-label="Fan-out diagram of a parent agent spawning subagents">
+        <svg class="diagram" viewBox="0 0 720 300" role="img" aria-label="Fan-out diagram of a parent agent spawning subagents" data-i18n-aria="s6-diagram">
           <defs>
             <marker id="arrow5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/>
@@ -526,41 +526,41 @@
             </marker>
           </defs>
           <rect class="node-accent" x="270" y="14" width="180" height="60" rx="9"/>
-          <text class="node-title" x="360" y="40" text-anchor="middle">Parent agent</text>
-          <text class="node-sub" x="360" y="58" text-anchor="middle">main context</text>
+          <text class="node-title" x="360" y="40" text-anchor="middle" data-i18n="s6-5">Parent agent</text>
+          <text class="node-sub" x="360" y="58" text-anchor="middle" data-i18n="s6-6">main context</text>
 
           <path class="flow" marker-end="url(#arrow5)" d="M300,74 L120,150"/>
           <path class="flow" marker-end="url(#arrow5)" d="M360,74 L360,150"/>
           <path class="flow" marker-end="url(#arrow5)" d="M420,74 L600,150"/>
 
           <rect class="node" x="40" y="150" width="160" height="62" rx="9"/>
-          <text class="node-title" x="120" y="176" text-anchor="middle">Subagent A</text>
-          <text class="node-sub" x="120" y="196" text-anchor="middle">own tools + prompt</text>
+          <text class="node-title" x="120" y="176" text-anchor="middle" data-i18n="s6-7">Subagent A</text>
+          <text class="node-sub" x="120" y="196" text-anchor="middle" data-i18n="s6-8">own tools + prompt</text>
 
           <rect class="node" x="280" y="150" width="160" height="62" rx="9"/>
-          <text class="node-title" x="360" y="176" text-anchor="middle">Subagent B</text>
-          <text class="node-sub" x="360" y="196" text-anchor="middle">own tools + prompt</text>
+          <text class="node-title" x="360" y="176" text-anchor="middle" data-i18n="s6-9">Subagent B</text>
+          <text class="node-sub" x="360" y="196" text-anchor="middle" data-i18n="s6-10">own tools + prompt</text>
 
           <rect class="node" x="520" y="150" width="160" height="62" rx="9"/>
-          <text class="node-title" x="600" y="176" text-anchor="middle">Subagent C</text>
-          <text class="node-sub" x="600" y="196" text-anchor="middle">own tools + prompt</text>
+          <text class="node-title" x="600" y="176" text-anchor="middle" data-i18n="s6-11">Subagent C</text>
+          <text class="node-sub" x="600" y="196" text-anchor="middle" data-i18n="s6-12">own tools + prompt</text>
 
           <path class="flow-accent" marker-end="url(#arrow5b)" d="M140,212 Q220,262 300,242"/>
           <path class="flow-accent" marker-end="url(#arrow5b)" d="M360,212 L360,242"/>
           <path class="flow-accent" marker-end="url(#arrow5b)" d="M580,212 Q500,262 420,242"/>
-          <text class="label" x="360" y="278" text-anchor="middle">result returns to parent &mdash; working context stays isolated</text>
+          <text class="label" x="360" y="278" text-anchor="middle" data-i18n="s6-13">result returns to parent &mdash; working context stays isolated</text>
         </svg>
       </div>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/subagents" target="_blank" rel="noopener noreferrer">Subagent context and returned reports</a>.</p>
+      <p class="sources" data-i18n="s6-14">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/subagents" target="_blank" rel="noopener noreferrer">Subagent context and returned reports</a>.</p>
     </section>
 
     <!-- 7 : SESSIONS -->
     <section class="slide">
-      <div class="eyebrow"><span>Module</span><span class="idx mono">07 &mdash; Continuity</span><span class="rule"></span></div>
-      <h2 class="title">Sessions</h2>
-      <p class="lede">A <span class="mono">session_id</span> identifies a conversation. Its history is saved locally by default, so a later run can pick up where it left off. You can also mirror it to external storage.</p>
+      <div class="eyebrow"><span data-i18n="s7-1">Module</span><span class="idx mono" data-i18n="s7-2">07 &mdash; Continuity</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s7-3">Sessions</h2>
+      <p class="lede" data-i18n="s7-4">A <span class="mono">session_id</span> identifies a conversation. Its history is saved locally by default, so a later run can pick up where it left off. You can also mirror it to external storage.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 800 260" role="img" aria-label="Timeline diagram of resuming and forking a session">
+        <svg class="diagram" viewBox="0 0 800 260" role="img" aria-label="Timeline diagram of resuming and forking a session" data-i18n-aria="s7-diagram">
           <defs>
             <marker id="arrow6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/>
@@ -574,156 +574,156 @@
           <circle cx="180" cy="110" r="6" class="dot"/>
           <circle cx="270" cy="110" r="6" class="dot"/>
           <circle cx="360" cy="110" r="6" class="dot"/>
-          <text class="label" x="40" y="90">turn 1</text>
-          <text class="label" x="330" y="90">session_id saved</text>
+          <text class="label" x="40" y="90" data-i18n="s7-5">turn 1</text>
+          <text class="label" x="330" y="90" data-i18n="s7-6">session_id saved</text>
 
           <path class="flow-accent" d="M420,110 Q470,60 560,80" marker-end="url(#arrow6)"/>
           <rect class="node-accent" x="560" y="46" width="200" height="60" rx="9"/>
-          <text class="node-title" x="660" y="72" text-anchor="middle">Resume</text>
-          <text class="node-sub" x="660" y="88" text-anchor="middle">continue latest</text>
-          <text class="node-sub" x="660" y="102" text-anchor="middle">or resume by ID</text>
+          <text class="node-title" x="660" y="72" text-anchor="middle" data-i18n="s7-7">Resume</text>
+          <text class="node-sub" x="660" y="88" text-anchor="middle" data-i18n="s7-8">continue latest</text>
+          <text class="node-sub" x="660" y="102" text-anchor="middle" data-i18n="s7-9">or resume by ID</text>
 
           <path class="flow-dash" d="M270,110 Q300,180 420,196" marker-end="url(#arrow6b)"/>
           <rect class="node-accent2" x="420" y="166" width="200" height="60" rx="9"/>
-          <text class="node-title" x="520" y="192" text-anchor="middle">Fork</text>
-          <text class="node-sub" x="520" y="208" text-anchor="middle">new session ID</text>
-          <text class="node-sub" x="520" y="222" text-anchor="middle">inherited history</text>
+          <text class="node-title" x="520" y="192" text-anchor="middle" data-i18n="s7-10">Fork</text>
+          <text class="node-sub" x="520" y="208" text-anchor="middle" data-i18n="s7-11">new session ID</text>
+          <text class="node-sub" x="520" y="222" text-anchor="middle" data-i18n="s7-12">inherited history</text>
         </svg>
       </div>
-      <div class="callout">A fork copies the conversation history. It does not copy your files: edits in the same working directory are visible to both sessions.</div>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/sessions" target="_blank" rel="noopener noreferrer">Continue, resume and fork sessions</a>.</p>
+      <div class="callout" data-i18n="s7-13">A fork copies the conversation history. It does not copy your files: edits in the same working directory are visible to both sessions.</div>
+      <p class="sources" data-i18n="s7-14">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/sessions" target="_blank" rel="noopener noreferrer">Continue, resume and fork sessions</a>.</p>
     </section>
 
     <!-- 8 : MCP SERVERS -->
     <section class="slide">
-      <div class="eyebrow"><span>Module</span><span class="idx mono">08 &mdash; Connections</span><span class="rule"></span></div>
-      <h2 class="title">External MCP Servers</h2>
-      <p class="lede">Connect local or remote MCP servers through stdio, SSE, or Streamable HTTP. Tool Search loads tool definitions when needed and is on by default where supported.</p>
+      <div class="eyebrow"><span data-i18n="s8-1">Module</span><span class="idx mono" data-i18n="s8-2">08 &mdash; Connections</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s8-3">External MCP Servers</h2>
+      <p class="lede" data-i18n="s8-4">Connect local or remote MCP servers through stdio, SSE, or Streamable HTTP. Tool Search loads tool definitions when needed and is on by default where supported.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 760 260" role="img" aria-label="Hub and spoke diagram of external MCP server connections">
+        <svg class="diagram" viewBox="0 0 760 260" role="img" aria-label="Hub and spoke diagram of external MCP server connections" data-i18n-aria="s8-diagram">
           <defs>
             <marker id="arrow7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/>
             </marker>
           </defs>
           <rect class="node-accent" x="40" y="98" width="200" height="64" rx="9"/>
-          <text class="node-title" x="140" y="124" text-anchor="middle">Your SDK agent</text>
-          <text class="node-sub" x="140" y="144" text-anchor="middle">find tools on demand</text>
+          <text class="node-title" x="140" y="124" text-anchor="middle" data-i18n="s8-5">Your SDK agent</text>
+          <text class="node-sub" x="140" y="144" text-anchor="middle" data-i18n="s8-6">find tools on demand</text>
 
           <path class="flow" marker-end="url(#arrow7)" d="M240,110 Q380,40 480,50"/>
           <path class="flow" marker-end="url(#arrow7)" d="M240,130 L480,130"/>
           <path class="flow" marker-end="url(#arrow7)" d="M240,150 Q380,220 480,210"/>
 
           <rect class="node" x="480" y="20" width="240" height="58" rx="9"/>
-          <text class="node-title" x="600" y="46" text-anchor="middle">stdio server</text>
-          <text class="node-sub" x="600" y="64" text-anchor="middle">local process</text>
+          <text class="node-title" x="600" y="46" text-anchor="middle" data-i18n="s8-7">stdio server</text>
+          <text class="node-sub" x="600" y="64" text-anchor="middle" data-i18n="s8-8">local process</text>
 
           <rect class="node" x="480" y="100" width="240" height="58" rx="9"/>
-          <text class="node-title" x="600" y="126" text-anchor="middle">SSE server</text>
-          <text class="node-sub" x="600" y="144" text-anchor="middle">legacy streaming transport</text>
+          <text class="node-title" x="600" y="126" text-anchor="middle" data-i18n="s8-9">SSE server</text>
+          <text class="node-sub" x="600" y="144" text-anchor="middle" data-i18n="s8-10">legacy streaming transport</text>
 
           <rect class="node" x="480" y="180" width="240" height="58" rx="9"/>
-          <text class="node-title" x="600" y="206" text-anchor="middle">Streamable HTTP</text>
-          <text class="node-sub" x="600" y="224" text-anchor="middle">current remote transport</text>
+          <text class="node-title" x="600" y="206" text-anchor="middle" data-i18n="s8-11">Streamable HTTP</text>
+          <text class="node-sub" x="600" y="224" text-anchor="middle" data-i18n="s8-12">current remote transport</text>
         </svg>
       </div>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/mcp#transport-types" target="_blank" rel="noopener noreferrer">MCP transports</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/tool-search" target="_blank" rel="noopener noreferrer">Tool Search defaults and supported configurations</a>.</p>
+      <p class="sources" data-i18n="s8-13">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/mcp#transport-types" target="_blank" rel="noopener noreferrer">MCP transports</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/tool-search" target="_blank" rel="noopener noreferrer">Tool Search defaults and supported configurations</a>.</p>
     </section>
 
     <!-- 9 : GUARDRAILS -->
     <section class="slide">
-      <div class="eyebrow"><span>Module</span><span class="idx mono">09 &mdash; Limits</span><span class="rule"></span></div>
-      <h2 class="title">Runtime Limits &amp; Effort</h2>
-      <p class="lede">Limit tool-use turns, set an estimated spending threshold, and choose how much reasoning Claude applies to each response.</p>
+      <div class="eyebrow"><span data-i18n="s9-1">Module</span><span class="idx mono" data-i18n="s9-2">09 &mdash; Limits</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s9-3">Runtime Limits &amp; Effort</h2>
+      <p class="lede" data-i18n="s9-4">Limit tool-use turns, set an estimated spending threshold, and choose how much reasoning Claude applies to each response.</p>
       <div class="body-area">
         <div class="stat-row">
           <div class="stat">
             <span class="mono-key">maxTurns</span>
-            <h3>Tool-use turn limit</h3>
+            <h3 data-i18n="s9-5">Tool-use turn limit</h3>
             <div class="meter"><i style="width:55%"></i></div>
-            <p>Stops with <code class="mono">error_max_turns</code>. Keep earlier streamed messages: this error has no final <code class="mono">result</code> answer.</p>
+            <p data-i18n="s9-6">Stops with <code class="mono">error_max_turns</code>. Keep earlier streamed messages: this error has no final <code class="mono">result</code> answer.</p>
           </div>
           <div class="stat">
             <span class="mono-key">maxBudgetUsd</span>
-            <h3>Budget threshold</h3>
+            <h3 data-i18n="s9-7">Budget threshold</h3>
             <div class="meter"><i style="width:78%"></i></div>
-            <p>Stops when estimated spend reaches the threshold, checked after each response. That response and running subagents can push the total higher.</p>
+            <p data-i18n="s9-8">Stops when estimated spend reaches the threshold, checked after each response. That response and running subagents can push the total higher.</p>
           </div>
           <div class="stat">
             <span class="mono-key">effort</span>
-            <h3>Reasoning depth</h3>
+            <h3 data-i18n="s9-9">Reasoning depth</h3>
             <div class="meter"><i style="width:35%"></i></div>
-            <p><code class="mono">low</code> to <code class="mono">max</code> &mdash; trades speed and token cost for reasoning depth. Available levels depend on the model.</p>
+            <p data-i18n="s9-10"><code class="mono">low</code> to <code class="mono">max</code> &mdash; trades speed and token cost for reasoning depth. Available levels depend on the model.</p>
           </div>
         </div>
       </div>
-      <div class="callout">For example, a <span class="mono">$1</span> threshold can finish above <span class="mono">$1</span>. Leave headroom, and use billing records for the actual charge.</div>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#turns-and-budget" target="_blank" rel="noopener noreferrer">Limits and effort</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/cost-tracking" target="_blank" rel="noopener noreferrer">Cost estimates</a>. Option names here are TypeScript.</p>
+      <div class="callout" data-i18n="s9-11">For example, a <span class="mono">$1</span> threshold can finish above <span class="mono">$1</span>. Leave headroom, and use billing records for the actual charge.</div>
+      <p class="sources" data-i18n="s9-12">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#turns-and-budget" target="_blank" rel="noopener noreferrer">Limits and effort</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/cost-tracking" target="_blank" rel="noopener noreferrer">Cost estimates</a>. Option names here are TypeScript.</p>
     </section>
 
     <!-- 10 : COMPACTION -->
     <section class="slide">
-      <div class="eyebrow"><span>Module</span><span class="idx mono">10 &mdash; Memory</span><span class="rule"></span></div>
-      <h2 class="title">Context Compaction</h2>
-      <p class="lede">When context fills up, the runtime summarizes older conversation history and keeps recent exchanges so Claude can continue. Some older details can be lost.</p>
+      <div class="eyebrow"><span data-i18n="s10-1">Module</span><span class="idx mono" data-i18n="s10-2">10 &mdash; Memory</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s10-3">Context Compaction</h2>
+      <p class="lede" data-i18n="s10-4">When context fills up, the runtime summarizes older conversation history and keeps recent exchanges so Claude can continue. Some older details can be lost.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 800 200" role="img" aria-label="Timeline diagram of context compaction">
+        <svg class="diagram" viewBox="0 0 800 200" role="img" aria-label="Timeline diagram of context compaction" data-i18n-aria="s10-diagram">
           <defs>
             <marker id="arrow8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/>
             </marker>
           </defs>
           <rect class="node" x="20" y="60" width="200" height="70" rx="9"/>
-          <text class="node-title" x="120" y="88" text-anchor="middle">Older turns</text>
-          <text class="node-sub" x="120" y="108" text-anchor="middle">full detail, growing</text>
+          <text class="node-title" x="120" y="88" text-anchor="middle" data-i18n="s10-5">Older turns</text>
+          <text class="node-sub" x="120" y="108" text-anchor="middle" data-i18n="s10-6">full detail, growing</text>
 
           <path class="flow-accent" marker-end="url(#arrow8)" d="M220,95 L300,95"/>
           <rect class="node-accent" x="300" y="60" width="180" height="70" rx="9"/>
-          <text class="node-title" x="390" y="88" text-anchor="middle">Summary</text>
-          <text class="node-sub" x="390" y="108" text-anchor="middle">key points from history</text>
+          <text class="node-title" x="390" y="88" text-anchor="middle" data-i18n="s10-7">Summary</text>
+          <text class="node-sub" x="390" y="108" text-anchor="middle" data-i18n="s10-8">key points from history</text>
           <path class="flow-accent" marker-end="url(#arrow8)" d="M480,95 L540,95"/>
 
           <rect class="node-accent2" x="540" y="60" width="240" height="70" rx="9"/>
-          <text class="node-title" x="660" y="88" text-anchor="middle">Continue with</text>
-          <text class="node-sub" x="660" y="108" text-anchor="middle">summary + recent exchanges</text>
+          <text class="node-title" x="660" y="88" text-anchor="middle" data-i18n="s10-9">Continue with</text>
+          <text class="node-sub" x="660" y="108" text-anchor="middle" data-i18n="s10-10">summary + recent exchanges</text>
         </svg>
       </div>
-      <div class="callout"><span class="mono">PreCompact</span> runs before compaction; <span class="mono">compact_boundary</span> marks it afterward. Put lasting project rules in <span class="mono">CLAUDE.md</span>, loaded through your settings sources.</div>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#automatic-compaction" target="_blank" rel="noopener noreferrer">Compaction and persistent instructions</a>.</p>
+      <div class="callout" data-i18n="s10-11"><span class="mono">PreCompact</span> runs before compaction; <span class="mono">compact_boundary</span> marks it afterward. Put lasting project rules in <span class="mono">CLAUDE.md</span>, loaded through your settings sources.</div>
+      <p class="sources" data-i18n="s10-12">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#automatic-compaction" target="_blank" rel="noopener noreferrer">Compaction and persistent instructions</a>.</p>
     </section>
 
     <!-- 11 : PYTHON VS TS -->
     <section class="slide">
-      <div class="eyebrow"><span>Module</span><span class="idx mono">11 &mdash; Two SDKs</span><span class="rule"></span></div>
-      <h2 class="title">Python vs TypeScript</h2>
-      <p class="lede">Broadly the same agent runtime, exposed through different language idioms &mdash; with occasional differences in API shape and release timing.</p>
+      <div class="eyebrow"><span data-i18n="s11-1">Module</span><span class="idx mono" data-i18n="s11-2">11 &mdash; Two SDKs</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s11-3">Python vs TypeScript</h2>
+      <p class="lede" data-i18n="s11-4">Broadly the same agent runtime, exposed through different language idioms &mdash; with occasional differences in API shape and release timing.</p>
       <div class="body-area">
         <div class="cmp">
           <div class="col py">
-            <header>Python</header>
-            <div class="row"><span class="k">Session tracking</span><code>ClaudeSDKClient</code> auto&#8209;tracks across calls</div>
-            <div class="row"><span class="k">Top-level options</span><code>snake_case</code>, e.g. <code>max_turns</code></div>
-            <div class="row"><span class="k">Custom tool</span><code>@tool</code> decorator</div>
+            <header data-i18n="s11-5">Python</header>
+            <div class="row" data-i18n="s11-6"><span class="k">Session tracking</span><code>ClaudeSDKClient</code> auto&#8209;tracks across calls</div>
+            <div class="row" data-i18n="s11-7"><span class="k">Top-level options</span><code>snake_case</code>, e.g. <code>max_turns</code></div>
+            <div class="row" data-i18n="s11-8"><span class="k">Custom tool</span><code>@tool</code> decorator</div>
           </div>
           <div class="col ts">
-            <header>TypeScript</header>
-            <div class="row"><span class="k">Session tracking</span><code>query()</code> with continuation or resume options</div>
-            <div class="row"><span class="k">Top-level options</span><code>camelCase</code>, e.g. <code>maxTurns</code></div>
-            <div class="row"><span class="k">Custom tool</span><code>tool()</code> helper</div>
+            <header data-i18n="s11-9">TypeScript</header>
+            <div class="row" data-i18n="s11-10"><span class="k">Session tracking</span><code>query()</code> with continuation or resume options</div>
+            <div class="row" data-i18n="s11-11"><span class="k">Top-level options</span><code>camelCase</code>, e.g. <code>maxTurns</code></div>
+            <div class="row" data-i18n="s11-12"><span class="k">Custom tool</span><code>tool()</code> helper</div>
           </div>
         </div>
       </div>
-      <div class="callout">Python has exceptions: hook fields and <span class="mono">AgentDefinition</span> use names such as <span class="mono">updatedInput</span> and <span class="mono">maxTurns</span>. Check the type you are configuring.</div>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/python" target="_blank" rel="noopener noreferrer">Python reference</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/typescript" target="_blank" rel="noopener noreferrer">TypeScript reference</a>.</p>
+      <div class="callout" data-i18n="s11-13">Python has exceptions: hook fields and <span class="mono">AgentDefinition</span> use names such as <span class="mono">updatedInput</span> and <span class="mono">maxTurns</span>. Check the type you are configuring.</div>
+      <p class="sources" data-i18n="s11-14">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/python" target="_blank" rel="noopener noreferrer">Python reference</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/typescript" target="_blank" rel="noopener noreferrer">TypeScript reference</a>.</p>
     </section>
 
     <!-- 12 : SYNTHESIS -->
     <section class="slide">
-      <div class="eyebrow"><span>Module</span><span class="idx mono">12 &mdash; Synthesis</span><span class="rule"></span></div>
-      <h2 class="title">The Full Picture</h2>
-      <p class="lede">Every module exists to shape one thing: what happens inside the loop.</p>
+      <div class="eyebrow"><span data-i18n="s12-1">Module</span><span class="idx mono" data-i18n="s12-2">12 &mdash; Synthesis</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s12-3">The Full Picture</h2>
+      <p class="lede" data-i18n="s12-4">Every module exists to shape one thing: what happens inside the loop.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 640 480" role="img" aria-label="Radial diagram summarizing all SDK modules around the central agent loop">
+        <svg class="diagram" viewBox="0 0 640 480" role="img" aria-label="Radial diagram summarizing all SDK modules around the central agent loop" data-i18n-aria="s12-diagram">
           <g stroke="var(--line)" stroke-width="1.3">
             <line x1="320" y1="240" x2="540" y2="240"/>
             <line x1="320" y1="240" x2="465" y2="90"/>
@@ -736,45 +736,45 @@
           </g>
 
           <circle cx="320" cy="240" r="54" class="node-accent"/>
-          <text class="node-title" x="320" y="235" text-anchor="middle">Agent</text>
-          <text class="node-title" x="320" y="252" text-anchor="middle">Loop</text>
+          <text class="node-title" x="320" y="235" text-anchor="middle" data-i18n="s12-5">Agent</text>
+          <text class="node-title" x="320" y="252" text-anchor="middle" data-i18n="s12-6">Loop</text>
 
-          <rect class="node" x="540" y="212" width="86" height="56" rx="8"/>
-          <text class="node-sub" x="583" y="236" text-anchor="middle">Hooks</text>
-          <text class="node-sub" x="583" y="252" text-anchor="middle">intercept</text>
+          <rect class="node" x="533" y="212" width="100" height="56" rx="8"/>
+          <text class="node-sub" x="583" y="236" text-anchor="middle" data-i18n="s12-7">Hooks</text>
+          <text class="node-sub" x="583" y="252" text-anchor="middle" data-i18n="s12-8">intercept</text>
 
-          <rect class="node" x="435" y="60" width="86" height="56" rx="8"/>
-          <text class="node-sub" x="478" y="84" text-anchor="middle">Skills</text>
-          <text class="node-sub" x="478" y="100" text-anchor="middle">know&#8209;how</text>
+          <rect class="node" x="428" y="60" width="100" height="56" rx="8"/>
+          <text class="node-sub" x="478" y="84" text-anchor="middle" data-i18n="s12-9">Skills</text>
+          <text class="node-sub" x="478" y="100" text-anchor="middle" data-i18n="s12-10">know&#8209;how</text>
 
           <rect class="node" x="277" y="6" width="86" height="56" rx="8"/>
-          <text class="node-sub" x="320" y="30" text-anchor="middle">Permissions</text>
-          <text class="node-sub" x="320" y="46" text-anchor="middle">gate</text>
+          <text class="node-sub" x="320" y="30" text-anchor="middle" data-i18n="s12-11">Permissions</text>
+          <text class="node-sub" x="320" y="46" text-anchor="middle" data-i18n="s12-12">gate</text>
 
           <rect class="node" x="120" y="60" width="110" height="56" rx="8"/>
-          <text class="node-sub" x="175" y="84" text-anchor="middle">Custom tools</text>
-          <text class="node-sub" x="175" y="100" text-anchor="middle">extend</text>
+          <text class="node-sub" x="175" y="84" text-anchor="middle" data-i18n="s12-13">Custom tools</text>
+          <text class="node-sub" x="175" y="100" text-anchor="middle" data-i18n="s12-14">extend</text>
 
           <rect class="node" x="12" y="212" width="100" height="56" rx="8"/>
-          <text class="node-sub" x="62" y="236" text-anchor="middle">Subagents</text>
-          <text class="node-sub" x="62" y="252" text-anchor="middle">delegate</text>
+          <text class="node-sub" x="62" y="236" text-anchor="middle" data-i18n="s12-15">Subagents</text>
+          <text class="node-sub" x="62" y="252" text-anchor="middle" data-i18n="s12-16">delegate</text>
 
           <rect class="node" x="118" y="362" width="100" height="56" rx="8"/>
-          <text class="node-sub" x="168" y="386" text-anchor="middle">Sessions</text>
-          <text class="node-sub" x="168" y="402" text-anchor="middle">persist</text>
+          <text class="node-sub" x="168" y="386" text-anchor="middle" data-i18n="s12-17">Sessions</text>
+          <text class="node-sub" x="168" y="402" text-anchor="middle" data-i18n="s12-18">persist</text>
 
-          <rect class="node" x="277" y="416" width="86" height="56" rx="8"/>
-          <text class="node-sub" x="320" y="440" text-anchor="middle">MCP servers</text>
-          <text class="node-sub" x="320" y="456" text-anchor="middle">connect</text>
+          <rect class="node" x="264" y="416" width="112" height="56" rx="8"/>
+          <text class="node-sub" x="320" y="440" text-anchor="middle" data-i18n="s12-19">MCP servers</text>
+          <text class="node-sub" x="320" y="456" text-anchor="middle" data-i18n="s12-20">connect</text>
 
-          <rect class="node" x="425" y="362" width="100" height="56" rx="8"/>
-          <text class="node-sub" x="475" y="380" text-anchor="middle">Runtime</text>
-          <text class="node-sub" x="475" y="395" text-anchor="middle">control</text>
-          <text class="node-sub" x="475" y="410" text-anchor="middle">limits &middot; memory</text>
+          <rect class="node" x="412" y="362" width="126" height="56" rx="8"/>
+          <text class="node-sub" x="475" y="380" text-anchor="middle" data-i18n="s12-21">Runtime</text>
+          <text class="node-sub" x="475" y="395" text-anchor="middle" data-i18n="s12-22">control</text>
+          <text class="node-sub" x="475" y="410" text-anchor="middle" data-i18n="s12-23">limits &middot; memory</text>
         </svg>
       </div>
-      <p class="closing-line">The pieces change what the loop can do &mdash; <span class="accent">the loop is still the thing.</span></p>
-      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/overview" target="_blank" rel="noopener noreferrer">Official Agent SDK overview</a>. Each slide links to the details behind its explanation.</p>
+      <p class="closing-line" data-i18n="s12-24">The pieces change what the loop can do &mdash; <span class="accent">the loop is still the thing.</span></p>
+      <p class="sources" data-i18n="s12-25">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/overview" target="_blank" rel="noopener noreferrer">Official Agent SDK overview</a>. Each slide links to the details behind its explanation.</p>
     </section>
 
     <button class="edge-zone left" id="edgeLeft" aria-label="Previous slide"></button>
@@ -880,6 +880,8 @@
   render();
 })();
 </script>
+<script src="./agent-sdk-anatomy.fr.js"></script>
+<script src="./agent-sdk-anatomy.ro.js"></script>
 <script src="./deck-standard.js"></script>
 
 </html>
