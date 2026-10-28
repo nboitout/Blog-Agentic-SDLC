@@ -217,22 +217,22 @@
         <rect x="14" y="32" width="36" height="24" rx="5" fill="var(--post-soft)" stroke="var(--post)" stroke-width="3"/>
         <circle cx="32" cy="44" r="3.2" fill="var(--post)"/>
       </svg>
-      <h1>The Interception Point</h1>
-      <p class="sub"><strong>PreToolUse</strong> checks a tool call before it runs. <strong>PostToolUse</strong> adds context or changes the result Claude reads after success.</p>
+      <h1 data-i18n="s0-1">The Interception Point</h1>
+      <p class="sub" data-i18n="s0-2"><strong>PreToolUse</strong> checks a tool call before it runs. <strong>PostToolUse</strong> adds context or changes the result Claude reads after success.</p>
       <div class="meta">
-        <span><span class="tag pre">Pre</span>&nbsp; gates the call</span>
-        <span><span class="tag post">Post</span>&nbsp; shapes the result</span>
-        <span>15 slides</span>
+        <span data-i18n="s0-3"><span class="tag pre">Pre</span>&nbsp; gates the call</span>
+        <span data-i18n="s0-4"><span class="tag post">Post</span>&nbsp; shapes the result</span>
+        <span data-i18n="s0-5">15 slides</span>
       </div>
     </section>
 
     <!-- 1: WHERE THEY SIT -->
     <section class="slide">
-      <div class="eyebrow"><span>01</span><span class="idx mono">Position</span><span class="rule"></span></div>
-      <h2 class="title">Where They Sit</h2>
-      <p class="lede">PreToolUse runs before execution. Once a tool starts, success reaches PostToolUse and an execution error reaches PostToolUseFailure.</p>
+      <div class="eyebrow"><span>01</span><span class="idx mono" data-i18n="s1-1">Position</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s1-2">Where They Sit</h2>
+      <p class="lede" data-i18n="s1-3">PreToolUse runs before execution. Once a tool starts, success reaches PostToolUse and an execution error reaches PostToolUseFailure.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 900 220" role="img" aria-label="Diagram showing PreToolUse before tool execution and PostToolUse after">
+        <svg class="diagram" viewBox="0 0 900 220" role="img" aria-label="Diagram showing PreToolUse before tool execution and PostToolUse after" data-i18n-aria="s1-diagram">
           <defs>
             <marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker>
           </defs>
@@ -242,65 +242,65 @@
           <path class="flow" marker-end="url(#a1)" d="M550,124 Q585,164 620,164"/>
 
           <rect class="node" x="10" y="76" width="120" height="68" rx="9"/>
-          <text class="node-title" x="70" y="104" text-anchor="middle">Claude selects</text>
-          <text class="node-title" x="70" y="122" text-anchor="middle">a tool</text>
+          <text class="node-title" x="70" y="104" text-anchor="middle" data-i18n="s1-4">Claude selects</text>
+          <text class="node-title" x="70" y="122" text-anchor="middle" data-i18n="s1-5">a tool</text>
 
           <rect class="node-pre" x="170" y="66" width="180" height="88" rx="10"/>
-          <text class="node-title" x="260" y="92" text-anchor="middle">PreToolUse</text>
-          <text class="node-sub" x="260" y="112" text-anchor="middle">allow &middot; deny &middot; ask &middot; defer</text>
-          <text class="node-sub" x="260" y="128" text-anchor="middle">or replace tool input</text>
+          <text class="node-title" x="260" y="92" text-anchor="middle" data-i18n="s1-6">PreToolUse</text>
+          <text class="node-sub" x="260" y="112" text-anchor="middle" data-i18n="s1-7">allow, deny, ask, defer</text>
+          <text class="node-sub" x="260" y="128" text-anchor="middle" data-i18n="s1-8">or replace tool input</text>
 
           <rect class="node" x="390" y="76" width="160" height="68" rx="9"/>
-          <text class="node-title" x="470" y="104" text-anchor="middle">Tool executes</text>
-          <text class="node-sub" x="470" y="122" text-anchor="middle">Bash &middot; Edit &middot; MCP&#8230;</text>
+          <text class="node-title" x="470" y="104" text-anchor="middle" data-i18n="s1-9">Tool executes</text>
+          <text class="node-sub" x="470" y="122" text-anchor="middle" data-i18n="s1-10">Bash &middot; Edit &middot; MCP&#8230;</text>
 
           <rect class="node-post" x="620" y="20" width="230" height="72" rx="10"/>
-          <text class="node-title" x="735" y="47" text-anchor="middle">PostToolUse</text>
-          <text class="node-sub" x="735" y="66" text-anchor="middle">successful result</text>
-          <text class="node-sub" x="735" y="81" text-anchor="middle">annotate or replace for Claude</text>
+          <text class="node-title" x="735" y="47" text-anchor="middle" data-i18n="s1-11">PostToolUse</text>
+          <text class="node-sub" x="735" y="66" text-anchor="middle" data-i18n="s1-12">successful result</text>
+          <text class="node-sub" x="735" y="81" text-anchor="middle" data-i18n="s1-13">annotate or replace for Claude</text>
 
           <rect class="node" x="620" y="128" width="230" height="72" rx="10"/>
-          <text class="node-title" x="735" y="155" text-anchor="middle">PostToolUseFailure</text>
-          <text class="node-sub" x="735" y="174" text-anchor="middle">failed result</text>
-          <text class="node-sub" x="735" y="189" text-anchor="middle">observe or guide recovery</text>
+          <text class="node-title" x="735" y="155" text-anchor="middle" data-i18n="s1-14">PostToolUseFailure</text>
+          <text class="node-sub" x="735" y="174" text-anchor="middle" data-i18n="s1-15">failed result</text>
+          <text class="node-sub" x="735" y="189" text-anchor="middle" data-i18n="s1-16">observe or guide recovery</text>
 
-          <text class="label" x="565" y="54">success</text>
-          <text class="label" x="565" y="171">failure</text>
+          <text class="label" x="565" y="54" data-i18n="s1-17">success</text>
+          <text class="label" x="565" y="171" data-i18n="s1-18">failure</text>
         </svg>
-        <div class="callout">A rejected call may never reach the tool. Invalid input can be rejected before either hook runs. A permission denial reaches PreToolUse, but does not fire PostToolUseFailure.</div>
+        <div class="callout" data-i18n="s1-19">A rejected call may never reach the tool. Invalid input can be rejected before either hook runs. A permission denial reaches PreToolUse, but does not fire PostToolUseFailure.</div>
       </div>
     </section>
 
     <!-- 2: SHARED INPUT SHAPE -->
     <section class="slide">
-      <div class="eyebrow"><span>02</span><span class="idx mono">Input shape</span><span class="rule"></span></div>
-      <h2 class="title">A Shared Base, Specific Payloads</h2>
-      <p class="lede">Both hooks receive common session and tool-call metadata. PostToolUse additionally receives the successful <span class="field">tool_response</span>.</p>
+      <div class="eyebrow"><span>02</span><span class="idx mono" data-i18n="s2-1">Input shape</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s2-2">A Shared Base, Specific Payloads</h2>
+      <p class="lede" data-i18n="s2-3">Both hooks receive common session and tool-call metadata. PostToolUse additionally receives the successful <span class="field">tool_response</span>.</p>
       <div class="body-area">
         <table class="ftable">
-          <tr><th>Scope</th><th>Fields and meaning</th></tr>
-          <tr><td class="mono field">shared</td><td><span class="mono">tool_name</span>, <span class="mono">tool_input</span> and <span class="mono">tool_use_id</span> identify and correlate the call</td></tr>
-          <tr><td class="mono field">shared</td><td><span class="mono">session_id</span>, <span class="mono">transcript_path</span>, <span class="mono">cwd</span> and <span class="mono">hook_event_name</span> locate the event</td></tr>
-          <tr><td class="mono field">shared</td><td><span class="mono">permission_mode</span>: default, auto, acceptEdits, dontAsk, bypassPermissions or plan</td></tr>
-          <tr><td class="mono field">conditional</td><td><span class="mono">agent_id</span> / <span class="mono">agent_type</span> identify subagent calls; agent type may also identify a configured session agent</td></tr>
-          <tr><td class="mono field">Post only</td><td><span class="mono">tool_response</span> contains the successful tool&rsquo;s structured output</td></tr>
+          <tr><th data-i18n="s2-4">Scope</th><th data-i18n="s2-5">Fields and meaning</th></tr>
+          <tr><td class="mono field" data-i18n="s2-6">shared</td><td data-i18n="s2-7"><span class="mono">tool_name</span>, <span class="mono">tool_input</span> and <span class="mono">tool_use_id</span> identify and correlate the call</td></tr>
+          <tr><td class="mono field" data-i18n="s2-8">shared</td><td data-i18n="s2-9"><span class="mono">session_id</span>, <span class="mono">transcript_path</span>, <span class="mono">cwd</span> and <span class="mono">hook_event_name</span> locate the event</td></tr>
+          <tr><td class="mono field" data-i18n="s2-10">shared</td><td data-i18n="s2-11"><span class="mono">permission_mode</span>: default, auto, acceptEdits, dontAsk, bypassPermissions or plan</td></tr>
+          <tr><td class="mono field" data-i18n="s2-12">conditional</td><td data-i18n="s2-13"><span class="mono">agent_id</span> / <span class="mono">agent_type</span> identify subagent calls; agent type may also identify a configured session agent</td></tr>
+          <tr><td class="mono field" data-i18n="s2-14">Post only</td><td data-i18n="s2-15"><span class="mono">tool_response</span> contains the successful tool&rsquo;s structured output</td></tr>
         </table>
       </div>
     </section>
 
     <!-- 3: PRETOOLUSE — THE GATE -->
     <section class="slide">
-      <div class="eyebrow on-pre"><span>03</span><span class="idx mono">PreToolUse</span><span class="rule"></span></div>
-      <h2 class="title">The Gate</h2>
-      <p class="lede">Should this tool run, and with what input? Command, HTTP, MCP and SDK hooks answer through <span class="field">hookSpecificOutput.permissionDecision</span>.</p>
+      <div class="eyebrow on-pre"><span>03</span><span class="idx mono" data-i18n="s3-1">PreToolUse</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s3-2">The Gate</h2>
+      <p class="lede" data-i18n="s3-3">Should this tool run, and with what input? Command, HTTP, MCP and SDK hooks answer through <span class="field">hookSpecificOutput.permissionDecision</span>.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 860 220" role="img" aria-label="Decision diagram for PreToolUse permissionDecision values">
+        <svg class="diagram" viewBox="0 0 860 220" role="img" aria-label="Decision diagram for PreToolUse permissionDecision values" data-i18n-aria="s3-diagram">
           <defs>
             <marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker>
           </defs>
           <rect class="node-pre" x="10" y="76" width="176" height="68" rx="9"/>
-          <text class="node-title" x="98" y="103" text-anchor="middle">Hook runs</text>
-          <text class="node-sub" x="98" y="121" text-anchor="middle">permissionDecision</text>
+          <text class="node-title" x="98" y="103" text-anchor="middle" data-i18n="s3-4">Hook runs</text>
+          <text class="node-sub" x="98" y="121" text-anchor="middle" data-i18n="s3-5">permissionDecision</text>
 
           <path class="flow" marker-end="url(#a3)" d="M186,90 Q230,30 300,24"/>
           <path class="flow" marker-end="url(#a3)" d="M186,105 Q230,90 300,88"/>
@@ -308,98 +308,98 @@
           <path class="flow" marker-end="url(#a3)" d="M186,150 Q230,206 300,208"/>
 
           <rect class="node-good" x="300" y="4" width="150" height="42" rx="8"/>
-          <text class="node-title" x="375" y="30" text-anchor="middle" font-size="12.5">allow</text>
+          <text class="node-title" x="375" y="30" text-anchor="middle" font-size="12.5" data-i18n="s3-6">allow</text>
 
           <rect class="node" x="300" y="66" width="150" height="42" rx="8"/>
-          <text class="node-title" x="375" y="92" text-anchor="middle" font-size="12.5">ask</text>
+          <text class="node-title" x="375" y="92" text-anchor="middle" font-size="12.5" data-i18n="s3-7">ask</text>
 
           <rect class="node" x="300" y="130" width="150" height="42" rx="8"/>
-          <text class="node-title" x="375" y="156" text-anchor="middle" font-size="12.5">defer</text>
+          <text class="node-title" x="375" y="156" text-anchor="middle" font-size="12.5" data-i18n="s3-8">defer</text>
 
           <rect class="node-bad" x="300" y="186" width="150" height="42" rx="8"/>
-          <text class="node-title" x="375" y="212" text-anchor="middle" font-size="12.5">deny</text>
+          <text class="node-title" x="375" y="212" text-anchor="middle" font-size="12.5" data-i18n="s3-9">deny</text>
 
-          <text class="label" x="470" y="30">approve within permission limits</text>
-          <text class="label" x="470" y="92">forces a user prompt</text>
-          <text class="label" x="470" y="156">pause non-interactive run; resume later</text>
-          <text class="label" x="470" y="212">blocked &mdash; reason sent to Claude</text>
+          <text class="label" x="470" y="30" data-i18n="s3-10">approve within permission limits</text>
+          <text class="label" x="470" y="92" data-i18n="s3-11">forces a user prompt</text>
+          <text class="label" x="470" y="156" data-i18n="s3-12">pause non-interactive run; resume later</text>
+          <text class="label" x="470" y="212" data-i18n="s3-13">blocked &mdash; reason sent to Claude</text>
         </svg>
-        <div class="callout"><span class="mono">allow</span> still respects deny rules, required user interaction and plan-mode restrictions. <span class="mono">updatedInput</span> replaces the whole input: include fields you want to keep. With no decision, normal permission checks apply. With <span class="mono">defer</span>, the replacement is ignored.</div>
+        <div class="callout" data-i18n="s3-14"><span class="mono">allow</span> still respects deny rules, required user interaction and plan-mode restrictions. <span class="mono">updatedInput</span> replaces the whole input: include fields you want to keep. With no decision, normal permission checks apply. With <span class="mono">defer</span>, the replacement is ignored.</div>
       </div>
     </section>
 
     <!-- 4: POSTTOOLUSE — THE REWRITE -->
     <section class="slide">
-      <div class="eyebrow on-post"><span>04</span><span class="idx mono">PostToolUse</span><span class="rule"></span></div>
-      <h2 class="title">The Rewrite</h2>
-      <p class="lede">The tool has already run. A hook can add a note, rewrite what Claude reads, or do follow-up work such as formatting a file. It does not roll back the original action.</p>
+      <div class="eyebrow on-post"><span>04</span><span class="idx mono" data-i18n="s4-1">PostToolUse</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s4-2">The Rewrite</h2>
+      <p class="lede" data-i18n="s4-3">The tool has already run. A hook can add a note, rewrite what Claude reads, or do follow-up work such as formatting a file. It does not roll back the original action.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 860 170" role="img" aria-label="Diagram of PostToolUse output fields">
+        <svg class="diagram" viewBox="0 0 860 170" role="img" aria-label="Diagram of PostToolUse output fields" data-i18n-aria="s4-diagram">
           <defs><marker id="a4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
           <rect class="node" x="10" y="52" width="150" height="64" rx="9"/>
-          <text class="node-title" x="85" y="80" text-anchor="middle">Raw result</text>
-          <text class="node-sub" x="85" y="98" text-anchor="middle">tool_response</text>
+          <text class="node-title" x="85" y="80" text-anchor="middle" data-i18n="s4-4">Raw result</text>
+          <text class="node-sub" x="85" y="98" text-anchor="middle" data-i18n="s4-5">tool_response</text>
           <path class="flow-post" marker-end="url(#a4)" d="M160,84 L196,84"/>
           <rect class="node-post" x="196" y="40" width="220" height="88" rx="10"/>
-          <text class="node-title" x="306" y="66" text-anchor="middle">PostToolUse hook</text>
-          <text class="node-sub" x="306" y="86" text-anchor="middle">additionalContext</text>
-          <text class="node-sub" x="306" y="102" text-anchor="middle">updatedToolOutput</text>
+          <text class="node-title" x="306" y="66" text-anchor="middle" data-i18n="s4-6">PostToolUse hook</text>
+          <text class="node-sub" x="306" y="86" text-anchor="middle" data-i18n="s4-7">additionalContext</text>
+          <text class="node-sub" x="306" y="102" text-anchor="middle" data-i18n="s4-8">updatedToolOutput</text>
           <path class="flow-post" marker-end="url(#a4)" d="M416,84 L452,84"/>
           <rect class="node" x="452" y="52" width="180" height="64" rx="9"/>
-          <text class="node-title" x="542" y="80" text-anchor="middle">What Claude reads</text>
-          <text class="node-sub" x="542" y="98" text-anchor="middle">as the tool result</text>
+          <text class="node-title" x="542" y="80" text-anchor="middle" data-i18n="s4-9">What Claude reads</text>
+          <text class="node-sub" x="542" y="98" text-anchor="middle" data-i18n="s4-10">as the tool result</text>
         </svg>
-        <div class="callout post"><span class="mono">updatedToolOutput</span> works for built-in and MCP tools. For a built-in tool, keep its expected fields and types: an invalid replacement is ignored. Example: redact Bash&rsquo;s <span class="mono">stdout</span> while keeping the rest of its result. Use <span class="mono">additionalContext</span> to add a note.</div>
+        <div class="callout post" data-i18n="s4-11"><span class="mono">updatedToolOutput</span> works for built-in and MCP tools. For a built-in tool, keep its expected fields and types: an invalid replacement is ignored. Example: redact Bash&rsquo;s <span class="mono">stdout</span> while keeping the rest of its result. Use <span class="mono">additionalContext</span> to add a note.</div>
       </div>
     </section>
 
     <!-- 5: EXIT CODES -->
     <section class="slide">
-      <div class="eyebrow"><span>05</span><span class="idx mono">Exit codes</span><span class="rule"></span></div>
-      <h2 class="title">Command Hook Exit Codes</h2>
-      <p class="lede">An exit code tells Claude Code how the hook finished. JSON can carry a decision too. For PreToolUse, exit 2 always blocks the call.</p>
+      <div class="eyebrow"><span>05</span><span class="idx mono" data-i18n="s5-1">Exit codes</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s5-2">Command Hook Exit Codes</h2>
+      <p class="lede" data-i18n="s5-3">An exit code tells Claude Code how the hook finished. JSON can carry a decision too. For PreToolUse, exit 2 always blocks the call.</p>
       <div class="body-area">
         <table class="ftable">
-          <tr><th>Exit code</th><th class="pre-col">PreToolUse</th><th class="post-col">PostToolUse</th></tr>
-          <tr><td class="mono">0</td><td>Read valid JSON. A JSON <span class="mono">deny</span> still blocks.</td><td>Apply valid JSON notes or output changes.</td></tr>
-          <tr><td class="mono">2</td><td><strong>Block, even if JSON says allow.</strong> stderr explains why.</td><td>Send stderr as feedback. The tool has already run.</td></tr>
-          <tr><td class="mono">other</td><td>Usually no decision. Valid JSON can still apply.*</td><td>Usually an error notice. Valid JSON can still apply.*</td></tr>
+          <tr><th data-i18n="s5-4">Exit code</th><th class="pre-col" data-i18n="s5-5">PreToolUse</th><th class="post-col" data-i18n="s5-6">PostToolUse</th></tr>
+          <tr><td class="mono" data-i18n="s5-7">0</td><td data-i18n="s5-8">Read valid JSON. A JSON <span class="mono">deny</span> still blocks.</td><td data-i18n="s5-9">Apply valid JSON notes or output changes.</td></tr>
+          <tr><td class="mono" data-i18n="s5-10">2</td><td data-i18n="s5-11"><strong>Block, even if JSON says allow.</strong> stderr explains why.</td><td data-i18n="s5-12">Send stderr as feedback. The tool has already run.</td></tr>
+          <tr><td class="mono" data-i18n="s5-13">other</td><td data-i18n="s5-14">Usually no decision. Valid JSON can still apply.*</td><td data-i18n="s5-15">Usually an error notice. Valid JSON can still apply.*</td></tr>
         </table>
-        <div class="callout"><strong>Simple rule:</strong> exit <span class="mono">0</span> when returning a JSON decision. Exit <span class="mono">2</span> to block a PreToolUse call. *With <span class="mono">onFailure: "block"</span>, an unexpected exit code counts as failure. Windows shell hooks without Git Bash also have stricter failure handling.</div>
+        <div class="callout" data-i18n="s5-16"><strong>Simple rule:</strong> exit <span class="mono">0</span> when returning a JSON decision. Exit <span class="mono">2</span> to block a PreToolUse call. *With <span class="mono">onFailure: "block"</span>, an unexpected exit code counts as failure. Windows shell hooks without Git Bash also have stricter failure handling.</div>
       </div>
     </section>
 
     <!-- 6: MATCHERS -->
     <section class="slide">
-      <div class="eyebrow"><span>06</span><span class="idx mono">Matchers</span><span class="rule"></span></div>
-      <h2 class="title">Scoping a Hook</h2>
-      <p class="lede">The <span class="field">matcher</span> string decides which tool calls reach the hook at all &mdash; and it's read two different ways depending on what's in it.</p>
+      <div class="eyebrow"><span>06</span><span class="idx mono" data-i18n="s6-1">Matchers</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s6-2">Scoping a Hook</h2>
+      <p class="lede" data-i18n="s6-3">The <span class="field">matcher</span> string decides which tool calls reach the hook at all &mdash; and it's read two different ways depending on what's in it.</p>
       <div class="body-area">
         <div class="grid2">
           <div class="card">
-            <span class="tag" style="color:var(--good);border-color:var(--good);background:var(--good-soft)">exact / list</span>
-            <h3>Plain names</h3>
-            <p>Only letters, digits, <span class="mono">_</span> <span class="mono">-</span>, spaces, commas, pipes &rarr; matched literally.</p>
-            <p class="mono">"Bash" &middot; "Edit|Write" &middot; "Edit, Write"</p>
+            <span class="tag" style="color:var(--good);border-color:var(--good);background:var(--good-soft)" data-i18n="s6-4">exact / list</span>
+            <h3 data-i18n="s6-5">Plain names</h3>
+            <p data-i18n="s6-6">Only letters, digits, <span class="mono">_</span> <span class="mono">-</span>, spaces, commas, pipes &rarr; matched literally.</p>
+            <p class="mono" data-i18n="s6-7">"Bash" &middot; "Edit|Write" &middot; "Edit, Write"</p>
           </div>
           <div class="card">
-            <span class="tag warn">regex</span>
-            <h3>Anything else</h3>
-            <p>A paren, bracket, <span class="mono">*</span>, <span class="mono">.</span>, <span class="mono">^</span> or <span class="mono">$</span> &rarr; the whole string becomes a regex.</p>
-            <p class="mono">"mcp__memory__.*" &middot; "^mcp__" &middot; ".*"</p>
+            <span class="tag warn" data-i18n="s6-8">regex</span>
+            <h3 data-i18n="s6-9">Anything else</h3>
+            <p data-i18n="s6-10">A paren, bracket, <span class="mono">*</span>, <span class="mono">.</span>, <span class="mono">^</span> or <span class="mono">$</span> &rarr; the whole string becomes a regex.</p>
+            <p class="mono" data-i18n="s6-11">"mcp__memory__.*" &middot; "^mcp__" &middot; ".*"</p>
           </div>
         </div>
-        <div class="callout">An empty, omitted or <span class="mono">*</span> matcher catches every tool. Matchers inspect the tool name, not its arguments; use handler logic or an <span class="mono">if</span> rule to narrow by command, path or operation.</div>
+        <div class="callout" data-i18n="s6-12">An empty, omitted or <span class="mono">*</span> matcher catches every tool. Matchers inspect the tool name, not its arguments; use handler logic or an <span class="mono">if</span> rule to narrow by command, path or operation.</div>
       </div>
     </section>
 
     <!-- 7: CONFIG ANATOMY -->
     <section class="slide">
-      <div class="eyebrow"><span>07</span><span class="idx mono">settings.json</span><span class="rule"></span></div>
-      <h2 class="title">Config Anatomy</h2>
-      <p class="lede">Inside the top-level <span class="field">hooks</span> object, three conceptual levels connect an event to the handlers that run.</p>
+      <div class="eyebrow"><span>07</span><span class="idx mono" data-i18n="s7-1">settings.json</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s7-2">Config Anatomy</h2>
+      <p class="lede" data-i18n="s7-3">Inside the top-level <span class="field">hooks</span> object, three conceptual levels connect an event to the handlers that run.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 900 190" role="img" aria-label="Nested box diagram of hooks configuration structure">
+        <svg class="diagram" viewBox="0 0 900 190" role="img" aria-label="Nested box diagram of hooks configuration structure" data-i18n-aria="s7-diagram">
           <defs><marker id="a7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
           <path class="flow" marker-end="url(#a7)" d="M138,95 L172,95"/>
           <path class="flow" marker-end="url(#a7)" d="M330,95 L364,95"/>
@@ -407,56 +407,56 @@
           <path class="flow" marker-end="url(#a7)" d="M756,95 L790,95"/>
 
           <rect class="node" x="8" y="62" width="130" height="64" rx="9"/>
-          <text class="node-title" x="73" y="90" text-anchor="middle">hooks</text>
-          <text class="node-sub" x="73" y="108" text-anchor="middle">top level</text>
+          <text class="node-title" x="73" y="90" text-anchor="middle" data-i18n="s7-4">hooks</text>
+          <text class="node-sub" x="73" y="108" text-anchor="middle" data-i18n="s7-5">top level</text>
 
           <rect class="node-pre" x="172" y="56" width="158" height="76" rx="9"/>
-          <text class="node-title" x="251" y="85" text-anchor="middle" font-size="12.5">PreToolUse /</text>
-          <text class="node-title" x="251" y="102" text-anchor="middle" font-size="12.5">PostToolUse</text>
+          <text class="node-title" x="251" y="85" text-anchor="middle" font-size="12.5" data-i18n="s7-6">PreToolUse /</text>
+          <text class="node-title" x="251" y="102" text-anchor="middle" font-size="12.5" data-i18n="s7-7">PostToolUse</text>
 
           <rect class="node" x="364" y="56" width="196" height="76" rx="9"/>
-          <text class="node-title" x="462" y="85" text-anchor="middle">matcher group</text>
-          <text class="node-sub" x="462" y="103" text-anchor="middle">{ matcher, hooks: [&#8230;] }</text>
+          <text class="node-title" x="462" y="85" text-anchor="middle" data-i18n="s7-8">matcher group</text>
+          <text class="node-sub" x="462" y="103" text-anchor="middle" data-i18n="s7-9">{ matcher, hooks: [&#8230;] }</text>
 
           <rect class="node" x="594" y="56" width="162" height="76" rx="9"/>
-          <text class="node-title" x="675" y="85" text-anchor="middle">handler</text>
-          <text class="node-sub" x="675" y="103" text-anchor="middle">type: command&#8230;</text>
+          <text class="node-title" x="675" y="85" text-anchor="middle" data-i18n="s7-10">handler</text>
+          <text class="node-sub" x="675" y="103" text-anchor="middle" data-i18n="s7-11">type: command&#8230;</text>
 
           <rect class="node-post" x="790" y="62" width="100" height="64" rx="9"/>
-          <text class="node-sub" x="840" y="86" text-anchor="middle">command</text>
-          <text class="node-sub" x="840" y="102" text-anchor="middle">timeout</text>
+          <text class="node-sub" x="840" y="86" text-anchor="middle" data-i18n="s7-12">command</text>
+          <text class="node-sub" x="840" y="102" text-anchor="middle" data-i18n="s7-13">timeout</text>
 
-          <text class="label" x="8" y="20">container &rarr; event &rarr; matcher group &rarr; one or more handlers</text>
-          <text class="label" x="8" y="168">Pre/Post support five handler types. Their replies and timeouts differ.</text>
+          <text class="label" x="8" y="20" data-i18n="s7-14">container &rarr; event &rarr; matcher group &rarr; one or more handlers</text>
+          <text class="label" x="8" y="168" data-i18n="s7-15">Pre/Post support five handler types. Their replies and timeouts differ.</text>
         </svg>
       </div>
     </section>
 
     <!-- 8: HANDLER CONTRACTS -->
     <section class="slide">
-      <div class="eyebrow"><span>08</span><span class="idx mono">Handler types</span><span class="rule"></span></div>
-      <h2 class="title">How a Handler Answers</h2>
-      <p class="lede">The event says <em>when</em> to run. The handler type says <em>what</em> runs and how it replies. These defaults apply to PreToolUse and PostToolUse.</p>
+      <div class="eyebrow"><span>08</span><span class="idx mono" data-i18n="s8-1">Handler types</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s8-2">How a Handler Answers</h2>
+      <p class="lede" data-i18n="s8-3">The event says <em>when</em> to run. The handler type says <em>what</em> runs and how it replies. These defaults apply to PreToolUse and PostToolUse.</p>
       <div class="body-area">
         <table class="ftable">
-          <tr><th>Handler</th><th>How it replies</th><th>Default wait</th></tr>
-          <tr><td class="mono">command / http / mcp_tool</td><td>Your code returns hook JSON. Command hooks also use exit codes.</td><td>600 seconds</td></tr>
-          <tr><td class="mono">prompt</td><td>A model returns <span class="mono">{ "ok": true }</span>, or <span class="mono">false</span> with a reason.</td><td>30 seconds</td></tr>
-          <tr><td class="mono">agent</td><td>An agent checks files or tools, then returns <span class="mono">ok</span> and a reason. Experimental.</td><td>60 seconds</td></tr>
-          <tr><td>SDK callback</td><td>Your application function returns hook JSON directly.</td><td>600 seconds</td></tr>
+          <tr><th data-i18n="s8-4">Handler</th><th data-i18n="s8-5">How it replies</th><th data-i18n="s8-6">Default wait</th></tr>
+          <tr><td class="mono" data-i18n="s8-7">command / http / mcp_tool</td><td data-i18n="s8-8">Your code returns hook JSON. Command hooks also use exit codes.</td><td data-i18n="s8-9">600 seconds</td></tr>
+          <tr><td class="mono" data-i18n="s8-10">prompt</td><td data-i18n="s8-11">A model returns <span class="mono">{ "ok": true }</span>, or <span class="mono">false</span> with a reason.</td><td data-i18n="s8-12">30 seconds</td></tr>
+          <tr><td class="mono" data-i18n="s8-13">agent</td><td data-i18n="s8-14">An agent checks files or tools, then returns <span class="mono">ok</span> and a reason. Experimental.</td><td data-i18n="s8-15">60 seconds</td></tr>
+          <tr><td data-i18n="s8-16">SDK callback</td><td data-i18n="s8-17">Your application function returns hook JSON directly.</td><td data-i18n="s8-18">600 seconds</td></tr>
         </table>
-        <div class="callout">For a prompt hook, <span class="mono">ok: false</span> normally ends the turn. Set <span class="mono">continueOnBlock: true</span> to let Claude read the reason and continue. Agent hooks already continue this way. A PreToolUse rejection still prevents that tool call.</div>
+        <div class="callout" data-i18n="s8-19">For a prompt hook, <span class="mono">ok: false</span> normally ends the turn. Set <span class="mono">continueOnBlock: true</span> to let Claude read the reason and continue. Agent hooks already continue this way. A PreToolUse rejection still prevents that tool call.</div>
       </div>
     </section>
 
     <!-- 9: SDK VS SETTINGS.JSON -->
     <section class="slide">
-      <div class="eyebrow"><span>09</span><span class="idx mono">Configuration</span><span class="rule"></span></div>
-      <h2 class="title">Config File or Callback</h2>
-      <p class="lede">A settings hook starts a program. An SDK callback runs in your application. Here, both respond after a file edit. Define the formatter before using either example.</p>
+      <div class="eyebrow"><span>09</span><span class="idx mono" data-i18n="s9-1">Configuration</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s9-2">Config File or Callback</h2>
+      <p class="lede" data-i18n="s9-3">A settings hook starts a program. An SDK callback runs in your application. Here, both respond after a file edit. Define the formatter before using either example.</p>
       <div class="body-area code-wrap">
         <div class="code-col">
-          <header>settings.json (Node.js required)</header>
+          <header data-i18n="s9-4">settings.json (Node.js required)</header>
           <pre>{
   <span class="tok-str">"hooks"</span>: {
     <span class="tok-str">"PostToolUse"</span>: [{
@@ -472,7 +472,7 @@
 }</pre>
         </div>
         <div class="code-col">
-          <header>Agent SDK (Python)</header>
+          <header data-i18n="s9-5">Agent SDK (Python)</header>
           <pre><span class="tok-kw">from</span> claude_agent_sdk <span class="tok-kw">import</span> (
   ClaudeAgentOptions, HookMatcher
 )
@@ -481,98 +481,98 @@
   hooks={
     <span class="tok-str">"PostToolUse"</span>: [HookMatcher(
       matcher=<span class="tok-str">"Edit|Write"</span>,
-      hooks=[format_file]  <span class="tok-com"># async callback</span>
+      hooks=[format_file]  <span class="tok-com" data-i18n="s9-6"># async callback</span>
     )]
   }
 )</pre>
         </div>
       </div>
-      <div class="callout">Node runs <span class="mono">format.mjs</span> on Windows, macOS and Linux. With <span class="mono">args</span>, no shell is needed. The script reads JSON from stdin. The SDK passes it to your callback. Both read <span class="mono">tool_input.file_path</span>.</div>
+      <div class="callout" data-i18n="s9-7">Node runs <span class="mono">format.mjs</span> on Windows, macOS and Linux. With <span class="mono">args</span>, no shell is needed. The script reads JSON from stdin. The SDK passes it to your callback. Both read <span class="mono">tool_input.file_path</span>.</div>
     </section>
 
     <!-- 10: WHEN HOOKS COLLIDE -->
     <section class="slide">
-      <div class="eyebrow"><span>10</span><span class="idx mono">Concurrency</span><span class="rule"></span></div>
-      <h2 class="title">When Hooks Collide</h2>
-      <p class="lede">Matching hooks can run <strong>in parallel</strong>. Their declaration order does not control their execution order. Prompt and agent hooks have concurrency limits, so some may wait.</p>
+      <div class="eyebrow"><span>10</span><span class="idx mono" data-i18n="s10-1">Concurrency</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s10-2">When Hooks Collide</h2>
+      <p class="lede" data-i18n="s10-3">Matching hooks can run <strong>in parallel</strong>. Their declaration order does not control their execution order. Prompt and agent hooks have concurrency limits, so some may wait.</p>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 860 200" role="img" aria-label="Diagram showing three parallel hooks resolving to one decision">
+        <svg class="diagram" viewBox="0 0 860 200" role="img" aria-label="Diagram showing three parallel hooks resolving to one decision" data-i18n-aria="s10-diagram">
           <defs><marker id="a9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line-strong)"/></marker></defs>
-          <rect class="node" x="10" y="10" width="170" height="46" rx="8"/><text class="node-sub" x="95" y="38" text-anchor="middle">hook A &rarr; allow</text>
-          <rect class="node" x="10" y="78" width="170" height="46" rx="8"/><text class="node-sub" x="95" y="106" text-anchor="middle">hook B &rarr; ask</text>
-          <rect class="node" x="10" y="146" width="170" height="46" rx="8"/><text class="node-sub" x="95" y="174" text-anchor="middle">hook C &rarr; deny</text>
+          <rect class="node" x="10" y="10" width="170" height="46" rx="8"/><text class="node-sub" x="95" y="38" text-anchor="middle" data-i18n="s10-4">hook A &rarr; allow</text>
+          <rect class="node" x="10" y="78" width="170" height="46" rx="8"/><text class="node-sub" x="95" y="106" text-anchor="middle" data-i18n="s10-5">hook B &rarr; ask</text>
+          <rect class="node" x="10" y="146" width="170" height="46" rx="8"/><text class="node-sub" x="95" y="174" text-anchor="middle" data-i18n="s10-6">hook C &rarr; deny</text>
           <path class="flow" marker-end="url(#a9)" d="M180,33 C250,33 270,88 320,88"/>
           <path class="flow" marker-end="url(#a9)" d="M180,101 L320,101"/>
           <path class="flow" marker-end="url(#a9)" d="M180,169 C250,169 270,114 320,114"/>
           <rect class="node-bad" x="320" y="72" width="190" height="58" rx="9"/>
-          <text class="node-title" x="415" y="105" text-anchor="middle">deny wins</text>
+          <text class="node-title" x="415" y="105" text-anchor="middle" data-i18n="s10-7">deny wins</text>
           <path class="flow" marker-end="url(#a9)" d="M510,101 L560,101"/>
           <rect class="node" x="560" y="66" width="290" height="70" rx="9"/>
-          <text class="node-sub" x="705" y="92" text-anchor="middle">precedence: deny &gt; defer &gt; ask &gt; allow</text>
-          <text class="node-sub" x="705" y="112" text-anchor="middle">independent hooks; no ordering contract</text>
+          <text class="node-sub" x="705" y="92" text-anchor="middle" data-i18n="s10-8">precedence: deny &gt; defer &gt; ask &gt; allow</text>
+          <text class="node-sub" x="705" y="112" text-anchor="middle" data-i18n="s10-9">independent hooks; no ordering contract</text>
         </svg>
-        <div class="callout warn" style="border-left-color:var(--warn); background:var(--warn-soft);">Use one hook to rewrite a given input or output. Other hooks can check or log it. If check B needs check A&rsquo;s result, put both steps in one handler.</div>
+        <div class="callout warn" style="border-left-color:var(--warn); background:var(--warn-soft);" data-i18n="s10-10">Use one hook to rewrite a given input or output. Other hooks can check or log it. If check B needs check A&rsquo;s result, put both steps in one handler.</div>
       </div>
     </section>
 
     <!-- 11: SECURITY & LIMITS -->
     <section class="slide">
-      <div class="eyebrow"><span>11</span><span class="idx mono">Boundaries</span><span class="rule"></span></div>
-      <h2 class="title">Security &amp; Limits</h2>
-      <p class="lede">What hooks can enforce &mdash; and what they can't get around.</p>
+      <div class="eyebrow"><span>11</span><span class="idx mono" data-i18n="s11-1">Boundaries</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s11-2">Security &amp; Limits</h2>
+      <p class="lede" data-i18n="s11-3">What hooks can enforce &mdash; and what they can't get around.</p>
       <div class="body-area">
         <div class="grid4">
           <div class="card">
-            <span class="tag warn">runs as you</span>
-            <h3>Full user permissions</h3>
-            <p>A command hook runs with your operating-system access, outside the tool sandbox. Validate its input and give it only the credentials it needs.</p>
+            <span class="tag warn" data-i18n="s11-4">runs as you</span>
+            <h3 data-i18n="s11-5">Full user permissions</h3>
+            <p data-i18n="s11-6">A command hook runs with your operating-system access, outside the tool sandbox. Validate its input and give it only the credentials it needs.</p>
           </div>
           <div class="card on-pre">
-            <span class="tag pre">deny always wins</span>
-            <h3>Even in bypassPermissions</h3>
-            <p>A PreToolUse <span class="mono">deny</span> blocks the call in every permission mode. <span class="mono">allow</span> can't override a settings&#8209;level deny rule.</p>
+            <span class="tag pre" data-i18n="s11-7">deny always wins</span>
+            <h3 data-i18n="s11-8">Even in bypassPermissions</h3>
+            <p data-i18n="s11-9">A PreToolUse <span class="mono">deny</span> blocks the call in every permission mode. <span class="mono">allow</span> can't override a settings&#8209;level deny rule.</p>
           </div>
           <div class="card on-post">
-            <span class="tag post">can't undo</span>
-            <h3>No automatic rollback</h3>
-            <p>Changing a result does not reverse a file write or network request. Earlier telemetry may also contain the original output.</p>
+            <span class="tag post" data-i18n="s11-10">can't undo</span>
+            <h3 data-i18n="s11-11">No automatic rollback</h3>
+            <p data-i18n="s11-12">Changing a result does not reverse a file write or network request. Earlier telemetry may also contain the original output.</p>
           </div>
           <div class="card">
-            <span class="tag" style="color:var(--ink-dim);border-color:var(--line-strong);background:var(--surface-2)">failure semantics</span>
-            <h3>SDK callback timeout</h3>
-            <p>A timed-out PreToolUse callback blocks that call. A timed-out PostToolUse callback keeps the tool result. Claude can continue in both cases.</p>
+            <span class="tag" style="color:var(--ink-dim);border-color:var(--line-strong);background:var(--surface-2)" data-i18n="s11-13">failure semantics</span>
+            <h3 data-i18n="s11-14">SDK callback timeout</h3>
+            <p data-i18n="s11-15">A timed-out PreToolUse callback blocks that call. A timed-out PostToolUse callback keeps the tool result. Claude can continue in both cases.</p>
           </div>
         </div>
-        <div class="callout"><strong>If a policy check fails, should the tool run?</strong> Command and HTTP hooks usually let it proceed on failure. Set <span class="mono">onFailure: "block"</span> on a synchronous PreToolUse handler to stop it on errors or timeouts. Requires Claude Code 2.1.295+.</div>
+        <div class="callout" data-i18n="s11-16"><strong>If a policy check fails, should the tool run?</strong> Command and HTTP hooks usually let it proceed on failure. Set <span class="mono">onFailure: "block"</span> on a synchronous PreToolUse handler to stop it on errors or timeouts. Requires Claude Code 2.1.295+.</div>
       </div>
     </section>
 
     <!-- 12: FOUR PATTERNS -->
     <section class="slide">
-      <div class="eyebrow"><span>12</span><span class="idx mono">Examples</span><span class="rule"></span></div>
-      <h2 class="title">Four Patterns</h2>
-      <p class="lede">Choose the hook based on what you need to prevent, change or record.</p>
+      <div class="eyebrow"><span>12</span><span class="idx mono" data-i18n="s12-1">Examples</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s12-2">Four Patterns</h2>
+      <p class="lede" data-i18n="s12-3">Choose the hook based on what you need to prevent, change or record.</p>
       <div class="body-area">
         <div class="grid4">
           <div class="card on-pre">
-            <span class="tag pre">PreToolUse</span>
-            <h3>Secrets gate</h3>
-            <p>Inspect <span class="mono">tool_input</span> and deny a forbidden file access. A Bash text check is only one guard: other tools or indirect commands need protection too.</p>
+            <span class="tag pre" data-i18n="s12-4">PreToolUse</span>
+            <h3 data-i18n="s12-5">Secrets gate</h3>
+            <p data-i18n="s12-6">Inspect <span class="mono">tool_input</span> and deny a forbidden file access. A Bash text check is only one guard: other tools or indirect commands need protection too.</p>
           </div>
           <div class="card on-post">
-            <span class="tag post">PostToolUse</span>
-            <h3>Auto&#8209;format</h3>
-            <p>Matcher <span class="mono">Edit|Write</span> runs a wrapper that reads <span class="mono">tool_input.file_path</span>, then formats the touched file.</p>
+            <span class="tag post" data-i18n="s12-7">PostToolUse</span>
+            <h3 data-i18n="s12-8">Auto&#8209;format</h3>
+            <p data-i18n="s12-9">Matcher <span class="mono">Edit|Write</span> runs a wrapper that reads <span class="mono">tool_input.file_path</span>, then formats the touched file.</p>
           </div>
           <div class="card on-post">
-            <span class="tag post">PostToolUse</span>
-            <h3>Clearer output</h3>
-            <p>Rewrite a result with <span class="mono">updatedToolOutput</span> while keeping that tool&rsquo;s schema. Add a common summary with <span class="mono">additionalContext</span>.</p>
+            <span class="tag post" data-i18n="s12-10">PostToolUse</span>
+            <h3 data-i18n="s12-11">Clearer output</h3>
+            <p data-i18n="s12-12">Rewrite a result with <span class="mono">updatedToolOutput</span> while keeping that tool&rsquo;s schema. Add a common summary with <span class="mono">additionalContext</span>.</p>
           </div>
           <div class="card on-post">
-            <span class="tag">Lifecycle</span>
-            <h3>Tool activity log</h3>
-            <p>Record attempts in PreToolUse and execution outcomes in the Post hooks. Record denials in your guard too. Early validation failures need separate logging.</p>
+            <span class="tag" data-i18n="s12-13">Lifecycle</span>
+            <h3 data-i18n="s12-14">Tool activity log</h3>
+            <p data-i18n="s12-15">Record attempts in PreToolUse and execution outcomes in the Post hooks. Record denials in your guard too. Early validation failures need separate logging.</p>
           </div>
         </div>
       </div>
@@ -580,36 +580,36 @@
 
     <!-- 13: CLOSING -->
     <section class="slide">
-      <div class="eyebrow"><span>13</span><span class="idx mono">Recap</span><span class="rule"></span></div>
-      <h2 class="title">Before and After a Tool Call</h2>
+      <div class="eyebrow"><span>13</span><span class="idx mono" data-i18n="s13-1">Recap</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s13-2">Before and After a Tool Call</h2>
       <div class="body-area">
-        <svg class="diagram" viewBox="0 0 860 130" role="img" aria-label="Summary diagram of PreToolUse and PostToolUse roles" style="max-height:120px">
+        <svg class="diagram" viewBox="0 0 860 130" role="img" aria-label="Summary diagram of PreToolUse and PostToolUse roles" style="max-height:120px" data-i18n-aria="s13-diagram">
           <rect class="node-pre" x="20" y="10" width="380" height="80" rx="10"/>
-          <text class="node-title" x="210" y="46" text-anchor="middle" font-size="15">PreToolUse</text>
-          <text class="node-sub" x="210" y="68" text-anchor="middle">decides whether it happens</text>
+          <text class="node-title" x="210" y="46" text-anchor="middle" font-size="15" data-i18n="s13-3">PreToolUse</text>
+          <text class="node-sub" x="210" y="68" text-anchor="middle" data-i18n="s13-4">decides whether it happens</text>
           <rect class="node-post" x="460" y="10" width="380" height="80" rx="10"/>
-          <text class="node-title" x="650" y="46" text-anchor="middle" font-size="15">PostToolUse</text>
-          <text class="node-sub" x="650" y="68" text-anchor="middle">shapes what Claude receives after success</text>
+          <text class="node-title" x="650" y="46" text-anchor="middle" font-size="15" data-i18n="s13-5">PostToolUse</text>
+          <text class="node-sub" x="650" y="68" text-anchor="middle" data-i18n="s13-6">shapes what Claude receives after success</text>
         </svg>
-        <p class="closing-line"><span class="pre">Before execution</span>, check whether the call should run. <span class="post">After success</span>, add context or adjust its result. Use PostToolUseFailure for execution errors.</p>
+        <p class="closing-line" data-i18n="s13-7"><span class="pre">Before execution</span>, check whether the call should run. <span class="post">After success</span>, add context or adjust its result. Use PostToolUseFailure for execution errors.</p>
       </div>
     </section>
 
     <!-- 14: SOURCES -->
     <section class="slide sources">
-      <div class="eyebrow"><span>14</span><span class="idx mono">Reference</span><span class="rule"></span></div>
-      <h2 class="title">Sources and Version Notes</h2>
-      <p class="lede">Reviewed 27 October 2026 against Claude Code 2.1.312 release notes and current Anthropic documentation. Older installations may behave differently.</p>
+      <div class="eyebrow"><span>14</span><span class="idx mono" data-i18n="s14-1">Reference</span><span class="rule"></span></div>
+      <h2 class="title" data-i18n="s14-2">Sources and Version Notes</h2>
+      <p class="lede" data-i18n="s14-3">Reviewed 27 October 2026 against Claude Code 2.1.312 release notes and current Anthropic documentation. Older installations may behave differently.</p>
       <div class="body-area">
         <table class="ftable">
-          <tr><th>Read more</th><th>What it explains</th></tr>
-          <tr><td><a href="https://code.claude.com/docs/en/hooks" target="_blank" rel="noopener noreferrer">Hooks reference</a></td><td>Events, permissions, exit codes and output schemas</td></tr>
-          <tr><td><a href="https://code.claude.com/docs/en/hooks-guide" target="_blank" rel="noopener noreferrer">Hooks guide</a></td><td>Practical examples, handler types and timeout defaults</td></tr>
-          <tr><td><a href="https://code.claude.com/docs/en/agent-sdk/hooks" target="_blank" rel="noopener noreferrer">Agent SDK hooks</a> / <a href="https://code.claude.com/docs/en/agent-sdk/python" target="_blank" rel="noopener noreferrer">Python API</a></td><td>Callback setup, return values and timeout behavior</td></tr>
-          <tr><td><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">Claude Code changelog</a></td><td><span class="mono">onFailure: "block"</span> requires 2.1.295+. Prompt and agent concurrency limits can change.</td></tr>
-          <tr><td><a href="https://github.com/anthropics/claude-agent-sdk-typescript/blob/main/CHANGELOG.md#02121" target="_blank" rel="noopener noreferrer">SDK compatibility note</a></td><td><span class="mono">updatedMCPToolOutput</span> is deprecated. Use <span class="mono">updatedToolOutput</span>.</td></tr>
+          <tr><th data-i18n="s14-4">Read more</th><th data-i18n="s14-5">What it explains</th></tr>
+          <tr><td data-i18n="s14-6"><a href="https://code.claude.com/docs/en/hooks" target="_blank" rel="noopener noreferrer">Hooks reference</a></td><td data-i18n="s14-7">Events, permissions, exit codes and output schemas</td></tr>
+          <tr><td data-i18n="s14-8"><a href="https://code.claude.com/docs/en/hooks-guide" target="_blank" rel="noopener noreferrer">Hooks guide</a></td><td data-i18n="s14-9">Practical examples, handler types and timeout defaults</td></tr>
+          <tr><td data-i18n="s14-10"><a href="https://code.claude.com/docs/en/agent-sdk/hooks" target="_blank" rel="noopener noreferrer">Agent SDK hooks</a> / <a href="https://code.claude.com/docs/en/agent-sdk/python" target="_blank" rel="noopener noreferrer">Python API</a></td><td data-i18n="s14-11">Callback setup, return values and timeout behavior</td></tr>
+          <tr><td data-i18n="s14-12"><a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">Claude Code changelog</a></td><td data-i18n="s14-13"><span class="mono">onFailure: "block"</span> requires 2.1.295+. Prompt and agent concurrency limits can change.</td></tr>
+          <tr><td data-i18n="s14-14"><a href="https://github.com/anthropics/claude-agent-sdk-typescript/blob/main/CHANGELOG.md#02121" target="_blank" rel="noopener noreferrer">SDK compatibility note</a></td><td data-i18n="s14-15"><span class="mono">updatedMCPToolOutput</span> is deprecated. Use <span class="mono">updatedToolOutput</span>.</td></tr>
         </table>
-        <div class="callout">Before a demo, check <span class="mono">claude --version</span> and <span class="mono">python -m pip show claude-agent-sdk</span>. The snippets show configuration patterns. Supply your formatter and test it with the versions you use.</div>
+        <div class="callout" data-i18n="s14-16">Before a demo, check <span class="mono">claude --version</span> and <span class="mono">python -m pip show claude-agent-sdk</span>. The snippets show configuration patterns. Supply your formatter and test it with the versions you use.</div>
       </div>
     </section>
 
@@ -718,4 +718,6 @@
   render();
 })();
 </script>
+<script src="./interception-point.fr.js"></script>
+<script src="./interception-point.ro.js"></script>
 <script src="./deck-standard.js"></script>
