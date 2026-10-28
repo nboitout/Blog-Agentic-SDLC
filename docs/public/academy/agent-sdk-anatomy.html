@@ -337,6 +337,7 @@
         <span>Python &amp; TypeScript</span>
         <span>13-slide anatomy</span>
       </div>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/overview" target="_blank" rel="noopener noreferrer">Agent SDK overview</a>.</p>
       <p class="sources source-note">Documentation reviewed: <time datetime="2026-10-27">27 October 2026</time>.<br>Release references: <a href="https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk/v/0.3.312" target="_blank" rel="noopener noreferrer">TypeScript 0.3.312</a> &middot; <a href="https://pypi.org/project/claude-agent-sdk/0.2.174/" target="_blank" rel="noopener noreferrer">Python 0.2.174</a>. This is a documentation review, not a runtime compatibility test.</p>
     </section>
 
@@ -378,7 +379,7 @@
         </svg>
       </div>
       <div class="callout"><span class="mono">init</span> reports session setup. <span class="mono">ResultMessage</span> reports how the run ended, with cost and usage. These are events your application receives.</div>
-      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop" target="_blank" rel="noopener noreferrer">Agent loop and message types</a>. Diagram uses Python message type names.</p>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop" target="_blank" rel="noopener noreferrer">Agent loop and message types</a>. Diagram uses Python message type names.</p>
     </section>
 
     <!-- 2 : HOOKS -->
@@ -421,7 +422,7 @@
         </svg>
         <div class="callout">One field now covers both tool families: <span class="mono">updatedToolOutput</span> replaces output for any tool &mdash; MCP or built&#8209;in. The older <span class="mono">updatedMCPToolOutput</span> is deprecated.</div>
       </div>
-      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/hooks#outputs" target="_blank" rel="noopener noreferrer">Hook decisions and output fields</a>.</p>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/hooks#outputs" target="_blank" rel="noopener noreferrer">Hook decisions and output fields</a>.</p>
     </section>
 
     <!-- 3 : SKILLS -->
@@ -449,7 +450,7 @@
         </div>
       </div>
       <div class="callout">Skills must be discovered through your configured settings sources and enabled for the session. The <span class="mono">skills</span> option controls which ones Claude may invoke.</div>
-      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/skills" target="_blank" rel="noopener noreferrer">Configure and invoke skills</a>.</p>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/skills" target="_blank" rel="noopener noreferrer">Configure and invoke skills</a>.</p>
     </section>
 
     <!-- 4 : PERMISSIONS -->
@@ -468,7 +469,7 @@
         </ol>
         <div class="callout permission-note">Modes: <span class="mono">default &middot; acceptEdits &middot; plan &middot; auto &middot; dontAsk &middot; bypassPermissions</span>.<br>Already-approved calls skip your callback. Use a <span class="mono">PreToolUse</span> hook for checks that must see every call.</div>
       </div>
-      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/permissions#how-permissions-are-evaluated" target="_blank" rel="noopener noreferrer">Permission order and exceptions</a>. Some protected actions always need extra checks.</p>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/permissions#how-permissions-are-evaluated" target="_blank" rel="noopener noreferrer">Permission order and exceptions</a>. Some protected actions always need extra checks.</p>
     </section>
 
     <!-- 5 : CUSTOM TOOLS -->
@@ -506,7 +507,7 @@
           <text class="node-sub" x="784" y="96" text-anchor="middle">TypeScript: mcpServers</text>
         </svg>
       </div>
-      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/custom-tools" target="_blank" rel="noopener noreferrer">Custom tools in Python and TypeScript</a>. Tool handlers run inside your application process.</p>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/custom-tools" target="_blank" rel="noopener noreferrer">Custom tools in Python and TypeScript</a>. Tool handlers run inside your application process.</p>
     </section>
 
     <!-- 6 : SUBAGENTS -->
@@ -550,7 +551,7 @@
           <text class="label" x="360" y="278" text-anchor="middle">result returns to parent &mdash; working context stays isolated</text>
         </svg>
       </div>
-      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/subagents" target="_blank" rel="noopener noreferrer">Subagent context and returned reports</a>.</p>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/subagents" target="_blank" rel="noopener noreferrer">Subagent context and returned reports</a>.</p>
     </section>
 
     <!-- 7 : SESSIONS -->
@@ -590,7 +591,7 @@
         </svg>
       </div>
       <div class="callout">A fork copies the conversation history. It does not copy your files: edits in the same working directory are visible to both sessions.</div>
-      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/sessions" target="_blank" rel="noopener noreferrer">Continue, resume and fork sessions</a>.</p>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/sessions" target="_blank" rel="noopener noreferrer">Continue, resume and fork sessions</a>.</p>
     </section>
 
     <!-- 8 : MCP SERVERS -->
@@ -626,7 +627,7 @@
           <text class="node-sub" x="600" y="224" text-anchor="middle">current remote transport</text>
         </svg>
       </div>
-      <p class="sources">Sources: <a href="https://code.claude.com/docs/en/agent-sdk/mcp#transport-types" target="_blank" rel="noopener noreferrer">MCP transports</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/tool-search" target="_blank" rel="noopener noreferrer">Tool Search defaults and supported configurations</a>.</p>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/mcp#transport-types" target="_blank" rel="noopener noreferrer">MCP transports</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/tool-search" target="_blank" rel="noopener noreferrer">Tool Search defaults and supported configurations</a>.</p>
     </section>
 
     <!-- 9 : GUARDRAILS -->
@@ -657,7 +658,7 @@
         </div>
       </div>
       <div class="callout">For example, a <span class="mono">$1</span> threshold can finish above <span class="mono">$1</span>. Leave headroom, and use billing records for the actual charge.</div>
-      <p class="sources">Sources: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#turns-and-budget" target="_blank" rel="noopener noreferrer">Limits and effort</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/cost-tracking" target="_blank" rel="noopener noreferrer">Cost estimates</a>. Option names here are TypeScript.</p>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#turns-and-budget" target="_blank" rel="noopener noreferrer">Limits and effort</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/cost-tracking" target="_blank" rel="noopener noreferrer">Cost estimates</a>. Option names here are TypeScript.</p>
     </section>
 
     <!-- 10 : COMPACTION -->
@@ -688,7 +689,7 @@
         </svg>
       </div>
       <div class="callout"><span class="mono">PreCompact</span> runs before compaction; <span class="mono">compact_boundary</span> marks it afterward. Put lasting project rules in <span class="mono">CLAUDE.md</span>, loaded through your settings sources.</div>
-      <p class="sources">Source: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#automatic-compaction" target="_blank" rel="noopener noreferrer">Compaction and persistent instructions</a>.</p>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#automatic-compaction" target="_blank" rel="noopener noreferrer">Compaction and persistent instructions</a>.</p>
     </section>
 
     <!-- 11 : PYTHON VS TS -->
@@ -713,7 +714,7 @@
         </div>
       </div>
       <div class="callout">Python has exceptions: hook fields and <span class="mono">AgentDefinition</span> use names such as <span class="mono">updatedInput</span> and <span class="mono">maxTurns</span>. Check the type you are configuring.</div>
-      <p class="sources">Sources: <a href="https://code.claude.com/docs/en/agent-sdk/python" target="_blank" rel="noopener noreferrer">Python reference</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/typescript" target="_blank" rel="noopener noreferrer">TypeScript reference</a>.</p>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/python" target="_blank" rel="noopener noreferrer">Python reference</a> &middot; <a href="https://code.claude.com/docs/en/agent-sdk/typescript" target="_blank" rel="noopener noreferrer">TypeScript reference</a>.</p>
     </section>
 
     <!-- 12 : SYNTHESIS -->
@@ -773,7 +774,7 @@
         </svg>
       </div>
       <p class="closing-line">The pieces change what the loop can do &mdash; <span class="accent">the loop is still the thing.</span></p>
-      <p class="sources">Start here: <a href="https://code.claude.com/docs/en/agent-sdk/overview" target="_blank" rel="noopener noreferrer">Official Agent SDK overview</a>. Each slide links to the details behind its explanation.</p>
+      <p class="sources">Claude Docs: <a href="https://code.claude.com/docs/en/agent-sdk/overview" target="_blank" rel="noopener noreferrer">Official Agent SDK overview</a>. Each slide links to the details behind its explanation.</p>
     </section>
 
     <button class="edge-zone left" id="edgeLeft" aria-label="Previous slide"></button>
