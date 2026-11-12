@@ -74,6 +74,12 @@ Voir la section [Templates](/fr/resources/templates/) pour des versions prêtes 
 
 Les prompts façonnent l'*intention* de l'agent. Les harnesses façonnent son *comportement*. Les deux comptent, mais dans un agentic SDLC de production, le harness design est la fondation.
 
+## Deux couches de harness {#two-layers}
+
+Ce cours emploie *harness* pour ce que vous écrivez dans le repository. Le même mot désigne aussi le produit agent qui entoure le modèle, comme Claude Code, Codex, OpenCode ou Pi. Ce produit fournit les outils, la gestion du context, les permissions et la connexion à un modèle. Votre harness de repository décide de leur comportement sur votre projet.
+
+Le parcours [Harness Engineering](https://www.agentic-sdlc.it/academy/harness-engineering#lecture) proposé dans l'Academy prend le relais là où ce cours s'arrête : choisir ce produit, le connecter à un modèle local ou auto-hébergé, et mesurer le résultat. Il relie chacune des cinq primitives ci-dessus au module où vous la pratiquez.
+
 ---
 
 *Suivant : [Multi-Agent Patterns →](/fr/lectures/lecture-05-multi-agent-patterns/)*

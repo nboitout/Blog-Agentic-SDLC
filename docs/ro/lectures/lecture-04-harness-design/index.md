@@ -13,6 +13,10 @@
 
 Pentru management, întrebarea nu este dacă modelul poate genera cod. Întrebarea este dacă delivery system-ul face munca agentului auditable, recoverable și aligned cu risk tolerance-ul echipei.
 
+## Două straturi de harness {#two-layers}
+
+Acest curs folosește *harness* pentru ceea ce scrieți în repository. Același cuvânt denumește și produsul agent din jurul modelului, precum Claude Code, Codex, OpenCode sau Pi. Parcursul [Harness Engineering](https://www.agentic-sdlc.it/academy/harness-engineering#lecture) propus în Academy continuă de aici: alegerea produsului, conectarea lui la un model local sau self-hosted și măsurarea rezultatului.
+
 ---
 
 *Următorul: [Multi-Agent Coordination Patterns](/ro/lectures/lecture-05-multi-agent-patterns/)*

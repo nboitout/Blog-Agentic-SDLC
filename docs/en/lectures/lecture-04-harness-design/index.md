@@ -175,6 +175,12 @@ See the [Templates](/en/resources/templates/) section for copy-ready versions of
 
 Prompts shape agent *intent*. Harnesses shape agent *behavior*. Both matter, but in a production agentic SDLC, harness design is the foundation.
 
+## Two layers of harness {#two-layers}
+
+This lecture uses *harness* for what you write in the repository. The same word also names the agent product around the model, such as Claude Code, Codex, OpenCode or Pi. That product supplies the tools, the context management, the permissions and the connection to a model. Your repository harness decides how they behave on your project.
+
+The Academy's proposed [Harness Engineering track](https://www.agentic-sdlc.it/academy/harness-engineering#lecture) picks up where this lecture stops: choosing that product, connecting it to a local or self-hosted model, and measuring the result. It maps each of the five primitives above to the module where you practise it.
+
 <button class="lecture-quiz-trigger" @click="isQuizOpen = true">Take a short quiz</button>
 
 <div v-if="isQuizOpen" class="lecture-quiz-modal" role="dialog" aria-modal="true" aria-label="Lecture 04 quiz">
